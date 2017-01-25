@@ -11,7 +11,6 @@ import java.util.Hashtable;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
 import javax.swing.SwingUtilities;
 
 import basic.javareflection.mopex.Mopex;
@@ -26,7 +25,6 @@ import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zBasicUI.listener.ListenerMouseMove4DragableWindowZZZ;
 import basic.zKernel.IKernelModuleUserZZZ;
-
 import basic.zKernel.KernelZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import custom.zKernel.LogZZZ;
@@ -355,12 +353,16 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	 * 
 	 * @see basic.zBasic.IFlagZZZ#setFlagZ(java.lang.String, boolean)
 	 */
+	/*
 	public boolean setFlagZ(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
-		boolean bFunction = false;
+		boolean bReturn = false;
 		main:{
 			if(sFlagName == null) break main;
 			if(sFlagName.equals("")) break main;
-			try{
+			try{				
+				String stemp = "Methode " + ReflectCodeZZZ.getMethodCurrentName() + ": für Flag '" + sFlagName + "'";
+				System.out.println(stemp);
+				this.getLogObject().WriteLineDate(stemp);
 			
 			//1. Hole alle SuperKlassen
 			Class objClassStart = this.getClass();
@@ -372,6 +374,9 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 				ArrayList<Class> listaClassImplementing = new ArrayList<Class>();
 				for(Class objClass : objaClass ){
 					if(ReflectClassZZZ.isImplementing(objClass, IFlagZZZ.class)){
+						stemp = objClassStart.getSimpleName() + "." + ReflectCodeZZZ.getMethodCurrentName() + ": Gefundene implementierende Klasse = " + objClass.getSimpleName();
+						System.out.println(stemp);
+						this.getLogObject().WriteLineDate(stemp);
 						//if(!objClass.getName().equalsIgnoreCase(this.getClass().getName())) listaClassImplementing.add(objClass); //Ohne des Abfangens der Gleichheit... fehler!!!
 						listaClassImplementing.add(objClass);
 					}
@@ -381,16 +386,18 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 			    for(Class<IFlagZZZ> objClass : listaClassImplementing){
 			    	//!!! Es muss die .setFlagZ Methode der Klasse aufgerufen werden. Nur so bekommt man den Zugriff auf die Enumeration FLAGZ
 			    	//3.1 Die Methode holen, per Reflection API
-			    	System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# Klassenobjekt, das IFlagZZZ implementiert: '" + objClass.getName() + "'");
+			    	System.out.println("Methode " + ReflectCodeZZZ.getMethodCurrentName() + "# Klassenobjekt, das IFlagZZZ implementiert: '" + objClass.getName() + "'");
 					Class[] clsaParam = new Class[2];
 					clsaParam[0]=String.class;//IFlagZZZ.class;
 					clsaParam[1]=String.class;
+					
+					boolean bFunction = false;
 					try {
 						Method m = Mopex.getSupportedMethod(objClass, "proofFlagZExists", clsaParam);
 						if(m!=null){
 							Object[] objaParam = new Object[2];
 							
-							objaParam[0] = objClass.getName();//Class.forName(objClass.getName());//wo ist dabei der sinn... funktiniert zwar, aber .... this;
+							objaParam[0] = objClass.getName();//Class.forName(objClass.getName());//wo ist dabei der sinn... funktioniert zwar, aber .... this;
 							objaParam[1] = sFlagName;
 							Object objReturnType = m.invoke(this, objaParam);
 							if(objReturnType!=null){
@@ -403,9 +410,26 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 							//Setze das Flag nun in die HashMap
 							HashMap<String, Boolean> hmFlag = this.getHashMapFlagZ();
 							hmFlag.put(sFlagName.toUpperCase(), bFlagValue);
-							bFunction = true;
 							
-							break main; //Wurde das Flag in der Elternklasse gesetzt, dann braucht es niergendwo weiter gesetzt werden.
+							bReturn = true; //Wurde das Flag in der Elternklasse gesetzt, dann braucht es niergendwo weiter gesetzt werden.							
+						}else{
+							System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# FLAGZ (noch) NICHT gefunden durch method.invoke(...).");
+							
+							//Existiert das Flag in dieser Klasse?
+							bFunction = this.proofFlagZExists(sFlagName);
+							if(bFunction == true){
+								System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# FLAGZ erfolgreich gefunden, direkt in der Klasse.");
+								
+								//Setze das Flag nun in die HashMap
+								HashMap<String, Boolean> hmFlag = this.getHashMapFlagZ();
+								hmFlag.put(sFlagName.toUpperCase(), bFlagValue);
+								
+								bReturn = true;
+							}else{
+								System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# FLAGZ auch direkt in der Klasse nicht gefunden.");
+								
+								bReturn = false;
+							}
 						}
 					} catch (NoSuchMethodException e) {
 						//Eine Klasse, die das Interface Implementiert, braucht selbst diese Methoden (.getFlagZ(...) / .setFlagZ(...) NICHT zu besitzen. Das Kann auch eine Elternklasse tun.
@@ -429,9 +453,46 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 			
 		}	// end main:
 		
+		return bReturn;	
+	}
+	*/
+	
+	/** DIESE METHODE MUSS IN ALLEN KLASSEN VORHANDEN SEIN - über Vererbung -, DIE IHRE FLAGS SETZEN WOLLEN
+	 * @param objClassParent
+	 * @param sFlagName
+	 * @param bFlagValue
+	 * @return
+	 * lindhaueradmin, 23.07.2013
+	 */
+	//Direkt aus Object ZZZ übernommen
+	public boolean setFlagZ(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
+		boolean bFunction = false;
+		main:{
+			if(StringZZZ.isEmpty(sFlagName)) break main;
+			
+
+			bFunction = this.proofFlagZExists(sFlagName);												
+			if(bFunction == true){
+				
+				//Setze das Flag nun in die HashMap
+				HashMap<String, Boolean> hmFlag = this.getHashMapFlagZ();
+				hmFlag.put(sFlagName.toUpperCase(), bFlagValue);
+				bFunction = true;								
+			}										
+		}	// end main:
+		
 		return bFunction;	
 	}
 
+	public boolean setFlag(String sFlagName, boolean bFlagValue) {
+		try {
+			return this.setFlagZ(sFlagName, bFlagValue);
+		} catch (ExceptionZZZ e) {
+			System.out.println("ExceptionZZZ (aus compatibilitaetgruenden mit Version vor Java 6 nicht weitergereicht) : " + e.getDetailAllLast());
+			return false;
+		}
+	}
+	
 	/** DIESE METHODE MUSS IN ALLEN KLASSEN VORHANDEN ZU SEIN, DIE IHRE FLAGS SETZEN WOLLEN
 	 *  SIE WIRD PER METHOD.INVOKE(...) aufgerufen von .setFlagZ(...)
 	 * @param objClassParent
@@ -440,6 +501,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	 * @return
 	 * lindhaueradmin, 23.07.2013
 	 */
+	/* 20170123 Teste, ob die aus ObjectZZZ entlehnet Methode nicht besser ist.
 	public boolean proofFlagZExists(String sParentClassName, String sFlagName){
 		boolean bReturn = false;
 		main:{
@@ -450,13 +512,33 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	
 			//Existiert in der Elternklasse oder in der aktuellen Klasse das Flag?
 			Class objClassParent;
-			objClassParent = Class.forName(sParentClassName);			
-			ObjectZZZ objcp = (ObjectZZZ)objClassParent.newInstance();
+			objClassParent = Class.forName(sParentClassName);	
+			System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# Parentklasse ist: '" + objClassParent.getClass().getName() + "' erzeuge hierzu KEINE neue Instanz.");
+			if(objClassParent.getClass().getName().equals("java.lang.Class")){
+				bReturn = false;
+				break main;
+			}
 			
-			if(objcp==null){
+			//Nur von anderen Klassen versuchen eine neue Instanz zu machen.
+			System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# Parentklasse ist: '" + objClassParent.getClass().getName() + "' erzeuge hierzu eine neue Instanz.");	
+			
+			//!!! für abstrakte Klassen gilt: Es kann per Reflection keine neue Objektinstanz geholt werden.
+			if(!ReflectClassZZZ.isAbstract(objClassParent)){
+			
+				//Immer Fehler beim Instatiieren: ObjectZZZ objcp = (ObjectZZZ)objClassParent.newInstance();
+				IFlagZZZ objcp = (IFlagZZZ)objClassParent.newInstance(); //darum auf cast von IFlagZZZ ausgewichen.
+				if(objcp==null){
+				}else{
+					System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# ObjektInstanz für '" + objcp.getClass().getName() + "' erfolgreich erzeugt. Nun Enum Klasse holen... .");
+					bReturn = ObjectZZZ.proofFlagZExists(objcp, sFlagName);
+				}
+			
 			}else{
-				System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# ObjektInstanz für '" + objcp.getClass().getName() + "' erfolgreich erzeugt. Nun Enum Klasse holen... .");
-				bReturn = ObjectZZZ.proofFlagZExists(objcp, sFlagName);
+				System.out.println("Abstrakte Klasse, weiter zur Elternklasse.");
+				Class objcp2 = objClassParent.getSuperclass();
+				if(objcp2!=null){
+					bReturn = ObjectZZZ.proofFlagZExists(objcp2.getName(), sFlagName);
+				}
 			}
 				
 			} catch (ClassNotFoundException e) {
@@ -472,20 +554,57 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 		}//end main:
 		return bReturn;
 	}
+	*/
 	
-	@Override
-	public final boolean getFlagZ(String sFlagName) {
-		boolean bFunction = false;
+	//Methode aus ObjectZZZ, notwendig, weil IFlagZ implementiert ist, aber nicht von ObjectZZZ geerbt wird. 
+	public static boolean proofFlagZExists(String sClassName, String sFlagName){
+		boolean bReturn = false;
 		main:{
 			if(StringZZZ.isEmpty(sFlagName))break main;
-			
-			/*NEIN, nicht notwendig, da die HashMap einzigartig sein soll
-			// hier Superclass aufrufen
-			System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# Aufruf der super-Klasse. Von '" + this.getClass().getName() + "' nach '" + this.getClass().getSuperclass().getName() + "'");
-			bFunction = super.getFlag(sFlagName);
-			if(bFunction == true) break main;
-			*/
-							
+			if(StringZZZ.isEmpty(sClassName))break main;
+			try {
+				
+				//Existiert in der Elternklasse oder in der aktuellen Klasse das Flag?
+				System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# ObjektInstanz erzeugen für '" + sClassName + "'");
+				Class objClass = Class.forName(sClassName);		
+				
+				//!!! für abstrakte Klassen gilt: Es kann per Reflection keine neue Objektinstanz geholt werden.
+				if(!ReflectClassZZZ.isAbstract(objClass)){
+				
+					IFlagZZZ objcp = (IFlagZZZ)objClass.newInstance();  //Aus der Objektinstanz kann dann gut die Enumeration FLAGZ ausgelesen werden.				
+					if(objcp==null){
+					}else{
+						System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# ObjektInstanz für '" + objcp.getClass().getName() + "' erfolgreich erzeugt. Nun daraus Enum Klasse holen... .");
+						bReturn = ObjectZZZ.proofFlagZExists(objcp, sFlagName);
+					}
+				}else{
+					System.out.println("Abstrakte Klasse, weiter zur Elternklasse.");
+					Class objcp2 = objClass.getSuperclass();
+					if(objcp2!=null){
+						bReturn = ObjectZZZ.proofFlagZExists(objcp2.getName(), sFlagName);
+					}
+				}
+				
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}//end main:
+		return bReturn;
+	}
+	
+	//Methode aus ObjectZZZ übernommern, wg. IFlagZ
+	public boolean getFlagZ(String sFlagName) {
+		boolean bFunction = false;
+		main:{
+			if(StringZZZ.isEmpty(sFlagName)) break main;
+										
 			HashMap<String, Boolean> hmFlag = this.getHashMapFlagZ();
 			Boolean objBoolean = hmFlag.get(sFlagName.toUpperCase());
 			if(objBoolean==null){
@@ -497,6 +616,10 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 		}	// end main:
 		
 		return bFunction;	
+	}
+	
+	public boolean getFlag(String sFlagName) {
+		return this.getFlagZ(sFlagName);
 	}
 	
 	/**
