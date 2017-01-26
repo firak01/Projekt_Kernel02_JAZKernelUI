@@ -47,15 +47,15 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 
 	private String sProgramName  = null; //ggf. der Name des Elternprogramms, s. KernelKonfiguration
 	private String sProgramAlias = null; //ggf. der Alias des Elternprogramms, s. KernelKonfiguration
-	/*private boolean flagComponentKernelProgram = false; // 2013-07-08: Damit wird gesagt, dass für dieses Panel ein "Program-Abschnitt" in der Kernel - Konfigurations .ini - Datei vorhanden ist.
-	                                                    //             Bei der Suche nach Parametern wird von der aktuellen Komponente weiter "nach oben" durchgegangen und der Parameter für jede Programkomponente gesucht.
+	/*private boolean flagComponentKernelProgram = false; // 2013-07-08: Damit wird gesagt, dass fï¿½r dieses Panel ein "Program-Abschnitt" in der Kernel - Konfigurations .ini - Datei vorhanden ist.
+	                                                    //             Bei der Suche nach Parametern wird von der aktuellen Komponente weiter "nach oben" durchgegangen und der Parameter fï¿½r jede Programkomponente gesucht.
 
 	private boolean flagComponentDraggable = true;
 	private boolean bFlagDebug = false;
 	private boolean bFlagInit = false;
 	private boolean bFlagTerminate = false;*/
 	private HashMap<String, Boolean>hmFlag=new HashMap<String, Boolean>();
-	/**20130721: Umgestellt auf HashMap und die Enum-Flags, Compiler auf 1.7 geändert
+	/**20130721: Umgestellt auf HashMap und die Enum-Flags, Compiler auf 1.7 geï¿½ndert
 	 * 
 	 */
 	public enum FLAGZ{
@@ -87,7 +87,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	 */
 	public KernelJPanelCascadedZZZ(KernelZZZ objKernel, KernelJFrameCascadedZZZ frameParent) throws ExceptionZZZ{
 		
-		//20130625 Hinzugefügt, um das Suchen des NAchbarpanels schon ermöglichen, bevor das launch() von KernelJFrameCascaded abgeschlossen ist.
+		//20130625 Hinzugefï¿½gt, um das Suchen des NAchbarpanels schon ermï¿½glichen, bevor das launch() von KernelJFrameCascaded abgeschlossen ist.
 		//Wird normalerweise im KErnelJFrameCascaded.lauchchDoing() gemacht, aber bei der Konfiguration der PAnels muss schon auf ein Nachbarpanel zugegriffen werden.
 		frameParent.setPanelContent(this); //this: Ist das oberste Panel, wichtig wenn man aus einem Panel nach den Nachbarpanels sucht.
 		frameParent.getContentPane().add(this);		
@@ -100,7 +100,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	     
 		FrameCascadedRootDummyZZZ frameParent = new FrameCascadedRootDummyZZZ(objKernel, frameBasic);
 		
-		//20130625 Hinzugefügt, um das Suchen des NAchbarpanels schon ermöglichen, bevor das launch() von KernelJFrameCascaded abgeschlossen ist.
+		//20130625 Hinzugefï¿½gt, um das Suchen des NAchbarpanels schon ermï¿½glichen, bevor das launch() von KernelJFrameCascaded abgeschlossen ist.
 		//Wird normalerweise im KErnelJFrameCascaded.lauchchDoing() gemacht, aber bei der Konfiguration der PAnels muss schon auf ein Nachbarpanel zugegriffen werden.
 		frameParent.setPanelContent(this); //this: Ist das oberste Panel, wichtig wenn man aus einem Panel nach den Nachbarpanels sucht.
 		//NEIN, nur DUMMY frameParent.getContentPane().add(this);		
@@ -138,7 +138,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 			
 
 			//3. der Rest, als auch ggf. andere Panels
-			contentPane.add(this); // das liefert bei JFrame einen Fehler. NICHT LÖSCHEN ggf. ist eine Fallunterscheidung für die verschiedenen Container notwendig
+			contentPane.add(this); // das liefert bei JFrame einen Fehler. NICHT Lï¿½SCHEN ggf. ist eine Fallunterscheidung fï¿½r die verschiedenen Container notwendig
 			
 			boolean bIsCascadedPanel = ReflectClassZZZ.isChildclassFrom(clsContainer, KernelJPanelCascadedZZZ.class);
 			if(bIsCascadedPanel){
@@ -153,14 +153,14 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	}
 	
 	public KernelJPanelCascadedZZZ(KernelZZZ objKernel, KernelJDialogExtendedZZZ dialog){
-		//Das Panel fügt sich dem Dialog selbst hinzu
+		//Das Panel fï¿½gt sich dem Dialog selbst hinzu
 		//Container objContainer = dialog.getContentPane();
 		//NEIN objContainer.add(this);
 		
 		//Damit auf die Hashtable der Dialogbox zugegriffen werden kann, um andere Panels zu erreichen
 		this.setDialogParent(dialog);
 		
-		//Damit dieses Panel zur Verfügung steht um "mit der Maus bewegt" zu werden.
+		//Damit dieses Panel zur Verfï¿½gung steht um "mit der Maus bewegt" zu werden.
 		Container objContainer = dialog.getContentPane();
 		//JFrame frameParent = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, (JComponent)objContainer);
 		KernelJFrameCascadedZZZ frameParent = (KernelJFrameCascadedZZZ) SwingUtilities.getAncestorOfClass(KernelJFrameCascadedZZZ.class, (JComponent) objContainer);
@@ -229,7 +229,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 		}
 		
 		
-		//Einen Mouse Listener hinzufügen, der es erlaubt Fenster zu ziehen (auch im Panel und nicht nur in der Titelleiste)
+		//Einen Mouse Listener hinzufï¿½gen, der es erlaubt Fenster zu ziehen (auch im Panel und nicht nur in der Titelleiste)
 		//if(this.getFlag("isdraggable")){
 		if(this.getFlagZ(FLAGZ.COMPONENT_DRAGGABLE.name())){	
 			
@@ -280,7 +280,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 		}
 	}
 	
-	/** Suche Rekursiv nach einem Panel mit dem angegebenen Alias. Fängt dabei bei sich selber an.
+	/** Suche Rekursiv nach einem Panel mit dem angegebenen Alias. Fï¿½ngt dabei bei sich selber an.
 	* @param sAlias
 	* @return
 	* 
@@ -290,7 +290,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	public KernelJPanelCascadedZZZ searchPanelSub(String sAlias) throws ExceptionZZZ{
 		KernelJPanelCascadedZZZ objReturn=null;
 		main:{
-			//Zuerst prüfen, ob es sich um das Root-Panel handelt, dann kann ja ggf. das Root-Panel selbst gesucht werden.
+			//Zuerst prï¿½fen, ob es sich um das Root-Panel handelt, dann kann ja ggf. das Root-Panel selbst gesucht werden.
 			if(this.getPanelParent()==null){
 				KernelJFrameCascadedZZZ frameParent = this.getFrameParent();				
 				String sRootAlias = KernelJFrameCascadedZZZ.getAliasPanelContent();
@@ -335,7 +335,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 				if(sAlias.toLowerCase().equals("content")){
 					return panelContent;
 				}else{
-					//Eine tiefergehende Suche müsste noch entwickelt werden.
+					//Eine tiefergehende Suche mï¿½sste noch entwickelt werden.
 					KernelJPanelCascadedZZZ panelNeighbour = panelContent.getPanelSub(sAlias);
 					return panelNeighbour;
 				}
@@ -360,7 +360,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 			if(sFlagName == null) break main;
 			if(sFlagName.equals("")) break main;
 			try{				
-				String stemp = "Methode " + ReflectCodeZZZ.getMethodCurrentName() + ": für Flag '" + sFlagName + "'";
+				String stemp = "Methode " + ReflectCodeZZZ.getMethodCurrentName() + ": fï¿½r Flag '" + sFlagName + "'";
 				System.out.println(stemp);
 				this.getLogObject().WriteLineDate(stemp);
 			
@@ -370,7 +370,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 		    if(objaClass==null){		    	
 		    }else if(objaClass.length<=0){
 		    }else{
-		    	//2. Prüfe die Klassen, ob sie IFlagZZZ implementieren.
+		    	//2. Prï¿½fe die Klassen, ob sie IFlagZZZ implementieren.
 				ArrayList<Class> listaClassImplementing = new ArrayList<Class>();
 				for(Class objClass : objaClass ){
 					if(ReflectClassZZZ.isImplementing(objClass, IFlagZZZ.class)){
@@ -382,7 +382,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 					}
 				}
 				
-				//3. Gehe die Liste durch und rufe für die Klassen die .setFlagZ-Methode auf.
+				//3. Gehe die Liste durch und rufe fï¿½r die Klassen die .setFlagZ-Methode auf.
 			    for(Class<IFlagZZZ> objClass : listaClassImplementing){
 			    	//!!! Es muss die .setFlagZ Methode der Klasse aufgerufen werden. Nur so bekommt man den Zugriff auf die Enumeration FLAGZ
 			    	//3.1 Die Methode holen, per Reflection API
@@ -434,10 +434,10 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 					} catch (NoSuchMethodException e) {
 						//Eine Klasse, die das Interface Implementiert, braucht selbst diese Methoden (.getFlagZ(...) / .setFlagZ(...) NICHT zu besitzen. Das Kann auch eine Elternklasse tun.
 						//Merke: Will die Klasse ABER eigene FLAGZ setzen, dann muss sie die Methoden selbst implementieren.
-						System.out.println("NoSuchMethodException: In der Klasse '" + objClass.getName() + "' ist die Methode setFlagZ(cls,sFlag,bValue) nicht vorhanden. So können keine eigenen Flags gesetzt werden.");
+						System.out.println("NoSuchMethodException: In der Klasse '" + objClass.getName() + "' ist die Methode setFlagZ(cls,sFlag,bValue) nicht vorhanden. So kï¿½nnen keine eigenen Flags gesetzt werden.");
 					} catch (InvocationTargetException e) {
 						//siehe oben, dito...
-						System.out.println("InvocationTargetException: In der Klasse '" + objClass.getName() + "' ist die Methode setFlagZ(cls,sFlag,bValue) fehlerhaft aufgerufen worden. So können keine eigenen Flags gesetzt werden.\n"+e.toString());
+						System.out.println("InvocationTargetException: In der Klasse '" + objClass.getName() + "' ist die Methode setFlagZ(cls,sFlag,bValue) fehlerhaft aufgerufen worden. So kï¿½nnen keine eigenen Flags gesetzt werden.\n"+e.toString());
 					} 
 			    }//end for				
 		    }//end if objaClass==null
@@ -457,14 +457,14 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	}
 	*/
 	
-	/** DIESE METHODE MUSS IN ALLEN KLASSEN VORHANDEN SEIN - über Vererbung -, DIE IHRE FLAGS SETZEN WOLLEN
+	/** DIESE METHODE MUSS IN ALLEN KLASSEN VORHANDEN SEIN - ï¿½ber Vererbung -, DIE IHRE FLAGS SETZEN WOLLEN
 	 * @param objClassParent
 	 * @param sFlagName
 	 * @param bFlagValue
 	 * @return
 	 * lindhaueradmin, 23.07.2013
 	 */
-	//Direkt aus Object ZZZ übernommen
+	//Direkt aus Object ZZZ ï¿½bernommen
 	public boolean setFlagZ(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
 		boolean bFunction = false;
 		main:{
@@ -522,14 +522,14 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 			//Nur von anderen Klassen versuchen eine neue Instanz zu machen.
 			System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# Parentklasse ist: '" + objClassParent.getClass().getName() + "' erzeuge hierzu eine neue Instanz.");	
 			
-			//!!! für abstrakte Klassen gilt: Es kann per Reflection keine neue Objektinstanz geholt werden.
+			//!!! fï¿½r abstrakte Klassen gilt: Es kann per Reflection keine neue Objektinstanz geholt werden.
 			if(!ReflectClassZZZ.isAbstract(objClassParent)){
 			
 				//Immer Fehler beim Instatiieren: ObjectZZZ objcp = (ObjectZZZ)objClassParent.newInstance();
 				IFlagZZZ objcp = (IFlagZZZ)objClassParent.newInstance(); //darum auf cast von IFlagZZZ ausgewichen.
 				if(objcp==null){
 				}else{
-					System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# ObjektInstanz für '" + objcp.getClass().getName() + "' erfolgreich erzeugt. Nun Enum Klasse holen... .");
+					System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# ObjektInstanz fï¿½r '" + objcp.getClass().getName() + "' erfolgreich erzeugt. Nun Enum Klasse holen... .");
 					bReturn = ObjectZZZ.proofFlagZExists(objcp, sFlagName);
 				}
 			
@@ -565,16 +565,16 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 			try {
 				
 				//Existiert in der Elternklasse oder in der aktuellen Klasse das Flag?
-				System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# ObjektInstanz erzeugen für '" + sClassName + "'");
+				System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# ObjektInstanz erzeugen fï¿½r '" + sClassName + "'");
 				Class objClass = Class.forName(sClassName);		
 				
-				//!!! für abstrakte Klassen gilt: Es kann per Reflection keine neue Objektinstanz geholt werden.
+				//!!! fï¿½r abstrakte Klassen gilt: Es kann per Reflection keine neue Objektinstanz geholt werden.
 				if(!ReflectClassZZZ.isAbstract(objClass)){
 				
 					IFlagZZZ objcp = (IFlagZZZ)objClass.newInstance();  //Aus der Objektinstanz kann dann gut die Enumeration FLAGZ ausgelesen werden.				
 					if(objcp==null){
 					}else{
-						System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# ObjektInstanz für '" + objcp.getClass().getName() + "' erfolgreich erzeugt. Nun daraus Enum Klasse holen... .");
+						System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# ObjektInstanz fï¿½r '" + objcp.getClass().getName() + "' erfolgreich erzeugt. Nun daraus Enum Klasse holen... .");
 						bReturn = ObjectZZZ.proofFlagZExists(objcp, sFlagName);
 					}
 				}else{
@@ -599,7 +599,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 		return bReturn;
 	}
 	
-	//Methode aus ObjectZZZ übernommern, wg. IFlagZ
+	//Methode aus ObjectZZZ Ã¼bernommern, wg. IFlagZ
 	public boolean getFlagZ(String sFlagName) {
 		boolean bFunction = false;
 		main:{
@@ -640,7 +640,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 			// bFunction = super.getFlag(sFlagName);
 			// if(bFunction == true) break main;
 			
-			//1. prüfe, ob dieses Flag existiert. (Neu 20130721)
+			//1. prï¿½fe, ob dieses Flag existiert. (Neu 20130721)
 			boolean bFlagExists = ObjectZZZ.proofFlagExists(getClassFlag(), sFlagName);
 			if(!bFlagExists){
 				//ExceptionZZZ ez = new ExceptionZZZ("Flag does not exist. '" + sFlagName + "'", iERROR_PARAMETER_VALUE,   this, ReflectCodeZZZ.getMethodCurrentName());								  
@@ -680,7 +680,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 			// if(bFunction == true) break main;
 			
 			
-			//Abänderung.... OHNE SUPERKLASS
+			//Abï¿½nderung.... OHNE SUPERKLASS
 			//boolean bFlagExists = ObjectZZZ.proofFlagExists(super.getClassFlag(), sFlagName);
 			//if(!bFlagExists){
 				//ExceptionZZZ ez = new ExceptionZZZ("Flag does not exist. '" + sFlagName + "'", iERROR_PARAMETER_VALUE,   this, ReflectCodeZZZ.getMethodCurrentName());								  
@@ -702,8 +702,8 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	}
 	*/
 	
-	/** Ermöglicht den ZKernel-Objekten eine gewisse Reflektion.
-	 * Hier wird geprüft, ob das Flag überhaupt vorhanden ist.
+	/** Ermï¿½glicht den ZKernel-Objekten eine gewisse Reflektion.
+	 * Hier wird geprï¿½ft, ob das Flag ï¿½berhaupt vorhanden ist.
 	 * Entweder in der eigenen Klasse oder auch in der Super-Klasse.
 	 */
 	/*
@@ -719,7 +719,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 					//out.format("Enumg %s%n", obj.getClass().getName());
 					Field[] fields = obj.getClass().getDeclaredFields();
 					for(Field field : fields){
-						if(!field.isSynthetic()){ //Sonst wird ENUM$VALUES auch zurückgegeben.
+						if(!field.isSynthetic()){ //Sonst wird ENUM$VALUES auch zurï¿½ckgegeben.
 							//out.format("...%s%n", field.getName());
 							if(sFlagName.equalsIgnoreCase(field.getName())){
 								bReturn = true;
@@ -827,7 +827,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	 * @see basic.zKernelUI.IComponentCascadedZZZ#setComponent(java.lang.String, javax.swing.JComponent)
 	 * 
 	 * 
-	 * Merke: Hierüber wird die JComponent per Aliasname "zugriefbar". Z.B. kann nun ein anderes Panel darauf zugreifen. 
+	 * Merke: Hierï¿½ber wird die JComponent per Aliasname "zugriefbar". Z.B. kann nun ein anderes Panel darauf zugreifen. 
 	 */
 	public void setComponent(String sAlias, JComponent objComponent) {
 		this.htComponent.put(sAlias, objComponent);
