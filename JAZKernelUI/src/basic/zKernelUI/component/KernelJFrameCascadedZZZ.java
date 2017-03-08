@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.util.HashMap;
 import java.util.Hashtable;
 
 import javax.swing.JComponent;
@@ -14,37 +15,50 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+
 import basic.zBasic.IConstantZZZ;
+import basic.zBasic.IFunctionZZZ;
 import basic.zBasic.IObjectZZZ;
 import basic.zBasic.ExceptionZZZ;
+import basic.zBasic.ObjectZZZ;
 import basic.zBasic.ReflectCodeZZZ;
+import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zBasicUI.adapter.AdapterJComponent4ScreenSnapperZZZ;
 import basic.zKernel.IKernelUserZZZ;
-
 import basic.zKernel.KernelZZZ;
+import basic.zUtil.io.KernelFileZZZ.FLAGZ;
 import custom.zKernel.LogZZZ;
 
 /** Class is base for all frames used by the configuration module
  * @author Lindhauer
  */
-public abstract class KernelJFrameCascadedZZZ extends JFrame  implements IConstantZZZ, IObjectZZZ, IKernelUserZZZ, IComponentCascadedUserZZZ, IFrameCascadedZZZ, IFrameLaunchableZZZ, IScreenFeatureZZZ{
+public abstract class KernelJFrameCascadedZZZ extends JFrame  implements IConstantZZZ, IObjectZZZ, IFunctionZZZ, IKernelUserZZZ, IComponentCascadedUserZZZ, IFrameCascadedZZZ, IFrameLaunchableZZZ, IScreenFeatureZZZ{
 	private KernelZZZ objKernel;
 	private LogZZZ objLog; 
 	private KernelJFrameCascadedZZZ frameParent=null;
 	private JFrame frameBasic = null;  //Falls diese Klasse aus einem normalen JFrame erstellt werden soll.
 	private Hashtable objHtFrameSub=new Hashtable();   //Damit kann man auf Frames zugreifen, die von diesem Frame aus gestartet wurden.
-	private Hashtable objHtPanelSub=new Hashtable();     //Eigentlich enthält das hier nur ein Panel
+	private Hashtable objHtPanelSub=new Hashtable();     //Eigentlich enthï¿½lt das hier nur ein Panel
 	private Hashtable objHtComponent = new Hashtable(); //Soll Komponenenten, wie z.B. ein Textfield per "Alias" greifbar machen.
 	 
+	private ExceptionZZZ objException;
+	
 	private boolean bLaunchedBefore = false;
 	
-	private boolean flagComponentKernelProgram = false; // 2013-07-08: Damit wird gesagt, dass für dieses Panel ein "Program-Abschnitt" in der Kernel - Konfigurations .ini - Datei vorhanden ist.
-    //             Bei der Suche nach Parametern wird von der aktuellen Komponente weiter "nach oben" durchgegangen und der Parameter für jede Programkomponente gesucht.
-private boolean flagComponentDraggable = true;
-private boolean bFlagDebug = false;
-private boolean bFlagInit = false;
-private boolean bFlagTerminate = false;
+//	private boolean flagComponentKernelProgram = false; // 2013-07-08: Damit wird gesagt, dass fï¿½r dieses Panel ein "Program-Abschnitt" in der Kernel - Konfigurations .ini - Datei vorhanden ist.
+    //             Bei der Suche nach Parametern wird von der aktuellen Komponente weiter "nach oben" durchgegangen und der Parameter fï¿½r jede Programkomponente gesucht.
+//private boolean flagComponentDraggable = true;
+//private boolean bFlagDebug = false;
+//private boolean bFlagInit = false;
+//private boolean bFlagTerminate = false;
+
+public enum FLAGZ{
+	COMPONENTKERNELPROGRAM,COMPONENTDRAGGABLE,TERMINATE; //Merke: DEBUG und INIT aus ObjectZZZ sollen Ã¼ber IObjectZZZ eingebunden werden, weil von ObjectkZZZ kann man ja nicht erben. Es wird schon von File geerbt.
+}
+
+private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 20130721 ersetzt die einzelnen Flags, irgendwann...
 	
 	public KernelJFrameCascadedZZZ(){
 		super();
@@ -100,7 +114,7 @@ private boolean bFlagTerminate = false;
 		}else{
 			this.setFrameParent(this); //!!! damit umgeht man das Problem, das dies null ist
 						
-			//Damit dieses eine Fenster beendet wird und auch alle darunter geöffneten
+			//Damit dieses eine Fenster beendet wird und auch alle darunter geï¿½ffneten
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		}
 		setSizeDefault();
@@ -116,88 +130,207 @@ private boolean bFlagTerminate = false;
 		}		
 	}
 	
+	
+	/**Overwritten and using an object of jakarta.commons.lang
+	 * to create this string using reflection. 
+	 * Remark: this is not yet formated. A style class is available in jakarta.commons.lang. 
+	 */
+	@Override
+	public String toString(){
+		String sReturn = "";
+		sReturn = ReflectionToStringBuilder.toString(this);
+		return sReturn;
+	}
+	
+	//### FlagMethods ##########################		
+	public HashMap<String, Boolean>getHashMapFlagZ(){
+		return this.hmFlag;
+	} 
+	
+	/* @see basic.zBasic.IFlagZZZ#getFlagZ(java.lang.String)
+	 * 	 Weteire Voraussetzungen:
+	 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
+	 * - Innere Klassen mÃ¼ssen auch public deklariert werden.(non-Javadoc)
+	 */
+	@Override
+	public boolean getFlagZ(String sFlagName) {
+		boolean bFunction = false;
+		main:{
+			if(StringZZZ.isEmpty(sFlagName)) break main;
+										
+			HashMap<String, Boolean> hmFlag = this.getHashMapFlagZ();
+			Boolean objBoolean = hmFlag.get(sFlagName.toUpperCase());
+			if(objBoolean==null){
+				bFunction = false;
+			}else{
+				bFunction = objBoolean.booleanValue();
+			}
+							
+		}	// end main:
+		
+		return bFunction;	
+	}
+	
+	
 	/**
 	 * @param sFlagName
 	 * @return
 	 * lindhaueradmin, 06.07.2013
 	 */
 	public boolean getFlag(String sFlagName) {
+//		boolean bFunction = false;
+//		main:{
+//			if(sFlagName == null) break main;
+//			if(sFlagName.equals("")) break main;
+//			
+//			// hier keine Superclass aufrufen, ist ja schon ObjectZZZ
+//			// bFunction = super.getFlag(sFlagName);
+//			// if(bFunction == true) break main;
+//			
+//			// Die Flags dieser Klasse setzen
+//			String stemp = sFlagName.toLowerCase();
+//			if(stemp.equals("debug")){
+//				bFunction = this.bFlagDebug;
+//				break main;
+//			}else if(stemp.equals("init")){
+//				bFunction = this.bFlagInit;
+//				break main;
+//			}else if(stemp.equals("terminate")){
+//				bFunction = this.bFlagTerminate;
+//			}else if(stemp.equals("isdraggable")){
+//				bFunction = this.flagComponentDraggable;
+//			}else if(stemp.equals("iskernelprogram")){
+//				bFunction = this.flagComponentKernelProgram;
+//			}else{
+//				bFunction = false;
+//			}		
+//		}	// end main:
+//		
+//		return bFunction;
+		return this.getFlagZ(sFlagName);
+		}
+
+	/** DIESE METHODE MUSS IN ALLEN KLASSEN VORHANDEN SEIN - Ã¼ber Vererbung -, DIE IHRE FLAGS SETZEN WOLLEN
+	 * Weteire Voraussetzungen:
+	 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
+	 * - Innere Klassen mÃ¼ssen auch public deklariert werden.
+	 * @param objClassParent
+	 * @param sFlagName
+	 * @param bFlagValue
+	 * @return
+	 * lindhaueradmin, 23.07.2013
+	 */
+	@Override
+	public boolean setFlagZ(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
 		boolean bFunction = false;
 		main:{
-			if(sFlagName == null) break main;
-			if(sFlagName.equals("")) break main;
+			if(StringZZZ.isEmpty(sFlagName)) break main;
 			
-			// hier keine Superclass aufrufen, ist ja schon ObjectZZZ
-			// bFunction = super.getFlag(sFlagName);
-			// if(bFunction == true) break main;
-			
-			// Die Flags dieser Klasse setzen
-			String stemp = sFlagName.toLowerCase();
-			if(stemp.equals("debug")){
-				bFunction = this.bFlagDebug;
-				break main;
-			}else if(stemp.equals("init")){
-				bFunction = this.bFlagInit;
-				break main;
-			}else if(stemp.equals("terminate")){
-				bFunction = this.bFlagTerminate;
-			}else if(stemp.equals("isdraggable")){
-				bFunction = this.flagComponentDraggable;
-			}else if(stemp.equals("iskernelprogram")){
-				bFunction = this.flagComponentKernelProgram;
-			}else{
-				bFunction = false;
-			}		
+
+			bFunction = this.proofFlagZExists(sFlagName);												
+			if(bFunction == true){
+				
+				//Setze das Flag nun in die HashMap
+				HashMap<String, Boolean> hmFlag = this.getHashMapFlagZ();
+				hmFlag.put(sFlagName.toUpperCase(), bFlagValue);
+				bFunction = true;								
+			}										
 		}	// end main:
 		
 		return bFunction;	
-		}
-
+	}
+	
 	/**
 	 * @param sFlagName
 	 * @param bFlagValue
 	 * @return
 	 * lindhaueradmin, 06.07.2013
+	 * @throws ExceptionZZZ 
 	 */
-	public boolean setFlag(String sFlagName, boolean bFlagValue) {
-		boolean bFunction = true;
+	public boolean setFlag(String sFlagName, boolean bFlagValue)  {
+//		boolean bFunction = true;
+//		main:{
+//			if(sFlagName == null) break main;
+//			if(sFlagName.equals("")) break main;
+//			
+//			// hier keine Superclass aufrufen, ist ja schon ObjectZZZ
+//			// bFunction = super.setFlag(sFlagName, bFlagValue);
+//			// if(bFunction == true) break main;
+//			
+//			// Die Flags dieser Klasse setzen
+//			String stemp = sFlagName.toLowerCase();
+//			if(stemp.equals("debug")){
+//				this.bFlagDebug = bFlagValue;
+//				bFunction = true;                            //durch diesen return wert kann man "reflexiv" ermitteln, ob es in dem ganzen hierarchie-strang das flag ï¿½berhaupt gibt !!!
+//				break main;
+//			}else if(stemp.equals("init")){
+//				this.bFlagInit = bFlagValue;
+//				bFunction = true;
+//				break main;
+//			}else if(stemp.equals("terminate")){
+//				this.bFlagTerminate = bFlagValue;
+//				bFunction = true;
+//				break main;
+//			}else if(stemp.equals("isdraggabel")){
+//				this.flagComponentDraggable = bFlagValue;
+//				bFunction = true;
+//				break main;
+//			}else if(stemp.equals("iskernelprogram")){
+//				this.flagComponentKernelProgram = bFlagValue;
+//				bFunction = true;
+//				break main;
+//			}else{
+//				bFunction = false;
+//			}	
+//			
+//		}	// end main:
+//		
+//		return bFunction;
+		try{
+			return this.setFlagZ(sFlagName, bFlagValue);
+		} catch (ExceptionZZZ e) {
+			System.out.println("ExceptionZZZ (aus compatibilitaetgruenden mit Version vor Java 6 nicht weitergereicht) : " + e.getDetailAllLast());
+			return false;
+		}
+	}
+	
+	/* (non-Javadoc)
+	 * @see zzzKernel.basic.KernelAssetObjectZZZ#getExceptionObject()
+	 */
+	public ExceptionZZZ getExceptionObject() {
+		return objException;
+	}
+
+	/* (non-Javadoc)
+	 * @see zzzKernel.basic.KernelAssetObjectZZZ#setExceptionObject(zzzKernel.custom.ExceptionZZZ)
+	 */
+	public void setExceptionObject(ExceptionZZZ objException) {
+		this.objException = objException;
+	}//end function
+
+	
+	//Aus IObjectZZZ, siehe FileZZZ
+	@Override
+	public boolean proofFlagZExists(String sFlagName) {
+		boolean bReturn = false;
 		main:{
-			if(sFlagName == null) break main;
-			if(sFlagName.equals("")) break main;
-			
-			// hier keine Superclass aufrufen, ist ja schon ObjectZZZ
-			// bFunction = super.setFlag(sFlagName, bFlagValue);
-			// if(bFunction == true) break main;
-			
-			// Die Flags dieser Klasse setzen
-			String stemp = sFlagName.toLowerCase();
-			if(stemp.equals("debug")){
-				this.bFlagDebug = bFlagValue;
-				bFunction = true;                            //durch diesen return wert kann man "reflexiv" ermitteln, ob es in dem ganzen hierarchie-strang das flag überhaupt gibt !!!
-				break main;
-			}else if(stemp.equals("init")){
-				this.bFlagInit = bFlagValue;
-				bFunction = true;
-				break main;
-			}else if(stemp.equals("terminate")){
-				this.bFlagTerminate = bFlagValue;
-				bFunction = true;
-				break main;
-			}else if(stemp.equals("isdraggabel")){
-				this.flagComponentDraggable = bFlagValue;
-				bFunction = true;
-				break main;
-			}else if(stemp.equals("iskernelprogram")){
-				this.flagComponentKernelProgram = bFlagValue;
-				bFunction = true;
-				break main;
-			}else{
-				bFunction = false;
-			}	
-			
-		}	// end main:
+			bReturn = ObjectZZZ.proofFlagZExists(this.getClass(), sFlagName);
 		
-		return bFunction;	
+			//Schon die oberste IObjectZZZ nutzende Klasse, darum ist der Aufruf einer Elternklasse mit der Methode nicht mÃ¶glich. 
+			//boolean bReturn = super.proofFlagZExists(sFlagName);
+		
+			if(!bReturn){			
+				Class<FLAGZ> enumClass = FLAGZ.class;	
+				for(Object obj : FLAGZ.class.getEnumConstants()){
+					//System.out.println(obj + "; "+obj.getClass().getName());
+					if(sFlagName.equalsIgnoreCase(obj.toString())) {
+						bReturn = true;
+						break main;
+					}
+				}				
+			}
+		}//end main:
+		return bReturn;
 	}
 	
 	public abstract boolean setSizeDefault() throws ExceptionZZZ;
@@ -335,31 +468,21 @@ private boolean bFlagTerminate = false;
 		return frameReturn;
 	}
 
-	public ExceptionZZZ getExceptionObject() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void setExceptionObject(ExceptionZZZ objException) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public final boolean launch(String sTitle) throws ExceptionZZZ {		
 		boolean bReturn = false;
 		main:{
 			if(this.frameParent==null){
 				RunnerFrameMainZZZ runnerFrame = new RunnerFrameMainZZZ(this, sTitle, this.bLaunchedBefore);
-				SwingUtilities.invokeLater(runnerFrame); //Damit also die Erzeugung des Frames in den EventDispatchThread stellen. Merke: Das macht nur Sinn, wenn in launchCustom() weiterer zeitaufwendiger Code ausgeführt wird.
+				SwingUtilities.invokeLater(runnerFrame); //Damit also die Erzeugung des Frames in den EventDispatchThread stellen. Merke: Das macht nur Sinn, wenn in launchCustom() weiterer zeitaufwendiger Code ausgefï¿½hrt wird.
 				bReturn = true;
 			}else{
-				//!!! Hier wird das gewünschte ContentPanel eingebaut !!!
+				//!!! Hier wird das gewï¿½nschte ContentPanel eingebaut !!!
 				KernelJFrameCascadedZZZ.launchDoing(this, sTitle, this.bLaunchedBefore);
 				bReturn = true;
 				
 				bReturn = this.launchCustom();
 				if(bReturn){
-					//2013-07-09 die Größe des Frames soll ggf. nicht von den Komponenten gesteuert werden
+					//2013-07-09 die Grï¿½ï¿½e des Frames soll ggf. nicht von den Komponenten gesteuert werden
 					//... mache also nix, wenn launchCustom()=true
 				}else{					
 					this.pack();
@@ -368,7 +491,7 @@ private boolean bFlagTerminate = false;
 				this.bLaunchedBefore = true;
 				ReportLogZZZ.write(ReportLogZZZ.DEBUG, "Frame launched");		
 				
-//				... sichtbar machen erst, nachdem alle Elemente im Frame hinzugefügt wurden !!!
+//				... sichtbar machen erst, nachdem alle Elemente im Frame hinzugefï¿½gt wurden !!!
 				//depreciated in 1.5 frame.show();
 				//statt dessen...
 				this.setVisible(true); //Meke: Trotz alledem wird das Fenster erst komplett angezeigt, wenn der code in launchCustom() beendet ist....															
@@ -409,19 +532,19 @@ private boolean bFlagTerminate = false;
 				//setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 				//TODO GOON, Falls dies nicht als unterframe aufgerufen wird:    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				
-				//Die Grösse des Frames, die Methode wird vom KernelFrame zur Verfügung gestellt 
+				//Die Grï¿½sse des Frames, die Methode wird vom KernelFrame zur Verfï¿½gung gestellt 
 				frmCascaded.setSizeDefault();
 				frmCascaded.setTitle(sTitle);
 				
-				//Grundfläche(n) in den Rahmen hinzufügen...
-				//	... das wird nun über das ContentPane der Frames gemacht. !!! Damit diese Grundfläche "draggable" ist, muss zumindest der ContentPane übergeben werden.
+				//Grundflï¿½che(n) in den Rahmen hinzufï¿½gen...
+				//	... das wird nun ï¿½ber das ContentPane der Frames gemacht. !!! Damit diese Grundflï¿½che "draggable" ist, muss zumindest der ContentPane ï¿½bergeben werden.
 				KernelJPanelCascadedZZZ objPanel = frmCascaded.getPaneContent();  //default ist der ContentPane-Alias
 				if(objPanel !=null){
 					if(!frmCascaded.getContentPane().equals(objPanel))frmCascaded.getContentPane().add(objPanel);
 					frmCascaded.setPanelSub(KernelJFrameCascadedZZZ.getAliasPanelContent(), objPanel);
 				}
 				
-				//FGL 20080912: Ggf. ein weiteres Panel hinzufügen
+				//FGL 20080912: Ggf. ein weiteres Panel hinzufï¿½gen
 				KernelJPanelCascadedZZZ objPanelContent = (KernelJPanelCascadedZZZ) frmCascaded.getPaneContent(KernelJFrameCascadedZZZ.getAliasPanelContent() + "Sub");
 				if(objPanelContent != null){
 					if (objPanel != null){
@@ -434,9 +557,9 @@ private boolean bFlagTerminate = false;
 					}
 				}
 				
-				//FGL 20080912: Ggf. einen LayeredPane hinzufügen
-				//Merke: Das LayeredPane muss entweder einem Panel hinzugefügt werden oder (falls nicht vorhanden) direkt dem JFrame
-				//Merke: Die LayoutManager der JPanels, müssen das Hinzufügen einer weiteren Komponente aber auch unterstützen
+				//FGL 20080912: Ggf. einen LayeredPane hinzufï¿½gen
+				//Merke: Das LayeredPane muss entweder einem Panel hinzugefï¿½gt werden oder (falls nicht vorhanden) direkt dem JFrame
+				//Merke: Die LayoutManager der JPanels, mï¿½ssen das Hinzufï¿½gen einer weiteren Komponente aber auch unterstï¿½tzen
 				//Merke: Zu dem LayeredPane gibt es ein Beispiel im TryOutSwing-Projekt
 				JLayeredPane objPaneLayered = (JLayeredPane) frmCascaded.getPaneContent("LayeredPane");
 				if(objPaneLayered != null){
@@ -453,7 +576,7 @@ private boolean bFlagTerminate = false;
 						}
 				}
 				
-				//Menü in den Rahmen hinzufügen
+				//Menï¿½ in den Rahmen hinzufï¿½gen
 				JMenuBar menu = frmCascaded.getMenuContent();
 				if(menu != null){
 					frmCascaded.setJMenuBar(menu);
@@ -494,13 +617,13 @@ private boolean bFlagTerminate = false;
 	
 	private class RunnerFrameMainZZZ implements Runnable{
 		/**Klasse bietet eine run() Methode an, die von KernelJFRameCascadedZZZ.launch() genutzt wird.
-		 * Hintergrund: Über SwingUtilities.invokeLater(RunnerJFrameCascadedZZZ) soll die Performance erhöht werden,
+		 * Hintergrund: ï¿½ber SwingUtilities.invokeLater(RunnerJFrameCascadedZZZ) soll die Performance erhï¿½ht werden,
 		 *                   wenn in  .launchCustom() der erbenden Klasse noch weiterer Code steht, der zeitaufwendig ist.
 		 *                   
-		 * Ziel: Den Aufbau des Frontends in den EventDispatcher-Thread verlegen und den Hautpthread für den Custom-Code nutzen.
+		 * Ziel: Den Aufbau des Frontends in den EventDispatcher-Thread verlegen und den Hautpthread fï¿½r den Custom-Code nutzen.
 		 * 
 		 * Merke: Das funktioniert aber nur/macht nur Sinn beim Starten des "Hauptframes". Danach wird jeder code, z.B: der eines Buttons,
-		 *           eh im AWT-EventQueue ausgeführt. Hat also keinen Performancegewinn.
+		 *           eh im AWT-EventQueue ausgefï¿½hrt. Hat also keinen Performancegewinn.
 		 */
 		private KernelJFrameCascadedZZZ frmCascaded;
 		private boolean bLaunchedBefore;
@@ -516,17 +639,17 @@ private boolean bFlagTerminate = false;
 					//Das doing der launch Methode als static-Methode.
 					KernelJFrameCascadedZZZ.launchDoing(this.frmCascaded, this.sTitle, this.bLaunchedBefore);
 					
-					//Hier werden dann die speziellen Panels des Frames hinzugefügt
+					//Hier werden dann die speziellen Panels des Frames hinzugefï¿½gt
 					boolean bReturn = this.frmCascaded.launchCustom();
 					if(bReturn){
-						//nix machen, wenn so gestartet wurde. Dann soll die Frame-Größe nicht von den Komponenten abhängen.
+						//nix machen, wenn so gestartet wurde. Dann soll die Frame-Grï¿½ï¿½e nicht von den Komponenten abhï¿½ngen.
 					}else{
-						this.frmCascaded.pack(); //Frame Größe hängt von den Komponenten ab
+						this.frmCascaded.pack(); //Frame Grï¿½ï¿½e hï¿½ngt von den Komponenten ab
 					}
 					this.bLaunchedBefore = true;
 					//das kostet sehr viel Performance:    ReportLogZZZ.write(ReportLogZZZ.DEBUG, "Frame '" + this.sTitle + "' launched");		
 					
-	//				... sichtbar machen erst, nachdem alle Elemente im Frame hinzugefügt wurden !!!
+	//				... sichtbar machen erst, nachdem alle Elemente im Frame hinzugefï¿½gt wurden !!!
 					//depreciated in 1.5 frame.show();
 					//statt dessen...
 					this.frmCascaded.setVisible(true); //Meke: Trotz alledem wird das Fenster erst komplett angezeigt, wenn der code in launchCustom() beendet ist....

@@ -2,7 +2,6 @@ package custom.zKernelUI.module.config;
 import javax.swing.JComponent;
 
 import basic.zKernel.KernelZZZ;
-
 import basic.zBasic.ExceptionZZZ;
 import basic.zKernelUI.component.KernelJFrameCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
@@ -16,7 +15,7 @@ public class FrameConfigZZZ extends KernelJFrameCascadedZZZ{
 public FrameConfigZZZ(KernelZZZ objKernelConfig, String sApplication2Config, String sSystemNumber2Config) throws ExceptionZZZ{
 	super(objKernelConfig); //Es gibt keinen ParentFrame
 	
-	//DIE Anwendung der konfiguration soll prüfen, ob alles korrekt konfiguriert ist. Darum wird dafür ein internes Kernel-Objekt angelegt.
+	//DIE Anwendung der konfiguration soll prï¿½fen, ob alles korrekt konfiguriert ist. Darum wird dafï¿½r ein internes Kernel-Objekt angelegt.
 	//ABER: Dabei entsteht ein Log-File. DAS DARF NICHT SEIN (TODO)
 	KernelZZZ objKernelChoosen = new KernelZZZ(sApplication2Config, sSystemNumber2Config, objKernelConfig, null);
 	this.setKernelConfigObject(objKernelChoosen);
@@ -28,23 +27,23 @@ public FrameConfigZZZ(KernelZZZ objKernelConfig, String sApplication2Config, Str
 public boolean launchCustom(){
 	return true;
 	
-	/* !!!! NICHT LÖSCHEN: WICHTIGER KOMMENTAR:       .... das wird nun alles in KernelJFrameCascaded gemacht
+	/* !!!! NICHT Lï¿½SCHEN: WICHTIGER KOMMENTAR:       .... das wird nun alles in KernelJFrameCascaded gemacht
 	main:
 	{
     //Aus Notes heraus gestartet funktioniert EXIT_ON_CLOSE nicht
 	//setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		
-	//Die Grösse des Frames, die Methode wird vom KernelFrame zur Verfügung gestellt 
+	//Die Grï¿½sse des Frames, die Methode wird vom KernelFrame zur Verfï¿½gung gestellt 
 	setTitle(this.getKernelObject().getApplicationKey() + " module configuration");
 	
-	//Grundfläche in den Rahmen hinzufügen...
-	//	... das wird nun über das ContentPane der Frames gemacht
+	//Grundflï¿½che in den Rahmen hinzufï¿½gen...
+	//	... das wird nun ï¿½ber das ContentPane der Frames gemacht
 	PanelConfigZZZ objPanel = new PanelConfigZZZ(this.getKernelObject(), this, this.getKernelConfigObject());
 	this.getContentPane().add(objPanel);
 	this.setPanelSub("ContentPane", objPanel);
 	
 	
-	//... sichtbar machen erst, nachdem alle Elemente im Frame hinzugefügt wurden !!!
+	//... sichtbar machen erst, nachdem alle Elemente im Frame hinzugefï¿½gt wurden !!!
 	//depreciated in 1.5 frame.show();
 	//statt dessen...
 	setVisible(true);
@@ -76,6 +75,8 @@ public JComponent getPaneContent(String sAlias) throws ExceptionZZZ {
 public boolean setSizeDefault() throws ExceptionZZZ {
 	JFrameHelperZZZ.setSizeDefault(this);
 	return true;
-} 
+}
+
+
 
 }//END class

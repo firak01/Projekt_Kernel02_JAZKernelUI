@@ -10,7 +10,6 @@ import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernelUI.component.KernelJFrameCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.util.JFrameHelperZZZ;
-
 import basic.zKernel.KernelZZZ;
 
 public class DLGBOX4INIZZZ  extends KernelJFrameCascadedZZZ  implements IJNILotusscriptCallableZZZ {
@@ -18,7 +17,7 @@ public class DLGBOX4INIZZZ  extends KernelJFrameCascadedZZZ  implements IJNILotu
 	
 	public DLGBOX4INIZZZ(KernelZZZ objKernel, KernelJFrameCascadedZZZ frameParent) throws ExceptionZZZ{
 		super(objKernel, frameParent);
-		this.setTitle("FLG non modale dialogbox: Started by using kernel-construktor and method .launch(...)");  //wenn denn mal .launch(...) ausgeführt wird
+		this.setTitle("FGL non modale dialogbox: Started by using kernel-construktor and method .launch(...)");  //wenn denn mal .launch(...) ausgefÃ¼hrt wird
 	}
 	
 
@@ -66,23 +65,23 @@ public class DLGBOX4INIZZZ  extends KernelJFrameCascadedZZZ  implements IJNILotu
 				sSystemNumber = StringZZZ.right(sSystemKey, "#");
 			}
 			
-			//Programme sollen erst auf Modulebenen konfigurierbar sein, trotzdem ein möglicherweise wertvoller Parameter.
+			//Programme sollen erst auf Modulebenen konfigurierbar sein, trotzdem ein mï¿½glicherweise wertvoller Parameter.
 			String sProgram = new String("");
 						
 			//TEST: LogObjekt
 			//LogZZZ objLogJAZ = new LogZZZ("d:\\tempfgl", "Testnow.txt");
 			
-			//Ein Kernel-Objekt für das zu startende Modul erstellen.
+			//Ein Kernel-Objekt fï¿½r das zu startende Modul erstellen.
 			this.objKernelChoosen = new KernelZZZ(sApplication, sSystemNumber, this.getKernelObject(),null);
 						
-			//Grundfläche in den Rahmen hinzufügen...
+			//Grundflï¿½che in den Rahmen hinzufï¿½gen...
 			Panel_DLGBOXZZZ objPanel = new Panel_DLGBOXZZZ(this.getKernelObject(),this, this.objKernelChoosen, sModule, sProgram);
 			
-			//... das wird nun über das ContentPane der Frames gemacht
+			//... das wird nun ï¿½ber das ContentPane der Frames gemacht
 			this.getContentPane().add(objPanel);
 			this.setPanelSub("ContentPane", objPanel);
 						
-			//... sichtbar machen erst, nachdem alle Elemente im Frame hinzugefügt wurden !!!
+			//... sichtbar machen erst, nachdem alle Elemente im Frame hinzugefï¿½gt wurden !!!
 			//depreciated in 1.5 frame.show();
 			//statt dessen...
 			setVisible(true);
@@ -100,8 +99,8 @@ public class DLGBOX4INIZZZ  extends KernelJFrameCascadedZZZ  implements IJNILotu
 
 	public KernelJPanelCascadedZZZ getPaneContent() {
 		// TODO Auto-generated method stub
-		//TODO: Hier muss noch das gewünschte Panel mit new() erzeugt werden
-		//           und dann ggf. der Hashtable unter den Alias "panelcontent" hinzugefügt werden.
+		//TODO: Hier muss noch das gewï¿½nschte Panel mit new() erzeugt werden
+		//           und dann ggf. der Hashtable unter den Alias "panelcontent" hinzugefï¿½gt werden.
 		return null;
 	}
 
@@ -117,10 +116,11 @@ public class DLGBOX4INIZZZ  extends KernelJFrameCascadedZZZ  implements IJNILotu
 	public boolean setSizeDefault() throws ExceptionZZZ {
 		JFrameHelperZZZ.setSizeDefault(this);
 		return true;
-	} 
+	}
 
 	
-	//#########################
-	// Methoden implementiert durch Schnittstellen
 	
+	//#########################
+	// Methoden implementiert durch Schnittstellen	
+
 }

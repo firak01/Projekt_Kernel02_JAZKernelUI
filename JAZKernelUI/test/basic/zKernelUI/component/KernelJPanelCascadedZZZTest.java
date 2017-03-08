@@ -73,7 +73,7 @@ public class KernelJPanelCascadedZZZTest  extends TestCase{
 			assertFalse(btemp);
 			
 			btemp = panelMainTest.proofFlagZExists(KernelJPanelCascadedZZZ.FLAGZ.COMPONENT_DRAGGABLE.name());
-			assertFalse(btemp);
+			assertTrue(btemp);
 			
 			//Test auf Flags aus dem component-Bereich
 			btemp = panelMainTest.proofFlagZExists(KernelJPanelCascadedZZZ.FLAGZ.COMPONENT_KERNEL_PROGRAM.name());
@@ -84,9 +84,9 @@ public class KernelJPanelCascadedZZZTest  extends TestCase{
 	}
 	
 	
-	//public deklaration notwendig , um per ObjectZZZ auf diese innere Klasse zugreifen zu können ?
+	//public deklaration notwendig , um per ObjectZZZ auf diese innere Klasse zugreifen zu kï¿½nnen ?
 	public class FrmMain extends KernelJFrameCascadedZZZ{
-		//Default Konstruktor, notwendig, um newInstance() machen zu können.
+		//Default Konstruktor, notwendig, um newInstance() machen zu kï¿½nnen.
 		public FrmMain(){
 			super();
 		}
@@ -100,8 +100,8 @@ public class KernelJPanelCascadedZZZTest  extends TestCase{
 		
 		public KernelJPanelCascadedZZZ getPaneContent() {
 			// TODO Auto-generated method stub
-			//TODO Hier muss nun das gewünschte Panel mit new erstellt werden und 
-			//          das panel muss der hashtable mit dem Alias "panelcontent" hinzugefügt werden.
+			//TODO Hier muss nun das gewï¿½nschte Panel mit new erstellt werden und 
+			//          das panel muss der hashtable mit dem Alias "panelcontent" hinzugefï¿½gt werden.
 			return null;
 		}
 
@@ -118,9 +118,9 @@ public class KernelJPanelCascadedZZZTest  extends TestCase{
 		} 
 	}//END class fFrmMain4test
 	
-	//public deklaration notwendig , um per ObjectZZZ auf diese innere Klasse zugreifen zu können ?
+	//public deklaration notwendig , um per ObjectZZZ auf diese innere Klasse zugreifen zu kï¿½nnen ?
 	public class PanelMain extends KernelJPanelCascadedZZZ{
-		//Default Konstruktor, notwendig, um newInstance() machen zu können.
+		//Default Konstruktor, notwendig, um newInstance() machen zu kï¿½nnen.
 		public PanelMain(){
 			super();
 		}

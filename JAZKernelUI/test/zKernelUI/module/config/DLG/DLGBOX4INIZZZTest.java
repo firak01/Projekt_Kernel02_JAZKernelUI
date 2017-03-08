@@ -24,7 +24,7 @@ public class DLGBOX4INIZZZTest extends TestCase {
 			String[] saModule = {"TEST#01", "TestModule"};
 			
 			//Dadurch wird f�r jeden Test das Frame geladen !!!
-			frmDLGBoxTest.launch(saModule);  // Nun muss aber f�r jeden Test das Fenster wieder geschlossen werden.
+			frmDLGBoxTest.launch(saModule);  // Nun muss aber für jeden Test das Fenster wieder geschlossen werden.
 	
 		} catch (ExceptionZZZ ez) {
 			fail("Method throws an exception." + ez.getMessageLast());
@@ -41,7 +41,7 @@ public class DLGBOX4INIZZZTest extends TestCase {
 		assertTrue("The DLGBox  frame is not showing.", frmDLGBoxTest.isShowing());
 		
 		//Test auf Titel
-		assertEquals("FLG non modale dialogbox: Started by using kernel-construktor and method .launch(...)", frmDLGBoxTest.getTitle());
+		assertEquals("FGL non modale dialogbox: Started by using kernel-construktor and method .launch(...)", frmDLGBoxTest.getTitle());
 				
 		//Test auf das Panel, das diesem Frame hinzugef�gt wurde
 		Panel_DLGBOXZZZ panelConfig = (Panel_DLGBOXZZZ) frmDLGBoxTest.getPanelSub("ContentPane");

@@ -27,6 +27,7 @@ import basic.zBasicUI.listener.ListenerMouseMove4DragableWindowZZZ;
 import basic.zKernel.IKernelModuleUserZZZ;
 import basic.zKernel.KernelZZZ;
 import basic.zKernelUI.KernelUIZZZ;
+import basic.zUtil.io.KernelFileZZZ.FLAGZ;
 import custom.zKernel.LogZZZ;
 
 /** Klasse bietet als Erweiterung zu JPanel die Verschachtelung von Panels an.
@@ -59,7 +60,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	 * 
 	 */
 	public enum FLAGZ{
-		DEBUG, INIT, COMPONENT_DRAGGABLE, TERMINATE, COMPONENT_KERNEL_PROGRAM;
+		COMPONENT_DRAGGABLE, TERMINATE, COMPONENT_KERNEL_PROGRAM;
 	}
 	
 	
@@ -565,7 +566,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 			try {
 				
 				//Existiert in der Elternklasse oder in der aktuellen Klasse das Flag?
-				System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# ObjektInstanz erzeugen f�r '" + sClassName + "'");
+				System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# ObjektInstanz erzeugen für '" + sClassName + "'");
 				Class objClass = Class.forName(sClassName);		
 				
 				//!!! f�r abstrakte Klassen gilt: Es kann per Reflection keine neue Objektinstanz geholt werden.
@@ -908,7 +909,25 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 		return FLAGZ.class;
 	}
 
-	public boolean proofFlagZExists(String sFlag) {
-		return ObjectZZZ.proofFlagZExists(this.getClass().getName(), sFlag);
+	public boolean proofFlagZExists(String sFlagName) {
+		boolean bReturn = false;
+		main:{
+			bReturn = ObjectZZZ.proofFlagZExists(this.getClass().getName(), sFlagName);
+		
+			//Schon die oberste IObjectZZZ nutzende Klasse, darum ist der Aufruf einer Elternklasse mit der Methode nicht möglich. 
+			//boolean bReturn = super.proofFlagZExists(sFlagName);
+		
+			if(!bReturn){			   
+				Class<FLAGZ> enumClass = FLAGZ.class;		
+				for(Object obj : FLAGZ.class.getEnumConstants()){
+					//System.out.println(obj + "; "+obj.getClass().getName());
+					if(sFlagName.equalsIgnoreCase(obj.toString())) {
+						bReturn = true;
+						break main;
+					}
+				}				
+			}
+		}//end main:
+		return bReturn;
 	}
 }
