@@ -1,5 +1,7 @@
 package basic.zKernelUI.component;
 
+import java.util.HashMap;
+
 import javax.swing.JTextArea;
 
 import basic.zBasic.ExceptionZZZ;
@@ -132,7 +134,7 @@ public boolean setFlag(String sFlagName, boolean bFlagValue){
 		String stemp = sFlagName.toLowerCase();
 		if(stemp.equals("debug")){
 			this.bFlagDebug = bFlagValue;
-			bFunction = true;                            //durch diesen return wert kann man "reflexiv" ermitteln, ob es in dem ganzen hierarchie-strang das flag überhaupt gibt !!!
+			bFunction = true;                            //durch diesen return wert kann man "reflexiv" ermitteln, ob es in dem ganzen hierarchie-strang das flag ï¿½berhaupt gibt !!!
 			break main;
 		}else if(stemp.equals("init")){
 			this.bFlagInit = bFlagValue;
@@ -150,5 +152,31 @@ public boolean setFlag(String sFlagName, boolean bFlagValue){
 	
 	return bFunction;	
 }
+
+//20170308: Enum FLAGZ nutzen
+	@Override
+	public HashMap<String, Boolean> getHashMapFlagZ() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean proofFlagZExists(String sFlagName) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean setFlagZ(String sFlagName, boolean bFlagValue)
+			throws ExceptionZZZ {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean getFlagZ(String sFlagName) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
 
