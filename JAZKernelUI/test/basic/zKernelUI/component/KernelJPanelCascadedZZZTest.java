@@ -37,7 +37,7 @@ public class KernelJPanelCascadedZZZTest  extends TestCase{
 	
 	
 	protected void tearDown(){
-		//Den ggf. gestarteten Frame wieder schliessen, sonst �ffnet man permanent Fenster
+		//Den ggf. gestarteten Frame wieder schliessen, sonst öffnet man permanent Fenster
 		frameMainTest.dispose();
 	}
 	
