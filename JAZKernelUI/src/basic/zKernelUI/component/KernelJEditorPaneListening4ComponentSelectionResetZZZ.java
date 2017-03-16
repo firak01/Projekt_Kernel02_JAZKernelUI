@@ -107,7 +107,7 @@ public abstract class KernelJEditorPaneListening4ComponentSelectionResetZZZ exte
 	/** Function can set the flags of this class or the super-class.
 	 * The following new flags are supported:
 	 * --- debug
- * @see basic.zBasic.IFunctionZZZ#setFlag(java.lang.String, boolean)
+ * @see basic.zBasic.IFunctionZZZ_loesch#setFlag(java.lang.String, boolean)
  */
 public boolean setFlag(String sFlagName, boolean bFlagValue){
 	boolean bFunction = false;
@@ -121,7 +121,7 @@ public boolean setFlag(String sFlagName, boolean bFlagValue){
 		String stemp = sFlagName.toLowerCase();
 		if(stemp.equals("debug")){
 			this.bFlagDebug = bFlagValue;
-			bFunction = true;                            //durch diesen return wert kann man "reflexiv" ermitteln, ob es in dem ganzen hierarchie-strang das flag überhaupt gibt !!!
+			bFunction = true;                            //durch diesen return wert kann man "reflexiv" ermitteln, ob es in dem ganzen hierarchie-strang das flag ï¿½berhaupt gibt !!!
 			break main;
 		}else if(stemp.equals("init")){
 			this.bFlagInit = bFlagValue;
@@ -141,7 +141,7 @@ public boolean setFlag(String sFlagName, boolean bFlagValue){
 }
 
 public final boolean proofFlagExists(String sFlagName){
-	//TODO: ausformulieren, als gemeingültigen Algorithmus
+	//TODO: ausformulieren, als gemeingï¿½ltigen Algorithmus
 	return false;
 }
 

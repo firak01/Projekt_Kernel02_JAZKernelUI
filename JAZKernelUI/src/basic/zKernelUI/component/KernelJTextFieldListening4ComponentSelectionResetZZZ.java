@@ -4,18 +4,17 @@ import java.util.HashMap;
 
 import javax.swing.JTextField;
 
-import basic.zKernel.KernelZZZ;
-import custom.zKernel.LogZZZ;
 import basic.zBasic.ExceptionZZZ;
-import basic.zBasic.IConstantZZZ;
-import basic.zBasic.IFunctionZZZ;
+import basic.zBasic.IFlagZZZ;
 import basic.zBasic.IObjectZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelUserZZZ;
+import basic.zKernel.KernelZZZ;
 import basic.zKernelUI.component.model.EventComponentSelectionResetZZZ;
 import basic.zKernelUI.component.model.IListenerSelectionResetZZZ;
+import custom.zKernel.LogZZZ;
 
-public abstract class KernelJTextFieldListening4ComponentSelectionResetZZZ extends JTextField implements IConstantZZZ, IFunctionZZZ, IObjectZZZ, IKernelUserZZZ, IListenerSelectionResetZZZ{
+public abstract class KernelJTextFieldListening4ComponentSelectionResetZZZ extends JTextField implements IObjectZZZ, IFlagZZZ, IKernelUserZZZ, IListenerSelectionResetZZZ{
 	private KernelZZZ objKernel;
 	private LogZZZ objLog;
 	
@@ -114,7 +113,7 @@ public abstract class KernelJTextFieldListening4ComponentSelectionResetZZZ exten
 	/** Function can set the flags of this class or the super-class.
 	 * The following new flags are supported:
 	 * --- debug
- * @see basic.zBasic.IFunctionZZZ#setFlag(java.lang.String, boolean)
+ * @see basic.zBasic.IFunctionZZZ_loesch#setFlag(java.lang.String, boolean)
  */
 public boolean setFlag(String sFlagName, boolean bFlagValue){
 	boolean bFunction = false;

@@ -117,8 +117,6 @@ public class DLGBOX4INIZZZ  extends KernelJFrameCascadedZZZ  implements IJNILotu
 		JFrameHelperZZZ.setSizeDefault(this);
 		return true;
 	}
-
-	
 	
 	//#########################
 	// Methoden implementiert durch Schnittstellen	

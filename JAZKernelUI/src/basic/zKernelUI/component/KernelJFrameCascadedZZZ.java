@@ -1,26 +1,20 @@
 package basic.zKernelUI.component;
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.Toolkit;
 import java.util.HashMap;
 import java.util.Hashtable;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JMenuBar;
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
-import basic.zBasic.IConstantZZZ;
-import basic.zBasic.IFunctionZZZ;
-import basic.zBasic.IObjectZZZ;
 import basic.zBasic.ExceptionZZZ;
+import basic.zBasic.IFlagZZZ;
+import basic.zBasic.IObjectZZZ;
 import basic.zBasic.ObjectZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
@@ -28,13 +22,12 @@ import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zBasicUI.adapter.AdapterJComponent4ScreenSnapperZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.KernelZZZ;
-import basic.zUtil.io.KernelFileZZZ.FLAGZ;
 import custom.zKernel.LogZZZ;
 
 /** Class is base for all frames used by the configuration module
  * @author Lindhauer
  */
-public abstract class KernelJFrameCascadedZZZ extends JFrame  implements IConstantZZZ, IObjectZZZ, IFunctionZZZ, IKernelUserZZZ, IComponentCascadedUserZZZ, IFrameCascadedZZZ, IFrameLaunchableZZZ, IScreenFeatureZZZ{
+public abstract class KernelJFrameCascadedZZZ extends JFrame  implements IObjectZZZ, IFlagZZZ, IKernelUserZZZ, IComponentCascadedUserZZZ, IFrameCascadedZZZ, IFrameLaunchableZZZ, IScreenFeatureZZZ{
 	private KernelZZZ objKernel;
 	private LogZZZ objLog; 
 	private KernelJFrameCascadedZZZ frameParent=null;
@@ -143,6 +136,12 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 	}
 	
 	//### FlagMethods ##########################		
+	
+	@Override
+	public Class getClassFlagZ() {		
+		return FLAGZ.class;
+	}
+
 	public HashMap<String, Boolean>getHashMapFlagZ(){
 		return this.hmFlag;
 	} 
