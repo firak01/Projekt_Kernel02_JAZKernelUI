@@ -475,13 +475,13 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 				SwingUtilities.invokeLater(runnerFrame); //Damit also die Erzeugung des Frames in den EventDispatchThread stellen. Merke: Das macht nur Sinn, wenn in launchCustom() weiterer zeitaufwendiger Code ausgef�hrt wird.
 				bReturn = true;
 			}else{
-				//!!! Hier wird das gew�nschte ContentPanel eingebaut !!!
+				//!!! Hier wird das gewünschte ContentPanel eingebaut !!!
 				KernelJFrameCascadedZZZ.launchDoing(this, sTitle, this.bLaunchedBefore);
 				bReturn = true;
 				
 				bReturn = this.launchCustom();
 				if(bReturn){
-					//2013-07-09 die Gr��e des Frames soll ggf. nicht von den Komponenten gesteuert werden
+					//2013-07-09 die Größe des Frames soll ggf. nicht von den Komponenten gesteuert werden
 					//... mache also nix, wenn launchCustom()=true
 				}else{					
 					this.pack();
@@ -490,7 +490,7 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 				this.bLaunchedBefore = true;
 				ReportLogZZZ.write(ReportLogZZZ.DEBUG, "Frame launched");		
 				
-//				... sichtbar machen erst, nachdem alle Elemente im Frame hinzugef�gt wurden !!!
+//				... sichtbar machen erst, nachdem alle Elemente im Frame hinzugefügt wurden !!!
 				//depreciated in 1.5 frame.show();
 				//statt dessen...
 				this.setVisible(true); //Meke: Trotz alledem wird das Fenster erst komplett angezeigt, wenn der code in launchCustom() beendet ist....															
