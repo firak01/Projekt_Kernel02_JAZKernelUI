@@ -1,39 +1,78 @@
 package basic.zBasicUI.glassPane.dragDropTranslucent;
 import java.awt.Component;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
-
 import java.net.URL;
 import java.net.MalformedURLException;
 
 import javax.imageio.ImageIO;
-
 import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
+
+import basic.zBasicUI.component.UIHelper;
+import basic.zKernel.KernelZZZ;
 
 public class GhostPictureAdapter extends GhostDropAdapter
 {
 	private BufferedImage image;
+	
 
 	public GhostPictureAdapter(GhostGlassPane glassPane, String action, String picture) {
 	   super(glassPane, action);
 	   try {
 	       //Das funktioniert wohl nicht immer this.image = ImageIO.read(new BufferedInputStream(GhostPictureAdapter.class.getResourceAsStream(picture)));
 		   File objFile = new File(picture);
-		   this.image = ImageIO.read(objFile);
-	
+		   
+		   BufferedImage objBufferdImageTemp = ImageIO.read(objFile);		  
+		   this.image = objBufferdImageTemp;
+		   
+		   
+		   
 	   } catch (MalformedURLException mue) {
 	       throw new IllegalStateException("Invalid picture URL.");
 	   } catch (IOException ioe) {
            throw new IllegalStateException("Invalid picture or picture URL.");
        }
 	}
+	
+	/** Die Größe verändern beim Ziehen.
+	 * Als ein Alternativer Konstuktor. Er wird angeboten, damit man in dieser Klasse kein Kernel - Objekt verwenden muss, um z.B. die Konfiguration für die IconGröße auszulesen.
+	 * @param glassPane
+	 * @param action
+	 * @param picture
+	 * @param iWidth
+	 * @param iHeight
+	 */
+	public GhostPictureAdapter(GhostGlassPane glassPane, String action, String picture, int iWidth, int iHeight) {
+		   super(glassPane, action);
+		   try {
+		       //Das funktioniert wohl nicht immer this.image = ImageIO.read(new BufferedInputStream(GhostPictureAdapter.class.getResourceAsStream(picture)));
+			   File objFile = new File(picture);
+			   //this.image = ImageIO.read(objFile);
+			   
+			   BufferedImage objBufferedImageTemp = ImageIO.read(objFile);
+			   
+			 //Die Größe verändern			   
+			   if(iWidth>=1 && iHeight>=1){
+				   BufferedImage objBufferedImageResized = UIHelper.resizeImage(objBufferedImageTemp, iWidth, iHeight); 
+				   this.image = objBufferedImageResized;
+			   }else{
+				   this.image=objBufferedImageTemp;
+			   }
+
+		   } catch (MalformedURLException mue) {
+		       throw new IllegalStateException("Invalid picture URL.");
+		   } catch (IOException ioe) {
+	           throw new IllegalStateException("Invalid picture or picture URL.");
+	       }
+		}
 
     public void mousePressed(MouseEvent e)
     {
