@@ -787,6 +787,8 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 				if(StringZZZ.isEmpty(this.sProgramName)){
 					sReturn = KernelUIZZZ.getProgramName(this);
 					this.sProgramName = sReturn;
+				}else{
+					sReturn = this.sProgramName;
 				}
 			}//end main:
 			return sReturn;
@@ -801,6 +803,8 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 				if(StringZZZ.isEmpty(this.sProgramAlias)){
 					sReturn = KernelUIZZZ.readProgramAlias(this);
 					this.sProgramAlias = sReturn;
+				}else{
+					sReturn = this.sProgramAlias;
 				}
 			}
 			return sReturn;
