@@ -118,5 +118,55 @@ public final class UIHelper
     	}
     	return objBufferedImageReturn;
     }
+    
+    /*D.h. hier werden die Ränder vom Bild abgeschnitten. Mit O ist die obere Ecke gekennzeichnet. Entspricht der unteren Ecke.
+    
+    +------------------+    
+    |                    |
+    |  O-----------+   |
+    |  |            |    |
+    |  |            |    |
+    |  |            |    |
+    |  |            |    |
+    |  +-----------O   |
+    |                    |
+    ---------------------
+  */    
+    public static BufferedImage cropImageCentral(BufferedImage objImageToCrop, int iBorderWidth, int iBorderHeight){
+    	BufferedImage objBufferedImageReturn=null;
+    	main:{
+    		//Erst ein Größenverändetes Image aus dem BufferedImage machen
+    		 int iImageWidth = objImageToCrop.getWidth();
+    		 int iImageHeight = objImageToCrop.getHeight();
+    		 objBufferedImageReturn = objImageToCrop.getSubimage(iBorderWidth, iBorderHeight,  iImageWidth-2*iBorderWidth, iImageHeight-2*iBorderHeight);  		   	
+    	}
+    	return objBufferedImageReturn;
+    }
+    
+    /*D.h. hier werden die Ränder vom Bild abgeschnitten. Mit O sind die obere und untere Ecke gekennzeichnet.
+    
+    +------------------+    
+    |                    |
+    |  O-----------+   |
+    |  |            |    |
+    |  |            |    |
+    |  |            |    |
+    |  |            |    |
+    |  +-----------O   |
+    |                    |
+    ---------------------
+  */    
+    //ACHTUNG FEHLER: 
+    //Exception in thread "AWT-EventQueue-0" java.awt.image.RasterFormatException: (y + height) is outside of Raster
+    public static BufferedImage cropImageByPoints(BufferedImage objImageToCrop, int iUpperBorderHeight,int iUpperBorderWidth, int iLowerBorderHeight, int iLowerBorderWidth){
+    	BufferedImage objBufferedImageReturn=null;
+    	main:{
+    		//Erst ein Größenverändetes Image aus dem BufferedImage machen
+    		 int iImageWidth = objImageToCrop.getWidth();
+    		 int iImageHeight = objImageToCrop.getHeight();
+    		 objBufferedImageReturn = objImageToCrop.getSubimage(iUpperBorderWidth, iUpperBorderHeight,  iImageWidth-iUpperBorderWidth-iLowerBorderWidth, iImageHeight-iUpperBorderHeight-iLowerBorderHeight);  		   	
+    	}
+    	return objBufferedImageReturn;
+    }
 
 }

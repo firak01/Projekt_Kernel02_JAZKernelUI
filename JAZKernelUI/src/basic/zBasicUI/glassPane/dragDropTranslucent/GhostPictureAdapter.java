@@ -55,7 +55,6 @@ public class GhostPictureAdapter extends GhostDropAdapter
 		   try {
 		       //Das funktioniert wohl nicht immer this.image = ImageIO.read(new BufferedInputStream(GhostPictureAdapter.class.getResourceAsStream(picture)));
 			   File objFile = new File(picture);
-			   //this.image = ImageIO.read(objFile);
 			   
 			   BufferedImage objBufferedImageTemp = ImageIO.read(objFile);
 			   
