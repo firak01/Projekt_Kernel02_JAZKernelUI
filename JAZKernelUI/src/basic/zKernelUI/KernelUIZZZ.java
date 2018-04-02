@@ -2,6 +2,7 @@ package basic.zKernelUI;
 
 import java.util.ArrayList;
 
+import basic.zKernel.IKernelModuleUserZZZ;
 import basic.zKernel.KernelZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IConstantZZZ;
@@ -12,14 +13,14 @@ import basic.zKernelUI.component.KernelJDialogExtendedZZZ;
 import basic.zKernelUI.component.KernelJFrameCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 
-/**Klasse dient zur Ermittlung von Informationen aus der KernelKonfiguration für die entsprechenden Komponenten.
+/**Klasse dient zur Ermittlung von Informationen aus der KernelKonfiguration fï¿½r die entsprechenden Komponenten.
  * Merke: Als Modul gilt nur das, was in der KErnel-Applikations-Konfigurations-Datei auch als Modul definiert wurde.
  *           D.h. es gibt dort einen Eintrag KernelConfigFile... , mit ... ist dann der Klassenname einer UI-Komponente (oder auch ein String)
  * @author lindhaueradmin
  *
  */
 public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ {
-	/**Diese Klasse enthält nur statische Methoden, also ist es nicht notwendig weitere Parameter zu übergeben.
+	/**Diese Klasse enthï¿½lt nur statische Methoden, also ist es nicht notwendig weitere Parameter zu ï¿½bergeben.
 	 * Darum ist der Konstruktor auch verborgen.
 	 *  
 	 * lindhaueradmin, 06.07.2013
@@ -99,6 +100,42 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 			}//end main:
 			return sReturn;
 		}
+		
+		public static String getProgramName(IKernelModuleUserZZZ objUsingKernelModule) throws ExceptionZZZ{
+			String sReturn = null;
+			main:{
+				if(objUsingKernelModule==null){
+					ExceptionZZZ ez = new ExceptionZZZ("objUsingKernelModule missing", iERROR_PARAMETER_MISSING, KernelUIZZZ.class,ReflectCodeZZZ.getMethodCurrentName() );
+					throw ez;
+				}
+			
+//				if(objUsingKernelModule.getFlag("isKernelProgram")){
+//					sReturn =  objUsingKernelModule.getClass().getName();
+//				}
+				
+				sReturn = objUsingKernelModule.getClass().getName();
+				
+			}//end main:
+			return sReturn;
+		}
+		
+		
+		public static String getProgramAlias(IKernelModuleUserZZZ objUsingKernelModule) throws ExceptionZZZ{
+			String sReturn = null;
+			main:{
+				if(objUsingKernelModule==null){
+					ExceptionZZZ ez = new ExceptionZZZ("objUsingKernelModule missing", iERROR_PARAMETER_MISSING, KernelUIZZZ.class,ReflectCodeZZZ.getMethodCurrentName() );
+					throw ez;
+				}
+							
+				if(objUsingKernelModule instanceof KernelJFrameCascadedZZZ){
+					sReturn = KernelUIZZZ.readProgramAlias((KernelJPanelCascadedZZZ) objUsingKernelModule);
+				}else{				
+					sReturn = objUsingKernelModule.getClass().getName();
+				}
+			}//end main:
+			return sReturn;
+		}
 	
 	/** Der Programmname einer Komponente entspricht dem des Elternpanels oder Dialog.
 	* @param panel
@@ -115,8 +152,8 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				throw ez;
 			}
 			
-			/* FGL 2013-07-05: Geändert, es wird die Methode in KErnelJPanelCascadedZZZ eingeführt.
-			 * Es ist fraglich, ob das immer das darübergeordnete Panel sein muss.
+			/* FGL 2013-07-05: Geï¿½ndert, es wird die Methode in KErnelJPanelCascadedZZZ eingefï¿½hrt.
+			 * Es ist fraglich, ob das immer das darï¿½bergeordnete Panel sein muss.
 			 */
 			/*
 			if(panelParent.getDialogParent()==null){
@@ -127,7 +164,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 			//if(panelCurrent.getFlag("isKernelProgram")){
 			String stemp = KernelJPanelCascadedZZZ.FLAGZ.COMPONENT_KERNEL_PROGRAM.name();
 			if(panelCurrent.getFlagZ(stemp)){
-				//NEIN, das wäre eine endlosschleife: sReturn = panelCurrent.getProgramAlias();
+				//NEIN, das wï¿½re eine endlosschleife: sReturn = panelCurrent.getProgramAlias();
 				
 				//Versuch den Alias direkt aus der Konfiguration auszulesen.
 				KernelZZZ objKernel = panelCurrent.getKernelObject();
@@ -156,9 +193,9 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 			}
 			
 			
-			//................ Das Array aller Module dahingehend prüfen, ob der Klassenname dort auftaucht.
+			//................ Das Array aller Module dahingehend prï¿½fen, ob der Klassenname dort auftaucht.
 			KernelZZZ objKernel = frame.getKernelObject();
-			ArrayList listaModuleString = objKernel.getModuleAll(); //d.h. es werden die Module berücksichtigt, die in der Konfiguration definiert sind, aber die Existenz der Module ist nicht notwendig.
+			ArrayList listaModuleString = objKernel.getModuleAll(); //d.h. es werden die Module berï¿½cksichtigt, die in der Konfiguration definiert sind, aber die Existenz der Module ist nicht notwendig.
 						
 			KernelJFrameCascadedZZZ frameParentTemp = frame.getFrameParent();
 			KernelJFrameCascadedZZZ frameParent = null;
@@ -172,7 +209,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				String sClassnameParentTemp = frameParent.getClass().getName(); 
 				String sClassnameParent = null;
 				
-//				!!! hier wird ggf. ein $xyz - Wert angehängt, z.B. im Debugmodus mit JUnit, was wohletwas mit der ReflectionAPI zu tun haben muss
+//				!!! hier wird ggf. ein $xyz - Wert angehï¿½ngt, z.B. im Debugmodus mit JUnit, was wohletwas mit der ReflectionAPI zu tun haben muss
 				if(StringZZZ.contains(sClassnameParentTemp, "$")){
 					sClassnameParent = StringZZZ.left(sClassnameParentTemp, "$");
 				}else{
@@ -202,13 +239,13 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				throw ez;
 			}
 			
-			//................ Das Array aller Module dahingehend prüfen, ob der Klassenname dort auftaucht.
+			//................ Das Array aller Module dahingehend prï¿½fen, ob der Klassenname dort auftaucht.
 			//KernelZZZ objKernel = this.getKernelObject();
 			KernelZZZ objKernel = frame.getKernelObject();
-			ArrayList listaModuleString = objKernel.getModuleAll(); //d.h. es werden die Module berücksichtigt, die in der Konfiguration definiert sind, aber die Existenz der Module ist nicht notwendig.
+			ArrayList listaModuleString = objKernel.getModuleAll(); //d.h. es werden die Module berï¿½cksichtigt, die in der Konfiguration definiert sind, aber die Existenz der Module ist nicht notwendig.
 			if(listaModuleString.size() <= 0) break main;
 			
-			//.................. Alle frames mit ihren parent-Frames durchgehen. Prüfen, ob der Framename als Modul definiert wurde.
+			//.................. Alle frames mit ihren parent-Frames durchgehen. Prï¿½fen, ob der Framename als Modul definiert wurde.
 			KernelJFrameCascadedZZZ frameParentTemp = frame.getFrameParent();
 			KernelJFrameCascadedZZZ frameParent = null;
 			
@@ -219,7 +256,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 			while(frameParentTemp!=null){
 				String sClassnameParentTemp = frameParentTemp.getClass().getName(); 
 				String sClassnameParent = null;
-//				!!! hier wird ggf. ein $xyz - Wert angehängt, z.B. im Debugmodus mit JUnit, was wohletwas mit der ReflectionAPI zu tun haben muss
+//				!!! hier wird ggf. ein $xyz - Wert angehï¿½ngt, z.B. im Debugmodus mit JUnit, was wohletwas mit der ReflectionAPI zu tun haben muss
 				if(StringZZZ.contains(sClassnameParentTemp, "$")){
 					sClassnameParent = StringZZZ.left(sClassnameParentTemp, "$");
 				}else{
@@ -242,10 +279,10 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 		}
 
 	
-	/** Sucht den obersten Frame und gibt dessen Klassennamen zurück.
-	 *   Normalerweise ist das dann auch ein Modulname, was hier aber nicht explizit geprüft wird.
+	/** Sucht den obersten Frame und gibt dessen Klassennamen zurï¿½ck.
+	 *   Normalerweise ist das dann auch ein Modulname, was hier aber nicht explizit geprï¿½ft wird.
 	 *   
-	 *   Merke: Den obersten Frame erkennt man daran, dass er sich selbst als ParentFrame zurückgibt.
+	 *   Merke: Den obersten Frame erkennt man daran, dass er sich selbst als ParentFrame zurï¿½ckgibt.
 	* @param frame
 	* @return  
 	* @throws ExceptionZZZ

@@ -802,6 +802,11 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 			main:{
 				if(StringZZZ.isEmpty(this.sProgramAlias)){
 					sReturn = KernelUIZZZ.readProgramAlias(this);
+					
+					//FGL 20180402: Es scheint mir sinnvoll, wenn der Alias nicht definiert ist, denn Programmnamen selbst zurückzugeben...
+					if(StringZZZ.isEmpty(this.sProgramAlias)){
+						sReturn = KernelUIZZZ.getProgramName(this);
+					}
 					this.sProgramAlias = sReturn;
 				}else{
 					sReturn = this.sProgramAlias;
