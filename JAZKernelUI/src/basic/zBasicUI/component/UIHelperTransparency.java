@@ -12,6 +12,10 @@ import java.awt.image.ImageProducer;
 import java.awt.image.RGBImageFilter;
 
 public class UIHelperTransparency {
+	/* aus:
+	 https://stackoverflow.com/questions/12020597/java-convert-image-to-icon-imageicon
+	 https://tips4java.wordpress.com/2010/08/22/alpha-icons/
+	 */
 	public static Image makeColorTransparent(Image im, final Color color) {
 	    ImageFilter filter = new RGBImageFilter() {
 	      // the color we are looking for... Alpha bits are set to opaque
