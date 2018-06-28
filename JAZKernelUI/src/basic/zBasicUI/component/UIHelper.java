@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -201,6 +202,38 @@ public final class UIHelper
     		return null;
     		
     	}
+    	
+    	
+    	 /**method to get byte array from bytestream 
+         * * 
+         *  
+         */  
+        public byte[] getByteArrayFromFile(String filePath){  
+            byte[] result=null;  
+            FileInputStream fileInStr=null;  
+            try{  
+                File imgFile=new File(filePath);  
+                fileInStr=new FileInputStream(imgFile);  
+                long imageSize=imgFile.length();  
+                  
+                if(imageSize>Integer.MAX_VALUE){  
+                    return null;    //image is too large  
+                }  
+                  
+                if(imageSize>0){  
+                    result=new byte[(int)imageSize];  
+                    fileInStr.read(result);  
+                }  
+            }catch(Exception e){  
+                e.printStackTrace();  
+            } finally {  
+                try {  
+                    fileInStr.close();  
+                } catch (Exception e) {  
+                }  
+            }  
+            return result;  
+        }  
     	
     	/**     //TODO: NOCH NICHT ANGEWENDET
     	 * Extracts the picture size of a given Image.
