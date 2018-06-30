@@ -5,6 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -21,6 +23,8 @@ import javax.imageio.stream.MemoryCacheImageInputStream;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+
+import basic.zBasic.util.datatype.string.StringZZZ;
 
 /**
  * Aus den Beispielen zum Buch "Swing Hacks", Beispiel Nr. 69 "Translucent Drag And Drop".
@@ -81,6 +85,14 @@ public final class UIHelper
         JLabel label = new JLabel(text, iconNormal, JLabel.LEFT);
         return label;
     }
+    
+    public static JLabel createLabelWithIconResized(String text, byte[] imageInByte, int iWidth, int iHeight){
+    	
+    	 ImageIcon iconNormal = readImageIconResized(imageInByte, iWidth, iHeight);
+    	 JLabel label = new JLabel(text, iconNormal, JLabel.LEFT);
+         return label;
+    }
+    
 
     /**FGL 20130624: Erweitert und Generalisiert aus Buch "Swing Hacks", Code zu Beispiel 69*/
     public static ImageIcon readImageIcon(String filename)
@@ -100,6 +112,22 @@ public final class UIHelper
 		 BufferedImage objBufferdImageTemp = ImageIO.read(objFile);
 		
 		   
+		 //Die Größe verändern
+		   BufferedImage objBufferedImageResized = UIHelper.resizeImage(objBufferdImageTemp, iNewWidth, iNewHeight);
+
+		   objImageIconReturn = new ImageIcon(objBufferedImageResized);
+    	} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return objImageIconReturn;
+    }
+    
+    public static ImageIcon readImageIconResized(byte[] icon, int iNewWidth, int iNewHeight){
+    	ImageIcon objImageIconReturn = null;
+    	try {    			  
+		 BufferedImage objBufferdImageTemp =UIHelper.toBufferedImage(icon);
+				   
 		 //Die Größe verändern
 		   BufferedImage objBufferedImageResized = UIHelper.resizeImage(objBufferdImageTemp, iNewWidth, iNewHeight);
 
@@ -179,7 +207,7 @@ public final class UIHelper
     
     //TODO: NOCH NICHT ANGEWENDET
     //Diese Methoden in den Kernel übernehmen. Sie dienen hier nur zur Verdeutlichung wie mit ImagInputStream und den BLOBs gearbeitet werden kann
-    	public File addImageExtension(File incoming) throws IOException {
+    	public static File addImageExtension(File incoming) throws IOException {
     		
     		String format = null;
     		ImageInputStream iis = ImageIO.createImageInputStream(incoming);
@@ -208,7 +236,7 @@ public final class UIHelper
          * * 
          *  
          */  
-        public byte[] getByteArrayFromFile(String filePath){  
+        public static byte[] getByteArrayFromFile(String filePath){  
             byte[] result=null;  
             FileInputStream fileInStr=null;  
             try{  
@@ -234,6 +262,33 @@ public final class UIHelper
             }  
             return result;  
         }  
+        
+        
+        /**Macht aus einem BufferedImage direkt ein byte[],
+         * ohne das Bild aus einer Datei lesen zu müssen.
+         * Das Bild kann also schon verändert worden sein.
+         *
+         * @param sFileEnding
+         * @return
+         * @throws IOException 
+         */
+        public static byte[] getByteArrayFromBufferedImage(BufferedImage objBufferdImage, String sFileEnding) throws IOException{
+			        	
+			/*Ansatz, direkt aus dem BufferedImage eine byte[] machen... Ein BufferedImage bekommt man z.B so:*/
+			//BufferedImage originalImage = ImageIO.read(new File("c:\\image\\mypic.jpg"));
+        	
+        	if(objBufferdImage==null) return null;
+        	if(StringZZZ.isEmpty(sFileEnding)) sFileEnding = "png";
+        	
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(objBufferdImage, sFileEnding, baos );
+			baos.flush();
+			byte[] imageInByte = baos.toByteArray();
+			baos.close();
+			
+			return imageInByte;
+        }
+        
     	
     	/**     //TODO: NOCH NICHT ANGEWENDET
     	 * Extracts the picture size of a given Image.
@@ -263,7 +318,7 @@ public final class UIHelper
     	
     	
       //TODO: NOCH NICHT ANGEWENDET
-    	public ImageInputStream createInputStreamInstance(Object input, boolean useCache, File cacheDir) throws IOException {
+    	public static ImageInputStream createInputStreamInstance(Object input, boolean useCache, File cacheDir) throws IOException {
     		if (input instanceof InputStream) {
     			InputStream is = (InputStream)input;
 
@@ -300,6 +355,13 @@ public final class UIHelper
 
           // Return the buffered image
           return bimage;
+      }
+      
+      public static BufferedImage toBufferedImage(byte[] imageInByte) throws IOException{
+    	// convert byte array back to BufferedImage
+    	InputStream in = new ByteArrayInputStream(imageInByte);
+    	BufferedImage bImageFromConvert = ImageIO.read(in);
+    	return bImageFromConvert;
       }
 
 

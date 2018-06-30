@@ -72,6 +72,36 @@ public class GhostPictureAdapter extends GhostDropAdapter
 	           throw new IllegalStateException("Invalid picture or picture URL.");
 	       }
 		}
+	
+	/** Die Größe verändern beim Ziehen.
+	 * Als ein Alternativer Konstuktor, nun direkt mit dem Bild in bytes.
+	 * Er wird angeboten, damit man in dieser Klasse kein Kernel - Objekt verwenden muss, um z.B. die Konfiguration für die IconGröße auszulesen.
+	 * @param glassPane
+	 * @param action
+	 * @param picture
+	 * @param iWidth
+	 * @param iHeight
+	 */
+	public GhostPictureAdapter(GhostGlassPane glassPane, String action, byte[] imageInByte, int iWidth, int iHeight) {
+		   super(glassPane, action);
+		   try {
+			   BufferedImage objBufferedImageTemp = UIHelper.toBufferedImage(imageInByte);
+			   
+			   //Die Größe verändern			   
+			   if(iWidth>=1 && iHeight>=1){
+				   BufferedImage objBufferedImageResized = UIHelper.resizeImage(objBufferedImageTemp, iWidth, iHeight); 
+				   this.image = objBufferedImageResized;
+			   }else{
+				   this.image=objBufferedImageTemp;
+			   }
+
+		   } catch (MalformedURLException mue) {
+		       throw new IllegalStateException("Invalid picture URL.");
+		   } catch (IOException ioe) {
+	           throw new IllegalStateException("Invalid picture or picture URL.");
+	       }
+		}
+
 
     public void mousePressed(MouseEvent e)
     {
