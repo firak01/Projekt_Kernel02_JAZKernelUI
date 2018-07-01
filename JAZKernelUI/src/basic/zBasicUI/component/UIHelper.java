@@ -86,6 +86,13 @@ public final class UIHelper
         return label;
     }
     
+    public static JLabel createLabelWithIcon(String text, byte[] imageInByte){
+    	
+   	 ImageIcon iconNormal = readImageIcon(imageInByte);
+   	 JLabel label = new JLabel(text, iconNormal, JLabel.LEFT);
+        return label;
+   }
+    
     public static JLabel createLabelWithIconResized(String text, byte[] imageInByte, int iWidth, int iHeight){
     	
     	 ImageIcon iconNormal = readImageIconResized(imageInByte, iWidth, iHeight);
@@ -103,6 +110,19 @@ public final class UIHelper
     	//System.out.println("Get Resource; " + UIHelper.class.getResource(filename));
         //return new ImageIcon(Toolkit.getDefaultToolkit().getImage(UIHelper.class.getResource(filename)));
     	return new ImageIcon(Toolkit.getDefaultToolkit().getImage(filename));
+    }
+    
+    public static ImageIcon readImageIcon(byte[] imageInByte){
+    	ImageIcon objImageIconReturn = null;
+    	try {    			  
+		 BufferedImage objBufferdImageTemp =UIHelper.toBufferedImage(imageInByte);		
+		 objImageIconReturn = new ImageIcon(objBufferdImageTemp);
+    	} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return objImageIconReturn;
+    	
     }
     
     public static ImageIcon readImageIconResized(String sFilename, int iNewWidth, int iNewHeight){
@@ -123,10 +143,10 @@ public final class UIHelper
     	return objImageIconReturn;
     }
     
-    public static ImageIcon readImageIconResized(byte[] icon, int iNewWidth, int iNewHeight){
+    public static ImageIcon readImageIconResized(byte[] imageInByte, int iNewWidth, int iNewHeight){
     	ImageIcon objImageIconReturn = null;
     	try {    			  
-		 BufferedImage objBufferdImageTemp =UIHelper.toBufferedImage(icon);
+		 BufferedImage objBufferdImageTemp =UIHelper.toBufferedImage(imageInByte);
 				   
 		 //Die Größe verändern
 		   BufferedImage objBufferedImageResized = UIHelper.resizeImage(objBufferdImageTemp, iNewWidth, iNewHeight);

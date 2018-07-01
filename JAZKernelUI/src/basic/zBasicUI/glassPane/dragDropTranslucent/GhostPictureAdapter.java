@@ -101,6 +101,26 @@ public class GhostPictureAdapter extends GhostDropAdapter
 	           throw new IllegalStateException("Invalid picture or picture URL.");
 	       }
 		}
+	
+	/** Das Bild direkt vewenden. Ggfs. wurde es daher schon Größentechnisch, etc. verändert in der Datenbank abgespeichert.
+	 * Als ein Alternativer Konstuktor, nun direkt mit dem Bild in bytes.
+	 * Er wird angeboten, damit man in dieser Klasse kein Kernel - Objekt verwenden muss, um z.B. die Konfiguration für die IconGröße auszulesen.
+	 * @param glassPane
+	 * @param action
+	 * @param picture
+	 */
+	public GhostPictureAdapter(GhostGlassPane glassPane, String action, byte[] imageInByte) {
+		   super(glassPane, action);
+
+		try {
+			 BufferedImage objBufferedImageTemp = UIHelper.toBufferedImage(imageInByte);
+			 this.image=objBufferedImageTemp;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		   
+}
 
 
     public void mousePressed(MouseEvent e)
