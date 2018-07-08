@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -332,8 +334,88 @@ public final class UIHelper
     	            } finally {
     	                reader.dispose();
     	            }
-    	        }
+    	        }    	            	        
     	        return null;  	
+    	}
+    	
+    	/**
+    	 * https://examples.javacodegeeks.com/desktop-java/awt/image/flipping-a-buffered-image/
+    	 */
+    	public static BufferedImage flipImageHorizontally(BufferedImage objBufferedImage){
+    		BufferedImage objBufferedImageReturn=null;
+        	main:{
+    			AffineTransform tx = AffineTransform.getScaleInstance(1, -1);    			
+    			tx.translate(0, -objBufferedImage.getHeight()); 
+    			
+    			AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);    			
+    			objBufferedImageReturn = op.filter(objBufferedImage, null);    			
+    		
+    		}//end main:
+    		return objBufferedImageReturn;
+    	
+    	}
+    	
+    	/**
+    	 * https://examples.javacodegeeks.com/desktop-java/awt/image/flipping-a-buffered-image/
+    	 */
+    	public static BufferedImage flipImageVertically(BufferedImage objBufferedImage){
+    		BufferedImage objBufferedImageReturn=null;
+        	main:{
+    			AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);    			
+    			tx.translate(-objBufferedImage.getWidth(), 0); 
+    			
+    			AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);    			
+    			objBufferedImageReturn = op.filter(objBufferedImage, null);    			
+    		
+    		}//end main:
+    		return objBufferedImageReturn;
+    	
+    	}
+    	
+    	/**
+    	 * https://examples.javacodegeeks.com/desktop-java/awt/image/flipping-a-buffered-image/
+    	 */
+    	public static BufferedImage rotateImageByDegree_180(BufferedImage objBufferedImage){
+    		BufferedImage objBufferedImageReturn=null;
+        	main:{
+    			AffineTransform tx = AffineTransform.getScaleInstance(-1, -1);    			
+    			tx.translate(-objBufferedImage.getWidth(null), -objBufferedImage.getHeight(null)); 
+    			
+    			AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);    			
+    			objBufferedImageReturn = op.filter(objBufferedImage, null);    			
+    		
+    		}//end main:
+    		return objBufferedImageReturn;
+    	
+    	}
+    	
+    	/** https://www.tutorials.de/threads/bild-drehen.238054/
+    	 * 
+    	 * Merke: Das Bild wird gedreht... aber wenn es nicht Transparent ist, bekommt man einen schwarzen Hintergrund an den jetzt leeren Stellen.
+    	 * @param objBufferedImage
+    	 * @param dblDegrees
+    	 * @return
+    	 */
+    	public static BufferedImage rotateImage(BufferedImage objBufferedImage, double dblDegrees){
+    		BufferedImage objBufferedImageReturn=null;
+    		main:{
+    		        AffineTransform tx = AffineTransform.getRotateInstance(
+    		                Math.toRadians(dblDegrees),
+    		                objBufferedImage.getWidth() / 2,
+    		                objBufferedImage.getHeight() / 2);
+    		        
+    		        objBufferedImageReturn = new BufferedImage(objBufferedImage.getWidth(), objBufferedImage.getHeight(), objBufferedImage.getType());
+    		        
+    		        //Auch das klappt...
+//    		        Graphics2D g = (Graphics2D) objBufferedImageReturn.getGraphics();
+//    		        g.setTransform(tx);
+//    		        g.drawImage(objBufferedImage, 0, 0, null);
+    		        
+    		        //Das Bild wird gedreht... aber wenn es nicht Transparent ist, bekommt man einen schwarzen Hintergrund
+    		        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);    			
+        			objBufferedImageReturn = op.filter(objBufferedImage, null); 
+    		}//end main:
+    	return objBufferedImageReturn;
     	}
     	
     	
