@@ -1,8 +1,11 @@
 package basic.zKernelUI.component;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Set;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -16,7 +19,10 @@ import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IFlagZZZ;
 import basic.zBasic.IObjectZZZ;
 import basic.zBasic.ObjectZZZ;
+import basic.zBasic.ReflectClassZZZ;
 import basic.zBasic.ReflectCodeZZZ;
+import basic.zBasic.IFlagZZZ.FLAGZ;
+import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zBasicUI.adapter.AdapterJComponent4ScreenSnapperZZZ;
@@ -307,6 +313,131 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 		this.objException = objException;
 	}//end function
 
+	//Aus IFlagZZZ, siehe ObjectZZZ
+	/**Gibt alle möglichen FlagZ Werte als Array zurück. 
+	 * @return
+	 */
+	public String[] getFlagZ(){
+		String[] saReturn = null;
+		main:{				
+				Class objClass4Enum = this.getClassFlagZ();	//Aufgrund des Interfaces IFlagZZZ wird vorausgesetzt, dass diese Methode vorhanden ist.
+				String sFilterName = objClass4Enum.getSimpleName();
+				
+				ArrayList<Class<?>> listEmbedded = ReflectClassZZZ.getEmbeddedClasses(this.getClass(), sFilterName);
+				if(listEmbedded == null) break main;
+				//out.format("%s# ListEmbeddedClasses.size()...%s%n", ReflectCodeZZZ.getPositionCurrent(), listEmbedded.size());
+				
+				ArrayList <String> listasTemp = new ArrayList<String>();
+				for(Class objClass : listEmbedded){
+					//out.format("%s# Class...%s%n", ReflectCodeZZZ.getPositionCurrent(), objClass.getName());
+					Field[] fields = objClass.getDeclaredFields();
+					for(Field field : fields){
+						if(!field.isSynthetic()){ //Sonst wird ENUM$VALUES auch zurückgegeben.
+							//out.format("%s# Field...%s%n", ReflectCodeZZZ.getPositionCurrent(), field.getName());
+							listasTemp.add(field.getName());
+						}				
+				}//end for
+			}//end for
+				
+			//20170307: Durch das Verschieben von FLAGZ mit den Werten DEBUG und INIT in das IObjectZZZ Interface, muss man explizit auch dort nachsehen.
+		   //                Merke: Das Verschieben ist deshlab notwenig, weil nicht alle Klassen direkt von ObjectZZZ erben können, sondern das Interface implementieren müsssen.
+		
+											
+				//+++ Nun die aktuelle Klasse 
+				Class<FLAGZ> enumClass = FLAGZ.class;								
+				for(Object obj : FLAGZ.class.getEnumConstants()){
+					//System.out.println(obj + "; "+obj.getClass().getName());
+					listasTemp.add(obj.toString());
+				}
+				saReturn = listasTemp.toArray(new String[listasTemp.size()]);
+		}//end main:
+		return saReturn;
+	}
+
+	/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück. 
+	 * @return
+	 */
+	public String[] getFlagZ(boolean bValueToSearchFor){
+		String[] saReturn = null;
+		main:{
+			
+			
+			ArrayList<String>listasTemp=new ArrayList<String>();
+			
+			//FALLUNTERSCHEIDUNG: Alle gesetzten FlagZ werden in der HashMap gespeichert. Aber die noch nicht gesetzten FlagZ stehen dort nicht drin.
+			//                                  Diese kann man nur durch Einzelprüfung ermitteln.
+			if(bValueToSearchFor==true){
+				HashMap<String,Boolean>hmFlag=this.getHashMapFlagZ();
+				if(hmFlag==null) break main;
+				
+				Set<String> setKey = hmFlag.keySet();
+				for(String sKey : setKey){
+					boolean btemp = hmFlag.get(sKey);
+					if(btemp==bValueToSearchFor){
+						listasTemp.add(sKey);
+					}
+				}
+			}else{
+				String[]saFlagZ = this.getFlagZ();
+				for(String sFlagZ : saFlagZ){
+					boolean btemp = this.getFlagZ(sFlagZ);
+					if(btemp==bValueToSearchFor ){ //also 'false'
+						listasTemp.add(sFlagZ);
+					}
+				}
+			}
+			saReturn = listasTemp.toArray(new String[listasTemp.size()]);
+		}//end main:
+		return saReturn;
+	}
+	
+	/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück, die auch als FLAGZ in dem anderen Objekt überhaupt vorhanden sind.
+	 *  Merke: Diese Methode ist dazu gedacht FlagZ-Werte von einem Objekt auf ein anderes zu übertragen.	
+	 *    
+	 * @return
+	 * @throws ExceptionZZZ 
+	 */
+	public String[] getFlagZ_passable(boolean bValueToSearchFor, IFlagZZZ objUsingFlagZ) throws ExceptionZZZ{
+		String[] saReturn = null;
+		main:{
+			
+			//1. Hole alle FlagZ, DIESER Klasse, mit dem gewünschten Wert.
+			String[] saFlag = this.getFlagZ(bValueToSearchFor);
+			
+			//2. Hole alle FlagZ der Zielklasse
+			String[] saFlagTarget = objUsingFlagZ.getFlagZ();
+			
+			ArrayList<String>listasFlagPassable=new ArrayList<String>();
+			//Nun nur die Schnittmenge der beiden StringÄrrays hiolen.
+			
+			saReturn = StringArrayZZZ.intersect(saFlag, saFlagTarget);
+		}//end main:
+		return saReturn;
+	}
+	
+	/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück, die auch als FLAGZ in dem anderen Objekt überhaupt vorhanden sind.
+	 *  Merke: Diese Methode ist dazu gedacht FlagZ-Werte von einem Objekt auf ein anderes zu übertragen.	
+	 *    
+	 * @return
+	 * @throws ExceptionZZZ 
+	 */
+	public String[] getFlagZ_passable(IFlagZZZ objUsingFlagZ) throws ExceptionZZZ{
+		String[] saReturn = null;
+		main:{
+			
+			//1. Hole alle FlagZ, DIESER Klasse, mit dem gewünschten Wert.
+			String[] saFlag = this.getFlagZ();
+			
+			//2. Hole alle FlagZ der Zielklasse
+			String[] saFlagTarget = objUsingFlagZ.getFlagZ();
+			
+			ArrayList<String>listasFlagPassable=new ArrayList<String>();
+			//Nun nur die Schnittmenge der beiden StringÄrrays hiolen.
+			
+			saReturn = StringArrayZZZ.intersect(saFlag, saFlagTarget);
+		}//end main:
+		return saReturn;
+	}
 	
 	//Aus IObjectZZZ, siehe FileZZZ
 	@Override
