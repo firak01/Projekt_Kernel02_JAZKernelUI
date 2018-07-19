@@ -177,6 +177,21 @@ public final class UIHelper
     	return objBufferedImageReturn;
     }
     
+    public static BufferedImage resizeImage(BufferedImage objImageToResize, float fNewWidth, float fNewHeight){
+    	BufferedImage objBufferedImageReturn=null;
+    	main:{
+    		
+    		Float fltNewWidth = new Float(fNewWidth);
+    		int iNewWidth = fltNewWidth.intValue();
+    		
+    		Float fltNewHeight = new Float(fNewHeight);
+    		int iNewHeight = fltNewHeight.intValue();
+    		
+    		objBufferedImageReturn = UIHelper.resizeImage(objImageToResize, iNewWidth, iNewHeight);    		
+    	}
+    	return objBufferedImageReturn;
+    }
+    
     /*D.h. hier werden die Ränder vom Bild abgeschnitten. Mit O ist die obere Ecke gekennzeichnet. Entspricht der unteren Ecke.
     
     +------------------+    
