@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
 
+import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasicUI.component.UIHelper;
 import basic.zKernel.KernelZZZ;
 
@@ -52,6 +53,8 @@ public class GhostPictureAdapter extends GhostDropAdapter
 	 */
 	public GhostPictureAdapter(GhostGlassPane glassPane, String action, String picture, int iWidth, int iHeight) {
 		   super(glassPane, action);
+		   GhostPictureAdapterNew_(glassPane, action, null, picture, iWidth, iHeight);
+		   
 		   try {
 		       //Das funktioniert wohl nicht immer this.image = ImageIO.read(new BufferedInputStream(GhostPictureAdapter.class.getResourceAsStream(picture)));
 			   File objFile = new File(picture);
@@ -84,22 +87,7 @@ public class GhostPictureAdapter extends GhostDropAdapter
 	 */
 	public GhostPictureAdapter(GhostGlassPane glassPane, String action, byte[] imageInByte, int iWidth, int iHeight) {
 		   super(glassPane, action);
-		   try {
-			   BufferedImage objBufferedImageTemp = UIHelper.toBufferedImage(imageInByte);
-			   
-			   //Die Größe verändern			   
-			   if(iWidth>=1 && iHeight>=1){
-				   BufferedImage objBufferedImageResized = UIHelper.resizeImage(objBufferedImageTemp, iWidth, iHeight); 
-				   this.image = objBufferedImageResized;
-			   }else{
-				   this.image=objBufferedImageTemp;
-			   }
-
-		   } catch (MalformedURLException mue) {
-		       throw new IllegalStateException("Invalid picture URL.");
-		   } catch (IOException ioe) {
-	           throw new IllegalStateException("Invalid picture or picture URL.");
-	       }
+		   GhostPictureAdapterNew_(glassPane, action, imageInByte, null, iWidth, iHeight);		   
 		}
 	
 	/** Das Bild direkt vewenden. Ggfs. wurde es daher schon Größentechnisch, etc. verändert in der Datenbank abgespeichert.
@@ -111,16 +99,48 @@ public class GhostPictureAdapter extends GhostDropAdapter
 	 */
 	public GhostPictureAdapter(GhostGlassPane glassPane, String action, byte[] imageInByte) {
 		   super(glassPane, action);
-
+		   GhostPictureAdapterNew_(glassPane, action, imageInByte, null, 0, 0);
+	}
+	
+	private boolean GhostPictureAdapterNew_(GhostGlassPane glassPane, String action, byte[] imageInByte, String sImagePath, int iWidth, int iHeight){
+		boolean bReturn = false;
+		String sImagePathUsed = null;
 		try {
-			 BufferedImage objBufferedImageTemp = UIHelper.toBufferedImage(imageInByte);
-			 this.image=objBufferedImageTemp;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(imageInByte==null && StringZZZ.isEmpty(sImagePath)){
+			   //sImagePathUsed = "Projekt_Kernel02_JAZKernel\\JAZKernel\\images\\quit.png"; //ALS DUMMY
+			sImagePathUsed = "images\\quit.png"; //ALS DUMMY
+		 }else{
+			 sImagePathUsed = sImagePath;  
+		 }
+		
+		BufferedImage objBufferedImageTemp = null;
+		if(imageInByte==null){
+			if(!StringZZZ.isEmpty(sImagePathUsed)){
+				  File objFile = new File(sImagePathUsed);
+				  objBufferedImageTemp = ImageIO.read(objFile);			   	
+			}
+		}else{
+			objBufferedImageTemp = UIHelper.toBufferedImage(imageInByte);
 		}
+			   
+		   //Die Größe verändern			   
+		   if(iWidth>=1 && iHeight>=1){
+			   BufferedImage objBufferedImageResized = UIHelper.resizeImage(objBufferedImageTemp, iWidth, iHeight); 
+			   this.image = objBufferedImageResized;
+		   }else{
+			   this.image=objBufferedImageTemp;
+		   }
+
+			   bReturn = true;
+		   } catch (MalformedURLException mue) {
+		       throw new IllegalStateException("Invalid picture URL. (sImagePathUsed=" + sImagePathUsed + "')" );
+		   } catch (IOException ioe) {
+	           throw new IllegalStateException("Invalid picture or picture URL. (sImagePathUsed=" + sImagePathUsed + "')" );
+	       }
 		   
-}
+		
+		return bReturn;
+	}
 
 
     public void mousePressed(MouseEvent e)
