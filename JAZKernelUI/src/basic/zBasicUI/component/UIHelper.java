@@ -1,6 +1,8 @@
 package basic.zBasicUI.component;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -91,9 +93,67 @@ public final class UIHelper
     public static JLabel createLabelWithIcon(String text, byte[] imageInByte){
     	
    	 ImageIcon iconNormal = readImageIcon(imageInByte);
-   	 JLabel label = new JLabel(text, iconNormal, JLabel.LEFT);
-        return label;
+   	 JLabel label = new JLabel(text, iconNormal, JLabel.LEFT);   	
+     return label;
    }
+    
+    //Verwende als Font den im System eingestellten. Passe nur die Textgröße an. Ein Graphics - Objekt wird geholt, falls vorhanden, was eigentlich nur im paint() gegeben ist.
+    public static JLabel createLabelWithIcon(String text, Graphics g, Float fltIconLabelFontSizeUsed, byte[] imageInByte){
+    	JLabel labelReturn = null;
+    	ImageIcon iconNormal = readImageIcon(imageInByte);
+      	if(g!=null){
+
+      	 Font fontOld = g.getFont();
+      	 Font font = g.getFont().deriveFont( fltIconLabelFontSizeUsed.floatValue());	//Die Schriftgöße ändern, hier des aktuellen Fonts
+     	 g.setFont(font);
+     	 
+     	labelReturn = new JLabel(text, iconNormal, JLabel.LEFT);
+      	 
+      	 g.setFont(fontOld);
+      	}else{
+      		labelReturn = new JLabel(text, iconNormal, JLabel.LEFT);
+      	}
+         return labelReturn;
+      }
+    
+    //Verwende als Font den im System eingestellten. Passe nur die Textgröße an. Ein Graphics - Objekt wird geholt, falls vorhanden, was eigentlich nur im paint() gegeben ist.
+    public static JLabel createLabel(String text, Graphics g, Float fltIconLabelFontSizeUsed){    
+    	JLabel labelReturn = null;
+      	if(g!=null){
+	    	 Font fontOld = g.getFont();
+	      	 Font font = g.getFont().deriveFont( fltIconLabelFontSizeUsed.floatValue());	//Die Schriftgöße ändern, hier des aktuellen Fonts
+	      	 g.setFont(font);
+	      	 
+	      	labelReturn= new JLabel(text, JLabel.LEFT);
+	      	 
+	      	 g.setFont(fontOld);
+      	}else{
+      		labelReturn = new JLabel(text, JLabel.LEFT);
+      	}
+      	
+         return labelReturn;
+      }
+    
+  //Verwende dem übergebenen Font
+    public static JLabel createLabelWithIcon(String text, Font objFont, byte[] imageInByte){
+    	JLabel labelReturn = null;
+    	ImageIcon iconNormal = readImageIcon(imageInByte);
+      	
+     	labelReturn = new JLabel(text, iconNormal, JLabel.LEFT);
+     	labelReturn.setFont(objFont);
+     	
+         return labelReturn;
+      }
+    
+    //Verwende als Font den im System eingestellten. Passe nur die Textgröße an. Ein Graphics - Objekt wird geholt, falls vorhanden, was eigentlich nur im paint() gegeben ist.
+    public static JLabel createLabel(String text, Font objFont){    
+    	JLabel labelReturn = null;
+
+	    labelReturn= new JLabel(text, JLabel.LEFT);
+	    labelReturn.setFont(objFont);
+           	
+         return labelReturn;
+      }
     
     public static JLabel createLabelWithIconResized(String text, byte[] imageInByte, int iWidth, int iHeight){
     	
