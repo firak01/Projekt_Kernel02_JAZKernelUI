@@ -662,11 +662,11 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 				//setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 				//TODO GOON, Falls dies nicht als unterframe aufgerufen wird:    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				
-				//Die Gr�sse des Frames, die Methode wird vom KernelFrame zur Verf�gung gestellt 
+				//Die Grösse des Frames, die Methode wird vom KernelFrame zur Verf�gung gestellt 
 				frmCascaded.setSizeDefault();
 				frmCascaded.setTitle(sTitle);
 				
-				//Grundfl�che(n) in den Rahmen hinzuf�gen...
+				//Grundfläche(n) in den Rahmen hinzufügen...
 				//	... das wird nun �ber das ContentPane der Frames gemacht. !!! Damit diese Grundfl�che "draggable" ist, muss zumindest der ContentPane �bergeben werden.
 				KernelJPanelCascadedZZZ objPanel = frmCascaded.getPaneContent();  //default ist der ContentPane-Alias
 				if(objPanel !=null){
@@ -674,7 +674,7 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 					frmCascaded.setPanelSub(KernelJFrameCascadedZZZ.getAliasPanelContent(), objPanel);
 				}
 				
-				//FGL 20080912: Ggf. ein weiteres Panel hinzuf�gen
+				//FGL 20080912: Ggf. ein weiteres Panel hinzufügen
 				KernelJPanelCascadedZZZ objPanelContent = (KernelJPanelCascadedZZZ) frmCascaded.getPaneContent(KernelJFrameCascadedZZZ.getAliasPanelContent() + "Sub");
 				if(objPanelContent != null){
 					if (objPanel != null){
@@ -687,9 +687,9 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 					}
 				}
 				
-				//FGL 20080912: Ggf. einen LayeredPane hinzuf�gen
-				//Merke: Das LayeredPane muss entweder einem Panel hinzugef�gt werden oder (falls nicht vorhanden) direkt dem JFrame
-				//Merke: Die LayoutManager der JPanels, m�ssen das Hinzuf�gen einer weiteren Komponente aber auch unterst�tzen
+				//FGL 20080912: Ggf. einen LayeredPane hinzufügen
+				//Merke: Das LayeredPane muss entweder einem Panel hinzugefügt werden oder (falls nicht vorhanden) direkt dem JFrame
+				//Merke: Die LayoutManager der JPanels, m�ssen das Hinzuf�gen einer weiteren Komponente aber auch unterstützen
 				//Merke: Zu dem LayeredPane gibt es ein Beispiel im TryOutSwing-Projekt
 				JLayeredPane objPaneLayered = (JLayeredPane) frmCascaded.getPaneContent("LayeredPane");
 				if(objPaneLayered != null){
@@ -705,13 +705,14 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 							frmCascaded.setLayeredPane(objPaneLayered);
 						}
 				}
+				}
 				
-				//Men� in den Rahmen hinzuf�gen
+				//Menü in den Rahmen hinzufügen
 				JMenuBar menu = frmCascaded.getMenuContent();
 				if(menu != null){
 					frmCascaded.setJMenuBar(menu);
 				}
-			}
+			
 		}//bLaunched before == true
 		return bReturn;
 	}//end main:
@@ -740,7 +741,7 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 	}
 
 	
-	public JMenuBar getMenuContent(){
+	public JMenuBar getMenuContent() throws ExceptionZZZ{
 		return null;
 	}
 	

@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -45,8 +46,8 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	private KernelJFrameCascadedZZZ frameParent;
 	private KernelJDialogExtendedZZZ dialogParent;
 	
-	private Hashtable htPanelSub=new Hashtable();
-	private Hashtable htComponent = new Hashtable();
+	private Hashtable<String,JPanel> htPanelSub=new Hashtable<String,JPanel>();
+	private Hashtable<String,JComponent> htComponent = new Hashtable<String,JComponent>();
 	
 	private ListenerMouseMove4DragableWindowZZZ listenerDraggableWindow = null; 
 
@@ -257,6 +258,46 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 		this.dialogParent = dialogExtended;
 	}
 	
+	
+	public ArrayList<JComponent> searchComponentAll(){
+		ArrayList<JComponent> listaReturn = new ArrayList<JComponent>();
+		main:{
+			Hashtable<String,JComponent> htComponent = this.getHashtableComponent();
+			Collection<JComponent> colComponent = htComponent.values();
+			listaReturn.addAll(colComponent);
+			
+			Hashtable<String,JPanel> htPanel = this.getHashtablePanel();
+			Set<String> setKey = htPanel.keySet();
+			for(String sKey : setKey){
+				KernelJPanelCascadedZZZ objPanel = (KernelJPanelCascadedZZZ) htPanel.get(sKey);
+				if(objPanel!=null){
+					ArrayList<JComponent> listaComponent = objPanel.searchComponentAll();
+					listaReturn.addAll(listaComponent);
+				}
+			}			
+		}//end main
+		return listaReturn;
+	}
+	
+	public JComponent searchComponent(String sKeyComponent){
+		JComponent objReturn = null;
+		main:{
+			Hashtable<String,JComponent> htComponent = this.getHashtableComponent();
+			objReturn = htComponent.get(sKeyComponent);
+			if(objReturn!=null) break main;
+			
+			Hashtable<String,JPanel> htPanel = this.getHashtablePanel();
+			Set<String> setKey = htPanel.keySet();
+			for(String sKeyPanel : setKey){
+				KernelJPanelCascadedZZZ objPanel = (KernelJPanelCascadedZZZ) htPanel.get(sKeyPanel);
+				if(objPanel!=null){
+					objReturn = objPanel.searchComponent(sKeyComponent);
+					if(objReturn!=null) break main;
+				}
+			}			
+		}//end main
+		return objReturn;
+	}
 
 	/** JPanel, searches all other parent panels untill no more parent panel is available. The last found panel seems to be the root panel for all cascaded panels. 
 	* Lindhauer; 15.05.2006 09:00:08
@@ -279,7 +320,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	
 	public KernelJPanelCascadedZZZ getPanelSub(String sAlias) {
 		if(this.htPanelSub.containsKey(sAlias)){
-			return (KernelJPanelCascadedZZZ) this.htPanelSub.get(sAlias);			
+			return (KernelJPanelCascadedZZZ) this.getHashtablePanel().get(sAlias);			
 		}else{
 			return null;
 		}
@@ -295,7 +336,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	public KernelJPanelCascadedZZZ searchPanelSub(String sAlias) throws ExceptionZZZ{
 		KernelJPanelCascadedZZZ objReturn=null;
 		main:{
-			//Zuerst pr�fen, ob es sich um das Root-Panel handelt, dann kann ja ggf. das Root-Panel selbst gesucht werden.
+			//Zuerst prüfen, ob es sich um das Root-Panel handelt, dann kann ja ggf. das Root-Panel selbst gesucht werden.
 			if(this.getPanelParent()==null){
 				KernelJFrameCascadedZZZ frameParent = this.getFrameParent();				
 				String sRootAlias = KernelJFrameCascadedZZZ.getAliasPanelContent();
@@ -310,7 +351,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 			if(objReturn!=null) break main;
 			
 			//Nun alle Panel durchgehen
-			Enumeration objEnum = htPanelSub.elements();					
+			Enumeration objEnum = this.getHashtablePanel().elements();					
 			while(objEnum.hasMoreElements()){
 				String stemp = (String) objEnum.nextElement();
 				KernelJPanelCascadedZZZ panelTemp = this.getPanelSub(stemp);
@@ -830,10 +871,16 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	
 	
 	public JComponent getComponent(String sAlias) {
-		return (JComponent) this.htComponent.get(sAlias);
+		return (JComponent) this.getHashtableComponent().get(sAlias);
 	}
 	
-
+	public Hashtable<String,JComponent> getHashtableComponent(){
+		return this.htComponent;
+	}
+	
+	public Hashtable<String,JPanel> getHashtablePanel(){
+		return this.htPanelSub;
+	}
 	
 	
 //#################### Interface IComponentCascadedUserZZZ
@@ -844,7 +891,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	 * Merke: Hier�ber wird die JComponent per Aliasname "zugriefbar". Z.B. kann nun ein anderes Panel darauf zugreifen. 
 	 */
 	public void setComponent(String sAlias, JComponent objComponent) {
-		this.htComponent.put(sAlias, objComponent);
+		this.getHashtableComponent().put(sAlias, objComponent);
 	}
 
 	public KernelJFrameCascadedZZZ getFrameParent() {
@@ -859,7 +906,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	 * @see basic.zKernelUI.component.IPanelCascadedZZZ#setPanelSub(java.lang.String, basic.zKernelUI.component.KernelJPanelCascadedZZZ)
 	 */
 	public void setPanelSub(String sAlias, KernelJPanelCascadedZZZ objPanelCascaded) {
-		this.htPanelSub.put(sAlias, objPanelCascaded);
+		this.getHashtablePanel().put(sAlias, objPanelCascaded);
 	}
 	
 	/* (non-Javadoc)

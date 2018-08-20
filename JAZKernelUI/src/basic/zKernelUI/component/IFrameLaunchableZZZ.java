@@ -9,7 +9,7 @@ import basic.zBasic.ExceptionZZZ;
 public interface IFrameLaunchableZZZ {
 	
 	/** Startet einen Frame. Dabei wird der erste Frame mit einem extra Thread UND Swingutilities.invokeLater() gestartet.
-	 *   Damit wird also die Erzeugung des Frames nicht in den EventDispatchThread gestellt. Merke: Das macht nur Sinn, wenn in launchCustom() weiterer zeitaufwendiger Code ausgeführt wird.
+	 *   Damit wird also die Erzeugung des Frames nicht in den EventDispatchThread gestellt. Merke: Das macht nur Sinn, wenn in launchCustom() weiterer zeitaufwendiger Code ausgefï¿½hrt wird.
 	* @return
 	* @throws ExceptionZZZ
 	* 
@@ -19,9 +19,9 @@ public interface IFrameLaunchableZZZ {
 	public abstract boolean launch(String sTitle) throws ExceptionZZZ;
 	
 	
-	/** Hier ist die Stelle in der noch zusätzlicher Code stattfinden kann. Z.B: initialisieren von Datenbank oder Http-Connections.
-	* @return true= es wird kein standardmäßiges packen der Komponenten durchgeführt, so dass die gesamte Frame Größe von der gewählten Größe abhängt.
-	*               false=es wird frame.pack() ausgeführt. Damit hängt die Größe des Frames von der Größe der einzelnen Komponenten ab.
+	/** Hier ist die Stelle in der noch zusï¿½tzlicher Code stattfinden kann. Z.B: initialisieren von Datenbank oder Http-Connections.
+	* @return true= es wird kein standardmï¿½ï¿½iges packen der Komponenten durchgefï¿½hrt, so dass die gesamte Frame Grï¿½ï¿½e von der gewï¿½hlten Grï¿½ï¿½e abhï¿½ngt.
+	*               false=es wird frame.pack() ausgefï¿½hrt. Damit hï¿½ngt die Grï¿½ï¿½e des Frames von der Grï¿½ï¿½e der einzelnen Komponenten ab.
 	* @throws ExceptionZZZ
 	* 
 	* lindhaueradmin; 15.03.2007 10:09:12
@@ -48,10 +48,10 @@ public interface IFrameLaunchableZZZ {
 	
 	
 	
-	/** Hier wird das Menü definiert. Es wird automatisch in .launch() herangezogen.
+	/** Hier wird das Menï¿½ definiert. Es wird automatisch in .launch() herangezogen.
 	* @return
 	* 
 	* lindhaueradmin; 15.03.2007 10:08:35
 	 */
-	public abstract JMenuBar getMenuContent();
+	public abstract JMenuBar getMenuContent()  throws ExceptionZZZ;
 }
