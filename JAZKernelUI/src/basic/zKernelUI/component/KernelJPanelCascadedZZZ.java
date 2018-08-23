@@ -1,6 +1,7 @@
 package basic.zKernelUI.component;
 
 import java.awt.Container;
+import java.awt.Font;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -318,6 +319,10 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 		return panelReturn;
 	}
 	
+	
+	
+	
+	
 	public KernelJPanelCascadedZZZ getPanelSub(String sAlias) {
 		if(this.htPanelSub.containsKey(sAlias)){
 			return (KernelJPanelCascadedZZZ) this.getHashtablePanel().get(sAlias);			
@@ -390,6 +395,24 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 			}
 		}		
 	}
+	
+	//### Den Font über alle "registrierten", d.h. in den HashTablen gesetzten Komponenten ändern
+	/**
+	 * @param font
+	 * @return Die Anzahl der mit dem Font tatsächlich aktualisierten Komponenten.
+	 */
+	public int updateComponentFontAll(Font font){
+		int iReturn = 0;
+		main:{
+			ArrayList<JComponent> listaComponent = this.searchComponentAll();
+			for(JComponent objComponent : listaComponent){
+				objComponent.setFont(font);
+				objComponent.repaint();
+			}
+		}
+		return iReturn;
+	}
+	
 	
 	//### FLAGS ####################
 	/* (non-Javadoc)
