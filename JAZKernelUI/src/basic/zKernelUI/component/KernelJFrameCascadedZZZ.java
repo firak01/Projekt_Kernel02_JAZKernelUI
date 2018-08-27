@@ -1,5 +1,7 @@
 package basic.zKernelUI.component;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Point;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -10,8 +12,11 @@ import java.util.Set;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
@@ -140,6 +145,41 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 		sReturn = ReflectionToStringBuilder.toString(this);
 		return sReturn;
 	}
+	
+	//### Den Font über alle vorhandenen Einträge einer Menubar ändern
+	public int updateMenuBarFontAll(Font font) throws ExceptionZZZ{
+		int iReturn = 0;
+		main:{
+			if(font==null) break main;
+			
+			//Die Menüeinträge hinsichtlich des Fonts ändern, alle über den UIManager.
+			//siehe https://stackoverflow.com/questions/27318130/changing-a-jmenubars-font
+			UIManager.put("MenuBar.font", font);
+			UIManager.put("Menu.font", font);
+			UIManager.put("MenuItem.font", font);
+			//panel.getFrameParent().getMenuContent().repaint(); //KLAPPT ABER NICHT... statt dessen SwingUtilities.updateComponentTreeUI							
+																							
+			JMenuBar menubar = this.getMenuContent();
+			Component[] menuComponents = (Component[]) menubar.getComponents();
+			for(Component menuComponent : menuComponents){
+				menuComponent.setFont(font);
+				JMenu menu = (JMenu) menuComponent;
+				Component[] menuItemComponents = menu.getMenuComponents();
+				for(Component menuItemComponent : menuItemComponents){
+					menuItemComponent.setFont(font);
+//					JMenuItem menuItem = (JMenuItem) menuItemComponent;
+//					System.out.println(ReflectCodeZZZ.getMethodCurrentName()+": MenuItem.getText() = '" + menuItem.getText() + "'");
+				}
+			}
+						
+			//Noch hinzunehmen. siehe: https://stackoverflow.com/questions/38383694/update-jmenu-and-jmenu-font-after-jmenubar-is-visible
+			menubar.revalidate();
+			SwingUtilities.updateComponentTreeUI(menubar);
+				
+		}//end main:
+		return iReturn;
+	}
+	
 	
 	//### FlagMethods ##########################		
 	
@@ -744,6 +784,7 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 	public JMenuBar getMenuContent() throws ExceptionZZZ{
 		return null;
 	}
+	
 	
 	
 	private class RunnerFrameMainZZZ implements Runnable{

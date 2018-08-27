@@ -408,6 +408,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 			for(JComponent objComponent : listaComponent){
 				objComponent.setFont(font);
 				objComponent.repaint();
+				iReturn++;
 			}
 		}
 		return iReturn;
