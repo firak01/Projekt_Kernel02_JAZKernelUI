@@ -46,15 +46,15 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements ICompone
 			Border borderEtched = BorderFactory.createEtchedBorder();
 			this.setBorder(borderEtched);	
 			
-			//+++ Vor dem Anlegen der Components erst einmal prüfen, ob es überhaupt etwas zu tun gibt
-			//TODO GOON: Das KernelObject zu verwenden ist eigentlich nicht sauber. Es muss ein eigenes Objekt für das zu konfigurierende Modul vorhanden sein.
+			//+++ Vor dem Anlegen der Components erst einmal prï¿½fen, ob es ï¿½berhaupt etwas zu tun gibt
+			//TODO GOON: Das KernelObject zu verwenden ist eigentlich nicht sauber. Es muss ein eigenes Objekt fï¿½r das zu konfigurierende Modul vorhanden sein.
 			//boolean bModuleConfigured = this.getKernelObject().proofModuleIsConfigured(sModule);
 			boolean bModuleConfigured = this.objKernel2configure.proofModuleFileIsConfigured(sModule);
 			if(bModuleConfigured==false){
 				//Fall: Modul nicht configuriert
 				break main;
 			}else{
-				//TODO GOON: Das KernelObject zu verwenden ist eigentlich nicht sauber. Es muss ein eigenes Objekt für das zu konfigurierende Modul vorhanden sein.
+				//TODO GOON: Das KernelObject zu verwenden ist eigentlich nicht sauber. Es muss ein eigenes Objekt fï¿½r das zu konfigurierende Modul vorhanden sein.
 			//boolean bModuleExists = this.getKernelObject().proofModuleExists(sModule);
 				boolean bModuleExists = this.objKernel2configure.proofModuleFileExists(sModule);
 			if(bModuleExists==false){
@@ -65,24 +65,24 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements ICompone
 			
 			
 			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++			
-			int iLine2Show = 0; //Alle anzuzeigenden Label-Zeilen, ggf. mit leeren aufgefüllt.			
-			int iLineFilled = 0; //Momentan anzuzeigende "gefüllte" Label-Zeilen
-			int iLine2Fill = 0; //Die zum auffüllen verwendetedn "leeren" Label-Zeilen
+			int iLine2Show = 0; //Alle anzuzeigenden Label-Zeilen, ggf. mit leeren aufgefÃ¼lllt.			
+			int iLineFilled = 0; //Momentan anzuzeigende "gefÃ¼llte" Label-Zeilen
+			int iLine2Fill = 0; //Die zum auffÃ¼llen verwendetedn "leeren" Label-Zeilen
 			
-			//SystemKey als Schlüssel für die Section
-			//TODO GOON: Das KernelObject zu verwenden ist eigentlich nicht sauber. Es muss ein eigenes Objekt für das zu konfigurierende Modul vorhanden sein.
+			//SystemKey als Schlï¿½ssel fï¿½r die Section
+			//TODO GOON: Das KernelObject zu verwenden ist eigentlich nicht sauber. Es muss ein eigenes Objekt fï¿½r das zu konfigurierende Modul vorhanden sein.
 			//String sSystemKey = this.getKernelObject().getSystemKey();
 			String sSystemKey = this.objKernel2configure.getSystemKey();
 			
 			//FileIniZZZ Objekt holen
-			//TODO GOON: Das KernelObject zu verwenden ist eigentlich nicht sauber. Es muss ein eigenes Objekt für das zu konfigurierende Modul vorhanden sein.
+			//TODO GOON: Das KernelObject zu verwenden ist eigentlich nicht sauber. Es muss ein eigenes Objekt fï¿½r das zu konfigurierende Modul vorhanden sein.
 			//FileIniZZZ objFileIni = this.getKernelObject().getFileConfigIniByAlias(sModule);
 			FileIniZZZ objFileIni = this.objKernel2configure.getFileConfigIniByAlias(sModule);
 			
-			//Alle Einträge dieses Keys holen
+			//Alle EintrÃ¤ge dieses Keys holen
 			String[] saProperty = objFileIni.getPropertyAll(sSystemKey);
 			if(saProperty==null){
-				//Hinweis: Keine Einträge gefunden
+				//Hinweis: Keine Eintrï¿½ge gefunden
 				iLine2Show = 1; //Die Hinweiszeile
 				iLine2Fill = iNR_OF_TEXTFIELD_SHOWN_DEFAULT - iLine2Show;
 				
@@ -95,7 +95,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements ICompone
 				this.add(textfieldaValue[0]);
 				
 			}else{
-				//Ausrechnen mit wievielen Leerlabels das Layout aufgefüllt werden muss
+				//Ausrechnen mit wievielen Leerlabels das Layout aufgefÃ¼llt werden muss
 				iLineFilled = saProperty.length;			
 				if(iLineFilled >= iNR_OF_TEXTFIELD_SHOWN_DEFAULT){
 					iLine2Show = iLineFilled;
@@ -105,7 +105,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements ICompone
 					iLine2Fill = iNR_OF_TEXTFIELD_SHOWN_DEFAULT - iLineFilled;
 				}
 				
-				//DIE ANZAHL DER ZEILEN VON DER ANZAHL DER GEFUNDENEN EINTRÄGE ABHÄNGIG MACHEN.
+				//DIE ANZAHL DER ZEILEN VON DER ANZAHL DER GEFUNDENEN EINTRï¿½GE ABHÃ„NGIG MACHEN.
 				//this.setLayout(new GridLayout(iLine2Show,2)); //1 Zeilen, 2 Spalten
 				double[] daProportion={0.2, 0.8};
 				
@@ -113,7 +113,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements ICompone
 	             this.setLayout(layout);
 				
 				
-				//DIE ARRAY GRÖSSEN VON DER ANZAHL DER GEFUNDENEN EINTRÄGE ABHÄNGIG MACHEN
+				//DIE ARRAY GRÃ–SSEN VON DER ANZAHL DER GEFUNDENEN EINTRÃ„GE ABHÃ„NGIG MACHEN
 				String sValue = new String("");
 				labelaText = new JLabel[iLineFilled];
 				textfieldaValue = new JTextField[iLineFilled];
@@ -126,7 +126,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements ICompone
 					this.add(labelaText[icount]);
 					
 					//Das Value - Textfeld										
-					//TODO GOON: Das KernelObject zu verwenden ist eigentlich nicht sauber. Es muss ein eigenes Objekt für das zu konfigurierende Modul vorhanden sein.
+					//TODO GOON: Das KernelObject zu verwenden ist eigentlich nicht sauber. Es muss ein eigenes Objekt fï¿½r das zu konfigurierende Modul vorhanden sein.
 					//sValue = this.getKernelObject().getParameterByModuleFile(objFileIni, saProperty[icount]); //Parameter);
 					sValue = this.objKernel2configure.getParameterByModuleFile(objFileIni, saProperty[icount]); //Parameter);
 					
@@ -136,7 +136,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements ICompone
 				}
 			}//END IF: if(saProperty==null){
 			
-			//### Damit die Labels hinsichtlich der Höhe nicht so gross werden, ggf. mit leeren Werten auffüllen
+			//### Damit die Labels hinsichtlich der HÃ¶he nicht so gross werden, ggf. mit leeren Werten auffÃ¼llen
 			for(int icount = 0; icount < iLine2Fill; icount ++){
 				JLabel labeltemp = new JLabel("", SwingConstants.RIGHT);
 				this.add(labeltemp);								
@@ -145,7 +145,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements ICompone
 			}
 			
 			
-				/* TODO: Auf das TextField zugreifen können, auch per Lotusscript
+				/* TODO: Auf das TextField zugreifen kï¿½nnen, auch per Lotusscript
 				JTextField objText2 = new JTextField(strParam, iTEXTFIELD_COLUMN_DEFAULT);
 				listaText.add(objText2);
 				this.add(objText2);	
@@ -207,7 +207,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements ICompone
 				if(this.textfieldaValue==null) break main;	
 				if(this.textfieldaValue.length != this.labelaText.length){
 					ExceptionZZZ ez = new ExceptionZZZ(sERROR_PARAMETER_VALUE + "Array lengths of Labels and Textfields does not match.", iERROR_PARAMETER_VALUE,  ReflectCodeZZZ.getMethodCurrentName(), "");
-					   //doesn´t work. Only works when > JDK 1.4
+					   //doesnï¿½t work. Only works when > JDK 1.4
 					   //Exception e = new Exception();
 					   //ExceptionZZZ ez = new ExceptionZZZ(stemp,iCode,this, e, "");			  
 					   throw ez;	
@@ -215,7 +215,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements ICompone
 			}//end check:
 		
 		//###################################
-		//Die Hashtable immer neu füllen, es kann sich ja gegenüber dem Einlesen etwas geändert haben
+		//Die Hashtable immer neu fï¿½llen, es kann sich ja gegenï¿½ber dem Einlesen etwas geï¿½ndert haben
 		objReturn = new Hashtable();
 		
 		int iLineTotal = textfieldaValue.length;
@@ -226,7 +226,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements ICompone
 				sValue = sValue.substring(1, sValue.length());
 			}
 			if (!(sValue.equals("") && bExcludeValueEmpty==true)){
-				//LEERWERTE SOLLEN ÜBERNOMMEN WERDEN
+				//LEERWERTE SOLLEN ï¿½BERNOMMEN WERDEN
 				String sProperty=this.labelaText[icount].getText();
 				if(sProperty.endsWith("=")){
 					//Ggf. wird dem Label das Gleicheitszeichen mitgegeben. Das wird hier am Ende entfernt.
