@@ -163,6 +163,7 @@ public class GhostPictureAdapter extends GhostDropAdapter
 
         glassPane.setPoint(p);
         glassPane.setImage(image);
+        glassPane.validate();
         glassPane.repaint();
     }
 

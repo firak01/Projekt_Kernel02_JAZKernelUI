@@ -407,6 +407,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 			ArrayList<JComponent> listaComponent = this.searchComponentAll();
 			for(JComponent objComponent : listaComponent){
 				objComponent.setFont(font);
+				objComponent.validate();
 				objComponent.repaint();
 				iReturn++;
 			}

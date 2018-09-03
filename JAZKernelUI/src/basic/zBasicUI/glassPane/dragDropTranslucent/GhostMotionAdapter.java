@@ -22,7 +22,7 @@ public class GhostMotionAdapter extends MouseMotionAdapter
 	}
 	
 	/* FGL 20130627:
-	 * Aber: Wenn man einen JScrollPane verwendet, dann muss man den glassPane neu erstellen. Nach dem Weiterscrollen funktioniert der alte nämlich nicht mehr richtig.
+	 * Aber: Wenn man einen JScrollPane verwendet, dann muss man den glassPane neu erstellen. Nach dem Weiterscrollen funktioniert der alte nï¿½mlich nicht mehr richtig.
 	 * Darum im ersten Wurf beim Clicken der Mouse-Taset den glassPane aktualisieren (Klasse GhostPictureAdapter)*/
 	
 	public void mouseDragged(MouseEvent e)
@@ -38,6 +38,7 @@ public class GhostMotionAdapter extends MouseMotionAdapter
         SwingUtilities.convertPointFromScreen(p, glassPane);
         glassPane.setPoint(p);
 
+        glassPane.validate();
         glassPane.repaint();
     }
 }
