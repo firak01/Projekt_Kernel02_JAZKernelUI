@@ -24,7 +24,9 @@ public class GhostPictureAdapter extends GhostDropAdapter
 {
 	private BufferedImage image;
 	
-
+     public GhostPictureAdapter(GhostGlassPane glassPane, String action){
+    	 super(glassPane, action);
+     }
 	public GhostPictureAdapter(GhostGlassPane glassPane, String action, String picture) {
 	   super(glassPane, action);
 	   try {
@@ -162,7 +164,7 @@ public class GhostPictureAdapter extends GhostDropAdapter
         SwingUtilities.convertPointFromScreen(p, glassPane);
 
         glassPane.setPoint(p);
-        glassPane.setImage(image);
+        if(image!=null) glassPane.setImage(image); //Verwende hier ein im Konstruktor zur Verfügung gestelltes Bild. Darum heisst es ja auch "Picture Adapter".                
         glassPane.validate();
         glassPane.repaint();
     }
