@@ -18,7 +18,7 @@ public class DebugDLGBox4IniZZZ {
 		objKernel = new KernelZZZ("FGL", "01", "", "ZKernelConfigConfig_default.ini",(String)null);
 		LogZZZ objLog = objKernel.getLogObject();
 	
-		//Dieses bietet die Möglichkeit auf die Komponenten einer Applikation zuzugreifen (auch Module genannt)
+		//Dieses bietet die MÃ¶glichkeit auf die Komponenten einer Applikation zuzugreifen (auch Module genannt)
 		//String sModule = "Kernel";
 		String sModule = "JDXDataReader";
 	
@@ -28,10 +28,10 @@ public class DebugDLGBox4IniZZZ {
 	
 		DLGBOX4INIZZZ frameDLG = new DLGBOX4INIZZZ(objKernel, null);
 	
-		// !!! Diese section und dieses Modul müssen in der oben für die Kernel-Konfiguration angegebenen Datei stehen. 
-		// !!! Die konfigurationsdatei für dieses Modul muss vorhanden sein.
+		// !!! Diese section und dieses Modul mï¿½ssen in der oben fï¿½r die Kernel-Konfiguration angegebenen Datei stehen. 
+		// !!! Die konfigurationsdatei fï¿½r dieses Modul muss vorhanden sein.
 		String[] saParam = new String[2];
-		saParam[0]="JDX#01";
+		saParam[0]="JDX!01";
 		saParam[1]=sModule;
 		frameDLG.launch(saParam);
 	

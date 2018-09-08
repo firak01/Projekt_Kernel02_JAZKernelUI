@@ -61,8 +61,8 @@ public class DLGBOX4INIZZZ  extends KernelJFrameCascadedZZZ  implements IJNILotu
 				sSystemKey = saModule[0];				
 				sModule = saModule[1];
 				
-				sApplication = StringZZZ.left(sSystemKey, "#");
-				sSystemNumber = StringZZZ.right(sSystemKey, "#");
+				sApplication = StringZZZ.left(sSystemKey, "!");
+				sSystemNumber = StringZZZ.right(sSystemKey, "!");
 			}
 			
 			//Programme sollen erst auf Modulebenen konfigurierbar sein, trotzdem ein m�glicherweise wertvoller Parameter.
