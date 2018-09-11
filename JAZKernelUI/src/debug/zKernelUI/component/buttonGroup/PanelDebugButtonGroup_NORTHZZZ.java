@@ -5,14 +5,17 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Iterator;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
@@ -27,7 +30,7 @@ import basic.zBasic.util.abstractList.HashMapMultiZZZ;
 import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zBasicUI.thread.SwingWorker;
 import basic.zKernelUI.component.KernelActionCascadedZZZ;
-import basic.zKernelUI.component.KernelJButtonGroupZZZ;
+import basic.zKernelUI.component.KernelButtonGroupZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 
 
@@ -41,6 +44,12 @@ public class PanelDebugButtonGroup_NORTHZZZ extends KernelJPanelCascadedZZZ {
     private static final String sBUTTON_PLUS = "buttonPlus";
     private static final String sBUTTON_MINUS = "buttonMinus";
     private static final String sBUTTON_ENABLE = "buttonEnable";
+    private static final String sBUTTON_DISABLE = "buttonDisable";
+    private static final String sBUTTON_TOGGLE_ALL = "buttonToggle_all";
+    private static final String sBUTTON_DIFFER_ALL = "buttonDiffer_all";
+    private static final String sBUTTON_DIFFER_ALL_REFFERENCE = "buttonDiffer_all_reference";
+    private static final String sBUTTON_SAME_ALL = "buttonSame_all";
+    private static final String sBUTTON_SAME_ALL_REFFERENCE = "buttonSame_all_reference";
 	
 	public PanelDebugButtonGroup_NORTHZZZ(KernelZZZ objKernel, JPanel panelParent) throws ExceptionZZZ {
 		super(objKernel, panelParent);
@@ -59,7 +68,8 @@ public class PanelDebugButtonGroup_NORTHZZZ extends KernelJPanelCascadedZZZ {
 			this.add(labelModuleText);
 			
 			//++++ Die ButtongroupZZZ
-			KernelJButtonGroupZZZ<String,JButton> groupButton = new KernelJButtonGroupZZZ<String,JButton>();
+			KernelButtonGroupZZZ<String,AbstractButton> groupButton = new KernelButtonGroupZZZ<String,AbstractButton>();
+			KernelButtonGroupZZZ<String,AbstractButton> groupButton02 = new KernelButtonGroupZZZ<String,AbstractButton>();
 			
 			
 			//++++ Die Buttons
@@ -69,6 +79,7 @@ public class PanelDebugButtonGroup_NORTHZZZ extends KernelJPanelCascadedZZZ {
 			this.setComponent(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_PLUS, buttonPlus);
 			this.add(buttonPlus);
 			groupButton.add(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_PLUS,buttonPlus);
+			groupButton02.add(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_PLUS,buttonPlus);
 			
 			
 			JButton buttonMinus = new JButton("MINUS");			
@@ -77,17 +88,70 @@ public class PanelDebugButtonGroup_NORTHZZZ extends KernelJPanelCascadedZZZ {
 			this.setComponent(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_MINUS, buttonMinus);
 			this.add(buttonMinus);
 			groupButton.add(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_MINUS,buttonMinus);
+			groupButton02.add(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_MINUS,buttonMinus);
 			
 			JButton buttonEnable = new JButton("Enable all");
 			ActionEnable actionEnable = new ActionEnable(objKernel, this);
 			buttonEnable.addActionListener(actionEnable);		
 			this.setComponent(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_ENABLE, buttonEnable);
 			this.add(buttonEnable);
-			groupButton.add(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_ENABLE,buttonEnable);
+			//Also diesen Button nicht hinzufügen. Sonst kriegt man sie nie wieder enabled:
+			//groupButton.add(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_ENABLE,buttonEnable);
 			
+			JButton buttonDisable = new JButton("Disable all");
+			ActionDisable actionDisable = new ActionDisable(objKernel, this);
+			buttonDisable.addActionListener(actionDisable);		
+			this.setComponent(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_DISABLE, buttonDisable);
+			this.add(buttonDisable);
+			//Also diesen Button nicht hinzufügen. Sonst kriegt man sie nie wieder enabled:
+			//groupButton.add(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_DISABLE,buttonDisable);
 			
+			JButton buttonToggle_all = new JButton("Toggle all");
+			ActionToggle_all actionToggle_all = new ActionToggle_all(objKernel, this);
+			buttonToggle_all.addActionListener(actionToggle_all);		
+			this.setComponent(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_TOGGLE_ALL, buttonToggle_all);
+			this.add(buttonToggle_all);
+			//Also diesen Button nicht hinzufügen. Sonst kriegt man sie nie wieder enabled:
+			//groupButton.add(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_DISABLE,buttonDisable);
+			
+			 final JToggleButton toggleButton1 = new JToggleButton("A Toggle Button");
+			 this.setComponent(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_DIFFER_ALL_REFFERENCE, toggleButton1);
+			this.add(toggleButton1);
+			groupButton02.add(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_DIFFER_ALL_REFFERENCE,toggleButton1);
+			groupButton02.add(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_SAME_ALL_REFFERENCE,toggleButton1);
+//		        ActionListener actionListener = new ActionListener() {
+//
+//		            @Override
+//		            public void actionPerformed(ActionEvent actionEvent) {
+//		                AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
+//		                boolean selected = abstractButton.getModel().isSelected();
+//		                System.out.println("Action - selected=" + selected + "\n");
+//		                toggleButton1.setSelected(selected);
+//		            }
+//		        };
+		       // toggleButton.addActionListener(actionListener);
+			
+			 
+			 
+			JButton buttonDiffer_all = new JButton("Differ all: Like 'A toggle button' selection");
+			ActionDiffer_all actionDiffer_all = new ActionDiffer_all(objKernel, this);
+			buttonDiffer_all.addActionListener(actionDiffer_all);		
+			this.setComponent(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_DIFFER_ALL, buttonDiffer_all);
+			this.add(buttonDiffer_all);
+			//Also diesen Button nicht hinzufügen. Sonst kriegt man sie nie wieder enabled:
+			//groupButton.add(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_DISABLE,buttonDisable);
+			
+			JButton buttonSame_all = new JButton("Same all: Like 'A toggle button' selection");
+			ActionSame_all actionSame_all = new ActionSame_all(objKernel, this);
+			buttonSame_all.addActionListener(actionSame_all);		
+			this.setComponent(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_SAME_ALL, buttonSame_all);
+			this.add(buttonSame_all);
+			//Also diesen Button nicht hinzufügen. Sonst kriegt man sie nie wieder enabled:
+			//groupButton.add(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_DISABLE,buttonDisable);
+						
 			//+++ ButtonGroup dem Panel hinzufügen
-			this.getHashtableButtonGroup().put("EINS", groupButton);  //TODO HashtableButtonGroup ist immer null in den SwingWorkern??? warum
+			this.getHashtableButtonGroup().put("EINS", groupButton);  
+			this.getHashtableButtonGroup().put("ZWEI", groupButton02); 
 			
 			} catch (ExceptionZZZ ez) {
 				String sError = ReflectCodeZZZ.getMethodCurrentName() + ": " + ez.getDetailAllLast();
@@ -149,8 +213,8 @@ class SwingWorker4ProgramPLUS extends SwingWorker implements IObjectZZZ, IKernel
 //		try{
 		
 			System.out.println("Updating Panel ...");
-			KernelJPanelCascadedZZZ objPanelParent = this.panel.getPanelParent();
-			updatePanel(objPanelParent); //20180819: Damit das klappt muss eine Komponentenliste über alle Panels zusammengesucht werden....						
+			KernelJPanelCascadedZZZ objPanelParent = this.panel; //.getPanelParent();
+			updatePanel(objPanelParent);						
 		
 //		}catch(ExceptionZZZ ez){
 //			System.out.println(ez.getDetailAllLast());
@@ -176,7 +240,7 @@ class SwingWorker4ProgramPLUS extends SwingWorker implements IObjectZZZ, IKernel
 					
 					System.out.println("PLUS GECLICKT");
 					
-					KernelJButtonGroupZZZ groupButton = panel.getHashtableButtonGroup().get("EINS");
+					KernelButtonGroupZZZ<String, AbstractButton> groupButton = panel.getHashtableButtonGroup().get("EINS");
 					if(groupButton!=null){
 						groupButton.disableOther(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_PLUS);
 					}
@@ -305,9 +369,9 @@ class SwingWorker4ProgramMINUS extends SwingWorker implements IObjectZZZ, IKerne
 	public Object construct() {
 //		try{
 		
-			System.out.println("Updating Panel ...");
-			KernelJPanelCascadedZZZ objPanelParent = this.panel.getPanelParent();
-			updatePanel(objPanelParent); //20180819: Damit das klappt muss eine Komponentenliste über alle Panels zusammengesucht werden....						
+		System.out.println("Updating Panel ...");
+		KernelJPanelCascadedZZZ objPanelParent = this.panel; //.getPanelParent();
+		updatePanel(objPanelParent);	
 		
 //		}catch(ExceptionZZZ ez){
 //			System.out.println(ez.getDetailAllLast());
@@ -332,6 +396,11 @@ class SwingWorker4ProgramMINUS extends SwingWorker implements IObjectZZZ, IKerne
 //				try {							
 					
 					System.out.println("MINUS GECLICKT");
+					
+					KernelButtonGroupZZZ<String, AbstractButton> groupButton = panel.getHashtableButtonGroup().get("EINS");
+					if(groupButton!=null){
+						groupButton.disableOther(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_MINUS);
+					}
 					panel.validate();
 					panel.repaint();	
 					
@@ -455,9 +524,9 @@ class SwingWorker4ProgramENABLE extends SwingWorker implements IObjectZZZ, IKern
 	public Object construct() {
 //		try{
 		
-			System.out.println("Updating Panel ...");
-			KernelJPanelCascadedZZZ objPanelParent = this.panel.getPanelParent();
-			updatePanel(objPanelParent); //20180819: Damit das klappt muss eine Komponentenliste über alle Panels zusammengesucht werden....						
+		System.out.println("Updating Panel ...");
+		KernelJPanelCascadedZZZ objPanelParent = this.panel; //.getPanelParent();
+		updatePanel(objPanelParent);	
 		
 //		}catch(ExceptionZZZ ez){
 //			System.out.println(ez.getDetailAllLast());
@@ -481,7 +550,16 @@ class SwingWorker4ProgramENABLE extends SwingWorker implements IObjectZZZ, IKern
 			public void run(){
 //				try {							
 					
-					System.out.println("ENABLE GECLICKT");
+					System.out.println("ENABLE ALL GECLICKT");
+					
+					KernelButtonGroupZZZ<String, AbstractButton> groupButton = panel.getHashtableButtonGroup().get("EINS");
+					if(groupButton!=null){
+						groupButton.enableAll();
+					}
+					KernelButtonGroupZZZ<String, AbstractButton> groupButton02 = panel.getHashtableButtonGroup().get("ZWEI");
+					if(groupButton02!=null){
+						groupButton02.enableAll();
+					}
 					panel.validate();
 					panel.repaint();	
 					
@@ -554,5 +632,608 @@ public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {
 }//End class ...KErnelActionCascaded....
 //##############################################
 
+//######################################
+//DISABLE BUTTON GUI - Innere Klassen, welche eine Action behandelt	
+class ActionDisable extends  KernelActionCascadedZZZ{ //KernelUseObjectZZZ implements ActionListener{						
+public ActionDisable(KernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
+	super(objKernel, panelParent);			
+}
+
+public boolean actionPerformCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ {
+	ReportLogZZZ.write(ReportLogZZZ.DEBUG, "Performing action: 'DISABLE'");
+										
+	String[] saFlag = null;			
+	KernelJPanelCascadedZZZ panelParent = (KernelJPanelCascadedZZZ) this.getPanelParent();
+															
+	SwingWorker4ProgramDISABLE worker = new SwingWorker4ProgramDISABLE(objKernel, panelParent, saFlag);
+	worker.start();  //Merke: Das Setzen des Label Felds geschieht durch einen extra Thread, der mit SwingUtitlities.invokeLater(runnable) gestartet wird.
+
+	return true;
+}
+
+public boolean actionPerformQueryCustom(ActionEvent ae) throws ExceptionZZZ {
+	return true;
+}
+
+public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ {
+}			 							
+
+class SwingWorker4ProgramDISABLE extends SwingWorker implements IObjectZZZ, IKernelUserZZZ{
+	private KernelZZZ objKernel;
+	private LogZZZ objLog;
+	private KernelJPanelCascadedZZZ panel;
+	private String[] saFlag4Program;
+	
+	private String sText2Update;    //Der Wert, der ins Label geschreiben werden soll. Jier als Variable, damit die intene Runner-Klasse darauf zugreifen kann.
+												// Auch: Dieser Wert wird aus dem Web ausgelesen und danach in das Label des Panels geschrieben.
+	
+				
+	protected ExceptionZZZ objException = null;    // diese Exception hat jedes Objekt
+	
+	public SwingWorker4ProgramDISABLE(KernelZZZ objKernel, KernelJPanelCascadedZZZ panel, String[] saFlag4Program){
+		super();
+		this.objKernel = objKernel;
+		this.objLog = objKernel.getLogObject();
+		this.panel = panel;
+		this.saFlag4Program = saFlag4Program;					
+	}
+	
+	//#### abstracte - Method aus SwingWorker
+	public Object construct() {
+//		try{
+		
+		System.out.println("Updating Panel ...");
+		KernelJPanelCascadedZZZ objPanelParent = this.panel; //.getPanelParent();
+		updatePanel(objPanelParent);	
+		
+//		}catch(ExceptionZZZ ez){
+//			System.out.println(ez.getDetailAllLast());
+//			ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());					
+//		}
+		return "all done";
+	}
+	
+
+	/**Aus dem Worker-Thread heraus wird ein Thread gestartet (der sich in die EventQueue von Swing einreiht.)
+	 *  
+	* @param stext
+	* 					
+	 */
+	public void updatePanel(KernelJPanelCascadedZZZ panel2updateStart){
+		this.panel = panel2updateStart;
+		
+//		Das Schreiben des Ergebnisses wieder an den EventDispatcher thread übergeben
+		Runnable runnerUpdatePanel= new Runnable(){
+
+			public void run(){
+//				try {							
+					
+					System.out.println("DISABLE GECLICKT");
+					
+					KernelButtonGroupZZZ<String, AbstractButton> groupButton = panel.getHashtableButtonGroup().get("EINS");
+					if(groupButton!=null){
+						groupButton.disableAll();
+					}					
+					panel.validate();
+					panel.repaint();	
+						 							
+//				} catch (ExceptionZZZ e) {
+//					e.printStackTrace();
+//				}
+			}
+		};
+		
+		SwingUtilities.invokeLater(runnerUpdatePanel);		
+		//Ggfs. nach dem Swing Worker eine Statuszeile etc. aktualisieren....
+
+	}
+	
+	
+	public KernelZZZ getKernelObject() {
+		return this.objKernel;
+	}
+
+	public void setKernelObject(KernelZZZ objKernel) {
+		this.objKernel = objKernel;
+	}
+
+	public LogZZZ getLogObject() {
+		return this.objLog;
+	}
+
+	public void setLogObject(LogZZZ objLog) {
+		this.objLog = objLog;
+	}
+	
+	
+	
+	
+	/* (non-Javadoc)
+	 * @see zzzKernel.basic.KernelAssetObjectZZZ#getExceptionObject()
+	 */
+	public ExceptionZZZ getExceptionObject() {
+		return this.objException;
+	}
+	/* (non-Javadoc)
+	 * @see zzzKernel.basic.KernelAssetObjectZZZ#setExceptionObject(zzzKernel.custom.ExceptionZZZ)
+	 */
+	public void setExceptionObject(ExceptionZZZ objException) {
+		this.objException = objException;
+	}
+	
+	
+	/**Overwritten and using an object of jakarta.commons.lang
+	 * to create this string using reflection. 
+	 * Remark: this is not yet formated. A style class is available in jakarta.commons.lang. 
+	 */
+	public String toString(){
+		String sReturn = "";
+		sReturn = ReflectionToStringBuilder.toString(this);
+		return sReturn;
+	}
+
+}
+
+@Override
+public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {
+	// TODO Auto-generated method stub
+	
+} //End Class MySwingWorker
+
+}//End class ...KErnelActionCascaded....
+//##############################################
+
+//######################################
+//TOGGLE_ALL BUTTON GUI - Innere Klassen, welche eine Action behandelt	
+class ActionToggle_all extends  KernelActionCascadedZZZ{ //KernelUseObjectZZZ implements ActionListener{						
+public ActionToggle_all(KernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
+	super(objKernel, panelParent);			
+}
+
+public boolean actionPerformCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ {
+	ReportLogZZZ.write(ReportLogZZZ.DEBUG, "Performing action: 'TOGGLE_ALL'");
+										
+	String[] saFlag = null;			
+	KernelJPanelCascadedZZZ panelParent = (KernelJPanelCascadedZZZ) this.getPanelParent();
+															
+	SwingWorker4ProgramTOGGLE_ALL worker = new SwingWorker4ProgramTOGGLE_ALL(objKernel, panelParent, saFlag);
+	worker.start();  //Merke: Das Setzen des Label Felds geschieht durch einen extra Thread, der mit SwingUtitlities.invokeLater(runnable) gestartet wird.
+
+	return true;
+}
+
+public boolean actionPerformQueryCustom(ActionEvent ae) throws ExceptionZZZ {
+	return true;
+}
+
+public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ {
+}			 							
+
+class SwingWorker4ProgramTOGGLE_ALL extends SwingWorker implements IObjectZZZ, IKernelUserZZZ{
+	private KernelZZZ objKernel;
+	private LogZZZ objLog;
+	private KernelJPanelCascadedZZZ panel;
+	private String[] saFlag4Program;
+	
+	private String sText2Update;    //Der Wert, der ins Label geschreiben werden soll. Jier als Variable, damit die intene Runner-Klasse darauf zugreifen kann.
+												// Auch: Dieser Wert wird aus dem Web ausgelesen und danach in das Label des Panels geschrieben.
+	
+				
+	protected ExceptionZZZ objException = null;    // diese Exception hat jedes Objekt
+	
+	public SwingWorker4ProgramTOGGLE_ALL(KernelZZZ objKernel, KernelJPanelCascadedZZZ panel, String[] saFlag4Program){
+		super();
+		this.objKernel = objKernel;
+		this.objLog = objKernel.getLogObject();
+		this.panel = panel;
+		this.saFlag4Program = saFlag4Program;					
+	}
+	
+	//#### abstracte - Method aus SwingWorker
+	public Object construct() {
+//		try{
+		
+		System.out.println("Updating Panel ...");
+		KernelJPanelCascadedZZZ objPanelParent = this.panel; //.getPanelParent();
+		updatePanel(objPanelParent);	
+		
+//		}catch(ExceptionZZZ ez){
+//			System.out.println(ez.getDetailAllLast());
+//			ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());					
+//		}
+		return "all done";
+	}
+	
+
+	/**Aus dem Worker-Thread heraus wird ein Thread gestartet (der sich in die EventQueue von Swing einreiht.)
+	 *  
+	* @param stext
+	* 					
+	 */
+	public void updatePanel(KernelJPanelCascadedZZZ panel2updateStart){
+		this.panel = panel2updateStart;
+		
+//		Das Schreiben des Ergebnisses wieder an den EventDispatcher thread übergeben
+		Runnable runnerUpdatePanel= new Runnable(){
+
+			public void run(){
+//				try {							
+					
+					System.out.println("TOGGLE ALL GECLICKT");
+					
+					KernelButtonGroupZZZ<String, AbstractButton> groupButton = panel.getHashtableButtonGroup().get("EINS");
+					if(groupButton!=null){
+						groupButton.toggleAll();
+					}					
+					panel.validate();
+					panel.repaint();	
+						 							
+//				} catch (ExceptionZZZ e) {
+//					e.printStackTrace();
+//				}
+			}
+		};
+		
+		SwingUtilities.invokeLater(runnerUpdatePanel);		
+		//Ggfs. nach dem Swing Worker eine Statuszeile etc. aktualisieren....
+
+	}
+	
+	
+	public KernelZZZ getKernelObject() {
+		return this.objKernel;
+	}
+
+	public void setKernelObject(KernelZZZ objKernel) {
+		this.objKernel = objKernel;
+	}
+
+	public LogZZZ getLogObject() {
+		return this.objLog;
+	}
+
+	public void setLogObject(LogZZZ objLog) {
+		this.objLog = objLog;
+	}
+	
+	
+	
+	
+	/* (non-Javadoc)
+	 * @see zzzKernel.basic.KernelAssetObjectZZZ#getExceptionObject()
+	 */
+	public ExceptionZZZ getExceptionObject() {
+		return this.objException;
+	}
+	/* (non-Javadoc)
+	 * @see zzzKernel.basic.KernelAssetObjectZZZ#setExceptionObject(zzzKernel.custom.ExceptionZZZ)
+	 */
+	public void setExceptionObject(ExceptionZZZ objException) {
+		this.objException = objException;
+	}
+	
+	
+	/**Overwritten and using an object of jakarta.commons.lang
+	 * to create this string using reflection. 
+	 * Remark: this is not yet formated. A style class is available in jakarta.commons.lang. 
+	 */
+	public String toString(){
+		String sReturn = "";
+		sReturn = ReflectionToStringBuilder.toString(this);
+		return sReturn;
+	}
+
+}
+
+@Override
+public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {
+	// TODO Auto-generated method stub
+	
+} //End Class MySwingWorker
+
+}//End class ...KErnelActionCascaded....
+//##############################################
+
+//######################################
+//DIFFER_ALL BUTTON GUI - Innere Klassen, welche eine Action behandelt	
+class ActionDiffer_all extends  KernelActionCascadedZZZ{ //KernelUseObjectZZZ implements ActionListener{						
+public ActionDiffer_all(KernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
+	super(objKernel, panelParent);			
+}
+
+public boolean actionPerformCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ {
+	ReportLogZZZ.write(ReportLogZZZ.DEBUG, "Performing action: 'DIFFER_ALL'");
+										
+	String[] saFlag = null;			
+	KernelJPanelCascadedZZZ panelParent = (KernelJPanelCascadedZZZ) this.getPanelParent();
+															
+	SwingWorker4ProgramDIFFER_ALL worker = new SwingWorker4ProgramDIFFER_ALL(objKernel, panelParent, saFlag);
+	worker.start();  //Merke: Das Setzen des Label Felds geschieht durch einen extra Thread, der mit SwingUtitlities.invokeLater(runnable) gestartet wird.
+
+	return true;
+}
+
+public boolean actionPerformQueryCustom(ActionEvent ae) throws ExceptionZZZ {
+	return true;
+}
+
+public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ {
+}			 							
+
+class SwingWorker4ProgramDIFFER_ALL extends SwingWorker implements IObjectZZZ, IKernelUserZZZ{
+	private KernelZZZ objKernel;
+	private LogZZZ objLog;
+	private KernelJPanelCascadedZZZ panel;
+	private String[] saFlag4Program;
+	
+	private String sText2Update;    //Der Wert, der ins Label geschreiben werden soll. Jier als Variable, damit die intene Runner-Klasse darauf zugreifen kann.
+												// Auch: Dieser Wert wird aus dem Web ausgelesen und danach in das Label des Panels geschrieben.
+	
+				
+	protected ExceptionZZZ objException = null;    // diese Exception hat jedes Objekt
+	
+	public SwingWorker4ProgramDIFFER_ALL(KernelZZZ objKernel, KernelJPanelCascadedZZZ panel, String[] saFlag4Program){
+		super();
+		this.objKernel = objKernel;
+		this.objLog = objKernel.getLogObject();
+		this.panel = panel;
+		this.saFlag4Program = saFlag4Program;					
+	}
+	
+	//#### abstracte - Method aus SwingWorker
+	public Object construct() {
+//		try{
+		
+		System.out.println("Updating Panel ...");
+		KernelJPanelCascadedZZZ objPanelParent = this.panel; //.getPanelParent();
+		updatePanel(objPanelParent);	
+		
+//		}catch(ExceptionZZZ ez){
+//			System.out.println(ez.getDetailAllLast());
+//			ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());					
+//		}
+		return "all done";
+	}
+	
+
+	/**Aus dem Worker-Thread heraus wird ein Thread gestartet (der sich in die EventQueue von Swing einreiht.)
+	 *  
+	* @param stext
+	* 					
+	 */
+	public void updatePanel(KernelJPanelCascadedZZZ panel2updateStart){
+		this.panel = panel2updateStart;
+		
+//		Das Schreiben des Ergebnisses wieder an den EventDispatcher thread übergeben
+		Runnable runnerUpdatePanel= new Runnable(){
+
+			public void run(){
+//				try {							
+					
+					System.out.println("DIFFER ALL GECLICKT");
+					
+					KernelButtonGroupZZZ<String, AbstractButton> groupButton = panel.getHashtableButtonGroup().get("ZWEI");
+					if(groupButton!=null){
+						groupButton.differAll(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_DIFFER_ALL_REFFERENCE);
+					}					
+					panel.validate();
+					panel.repaint();	
+						 							
+//				} catch (ExceptionZZZ e) {
+//					e.printStackTrace();
+//				}
+			}
+		};
+		
+		SwingUtilities.invokeLater(runnerUpdatePanel);		
+		//Ggfs. nach dem Swing Worker eine Statuszeile etc. aktualisieren....
+
+	}
+	
+	
+	public KernelZZZ getKernelObject() {
+		return this.objKernel;
+	}
+
+	public void setKernelObject(KernelZZZ objKernel) {
+		this.objKernel = objKernel;
+	}
+
+	public LogZZZ getLogObject() {
+		return this.objLog;
+	}
+
+	public void setLogObject(LogZZZ objLog) {
+		this.objLog = objLog;
+	}
+	
+	
+	
+	
+	/* (non-Javadoc)
+	 * @see zzzKernel.basic.KernelAssetObjectZZZ#getExceptionObject()
+	 */
+	public ExceptionZZZ getExceptionObject() {
+		return this.objException;
+	}
+	/* (non-Javadoc)
+	 * @see zzzKernel.basic.KernelAssetObjectZZZ#setExceptionObject(zzzKernel.custom.ExceptionZZZ)
+	 */
+	public void setExceptionObject(ExceptionZZZ objException) {
+		this.objException = objException;
+	}
+	
+	
+	/**Overwritten and using an object of jakarta.commons.lang
+	 * to create this string using reflection. 
+	 * Remark: this is not yet formated. A style class is available in jakarta.commons.lang. 
+	 */
+	public String toString(){
+		String sReturn = "";
+		sReturn = ReflectionToStringBuilder.toString(this);
+		return sReturn;
+	}
+
+}
+
+@Override
+public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {
+	// TODO Auto-generated method stub
+	
+} //End Class MySwingWorker
+
+}//End class ...KErnelActionCascaded....
+//##############################################
+
+//######################################
+//SAME_ALL BUTTON GUI - Innere Klassen, welche eine Action behandelt	
+class ActionSame_all extends  KernelActionCascadedZZZ{ //KernelUseObjectZZZ implements ActionListener{						
+public ActionSame_all(KernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
+	super(objKernel, panelParent);			
+}
+
+public boolean actionPerformCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ {
+	ReportLogZZZ.write(ReportLogZZZ.DEBUG, "Performing action: 'SAME_ALL'");
+										
+	String[] saFlag = null;			
+	KernelJPanelCascadedZZZ panelParent = (KernelJPanelCascadedZZZ) this.getPanelParent();
+															
+	SwingWorker4ProgramSAME_ALL worker = new SwingWorker4ProgramSAME_ALL(objKernel, panelParent, saFlag);
+	worker.start();  //Merke: Das Setzen des Label Felds geschieht durch einen extra Thread, der mit SwingUtitlities.invokeLater(runnable) gestartet wird.
+
+	return true;
+}
+
+public boolean actionPerformQueryCustom(ActionEvent ae) throws ExceptionZZZ {
+	return true;
+}
+
+public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ {
+}			 							
+
+class SwingWorker4ProgramSAME_ALL extends SwingWorker implements IObjectZZZ, IKernelUserZZZ{
+	private KernelZZZ objKernel;
+	private LogZZZ objLog;
+	private KernelJPanelCascadedZZZ panel;
+	private String[] saFlag4Program;
+	
+	private String sText2Update;    //Der Wert, der ins Label geschreiben werden soll. Jier als Variable, damit die intene Runner-Klasse darauf zugreifen kann.
+												// Auch: Dieser Wert wird aus dem Web ausgelesen und danach in das Label des Panels geschrieben.
+	
+				
+	protected ExceptionZZZ objException = null;    // diese Exception hat jedes Objekt
+	
+	public SwingWorker4ProgramSAME_ALL(KernelZZZ objKernel, KernelJPanelCascadedZZZ panel, String[] saFlag4Program){
+		super();
+		this.objKernel = objKernel;
+		this.objLog = objKernel.getLogObject();
+		this.panel = panel;
+		this.saFlag4Program = saFlag4Program;					
+	}
+	
+	//#### abstracte - Method aus SwingWorker
+	public Object construct() {
+//		try{
+		
+		System.out.println("Updating Panel ...");
+		KernelJPanelCascadedZZZ objPanelParent = this.panel; //.getPanelParent();
+		updatePanel(objPanelParent);	
+		
+//		}catch(ExceptionZZZ ez){
+//			System.out.println(ez.getDetailAllLast());
+//			ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());					
+//		}
+		return "all done";
+	}
+	
+
+	/**Aus dem Worker-Thread heraus wird ein Thread gestartet (der sich in die EventQueue von Swing einreiht.)
+	 *  
+	* @param stext
+	* 					
+	 */
+	public void updatePanel(KernelJPanelCascadedZZZ panel2updateStart){
+		this.panel = panel2updateStart;
+		
+//		Das Schreiben des Ergebnisses wieder an den EventDispatcher thread übergeben
+		Runnable runnerUpdatePanel= new Runnable(){
+
+			public void run(){
+//				try {							
+					
+					System.out.println("SAME ALL GECLICKT");
+					
+					KernelButtonGroupZZZ<String, AbstractButton> groupButton02 = panel.getHashtableButtonGroup().get("ZWEI");
+					if(groupButton02!=null){
+						groupButton02.sameAll(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_SAME_ALL_REFFERENCE);
+					}					
+					panel.validate();
+					panel.repaint();	
+						 							
+//				} catch (ExceptionZZZ e) {
+//					e.printStackTrace();
+//				}
+			}
+		};
+		
+		SwingUtilities.invokeLater(runnerUpdatePanel);		
+		//Ggfs. nach dem Swing Worker eine Statuszeile etc. aktualisieren....
+
+	}
+	
+	
+	public KernelZZZ getKernelObject() {
+		return this.objKernel;
+	}
+
+	public void setKernelObject(KernelZZZ objKernel) {
+		this.objKernel = objKernel;
+	}
+
+	public LogZZZ getLogObject() {
+		return this.objLog;
+	}
+
+	public void setLogObject(LogZZZ objLog) {
+		this.objLog = objLog;
+	}
+	
+	
+	
+	
+	/* (non-Javadoc)
+	 * @see zzzKernel.basic.KernelAssetObjectZZZ#getExceptionObject()
+	 */
+	public ExceptionZZZ getExceptionObject() {
+		return this.objException;
+	}
+	/* (non-Javadoc)
+	 * @see zzzKernel.basic.KernelAssetObjectZZZ#setExceptionObject(zzzKernel.custom.ExceptionZZZ)
+	 */
+	public void setExceptionObject(ExceptionZZZ objException) {
+		this.objException = objException;
+	}
+	
+	
+	/**Overwritten and using an object of jakarta.commons.lang
+	 * to create this string using reflection. 
+	 * Remark: this is not yet formated. A style class is available in jakarta.commons.lang. 
+	 */
+	public String toString(){
+		String sReturn = "";
+		sReturn = ReflectionToStringBuilder.toString(this);
+		return sReturn;
+	}
+
+}
+
+@Override
+public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {
+	// TODO Auto-generated method stub
+	
+} //End Class MySwingWorker
+
+}//End class ...KErnelActionCascaded....
+//##############################################
 
 }

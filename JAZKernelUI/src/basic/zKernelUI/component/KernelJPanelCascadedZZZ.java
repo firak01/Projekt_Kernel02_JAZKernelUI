@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Set;
 
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -50,7 +51,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	
 	private Hashtable<String,JPanel> htPanelSub=new Hashtable<String,JPanel>();
 	private Hashtable<String,JComponent> htComponent = new Hashtable<String,JComponent>();
-	private Hashtable <String, KernelJButtonGroupZZZ<String, JButton>> htButtonGroup = new Hashtable<String, KernelJButtonGroupZZZ<String, JButton>>();
+	private Hashtable <String, KernelButtonGroupZZZ<String, AbstractButton>> htButtonGroup = new Hashtable<String, KernelButtonGroupZZZ<String, AbstractButton>>();
 	
 	private ListenerMouseMove4DragableWindowZZZ listenerDraggableWindow = null; 
 
@@ -909,7 +910,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 		return this.htPanelSub;
 	}
 	
-	public Hashtable<String,KernelJButtonGroupZZZ<String,JButton>> getHashtableButtonGroup(){
+	public Hashtable<String,KernelButtonGroupZZZ<String,AbstractButton>> getHashtableButtonGroup(){
 		return this.htButtonGroup;
 	}
 	
