@@ -2,14 +2,15 @@ package basic.zKernelUI.component;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import basic.zKernel.KernelZZZ;
 
+import basic.zKernel.IKernelZZZ;
+import basic.zKernel.KernelZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
 
 public class KernelActionJMenuZZZ extends KernelUseObjectZZZ  implements ActionListener{
 	KernelJFrameCascadedZZZ frameParentCascaded = null;
 	
-	public KernelActionJMenuZZZ(KernelZZZ objKernel, KernelJFrameCascadedZZZ frameParentCascaded ){
+	public KernelActionJMenuZZZ(IKernelZZZ objKernel, KernelJFrameCascadedZZZ frameParentCascaded ){
 		super(objKernel);
 		this.frameParentCascaded = frameParentCascaded;
 	}
@@ -25,6 +26,6 @@ public class KernelActionJMenuZZZ extends KernelUseObjectZZZ  implements ActionL
 	
 	//### Aus Interface
 	public void actionPerformed(ActionEvent arg0) {
-		//Muss dann überschreiben werden
+		//Muss dann ï¿½berschreiben werden
 	}
 }

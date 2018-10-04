@@ -9,17 +9,17 @@ import javax.swing.JPanel;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zKernel.IKernelUserZZZ;
+import basic.zKernel.IKernelZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
-
 import basic.zKernel.KernelZZZ;
 import custom.zKernel.LogZZZ;
 import custom.zKernelUI.module.config.DLG.Panel_NORTHZZZ;
 
 
 public class PanelDebugButtonGroupZZZ extends KernelJPanelCascadedZZZ{
-   private KernelZZZ objKernelChoosen;
+   private IKernelZZZ objKernelChoosen;
 	
-	public PanelDebugButtonGroupZZZ(KernelZZZ objKernel, JFrame frameParent) throws ExceptionZZZ{
+	public PanelDebugButtonGroupZZZ(IKernelZZZ objKernel, JFrame frameParent) throws ExceptionZZZ{
 		super(objKernel, frameParent);
         this.setKernelConfigObject(objKernelChoosen);
 				
@@ -46,10 +46,10 @@ public class PanelDebugButtonGroupZZZ extends KernelJPanelCascadedZZZ{
 	}
 
 	
-	public KernelZZZ getKernelConfigObject(){
+	public IKernelZZZ getKernelConfigObject(){
 		return this.objKernelChoosen;
 	}
-	public void setKernelConfigObject(KernelZZZ objKernelConfig){
+	public void setKernelConfigObject(IKernelZZZ objKernelConfig){
 		this.objKernelChoosen = objKernelConfig;
 	}
 	

@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
 import custom.zKernel.LogZZZ;
 
@@ -28,13 +29,13 @@ import basic.zBasicUI.adapter.AdapterJComponent4ScreenSnapperZZZ;
 import basic.zBasicUI.listener.ListenerMouseMove4DragableWindowZZZ;
 import basic.zKernel.IKernelUserZZZ;
 
-/**Diese Klasse soll sicherstellen, das ein Dialogfenster auch nur einmal geöffnet wird.
+/**Diese Klasse soll sicherstellen, das ein Dialogfenster auch nur einmal geï¿½ffnet wird.
  * !!! NOCH UNGETESTET !!!
  * @author 0823
  *
  */
 public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConstantZZZ, IObjectZZZ, IKernelUserZZZ, IScreenFeatureZZZ, IMouseFeatureZZZ{
-	private KernelZZZ objKernel;
+	private IKernelZZZ objKernel;
 	private LogZZZ objLog;
 	private boolean bPanelCenterAdded=false;
 	private boolean bPanelButtonAdded=false;
@@ -42,12 +43,12 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	private String sText4ButtonOk="OK";
 	private String sText4ContentDefault = "";
 	
-	private Hashtable objHtPanelSub=new Hashtable();     //Die Panels, die im BorderLayout hinzugefügt werden
+	private Hashtable objHtPanelSub=new Hashtable();     //Die Panels, die im BorderLayout hinzugefï¿½gt werden
 	//private Hashtable objHtComponent = new Hashtable(); //Soll Komponenenten, wie z.B. ein Textfield per "Alias" greifbar machen.
 	
 	private 	boolean flagComponentDraggable=true;
-	private boolean flagComponentKernelProgram = false; // 2013-07-08: Damit wird gesagt, dass für dieses Panel ein "Program-Abschnitt" in der Kernel - Konfigurations .ini - Datei vorhanden ist.
-    //             Bei der Suche nach Parametern wird von der aktuellen Komponente weiter "nach oben" durchgegangen und der Parameter für jede Programkomponente gesucht.
+	private boolean flagComponentKernelProgram = false; // 2013-07-08: Damit wird gesagt, dass fï¿½r dieses Panel ein "Program-Abschnitt" in der Kernel - Konfigurations .ini - Datei vorhanden ist.
+    //             Bei der Suche nach Parametern wird von der aktuellen Komponente weiter "nach oben" durchgegangen und der Parameter fï¿½r jede Programkomponente gesucht.
 
 
 	private boolean bFlagDebug = false;
@@ -55,7 +56,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	private boolean bFlagTerminate = false;
 	
 	
-	public KernelJDialogExtendedZZZ(KernelZZZ objKernel, KernelJFrameCascadedZZZ frameOwner, boolean bModal, HashMap<String, Boolean> hmFlag){
+	public KernelJDialogExtendedZZZ(IKernelZZZ objKernel, KernelJFrameCascadedZZZ frameOwner, boolean bModal, HashMap<String, Boolean> hmFlag){
 		super(frameOwner, bModal);		//Das initialisiert JDialog
 		this.setKernelObject(objKernel);
 		this.setLogObject(objKernel.getLogObject());
@@ -133,7 +134,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			String stemp = sFlagName.toLowerCase();
 			if(stemp.equals("debug")){
 				this.bFlagDebug = bFlagValue;
-				bFunction = true;                            //durch diesen return wert kann man "reflexiv" ermitteln, ob es in dem ganzen hierarchie-strang das flag überhaupt gibt !!!
+				bFunction = true;                            //durch diesen return wert kann man "reflexiv" ermitteln, ob es in dem ganzen hierarchie-strang das flag ï¿½berhaupt gibt !!!
 				break main;
 			}else if(stemp.equals("init")){
 				this.bFlagInit = bFlagValue;
@@ -163,7 +164,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	public void addPanelCenter(KernelJPanelCascadedZZZ panelCenter) throws ExceptionZZZ{
 		main:{
 			if(panelCenter == null){
-				//Nun das Standard Content Panel hinzufügen
+				//Nun das Standard Content Panel hinzufï¿½gen
 				String sText = this.getText4ContentDefault();
 				KernelJPanelCascadedZZZ panel2add = this.getPanelContent();
 				if(panel2add==null){
@@ -172,7 +173,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 				}
 				
 				if(this.isJComponentContentDraggable()){								
-					//Nun den Listener für diese Komponente hinzufügen, der es erlaubt durch Drag mit der Maus auf das Panel des Dialogs den ganzen Dialog zu bewegen.
+					//Nun den Listener fï¿½r diese Komponente hinzufï¿½gen, der es erlaubt durch Drag mit der Maus auf das Panel des Dialogs den ganzen Dialog zu bewegen.
 					ListenerMouseMove4DragableWindowZZZ mml = new ListenerMouseMove4DragableWindowZZZ((JPanel)panel2add, (JDialog)this);
 					panel2add.addMouseListener(mml);
 					panel2add.addMouseMotionListener(mml);
@@ -184,7 +185,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 
 			}else{
 				if(this.isJComponentContentDraggable()){								
-					//Nun den Listener für diese Komponente hinzufügen, der es erlaubt durch Drag mit der Maus auf das Panel des Dialogs den ganzen Dialog zu bewegen.
+					//Nun den Listener fï¿½r diese Komponente hinzufï¿½gen, der es erlaubt durch Drag mit der Maus auf das Panel des Dialogs den ganzen Dialog zu bewegen.
 					ListenerMouseMove4DragableWindowZZZ mml = new ListenerMouseMove4DragableWindowZZZ((JPanel)panelCenter, (JDialog)this);
 					panelCenter.addMouseListener(mml);
 					panelCenter.addMouseMotionListener(mml);
@@ -198,7 +199,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		}
 
 	public void addPanelButton(KernelJPanelCascadedZZZ panelButton){
-		//Nun den standard Button Panel hinzufügen
+		//Nun den standard Button Panel hinzufï¿½gen
 		if(panelButton == null){ 
 			KernelJPanelCascadedZZZ panel2add = this.getPanelButton();
 			if(panel2add==null){
@@ -208,7 +209,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			
 			
 			if(this.isJComponentContentDraggable()){								
-	//			Nun den Listner für diese Komponente hinzufügen, der es erlaubt durch Drag mit der Maus auf das Panel des Dialogs den ganzen Dialog zu bewegen.
+	//			Nun den Listner fï¿½r diese Komponente hinzufï¿½gen, der es erlaubt durch Drag mit der Maus auf das Panel des Dialogs den ganzen Dialog zu bewegen.
 				ListenerMouseMove4DragableWindowZZZ mml = new ListenerMouseMove4DragableWindowZZZ((JPanel)panel2add, (JDialog)this);
 				panel2add.addMouseListener(mml);
 				panel2add.addMouseMotionListener(mml);
@@ -218,7 +219,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			this.bPanelButtonAdded=true;
 		}else{
 			if(this.isJComponentContentDraggable()){			
-	//			Nun den Listner für diese Komponente hinzufügen, der es erlaubt durch Drag mit der Maus auf das Panel des Dialogs den ganzen Dialog zu bewegen.
+	//			Nun den Listner fï¿½r diese Komponente hinzufï¿½gen, der es erlaubt durch Drag mit der Maus auf das Panel des Dialogs den ganzen Dialog zu bewegen.
 				ListenerMouseMove4DragableWindowZZZ mml = new ListenerMouseMove4DragableWindowZZZ((JPanel)panelButton, (JDialog)this);
 				panelButton.addMouseListener(mml);
 				panelButton.addMouseMotionListener(mml);
@@ -290,18 +291,18 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			*/
 			
 			/*
-			//Falls noch keine Button-Zeile hinzugefügt worden ist, dies hier nachholen
+			//Falls noch keine Button-Zeile hinzugefï¿½gt worden ist, dies hier nachholen
 			if(this.bPanelButtonAdded==false){
-				this.addPanelButton(null); //null soll bewirken, dass das default ButtonPanel hinzugefügt wird.
-			}  //Merke: Normlerweise werden die Panels im Konstruktor der Dialogbox hinzugefügt, der von KernelJDialogboxExtended erbt. 
+				this.addPanelButton(null); //null soll bewirken, dass das default ButtonPanel hinzugefï¿½gt wird.
+			}  //Merke: Normlerweise werden die Panels im Konstruktor der Dialogbox hinzugefï¿½gt, der von KernelJDialogboxExtended erbt. 
 			*/
 
-			//Hier nun die Panels hinzufügen, aber nur, wenn sie nicht schon hinzugefügt worden sind
-			//Merke: Die Panels sollten noch nicht im Konstruktor der Klasse hinzugefügt werden, weil man sonst schwerer eigenschaften wie "Button-Text" ändern kann.
-			//          So kann man erst das Objekt erzeugen und dann mit "setText4ButtonOk" den Button-Text ändern, der dann mit showDialog() angezeigt wird.
+			//Hier nun die Panels hinzufï¿½gen, aber nur, wenn sie nicht schon hinzugefï¿½gt worden sind
+			//Merke: Die Panels sollten noch nicht im Konstruktor der Klasse hinzugefï¿½gt werden, weil man sonst schwerer eigenschaften wie "Button-Text" ï¿½ndern kann.
+			//          So kann man erst das Objekt erzeugen und dann mit "setText4ButtonOk" den Button-Text ï¿½ndern, der dann mit showDialog() angezeigt wird.
 			if(this.bPanelButtonAdded==false){
 				KernelJPanelCascadedZZZ panelButton = this.getPanelButton();				
-				this.addPanelButton(panelButton); //null soll bewirken, dass das default ButtonPanel hinzugefügt wird.
+				this.addPanelButton(panelButton); //null soll bewirken, dass das default ButtonPanel hinzugefï¿½gt wird.
 			}  
 			
 			if(this.bPanelCenterAdded==false){
@@ -359,14 +360,14 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	/* (non-Javadoc)
 	 * @see basic.zKernel.IKernelZZZ#getKernelObject()
 	 */
-	public KernelZZZ getKernelObject() {
+	public IKernelZZZ getKernelObject() {
 		return this.objKernel;
 	}
 
 	/* (non-Javadoc)
 	 * @see basic.zKernel.IKernelZZZ#setKernelObject(custom.zKernel.KernelZZZ)
 	 */
-	public void setKernelObject(KernelZZZ objKernel) {
+	public void setKernelObject(IKernelZZZ objKernel) {
 		this.objKernel = objKernel;
 	}
 
@@ -417,7 +418,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	public abstract KernelJPanelCascadedZZZ getPanelContent() throws ExceptionZZZ;
 	
 	
-	/** Kann von einer Dialogbox überschrieben werden, wenn ein anderes Panel als das "Default" Panel verwendet werden soll.
+	/** Kann von einer Dialogbox ï¿½berschrieben werden, wenn ein anderes Panel als das "Default" Panel verwendet werden soll.
 	* @return
 	* 
 	* lindhaueradmin; 11.01.2007 08:27:54

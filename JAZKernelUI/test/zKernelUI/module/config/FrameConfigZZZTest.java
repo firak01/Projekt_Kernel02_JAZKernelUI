@@ -6,6 +6,7 @@ import javax.swing.JComponent;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zKernelUI.util.KernelJComboBoxHelperZZZ;
+import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
 import custom.zKernelUI.module.config.FrameConfigZZZ;
 import custom.zKernelUI.module.config.PanelConfigZZZ;
@@ -101,7 +102,7 @@ public class FrameConfigZZZTest extends TestCase {
 			JComboBox objCombo = (JComboBox) objComp;
 			
 			//Dazu eine Helper-Klasse verwenden ....
-			KernelZZZ objKernel = frmConfigTest.getKernelObject();
+			IKernelZZZ objKernel = frmConfigTest.getKernelObject();
 			KernelJComboBoxHelperZZZ objComboHelp = new KernelJComboBoxHelperZZZ(objKernel, objCombo);
 			String[] saContent = objComboHelp.getStringAll();
 			assertNotNull("The combo box for module selection seems to have no content", saContent);	

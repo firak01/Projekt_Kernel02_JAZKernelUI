@@ -32,6 +32,7 @@ import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zBasicUI.adapter.AdapterJComponent4ScreenSnapperZZZ;
 import basic.zKernel.IKernelUserZZZ;
+import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
 import custom.zKernel.LogZZZ;
 
@@ -39,7 +40,7 @@ import custom.zKernel.LogZZZ;
  * @author Lindhauer
  */
 public abstract class KernelJFrameCascadedZZZ extends JFrame  implements IObjectZZZ, IFlagZZZ, IKernelUserZZZ, IComponentCascadedUserZZZ, IFrameCascadedZZZ, IFrameLaunchableZZZ, IScreenFeatureZZZ{
-	private KernelZZZ objKernel;
+	private IKernelZZZ objKernel;
 	private LogZZZ objLog; 
 	private KernelJFrameCascadedZZZ frameParent=null;
 	private JFrame frameBasic = null;  //Falls diese Klasse aus einem normalen JFrame erstellt werden soll.
@@ -74,7 +75,7 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 	 * @param objKernel
 	 * @param frameBasic
 	 */
-	public KernelJFrameCascadedZZZ(KernelZZZ objKernel, JFrame frameBasic){
+	public KernelJFrameCascadedZZZ(IKernelZZZ objKernel, JFrame frameBasic){
 		super();
 		this.setKernelObject(objKernel);  //Merke: Diese Klasse erweiter JFrame und nicht KernelUseObjectZZZ
 		this.setLogObject(objKernel.getLogObject());
@@ -89,7 +90,7 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 	 * @param objKernel
 	 * @throws ExceptionZZZ
 	 */
-	public KernelJFrameCascadedZZZ(KernelZZZ objKernel) throws ExceptionZZZ{
+	public KernelJFrameCascadedZZZ(IKernelZZZ objKernel) throws ExceptionZZZ{
 		super();
 		this.setKernelObject(objKernel);  //Merke: Diese Klasse erweiter JFrame und nicht KernelUseObjectZZZ
 		this.setLogObject(objKernel.getLogObject());
@@ -103,7 +104,7 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 	 * @param frameParent, if null => this will be handled as a basic frame.
 	 * @throws ExceptionZZZ
 	 */
-	public KernelJFrameCascadedZZZ(KernelZZZ objKernel, KernelJFrameCascadedZZZ frameParent) throws ExceptionZZZ{
+	public KernelJFrameCascadedZZZ(IKernelZZZ objKernel, KernelJFrameCascadedZZZ frameParent) throws ExceptionZZZ{
 		super();
 		
 		this.setKernelObject(objKernel);   //Merke: Diese Klasse erweiter JFrame und nicht KernelUseObjectZZZ
@@ -551,10 +552,10 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 	
 	//#######################################
 	//Methods implemented by Interface
-	public KernelZZZ getKernelObject() {
+	public IKernelZZZ getKernelObject() {
 		return this.objKernel;
 	}
-	public void setKernelObject(KernelZZZ objKernel) {
+	public void setKernelObject(IKernelZZZ objKernel) {
 		this.objKernel = objKernel;
 	}
 		

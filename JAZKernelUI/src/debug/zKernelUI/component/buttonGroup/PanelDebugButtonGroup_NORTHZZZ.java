@@ -32,9 +32,8 @@ import basic.zBasicUI.thread.SwingWorker;
 import basic.zKernelUI.component.KernelActionCascadedZZZ;
 import basic.zKernelUI.component.KernelButtonGroupZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
-
-
 import basic.zKernel.IKernelUserZZZ;
+import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
 
 public class PanelDebugButtonGroup_NORTHZZZ extends KernelJPanelCascadedZZZ {
@@ -51,7 +50,7 @@ public class PanelDebugButtonGroup_NORTHZZZ extends KernelJPanelCascadedZZZ {
     private static final String sBUTTON_SAME_ALL = "buttonSame_all";
     private static final String sBUTTON_SAME_ALL_REFFERENCE = "buttonSame_all_reference";
 	
-	public PanelDebugButtonGroup_NORTHZZZ(KernelZZZ objKernel, JPanel panelParent) throws ExceptionZZZ {
+	public PanelDebugButtonGroup_NORTHZZZ(IKernelZZZ objKernel, JPanel panelParent) throws ExceptionZZZ {
 		super(objKernel, panelParent);
 		main:{
 		try {		
@@ -165,7 +164,7 @@ public class PanelDebugButtonGroup_NORTHZZZ extends KernelJPanelCascadedZZZ {
 	//######################################
 //PLUS BUTTON GUI - Innere Klassen, welche eine Action behandelt	
 class ActionPlus extends  KernelActionCascadedZZZ{ //KernelUseObjectZZZ implements ActionListener{						
-public ActionPlus(KernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
+public ActionPlus(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
 	super(objKernel, panelParent);			
 }
 
@@ -189,7 +188,7 @@ public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws
 }			 							
 
 class SwingWorker4ProgramPLUS extends SwingWorker implements IObjectZZZ, IKernelUserZZZ{
-	private KernelZZZ objKernel;
+	private IKernelZZZ objKernel;
 	private LogZZZ objLog;
 	private KernelJPanelCascadedZZZ panel;
 	private String[] saFlag4Program;
@@ -200,7 +199,7 @@ class SwingWorker4ProgramPLUS extends SwingWorker implements IObjectZZZ, IKernel
 				
 	protected ExceptionZZZ objException = null;    // diese Exception hat jedes Objekt
 	
-	public SwingWorker4ProgramPLUS(KernelZZZ objKernel, KernelJPanelCascadedZZZ panel, String[] saFlag4Program){
+	public SwingWorker4ProgramPLUS(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panel, String[] saFlag4Program){
 		super();
 		this.objKernel = objKernel;
 		this.objLog = objKernel.getLogObject();
@@ -263,11 +262,11 @@ class SwingWorker4ProgramPLUS extends SwingWorker implements IObjectZZZ, IKernel
 	}
 	
 	
-	public KernelZZZ getKernelObject() {
+	public IKernelZZZ getKernelObject() {
 		return this.objKernel;
 	}
 
-	public void setKernelObject(KernelZZZ objKernel) {
+	public void setKernelObject(IKernelZZZ objKernel) {
 		this.objKernel = objKernel;
 	}
 
@@ -322,7 +321,7 @@ public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {
 //######################################
 //MINUS BUTTON GUI - Innere Klassen, welche eine Action behandelt	
 class ActionMinus extends  KernelActionCascadedZZZ{ //KernelUseObjectZZZ implements ActionListener{						
-public ActionMinus(KernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
+public ActionMinus(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
 super(objKernel, panelParent);			
 }
 
@@ -346,7 +345,7 @@ public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws
 }			 							
 
 class SwingWorker4ProgramMINUS extends SwingWorker implements IObjectZZZ, IKernelUserZZZ{
-	private KernelZZZ objKernel;
+	private IKernelZZZ objKernel;
 	private LogZZZ objLog;
 	private KernelJPanelCascadedZZZ panel;
 	private String[] saFlag4Program;
@@ -357,7 +356,7 @@ class SwingWorker4ProgramMINUS extends SwingWorker implements IObjectZZZ, IKerne
 				
 	protected ExceptionZZZ objException = null;    // diese Exception hat jedes Objekt
 	
-	public SwingWorker4ProgramMINUS(KernelZZZ objKernel, KernelJPanelCascadedZZZ panel, String[] saFlag4Program){
+	public SwingWorker4ProgramMINUS(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panel, String[] saFlag4Program){
 		super();
 		this.objKernel = objKernel;
 		this.objLog = objKernel.getLogObject();
@@ -419,11 +418,11 @@ class SwingWorker4ProgramMINUS extends SwingWorker implements IObjectZZZ, IKerne
 	}
 	
 	
-	public KernelZZZ getKernelObject() {
+	public IKernelZZZ getKernelObject() {
 		return this.objKernel;
 	}
 
-	public void setKernelObject(KernelZZZ objKernel) {
+	public void setKernelObject(IKernelZZZ objKernel) {
 		this.objKernel = objKernel;
 	}
 
@@ -477,7 +476,7 @@ public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {
 //######################################
 //ENABLE BUTTON GUI - Innere Klassen, welche eine Action behandelt	
 class ActionEnable extends  KernelActionCascadedZZZ{ //KernelUseObjectZZZ implements ActionListener{						
-public ActionEnable(KernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
+public ActionEnable(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
 	super(objKernel, panelParent);			
 }
 
@@ -501,7 +500,7 @@ public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws
 }			 							
 
 class SwingWorker4ProgramENABLE extends SwingWorker implements IObjectZZZ, IKernelUserZZZ{
-	private KernelZZZ objKernel;
+	private IKernelZZZ objKernel;
 	private LogZZZ objLog;
 	private KernelJPanelCascadedZZZ panel;
 	private String[] saFlag4Program;
@@ -512,7 +511,7 @@ class SwingWorker4ProgramENABLE extends SwingWorker implements IObjectZZZ, IKern
 				
 	protected ExceptionZZZ objException = null;    // diese Exception hat jedes Objekt
 	
-	public SwingWorker4ProgramENABLE(KernelZZZ objKernel, KernelJPanelCascadedZZZ panel, String[] saFlag4Program){
+	public SwingWorker4ProgramENABLE(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panel, String[] saFlag4Program){
 		super();
 		this.objKernel = objKernel;
 		this.objLog = objKernel.getLogObject();
@@ -578,11 +577,11 @@ class SwingWorker4ProgramENABLE extends SwingWorker implements IObjectZZZ, IKern
 	}
 	
 	
-	public KernelZZZ getKernelObject() {
+	public IKernelZZZ getKernelObject() {
 		return this.objKernel;
 	}
 
-	public void setKernelObject(KernelZZZ objKernel) {
+	public void setKernelObject(IKernelZZZ objKernel) {
 		this.objKernel = objKernel;
 	}
 
@@ -635,7 +634,7 @@ public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {
 //######################################
 //DISABLE BUTTON GUI - Innere Klassen, welche eine Action behandelt	
 class ActionDisable extends  KernelActionCascadedZZZ{ //KernelUseObjectZZZ implements ActionListener{						
-public ActionDisable(KernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
+public ActionDisable(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
 	super(objKernel, panelParent);			
 }
 
@@ -659,7 +658,7 @@ public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws
 }			 							
 
 class SwingWorker4ProgramDISABLE extends SwingWorker implements IObjectZZZ, IKernelUserZZZ{
-	private KernelZZZ objKernel;
+	private IKernelZZZ objKernel;
 	private LogZZZ objLog;
 	private KernelJPanelCascadedZZZ panel;
 	private String[] saFlag4Program;
@@ -670,7 +669,7 @@ class SwingWorker4ProgramDISABLE extends SwingWorker implements IObjectZZZ, IKer
 				
 	protected ExceptionZZZ objException = null;    // diese Exception hat jedes Objekt
 	
-	public SwingWorker4ProgramDISABLE(KernelZZZ objKernel, KernelJPanelCascadedZZZ panel, String[] saFlag4Program){
+	public SwingWorker4ProgramDISABLE(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panel, String[] saFlag4Program){
 		super();
 		this.objKernel = objKernel;
 		this.objLog = objKernel.getLogObject();
@@ -729,11 +728,11 @@ class SwingWorker4ProgramDISABLE extends SwingWorker implements IObjectZZZ, IKer
 	}
 	
 	
-	public KernelZZZ getKernelObject() {
+	public IKernelZZZ getKernelObject() {
 		return this.objKernel;
 	}
 
-	public void setKernelObject(KernelZZZ objKernel) {
+	public void setKernelObject(IKernelZZZ objKernel) {
 		this.objKernel = objKernel;
 	}
 
@@ -786,7 +785,7 @@ public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {
 //######################################
 //TOGGLE_ALL BUTTON GUI - Innere Klassen, welche eine Action behandelt	
 class ActionToggle_all extends  KernelActionCascadedZZZ{ //KernelUseObjectZZZ implements ActionListener{						
-public ActionToggle_all(KernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
+public ActionToggle_all(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
 	super(objKernel, panelParent);			
 }
 
@@ -810,7 +809,7 @@ public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws
 }			 							
 
 class SwingWorker4ProgramTOGGLE_ALL extends SwingWorker implements IObjectZZZ, IKernelUserZZZ{
-	private KernelZZZ objKernel;
+	private IKernelZZZ objKernel;
 	private LogZZZ objLog;
 	private KernelJPanelCascadedZZZ panel;
 	private String[] saFlag4Program;
@@ -821,7 +820,7 @@ class SwingWorker4ProgramTOGGLE_ALL extends SwingWorker implements IObjectZZZ, I
 				
 	protected ExceptionZZZ objException = null;    // diese Exception hat jedes Objekt
 	
-	public SwingWorker4ProgramTOGGLE_ALL(KernelZZZ objKernel, KernelJPanelCascadedZZZ panel, String[] saFlag4Program){
+	public SwingWorker4ProgramTOGGLE_ALL(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panel, String[] saFlag4Program){
 		super();
 		this.objKernel = objKernel;
 		this.objLog = objKernel.getLogObject();
@@ -880,11 +879,11 @@ class SwingWorker4ProgramTOGGLE_ALL extends SwingWorker implements IObjectZZZ, I
 	}
 	
 	
-	public KernelZZZ getKernelObject() {
+	public IKernelZZZ getKernelObject() {
 		return this.objKernel;
 	}
 
-	public void setKernelObject(KernelZZZ objKernel) {
+	public void setKernelObject(IKernelZZZ objKernel) {
 		this.objKernel = objKernel;
 	}
 
@@ -937,7 +936,7 @@ public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {
 //######################################
 //DIFFER_ALL BUTTON GUI - Innere Klassen, welche eine Action behandelt	
 class ActionDiffer_all extends  KernelActionCascadedZZZ{ //KernelUseObjectZZZ implements ActionListener{						
-public ActionDiffer_all(KernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
+public ActionDiffer_all(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
 	super(objKernel, panelParent);			
 }
 
@@ -961,7 +960,7 @@ public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws
 }			 							
 
 class SwingWorker4ProgramDIFFER_ALL extends SwingWorker implements IObjectZZZ, IKernelUserZZZ{
-	private KernelZZZ objKernel;
+	private IKernelZZZ objKernel;
 	private LogZZZ objLog;
 	private KernelJPanelCascadedZZZ panel;
 	private String[] saFlag4Program;
@@ -972,7 +971,7 @@ class SwingWorker4ProgramDIFFER_ALL extends SwingWorker implements IObjectZZZ, I
 				
 	protected ExceptionZZZ objException = null;    // diese Exception hat jedes Objekt
 	
-	public SwingWorker4ProgramDIFFER_ALL(KernelZZZ objKernel, KernelJPanelCascadedZZZ panel, String[] saFlag4Program){
+	public SwingWorker4ProgramDIFFER_ALL(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panel, String[] saFlag4Program){
 		super();
 		this.objKernel = objKernel;
 		this.objLog = objKernel.getLogObject();
@@ -1031,11 +1030,11 @@ class SwingWorker4ProgramDIFFER_ALL extends SwingWorker implements IObjectZZZ, I
 	}
 	
 	
-	public KernelZZZ getKernelObject() {
+	public IKernelZZZ getKernelObject() {
 		return this.objKernel;
 	}
 
-	public void setKernelObject(KernelZZZ objKernel) {
+	public void setKernelObject(IKernelZZZ objKernel) {
 		this.objKernel = objKernel;
 	}
 
@@ -1088,7 +1087,7 @@ public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {
 //######################################
 //SAME_ALL BUTTON GUI - Innere Klassen, welche eine Action behandelt	
 class ActionSame_all extends  KernelActionCascadedZZZ{ //KernelUseObjectZZZ implements ActionListener{						
-public ActionSame_all(KernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
+public ActionSame_all(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
 	super(objKernel, panelParent);			
 }
 
@@ -1112,7 +1111,7 @@ public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws
 }			 							
 
 class SwingWorker4ProgramSAME_ALL extends SwingWorker implements IObjectZZZ, IKernelUserZZZ{
-	private KernelZZZ objKernel;
+	private IKernelZZZ objKernel;
 	private LogZZZ objLog;
 	private KernelJPanelCascadedZZZ panel;
 	private String[] saFlag4Program;
@@ -1123,7 +1122,7 @@ class SwingWorker4ProgramSAME_ALL extends SwingWorker implements IObjectZZZ, IKe
 				
 	protected ExceptionZZZ objException = null;    // diese Exception hat jedes Objekt
 	
-	public SwingWorker4ProgramSAME_ALL(KernelZZZ objKernel, KernelJPanelCascadedZZZ panel, String[] saFlag4Program){
+	public SwingWorker4ProgramSAME_ALL(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panel, String[] saFlag4Program){
 		super();
 		this.objKernel = objKernel;
 		this.objLog = objKernel.getLogObject();
@@ -1182,11 +1181,11 @@ class SwingWorker4ProgramSAME_ALL extends SwingWorker implements IObjectZZZ, IKe
 	}
 	
 	
-	public KernelZZZ getKernelObject() {
+	public IKernelZZZ getKernelObject() {
 		return this.objKernel;
 	}
 
-	public void setKernelObject(KernelZZZ objKernel) {
+	public void setKernelObject(IKernelZZZ objKernel) {
 		this.objKernel = objKernel;
 	}
 

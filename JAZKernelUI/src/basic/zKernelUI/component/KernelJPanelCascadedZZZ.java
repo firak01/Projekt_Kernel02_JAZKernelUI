@@ -33,6 +33,7 @@ import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zBasicUI.listener.ListenerMouseMove4DragableWindowZZZ;
 import basic.zKernel.IKernelModuleUserZZZ;
 import basic.zKernel.IKernelUserZZZ;
+import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import basic.zUtil.io.KernelFileZZZ.FLAGZ;
@@ -42,7 +43,7 @@ import custom.zKernel.LogZZZ;
  * Merke: Ohne ein JFrame als Parent funktioniert es nicht, das Panel per Drag mit der Maus zu bewegen 
  */
 public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IComponentCascadedUserZZZ, IConstantZZZ,  IKernelUserZZZ, IKernelModuleUserZZZ, IObjectZZZ, IMouseFeatureZZZ, IFlagZZZ{
-	protected KernelZZZ objKernel;   //das "protected" erlaubt es hiervon erbende Klassen mit XYXErbendeKlasse.objKernel zu arbeiten.
+	protected IKernelZZZ objKernel;   //das "protected" erlaubt es hiervon erbende Klassen mit XYXErbendeKlasse.objKernel zu arbeiten.
 	protected LogZZZ objLog;
 	private ExceptionZZZ objException;
 	private JPanel panelParent;
@@ -84,7 +85,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 		//20130723 raus:		KernelJPanelCascadedNew_(null, frameParent, null);
 	}
 	
-	public KernelJPanelCascadedZZZ(KernelZZZ objKernel) throws ExceptionZZZ{
+	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel) throws ExceptionZZZ{
 		KernelJFrameCascadedZZZ frameParent = (KernelJFrameCascadedZZZ) SwingUtilities.getAncestorOfClass(KernelJFrameCascadedZZZ.class, (JComponent)this); //ist eh null 
 		KernelJPanelCascadedNew_(objKernel, frameParent, null);		
 	}
@@ -95,7 +96,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	 * @param panelParent
 	 * @throws ExceptionZZZ 
 	 */
-	public KernelJPanelCascadedZZZ(KernelZZZ objKernel, KernelJFrameCascadedZZZ frameParent) throws ExceptionZZZ{
+	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, KernelJFrameCascadedZZZ frameParent) throws ExceptionZZZ{
 		
 		//20130625 Hinzugef�gt, um das Suchen des NAchbarpanels schon erm�glichen, bevor das launch() von KernelJFrameCascaded abgeschlossen ist.
 		//Wird normalerweise im KErnelJFrameCascaded.lauchchDoing() gemacht, aber bei der Konfiguration der PAnels muss schon auf ein Nachbarpanel zugegriffen werden.
@@ -105,7 +106,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 		KernelJPanelCascadedNew_(objKernel, frameParent, null);
 	}
 	
-	public KernelJPanelCascadedZZZ(KernelZZZ objKernel, JFrame frameBasic) throws ExceptionZZZ{
+	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, JFrame frameBasic) throws ExceptionZZZ{
 		frameBasic.getContentPane().add(this);
 	     
 		FrameCascadedRootDummyZZZ frameParent = new FrameCascadedRootDummyZZZ(objKernel, frameBasic);
@@ -118,7 +119,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 		KernelJPanelCascadedNew_(objKernel, frameParent, null);
 	}
 	
-	public KernelJPanelCascadedZZZ(KernelZZZ objKernel, Container contentPane) throws ExceptionZZZ{
+	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, Container contentPane) throws ExceptionZZZ{
 		main:{
 			//TODO die Fallunterscheidung dynamischer mit einer Reflection-Betrachtung machen, die auch "Vererbung" einschliesst, bzw. den Namen von "Elternklassen"
 			//TODO Wie sieht es mit Klassen aus, die static - deklariert sind. contentPane.class.getName() geht da nicht !!!!
@@ -162,7 +163,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 		
 	}
 	
-	public KernelJPanelCascadedZZZ(KernelZZZ objKernel, KernelJDialogExtendedZZZ dialog){
+	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialog){
 		//Das Panel f�gt sich dem Dialog selbst hinzu
 		//Container objContainer = dialog.getContentPane();
 		//NEIN objContainer.add(this);
@@ -183,7 +184,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 		this.setFrameParent(frameParent);		
 	}
 	
-	public KernelJPanelCascadedZZZ(KernelZZZ objKernel, KernelJDialogExtendedZZZ dialog,  HashMap<String, Boolean>hmFlag) throws ExceptionZZZ{
+	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialog,  HashMap<String, Boolean>hmFlag) throws ExceptionZZZ{
 		this(objKernel, dialog);
 		
 		//Die ggf. vorhandenen Flags setzen.
@@ -201,7 +202,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	 * @param panelParent
 	 * @throws ExceptionZZZ 
 	 */
-	public KernelJPanelCascadedZZZ(KernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent) throws ExceptionZZZ{
+	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent) throws ExceptionZZZ{
 				
 		this.setPanelParent(panelParent);
 		//Das liefert aber beim Ersstellen zjmindest nur NULL JFrame frameParent = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, (JComponent)this);
@@ -212,7 +213,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 		KernelJPanelCascadedNew_(objKernel, frameParent, null);
 	}
 	
-	public KernelJPanelCascadedZZZ(KernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent, HashMap<String, Boolean> hmFlag) throws ExceptionZZZ{
+	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent, HashMap<String, Boolean> hmFlag) throws ExceptionZZZ{
 		
 		this.setPanelParent(panelParent);
 		//Das liefert aber beim Ersstellen zjmindest nur NULL JFrame frameParent = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, (JComponent)this);
@@ -223,7 +224,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 		KernelJPanelCascadedNew_(objKernel, frameParent, hmFlag);
 	}
 	
-	private void KernelJPanelCascadedNew_(KernelZZZ objKernel, KernelJFrameCascadedZZZ frameParent, HashMap<String, Boolean> hmFlag ) throws ExceptionZZZ{
+	private void KernelJPanelCascadedNew_(IKernelZZZ objKernel, KernelJFrameCascadedZZZ frameParent, HashMap<String, Boolean> hmFlag ) throws ExceptionZZZ{
 		if(objKernel!= null){
 			this.objKernel = objKernel;
 			this.objLog = objKernel.getLogObject();
@@ -812,11 +813,11 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	*/
 
 	//#################### Interface IKernelUserZZZ
-	public KernelZZZ getKernelObject() {
+	public IKernelZZZ getKernelObject() {
 		return objKernel;
 	}
 
-	public void setKernelObject(KernelZZZ objKernel) {
+	public void setKernelObject(IKernelZZZ objKernel) {
 		this.objKernel = objKernel;
 	}
 

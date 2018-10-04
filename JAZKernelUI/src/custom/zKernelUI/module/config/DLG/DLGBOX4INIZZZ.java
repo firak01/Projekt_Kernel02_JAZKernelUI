@@ -10,12 +10,13 @@ import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernelUI.component.KernelJFrameCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.util.JFrameHelperZZZ;
+import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
 
 public class DLGBOX4INIZZZ  extends KernelJFrameCascadedZZZ  implements IJNILotusscriptCallableZZZ {
 	protected KernelZZZ objKernelChoosen;  //Merke: Das wird erst im launch() mitgegeben !!!
 	
-	public DLGBOX4INIZZZ(KernelZZZ objKernel, KernelJFrameCascadedZZZ frameParent) throws ExceptionZZZ{
+	public DLGBOX4INIZZZ(IKernelZZZ objKernel, KernelJFrameCascadedZZZ frameParent) throws ExceptionZZZ{
 		super(objKernel, frameParent);
 		this.setTitle("FGL non modale dialogbox: Started by using kernel-construktor and method .launch(...)");  //wenn denn mal .launch(...) ausgeführt wird
 	}

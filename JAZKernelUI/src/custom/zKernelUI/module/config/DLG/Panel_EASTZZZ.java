@@ -13,24 +13,24 @@ import javax.swing.border.Border;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ReflectCodeZZZ;
+import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
-
 import basic.zKernel.KernelZZZ;
 import custom.zKernel.file.ini.FileIniZZZ;
 
 public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
-	private KernelZZZ objKernelChoosen;
+	private IKernelZZZ objKernelChoosen;
 	private static final int iLABEL_COLUMN_DEFAULT = 10;
 	
-	public Panel_EASTZZZ(KernelZZZ objKernel, JPanel panelParent, KernelZZZ objKernelChoosen, String sModule, String sProgram) throws ExceptionZZZ {
+	public Panel_EASTZZZ(IKernelZZZ objKernel, JPanel panelParent, IKernelZZZ objKernelChoosen, String sModule, String sProgram) throws ExceptionZZZ {
 		super(objKernel, panelParent);
 		main:{
 		try{	
 		this.objKernelChoosen = objKernelChoosen;
 		
 		
-			//TODO Komplizierteres aber schöneres Layout durch einen anderen Layoutmanager
+			//TODO Komplizierteres aber schï¿½neres Layout durch einen anderen Layoutmanager
 			//this.setLayout(new GridLayout(6,2)); //6 Zeilen, 2 Spalten
 	
 			//Einen Rand um das Panel ziehen
@@ -38,19 +38,19 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 			this.setBorder(borderEtched);
 			
 			check:{
-				//Kein Modul übergeben
+				//Kein Modul ï¿½bergeben
 				if(sModule==null){
 					//Statt Button eine Meldung TODO: Wie graut man einen Button aus ???
 					JLabel labelModuleValue = new JLabel("Save unavailable", SwingConstants.LEFT);
 					this.add(labelModuleValue);
 					break main;
-					//TODO: Falls kein Modul übergeben wurde, so können später immer noch Buttons wie "create new module", etc. angezeigt werden.
+					//TODO: Falls kein Modul ï¿½bergeben wurde, so kï¿½nnen spï¿½ter immer noch Buttons wie "create new module", etc. angezeigt werden.
 				}else if(sModule.equals("")){
 					//Statt Button eine Meldung TODO: Wie graut man einen Button aus ???
 					JLabel labelModuleValue = new JLabel("Save unavailable", SwingConstants.LEFT);
 					this.add(labelModuleValue);
 					break main;
-					//TODO: Falls kein Modul übergeben wurde, so können später immer noch Buttons wie "create new module", etc. angezeigt werden.
+					//TODO: Falls kein Modul ï¿½bergeben wurde, so kï¿½nnen spï¿½ter immer noch Buttons wie "create new module", etc. angezeigt werden.
 				}else{
 					//ModuleExists ?
 					boolean bModuleConfigured = this.objKernelChoosen.proofModuleFileIsConfigured(sModule);
@@ -68,7 +68,7 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 							//Fall: Alles o.k.
 							JButton buttonSave = new JButton("Save Section Values");
 							
-							//TODO GOON: Das KernelObject zu verwenden ist eigentlich nicht sauber. Es muss ein eigenes Objekt für das zu konfigurierende Modul vorhanden sein.
+							//TODO GOON: Das KernelObject zu verwenden ist eigentlich nicht sauber. Es muss ein eigenes Objekt fï¿½r das zu konfigurierende Modul vorhanden sein.
 							ActionSaveSection objActSAVE_SECTION = new ActionSaveSection(this.getKernelObject(), this.objKernelChoosen, this);
 							
 							
@@ -91,8 +91,8 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 		 * This internal class doe not extend KernelActionCascadedZZZ, because of the different constructor, which has to work with 2 KernelObjects.
 		 */
 		private JPanel panelParent;
-		private KernelZZZ objKernelChoosen;
-		public ActionSaveSection(KernelZZZ objKernel,KernelZZZ objKernelChoosen,  JPanel panelParent){
+		private IKernelZZZ objKernelChoosen;
+		public ActionSaveSection(IKernelZZZ objKernel,IKernelZZZ objKernelChoosen,  JPanel panelParent){
 			super(objKernel);
 			this.panelParent = panelParent;	
 			this.objKernelChoosen = objKernelChoosen;
@@ -115,7 +115,7 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 			//KernelJPanelCascadedZZZ objPanelCenterTemp = objPanelDLGBox.getPanelSub("CENTER");
 			Panel_CENTERZZZ objPanelCenter = (Panel_CENTERZZZ)objPanelDLGBox.getPanelSub("CENTER");
 			
-			//Merke: Für jede Property=Value Zeile kommen 2 Component hinzu: JLabel + JTextField;						
+			//Merke: Fï¿½r jede Property=Value Zeile kommen 2 Component hinzu: JLabel + JTextField;						
 			//System.out.println("Anzahl der Componenten im CENTER Panel: " + objPanelCenter.getComponentCount());
 			
 			//TODO GOON Zugriff auf die JLabel und JTextFields des Panels, am besten als Hashtable
@@ -130,32 +130,32 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 			String sSection = objPanelCenter.getTableAlias();
 			this.getLogObject().WriteLineDate("Performing Action: ... on module '" + sModule + "' and section '" + sSection + "'");
 						
-			//+++ Füllen einer Tabelle mit den Werten der JLabel und JTextfield Components
+			//+++ Fï¿½llen einer Tabelle mit den Werten der JLabel und JTextfield Components
 			Hashtable objHt = objPanelCenter.getTable(false);
 			boolean bSuccess;
 			if(objHt==null){
 				ExceptionZZZ ez = new ExceptionZZZ(sERROR_PARAMETER_VALUE + "Array lengths of Labels and Textfields does not match.", iERROR_PARAMETER_VALUE,  ReflectCodeZZZ.getMethodCurrentName(), "");
-				   //doesn´t work. Only works when > JDK 1.4
+				   //doesnï¿½t work. Only works when > JDK 1.4
 				   //Exception e = new Exception();
 				   //ExceptionZZZ ez = new ExceptionZZZ(stemp,iCode,this, e, "");			  
 				   throw ez;	
 			}else if(objHt.size()<=0){
 				//TODO GOON Sicherheitsabfrage per Dialog
-				//Section löschen				
-				//TODO GOON, das ist nicht sauber das eigenen KernelObjekt dafür zu verwenden. Es muss ein anderes herangezogen werden.
+				//Section lï¿½schen				
+				//TODO GOON, das ist nicht sauber das eigenen KernelObjekt dafï¿½r zu verwenden. Es muss ein anderes herangezogen werden.
 				//FileIniZZZ objFileIni = this.getKernelObject().getFileConfigIniByAlias(sModule);
 				FileIniZZZ objFileIni = this.objKernelChoosen.getFileConfigIniByAlias(sModule);
 				objFileIni.deleteSection(objPanelCenter.getTableAlias());
 				bSuccess = objFileIni.save();
 			}else{
 				//TODO GOON Sicherheitsabfrage per Dialog
-				//Talleneinträge der Section hinzufügen. Zudem: Section in der Datei zuerst entfernen.
+				//Talleneintrï¿½ge der Section hinzufï¿½gen. Zudem: Section in der Datei zuerst entfernen.
 				
-				//TODO GOON, das ist nicht sauber das eigenen KernelObjekt dafür zu verwenden. Es muss ein anderes herangezogen werden.
+				//TODO GOON, das ist nicht sauber das eigenen KernelObjekt dafï¿½r zu verwenden. Es muss ein anderes herangezogen werden.
 				//FileIniZZZ objFileIni = this.getKernelObject().getFileConfigIniByAlias(sModule);
 				FileIniZZZ objFileIni = this.objKernelChoosen.getFileConfigIniByAlias(sModule);
 				
-				//TODO GOON, eine sortierte Hashtable übergeben !!!
+				//TODO GOON, eine sortierte Hashtable ï¿½bergeben !!!
 				objFileIni.setSection(sSection, objHt, true);	
 				bSuccess = objFileIni.save();
 			}

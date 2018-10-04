@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
 import custom.zKernel.LogZZZ;
 import basic.zBasic.ExceptionZZZ;
@@ -23,7 +24,7 @@ import basic.zBasic.ReflectCodeZZZ;
 import basic.zKernel.IKernelUserZZZ;
 
 public class KernelJPanelDialogButtonDefaultZZZ extends KernelJPanelCascadedZZZ implements IConstantZZZ,  IKernelUserZZZ, IObjectZZZ, IPanelDialogButtonZZZ{
-	//Buttons für den JPane	
+	//Buttons fï¿½r den JPane	
 	private JButton buttonOk = null;
 	private JButton buttonCancel = null;
 	
@@ -36,11 +37,11 @@ public class KernelJPanelDialogButtonDefaultZZZ extends KernelJPanelCascadedZZZ 
 		super();
 	}
 	
-	public KernelJPanelDialogButtonDefaultZZZ(KernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended, boolean bIsButtonOkAvailable, boolean bIsButtonCancelAvailable){
+	public KernelJPanelDialogButtonDefaultZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended, boolean bIsButtonOkAvailable, boolean bIsButtonCancelAvailable){
 		super(objKernel, dialogExtended);
 		
-		//Panel gestalten. in dem übergeordneten Panel gilt:  Border Layout mit ButtonPanel im SOUTH
-		//TODO: ggf. ein Objekt für Rückgabewerte definieren und übergeben.
+		//Panel gestalten. in dem ï¿½bergeordneten Panel gilt:  Border Layout mit ButtonPanel im SOUTH
+		//TODO: ggf. ein Objekt fï¿½r Rï¿½ckgabewerte definieren und ï¿½bergeben.
 		 
 		this.bIsButtonCancelAvailable = bIsButtonCancelAvailable;
 		this.bIsButtonOkAvailable = bIsButtonOkAvailable;
@@ -80,11 +81,11 @@ public class KernelJPanelDialogButtonDefaultZZZ extends KernelJPanelCascadedZZZ 
 	}
 	
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	public KernelZZZ getKernelObject() {
+	public IKernelZZZ getKernelObject() {
 		return this.objKernel;
 	}
 
-	public void setKernelObject(KernelZZZ objKernel) {
+	public void setKernelObject(IKernelZZZ objKernel) {
 		this.objKernel = objKernel;
 	}
 
@@ -110,21 +111,21 @@ public class KernelJPanelDialogButtonDefaultZZZ extends KernelJPanelCascadedZZZ 
 	//### Action Klassen
 	//	 	   Standard listeners *************************************************************
 
-	/**Eine Klasse, die als ActionListener für einen "Cancel-Button" in einer Dialogbox dienen kann (ggf. sind die ...Custom - Methoden zu überschreiben.
+	/**Eine Klasse, die als ActionListener fï¿½r einen "Cancel-Button" in einer Dialogbox dienen kann (ggf. sind die ...Custom - Methoden zu ï¿½berschreiben.
 	 *   Dieser Standardbutton schliesst lediglich die Dialogbox.
 	 * @author lindhaueradmin
 	 *
 	 */
 	public class ActionListenerButtonCancelDefaultZZZ extends KernelActionCascadedZZZ {
 
-		public ActionListenerButtonCancelDefaultZZZ(KernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent) {
+		public ActionListenerButtonCancelDefaultZZZ(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent) {
 			super(objKernel, panelParent);
 		}
 
 		
-		/**Durch überschreiben dieser Methoden können erbende Klassen noch anderen Code ausführen
+		/**Durch ï¿½berschreiben dieser Methoden kï¿½nnen erbende Klassen noch anderen Code ausfï¿½hren
 		* @param ActionEvent
-		* @return true ==> es wird der weitere Code ausgeführt
+		* @return true ==> es wird der weitere Code ausgefï¿½hrt
 		* 
 		* lindhaueradmin; 09.01.2007 09:03:32
 		 */
@@ -148,20 +149,20 @@ public class KernelJPanelDialogButtonDefaultZZZ extends KernelJPanelCascadedZZZ 
 		
 	}//END class actionListenerButtonCancelDefault
 	
-	/** Eine Klasse, die als ActionListener für einen "OK-Button" in einer Dialogbox dienen kann (ggf. sind die ...Custom - Methoden zu überschreiben.
+	/** Eine Klasse, die als ActionListener fï¿½r einen "OK-Button" in einer Dialogbox dienen kann (ggf. sind die ...Custom - Methoden zu ï¿½berschreiben.
 	 *   Dieser Standardbutton schliesst lediglich die Dialogbox.
 	 * @author lindhaueradmin
 	 *
 	 */
 	public class ActionListenerButtonOkDefaultZZZ extends KernelActionCascadedZZZ implements ActionListener {
 
-		public ActionListenerButtonOkDefaultZZZ(KernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent) {
+		public ActionListenerButtonOkDefaultZZZ(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent) {
 			super(objKernel, panelParent);
 		}
 		
-		/**Durch überschreiben dieser Methoden können erbende Klassen noch anderen Code ausführen
+		/**Durch ï¿½berschreiben dieser Methoden kï¿½nnen erbende Klassen noch anderen Code ausfï¿½hren
 		* @param ActionEvent
-		* @return true ==> es wird der weitere Code ausgeführt
+		* @return true ==> es wird der weitere Code ausgefï¿½hrt
 		* 
 		* lindhaueradmin; 09.01.2007 09:03:32
 		 */
@@ -169,7 +170,7 @@ public class KernelJPanelDialogButtonDefaultZZZ extends KernelJPanelCascadedZZZ 
 			return true;
 		}
 		public boolean actionPerformCustom(ActionEvent ae, boolean bQueryResult){
-			/* BEISPIEL, normalerweise wird eine andere Klasse verwendet, wenn zusätzlich zur Default Aktion noch hier etwas gemacht werden soll
+			/* BEISPIEL, normalerweise wird eine andere Klasse verwendet, wenn zusï¿½tzlich zur Default Aktion noch hier etwas gemacht werden soll
 			// BEISPIEL: Den Inhalt des Labels in einem anderen Panel hier ausgeben.
 			System.out.println("ok");					
 			KernelJPanelCascadedZZZ panelButton = (KernelJPanelCascadedZZZ) this.getPanelParent();

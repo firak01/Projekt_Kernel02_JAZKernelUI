@@ -13,6 +13,7 @@ import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IConstantZZZ;
 import basic.zBasic.IObjectZZZ;
 import basic.zKernel.IKernelUserZZZ;
+import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
 import custom.zKernel.LogZZZ;
 
@@ -24,7 +25,7 @@ public class KernelJPanelDialogContentDefaultZZZ extends KernelJPanelCascadedZZZ
 		super();
 	}
 	
-	public KernelJPanelDialogContentDefaultZZZ(KernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended, String sText4ContentDefault){
+	public KernelJPanelDialogContentDefaultZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended, String sText4ContentDefault){
 		super(objKernel, dialogExtended);
 		this.sText4ContentDefault= sText4ContentDefault;
 		this.addContentDefault();
@@ -47,11 +48,11 @@ public class KernelJPanelDialogContentDefaultZZZ extends KernelJPanelCascadedZZZ
 
 
 	//#### Interfaces ##############################
-	public KernelZZZ getKernelObject() {
+	public IKernelZZZ getKernelObject() {
 		return this.objKernel;
 	}
 
-	public void setKernelObject(KernelZZZ objKernel) {
+	public void setKernelObject(IKernelZZZ objKernel) {
 		this.objKernel = objKernel;
 	}
 

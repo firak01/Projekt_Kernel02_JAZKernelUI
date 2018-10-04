@@ -2,8 +2,8 @@ package basic.zKernelUI.util;
 
 import javax.swing.JComboBox;
 
+import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
-
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
@@ -17,7 +17,7 @@ import basic.zKernel.KernelUseObjectZZZ;
 public class KernelJComboBoxHelperZZZ extends KernelUseObjectZZZ{
 private JComboBox objCombo;
 
-	public KernelJComboBoxHelperZZZ(KernelZZZ objKernel, JComboBox objCombo){
+	public KernelJComboBoxHelperZZZ(IKernelZZZ objKernel, JComboBox objCombo){
 		super(objKernel);
 		this.setJComboBox(objCombo);
 	}
@@ -49,13 +49,13 @@ private JComboBox objCombo;
 			JComboBox objCombo = this.getJComboBox();
 			if(objCombo==null) break main;
 			
-			//zuerst auf das StringArray zurückkommen
+			//zuerst auf das StringArray zurï¿½ckkommen
 			String[] saAll = this.getStringAll();
 			if(saAll==null){
 				objCombo.addItem(sValue);
 				break main;
 			}else{
-//				In das sortierte StringArray nun den Wert einfügen				
+//				In das sortierte StringArray nun den Wert einfï¿½gen				
 				String[] saNew = StringArrayZZZ.insertSorted(saAll, sValue, "IGNORECASE");
 				
 				//Nun alle Items entferen und neu aufbauen.

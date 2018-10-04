@@ -19,15 +19,15 @@ import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasicUI.layoutmanager.EntryLayout;
 import basic.zKernel.IKernelUserZZZ;
+import basic.zKernel.IKernelZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
-
 import basic.zKernel.KernelZZZ;
 import custom.zKernel.LogZZZ;
 import custom.zKernel.file.ini.FileIniZZZ;
 
 public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IComponentTableZZZ {
 	private String sModule;
-	private KernelZZZ objKernel2configure;
+	private IKernelZZZ objKernel2configure;
 	
 	private static final int iTEXTFIELD_COLUMN_DEFAULT = 10;             //Wie breit ein Textfeld sein soll
 	private static final int iNR_OF_TEXTFIELD_SHOWN_DEFAULT = 10; //Wieviele Textfields angezeigt werden sollen
@@ -36,7 +36,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements ICompone
 	private JTextField[] textfieldaValue = null; 
 	
 
-	public Panel_CENTERZZZ(KernelZZZ objKernel, JPanel panelParent, KernelZZZ objKernelChoosen, String sModule, String sProgram) throws ExceptionZZZ {
+	public Panel_CENTERZZZ(IKernelZZZ objKernel, JPanel panelParent, IKernelZZZ objKernelChoosen, String sModule, String sProgram) throws ExceptionZZZ {
 		super(objKernel, panelParent);
 		main:{
 		try {			
@@ -190,7 +190,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements ICompone
 	public String getTableAlias(){
 		String sReturn = new String("");
 		main:{
-			KernelZZZ objKernel = this.objKernel2configure;
+			IKernelZZZ objKernel = this.objKernel2configure;
 			sReturn = objKernel.getSystemKey();			
 		}
 		return sReturn;

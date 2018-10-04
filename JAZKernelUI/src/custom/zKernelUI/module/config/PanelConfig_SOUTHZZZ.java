@@ -9,20 +9,20 @@ import basic.zBasic.ExceptionZZZ;
 import basic.zKernelUI.component.KernelActionCascadedZZZ;
 import basic.zKernelUI.component.KernelJFrameCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
-
+import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
 import custom.zKernel.LogZZZ;
 import custom.zKernelUI.module.config.DLG.DLGBOX4INIZZZ;
 
 public class PanelConfig_SOUTHZZZ extends KernelJPanelCascadedZZZ {
-	  private KernelZZZ objKernel2Config;
+	  private IKernelZZZ objKernel2Config;
 	
-	public  PanelConfig_SOUTHZZZ(KernelZZZ objKernel, JPanel panelParent, KernelZZZ objKernel2Config) throws ExceptionZZZ{
+	public  PanelConfig_SOUTHZZZ(IKernelZZZ objKernel, JPanel panelParent, IKernelZZZ objKernel2Config) throws ExceptionZZZ{
 		super(objKernel, panelParent);
 	
 		this.setKernel2ConfigObject(objKernel2Config);
 		
-		//Button, über den ein weiteres Frame gestartet wird, mit dem das eingestellte Modul bearbeitet werden kann.
+		//Button, ï¿½ber den ein weiteres Frame gestartet wird, mit dem das eingestellte Modul bearbeitet werden kann.
 		JButton buttonEdit = new JButton("Edit module configuration");
 		ActionEditModule objActSAVE_SECTION = new ActionEditModule(objKernel,objKernel2Config, this);		
 		buttonEdit.addActionListener(objActSAVE_SECTION);
@@ -32,10 +32,10 @@ public class PanelConfig_SOUTHZZZ extends KernelJPanelCascadedZZZ {
 
 	//#######################################
 	//### Getter / Setter
-	public KernelZZZ getKernel2ConfigObject(){
+	public IKernelZZZ getKernel2ConfigObject(){
 		return this.objKernel2Config;
 	}
-	public void setKernel2ConfigObject(KernelZZZ objKernel){
+	public void setKernel2ConfigObject(IKernelZZZ objKernel){
 		this.objKernel2Config = objKernel;
 	}
 	
@@ -46,9 +46,9 @@ public class PanelConfig_SOUTHZZZ extends KernelJPanelCascadedZZZ {
 		/**
 		 * This class does not extent KernelActionCascadedZZZ, because of the second KernelObject, which has to be passed in the constructor !!!
 		 */
-		private KernelZZZ objKernel2Config;
+		private IKernelZZZ objKernel2Config;
 				
-		public ActionEditModule(KernelZZZ objKernel, KernelZZZ objKernel2Config, KernelJPanelCascadedZZZ panelParent){
+		public ActionEditModule(IKernelZZZ objKernel, IKernelZZZ objKernel2Config, KernelJPanelCascadedZZZ panelParent){
 			super(objKernel, panelParent);			
 			this.objKernel2Config = objKernel2Config;
 		} 
@@ -80,7 +80,7 @@ public class PanelConfig_SOUTHZZZ extends KernelJPanelCascadedZZZ {
 					//Einen Elternframe definieren, damit der Hauptframe beim Schliessen der Dialogbox nicht auch geschlossen wird.
 					//FrameConfigZZZ frameParent = (FrameConfigZZZ) panelDLGBox.getFrameParent();
 					//TODO: Sofort auf das ParentFrame-kommen. z.B: durch this.searchFrameParent();
-					//TODO: Eine Möglichkeit auf den aufrufenden Frame zuzugreifen wäre this.searchFrameRoot();
+					//TODO: Eine Mï¿½glichkeit auf den aufrufenden Frame zuzugreifen wï¿½re this.searchFrameRoot();
 					KernelJFrameCascadedZZZ frameParent = (KernelJFrameCascadedZZZ) panelRoot.getFrameParent();
 					
 					//Panel_DLGBOXZZZ objPanelDLGBox = (Panel_DLGBOXZZZ)objPanelSubEast.getPanelParent();
@@ -92,7 +92,7 @@ public class PanelConfig_SOUTHZZZ extends KernelJPanelCascadedZZZ {
 					PanelConfig_CENTERZZZ panelSubCenter = (PanelConfig_CENTERZZZ) panelRoot.getPanelSub("CENTER");
 					//PanelConfigZZZ panelDLGBox = (PanelConfigZZZ) panelSubCenter.getPanelParent();
 					
-		//			Dieses bietet die Möglichkeit auf die Komponenten zuzugreifen.
+		//			Dieses bietet die Mï¿½glichkeit auf die Komponenten zuzugreifen.
 					String sModule = panelSubCenter.getModuleSelected();			
 					
 					
@@ -122,10 +122,10 @@ public class PanelConfig_SOUTHZZZ extends KernelJPanelCascadedZZZ {
 		
 		//#######################################
 		//### Getter / Setter
-		public KernelZZZ getKernel2ConfigObject(){
+		public IKernelZZZ getKernel2ConfigObject(){
 			return this.objKernel2Config;
 		}
-		public void setKernel2ConfigObject(KernelZZZ objKernel){
+		public void setKernel2ConfigObject(IKernelZZZ objKernel){
 			this.objKernel2Config = objKernel;
 		}
 		
@@ -139,11 +139,11 @@ public class PanelConfig_SOUTHZZZ extends KernelJPanelCascadedZZZ {
 			// TODO Auto-generated method stub			
 		}
 
-		public KernelZZZ getKernelObject() {
+		public IKernelZZZ getKernelObject() {
 			return this.objKernel;
 		}
 
-		public void setKernelObject(KernelZZZ objKernel) {
+		public void setKernelObject(IKernelZZZ objKernel) {
 			this.objKernel = objKernel;
 		}
 

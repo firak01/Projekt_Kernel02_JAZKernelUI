@@ -3,6 +3,7 @@ package basic.zKernelUI;
 import java.util.ArrayList;
 
 import basic.zKernel.IKernelModuleUserZZZ;
+import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IConstantZZZ;
@@ -167,7 +168,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				//NEIN, das w�re eine endlosschleife: sReturn = panelCurrent.getProgramAlias();
 				
 				//Versuch den Alias direkt aus der Konfiguration auszulesen.
-				KernelZZZ objKernel = panelCurrent.getKernelObject();
+				IKernelZZZ objKernel = panelCurrent.getKernelObject();
 				sReturn = objKernel.getParameter(panelCurrent.getProgramName()); //Also: Der Alias ist auf Modulebene (z.B: in einem Abschnitt [THM#01]) definiert und steht dort hinter dem Package + Klassennamen der Komponente.			
 			}else{				
 				//Suche nach Elternpanel, das dieses Flag gesetzt hat ... als rekursiver Aufruf.
@@ -194,7 +195,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 			
 			
 			//................ Das Array aller Module dahingehend pr�fen, ob der Klassenname dort auftaucht.
-			KernelZZZ objKernel = frame.getKernelObject();
+			IKernelZZZ objKernel = frame.getKernelObject();
 			ArrayList listaModuleString = objKernel.getModuleAll(); //d.h. es werden die Module ber�cksichtigt, die in der Konfiguration definiert sind, aber die Existenz der Module ist nicht notwendig.
 						
 			KernelJFrameCascadedZZZ frameParentTemp = frame.getFrameParent();
@@ -241,7 +242,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 			
 			//................ Das Array aller Module dahingehend pr�fen, ob der Klassenname dort auftaucht.
 			//KernelZZZ objKernel = this.getKernelObject();
-			KernelZZZ objKernel = frame.getKernelObject();
+			IKernelZZZ objKernel = frame.getKernelObject();
 			ArrayList listaModuleString = objKernel.getModuleAll(); //d.h. es werden die Module ber�cksichtigt, die in der Konfiguration definiert sind, aber die Existenz der Module ist nicht notwendig.
 			if(listaModuleString.size() <= 0) break main;
 			

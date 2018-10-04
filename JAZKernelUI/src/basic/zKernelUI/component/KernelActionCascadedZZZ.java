@@ -6,8 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
-
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
@@ -16,7 +16,7 @@ public abstract class KernelActionCascadedZZZ extends KernelUseObjectZZZ  implem
 	private KernelJPanelCascadedZZZ panelParent;
 	
 	
-	public KernelActionCascadedZZZ(KernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
+	public KernelActionCascadedZZZ(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
 		super(objKernel);
 		this.panelParent = panelParent;	
 	}
@@ -26,13 +26,13 @@ public abstract class KernelActionCascadedZZZ extends KernelUseObjectZZZ  implem
 	 */
 	public final void actionPerformed(ActionEvent ae) {
 		try{
-			boolean bQueryResult = this.actionPerformQueryCustom(ae); //Durch überschreiben diesr Methode können erbende Klassen noch anderen Code ausführen			
-			boolean bPerformResult = this.actionPerformCustom(ae, bQueryResult);  //Durch überschreiben dieser Methode können erbende Klassen noch anderen Code ausführen
+			boolean bQueryResult = this.actionPerformQueryCustom(ae); //Durch ï¿½berschreiben diesr Methode kï¿½nnen erbende Klassen noch anderen Code ausfï¿½hren			
+			boolean bPerformResult = this.actionPerformCustom(ae, bQueryResult);  //Durch ï¿½berschreiben dieser Methode kï¿½nnen erbende Klassen noch anderen Code ausfï¿½hren
 			if(bPerformResult == true){
 				this.actionPerformPostCustom(ae, bQueryResult);
 			}
 		} catch (ExceptionZZZ ez) {
-			//Protokolliern des Fehlers an allen möglichen Stellen
+			//Protokolliern des Fehlers an allen mï¿½glichen Stellen
 			this.getLogObject().WriteLineDate(ez.getDetailAllLast());
 			System.out.println(ez.getDetailAllLast());
 			ez.printStackTrace();
@@ -105,7 +105,7 @@ public abstract class KernelActionCascadedZZZ extends KernelUseObjectZZZ  implem
 	 * Besser diese Methode abstract zu machen und die actionPerformed Methode gleichzeitig final zu machen.
 	 * Als einen ExceptionZZZ - Hinweis auszugeben. Wie z.B.:
 	 * 
-	 	//Hinweis darauf, dass diese Methode überschrieben werden muss !!!
+	 	//Hinweis darauf, dass diese Methode ï¿½berschrieben werden muss !!!
 			ExceptionZZZ ez = new ExceptionZZZ(sERROR_ZFRAME_METHOD, iERROR_ZFRAME_METHOD, this, ReflectionZZZ.getMethodCurrentName()); 
 			throw ez;
 	 * 
@@ -120,7 +120,7 @@ public abstract class KernelActionCascadedZZZ extends KernelUseObjectZZZ  implem
 	 * Besser diese Methode abstract zu machen und die actionPerformed Methode gleichzeitig final zu machen.
 	 * Als einen ExceptionZZZ - Hinweis auszugeben. Wie z.B.:
 	 * 
-	 	//Hinweis darauf, dass diese Methode überschrieben werden muss !!!
+	 	//Hinweis darauf, dass diese Methode ï¿½berschrieben werden muss !!!
 			ExceptionZZZ ez = new ExceptionZZZ(sERROR_ZFRAME_METHOD, iERROR_ZFRAME_METHOD, this, ReflectionZZZ.getMethodCurrentName()); 
 			throw ez;
 	 * 
@@ -134,7 +134,7 @@ public abstract class KernelActionCascadedZZZ extends KernelUseObjectZZZ  implem
 	 * Besser diese Methode abstract zu machen und die actionPerformed Methode gleichzeitig final zu machen.
 	 * Als einen ExceptionZZZ - Hinweis auszugeben. Wie z.B.:
 	 * 
-	 	//Hinweis darauf, dass diese Methode überschrieben werden muss !!!
+	 	//Hinweis darauf, dass diese Methode ï¿½berschrieben werden muss !!!
 			ExceptionZZZ ez = new ExceptionZZZ(sERROR_ZFRAME_METHOD, iERROR_ZFRAME_METHOD, this, ReflectionZZZ.getMethodCurrentName()); 
 			throw ez;
 	 * 

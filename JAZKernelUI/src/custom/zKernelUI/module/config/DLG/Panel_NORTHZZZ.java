@@ -13,20 +13,21 @@ import basic.zBasic.ExceptionZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 
 
+import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
 
 public class Panel_NORTHZZZ extends KernelJPanelCascadedZZZ {
-	private KernelZZZ objKernelChoosen;
+	private IKernelZZZ objKernelChoosen;
 	private static final int iLABEL_COLUMN_DEFAULT = 10;
 
 	
-	public Panel_NORTHZZZ(KernelZZZ objKernel, KernelZZZ objKernelChoosen, String sModule, String sProgram, JPanel panelParent) throws ExceptionZZZ {
+	public Panel_NORTHZZZ(IKernelZZZ objKernel, IKernelZZZ objKernelChoosen, String sModule, String sProgram, JPanel panelParent) throws ExceptionZZZ {
 		super(objKernel, panelParent);
 		main:{
 		try {
 		this.objKernelChoosen = objKernelChoosen;
 		
-		//TODO Komplizierteres aber schöneres Layout durch einen anderen Layoutmanager
+		//TODO Komplizierteres aber schï¿½neres Layout durch einen anderen Layoutmanager
 		this.setLayout(new GridLayout(6,2)); //6 Zeilen, 2 Spalten
 	
 			//Einen Rahmen um das Panel zeichnen
@@ -35,17 +36,17 @@ public class Panel_NORTHZZZ extends KernelJPanelCascadedZZZ {
 			
 			
 			// Die grundlegenden Informationen zum Kernel-Objekt anzeigen in JLabel-Objekten
-			// +++ Das Modul muss übergeben werden. Falls das Modul nicht vorhanden ist. Hier einen Fehler als Wert anzeigen.			
+			// +++ Das Modul muss ï¿½bergeben werden. Falls das Modul nicht vorhanden ist. Hier einen Fehler als Wert anzeigen.			
 			JLabel labelModuleText = new JLabel("Module: ", SwingConstants.RIGHT);
 			this.add(labelModuleText);
 			
 			check:{				
 				if(sModule==null){
-//					Kein Modul übergeben: NULL
+//					Kein Modul ï¿½bergeben: NULL
 					JLabel labelModuleValue = new JLabel("No module selected", SwingConstants.LEFT);
 					this.add(labelModuleValue);				
 				}else if(sModule.equals("")){
-					//Kein Modul übergeben: ""
+					//Kein Modul ï¿½bergeben: ""
 					JLabel labelModuleValue = new JLabel("No module selected", SwingConstants.LEFT);
 					this.add(labelModuleValue);					
 				}else{
@@ -82,7 +83,7 @@ public class Panel_NORTHZZZ extends KernelJPanelCascadedZZZ {
 			JLabel labelKeyText = new JLabel("Application key: ", SwingConstants.RIGHT);
 			this.add(labelKeyText);
 			
-//			TODO GOON, ist nicht ganz sauber das eigene Kernel-Objekt hierfür zu verwenden
+//			TODO GOON, ist nicht ganz sauber das eigene Kernel-Objekt hierfï¿½r zu verwenden
 			//String sApplicationKey = this.getKernelObject().getApplicationKey();	
 			String sApplicationKey = this.objKernelChoosen.getApplicationKey();
 			JLabel labelKeyValue = new JLabel(sApplicationKey, SwingConstants.LEFT);
@@ -93,7 +94,7 @@ public class Panel_NORTHZZZ extends KernelJPanelCascadedZZZ {
 			JLabel labelSystemText = new JLabel("System: ", SwingConstants.RIGHT);
 			this.add(labelSystemText);
 			
-//			TODO GOON, ist nicht ganz sauber das eigene Kernel-Objekt hierfür zu verwenden
+//			TODO GOON, ist nicht ganz sauber das eigene Kernel-Objekt hierfï¿½r zu verwenden
 			//String sSystemNumber = this.getKernelObject().getSystemNumber();
 			String sSystemNumber = this.objKernelChoosen.getSystemNumber();
 			JLabel labelSystemValue = new JLabel(sSystemNumber, SwingConstants.LEFT);

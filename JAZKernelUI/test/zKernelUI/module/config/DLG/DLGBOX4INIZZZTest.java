@@ -2,6 +2,7 @@ package zKernelUI.module.config.DLG;
 
 import junit.framework.TestCase;
 import basic.zBasic.ExceptionZZZ;
+import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
 import custom.zKernelUI.module.config.DLG.DLGBOX4INIZZZ;
 import custom.zKernelUI.module.config.DLG.Panel_DLGBOXZZZ;
@@ -15,7 +16,7 @@ public class DLGBOX4INIZZZTest extends TestCase {
 			//### Aufbau des TestFixtures
 			//Das Kernel-Objekt
 			//KernelZZZ objKernel = new KernelZZZ("FGL", "01", "c:\\fglKernel\\KernelTest", "ZKernelConfigKernel_test.ini",(String)null);
-			KernelZZZ objKernel = new KernelZZZ("FGL", "01", "", "ZKernelConfigKernelUI_test.ini",(String)null);
+			IKernelZZZ objKernel = new KernelZZZ("FGL", "01", "", "ZKernelConfigKernelUI_test.ini",(String)null);
 			
 			//The main object used for testing.
 			frmDLGBoxTest = new DLGBOX4INIZZZ(objKernel, null);  //Die Dialogbox wird ohne einen ParentFrame getestet

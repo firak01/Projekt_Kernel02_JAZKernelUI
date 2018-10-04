@@ -3,6 +3,7 @@ package basic.zKernelUI.component;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
+import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
 import basic.zKernelUI.util.JFrameHelperZZZ;
 import basic.zBasic.ExceptionZZZ;
@@ -15,7 +16,7 @@ import basic.zBasic.ExceptionZZZ;
  */
 public class FrameCascadedRootDummyZZZ extends KernelJFrameCascadedZZZ{
 	
-	public FrameCascadedRootDummyZZZ(KernelZZZ objKernel, JFrame frame) {
+	public FrameCascadedRootDummyZZZ(IKernelZZZ objKernel, JFrame frame) {
 		super(objKernel, frame);
 	}
 

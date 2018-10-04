@@ -9,17 +9,17 @@ import javax.swing.JPanel;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zKernel.IKernelUserZZZ;
+import basic.zKernel.IKernelZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
-
 import basic.zKernel.KernelZZZ;
 import custom.zKernel.LogZZZ;
 import custom.zKernelUI.module.config.DLG.Panel_NORTHZZZ;
 
 
 public class PanelConfigZZZ extends KernelJPanelCascadedZZZ{
-   private KernelZZZ objKernelChoosen;
+   private IKernelZZZ objKernelChoosen;
 	
-	public PanelConfigZZZ(KernelZZZ objKernel, JFrame frameParent, KernelZZZ objKernelChoosen) throws ExceptionZZZ{
+	public PanelConfigZZZ(IKernelZZZ objKernel, JFrame frameParent, IKernelZZZ objKernelChoosen) throws ExceptionZZZ{
 		super(objKernel, frameParent);
         this.setKernelConfigObject(objKernelChoosen);
 				
@@ -28,22 +28,22 @@ public class PanelConfigZZZ extends KernelJPanelCascadedZZZ{
 				
 		//### PANEL SOUTH
 		PanelConfig_SOUTHZZZ objPanelSouth = new PanelConfig_SOUTHZZZ(objKernel, this, objKernelChoosen);
-		this.add(objPanelSouth, BorderLayout.SOUTH); //Frontend hinzufügen
-		this.setPanelSub("SOUTH", objPanelSouth);    //Backend Hashtable hinzufügen
+		this.add(objPanelSouth, BorderLayout.SOUTH); //Frontend hinzufï¿½gen
+		this.setPanelSub("SOUTH", objPanelSouth);    //Backend Hashtable hinzufï¿½gen
 		
 		//### PANEL CENTER
 		PanelConfig_CENTERZZZ objPanelCenter = new PanelConfig_CENTERZZZ(objKernel, this, objKernelChoosen);
-		this.add(objPanelCenter, BorderLayout.CENTER); //Frontend hinzufügen
-		this.setPanelSub("CENTER", objPanelCenter);       //Backend Hashtable hinzufügen
+		this.add(objPanelCenter, BorderLayout.CENTER); //Frontend hinzufï¿½gen
+		this.setPanelSub("CENTER", objPanelCenter);       //Backend Hashtable hinzufï¿½gen
 		
 	
 	}
 
 	
-	public KernelZZZ getKernelConfigObject(){
+	public IKernelZZZ getKernelConfigObject(){
 		return this.objKernelChoosen;
 	}
-	public void setKernelConfigObject(KernelZZZ objKernelConfig){
+	public void setKernelConfigObject(IKernelZZZ objKernelConfig){
 		this.objKernelChoosen = objKernelConfig;
 	}
 	
