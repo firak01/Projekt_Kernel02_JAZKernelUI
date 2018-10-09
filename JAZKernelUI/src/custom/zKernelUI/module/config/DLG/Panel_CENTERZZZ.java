@@ -187,7 +187,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements ICompone
 	/* (non-Javadoc)
 	 * @see custom.zKernelUI.module.config.DLG.IComponentTableZZZ#getTableAlias()
 	 */
-	public String getTableAlias(){
+	public String getTableAlias() throws ExceptionZZZ{
 		String sReturn = new String("");
 		main:{
 			IKernelZZZ objKernel = this.objKernel2configure;
