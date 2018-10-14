@@ -65,9 +65,9 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements ICompone
 			
 			
 			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++			
-			int iLine2Show = 0; //Alle anzuzeigenden Label-Zeilen, ggf. mit leeren aufgefülllt.			
-			int iLineFilled = 0; //Momentan anzuzeigende "gefüllte" Label-Zeilen
-			int iLine2Fill = 0; //Die zum auffüllen verwendetedn "leeren" Label-Zeilen
+			int iLines2Show = 0; //Alle anzuzeigenden Label-Zeilen, ggf. mit leeren aufgefülllt.			
+			int iLinesWithValue = 0; //Momentan anzuzeigende "gefüllte" Label-Zeilen
+			int iLines2Fill = 0; //Die zum auffüllen verwendeten "leeren" Label-Zeilen
 			
 			//SystemKey als Schl�ssel f�r die Section
 			//TODO GOON: Das KernelObject zu verwenden ist eigentlich nicht sauber. Es muss ein eigenes Objekt f�r das zu konfigurierende Modul vorhanden sein.
@@ -83,8 +83,8 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements ICompone
 			String[] saProperty = objFileIni.getPropertyAll(sSystemKey);
 			if(saProperty==null){
 				//Hinweis: Keine Eintr�ge gefunden
-				iLine2Show = 1; //Die Hinweiszeile
-				iLine2Fill = iNR_OF_TEXTFIELD_SHOWN_DEFAULT - iLine2Show;
+				iLines2Show = 1; //Die Hinweiszeile
+				iLines2Fill = iNR_OF_TEXTFIELD_SHOWN_DEFAULT - iLines2Show;
 				
 				labelaText = new JLabel[1];
 				textfieldaValue = new JTextField[1];
@@ -96,13 +96,13 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements ICompone
 				
 			}else{
 				//Ausrechnen mit wievielen Leerlabels das Layout aufgefüllt werden muss
-				iLineFilled = saProperty.length;			
-				if(iLineFilled >= iNR_OF_TEXTFIELD_SHOWN_DEFAULT){
-					iLine2Show = iLineFilled;
-					iLine2Fill = 0;  
+				iLinesWithValue = saProperty.length;			
+				if(iLinesWithValue >= iNR_OF_TEXTFIELD_SHOWN_DEFAULT){
+					iLines2Show = iLinesWithValue;
+					iLines2Fill = 0;  
 				}else{					
-					iLine2Show = iNR_OF_TEXTFIELD_SHOWN_DEFAULT;
-					iLine2Fill = iNR_OF_TEXTFIELD_SHOWN_DEFAULT - iLineFilled;
+					iLines2Show = iNR_OF_TEXTFIELD_SHOWN_DEFAULT;
+					iLines2Fill = iNR_OF_TEXTFIELD_SHOWN_DEFAULT - iLinesWithValue;
 				}
 				
 				//DIE ANZAHL DER ZEILEN VON DER ANZAHL DER GEFUNDENEN EINTR�GE ABHÄNGIG MACHEN.
@@ -115,11 +115,11 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements ICompone
 				
 				//DIE ARRAY GRÖSSEN VON DER ANZAHL DER GEFUNDENEN EINTRÄGE ABHÄNGIG MACHEN
 				String sValue = new String("");
-				labelaText = new JLabel[iLineFilled];
-				textfieldaValue = new JTextField[iLineFilled];
+				labelaText = new JLabel[iLinesWithValue];
+				textfieldaValue = new JTextField[iLinesWithValue];
 				Dimension dimensionLabel = new Dimension(10,10);
 				Dimension dimensionTextfield = new Dimension(10, 10);
-				for(int icount=0; icount < iLineFilled; icount++){
+				for(int icount=0; icount < iLinesWithValue; icount++){
 					//Das Property - Label
 					labelaText[icount]= new JLabel(saProperty[icount] + "=", SwingConstants.RIGHT);
 					labelaText[icount].setSize(dimensionLabel);
@@ -137,7 +137,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements ICompone
 			}//END IF: if(saProperty==null){
 			
 			//### Damit die Labels hinsichtlich der Höhe nicht so gross werden, ggf. mit leeren Werten auffüllen
-			for(int icount = 0; icount < iLine2Fill; icount ++){
+			for(int icount = iLines2Show; icount < iLines2Fill; icount ++){
 				JLabel labeltemp = new JLabel("", SwingConstants.RIGHT);
 				this.add(labeltemp);								
 				JLabel labeltemp2 = new JLabel("", SwingConstants.LEFT);
