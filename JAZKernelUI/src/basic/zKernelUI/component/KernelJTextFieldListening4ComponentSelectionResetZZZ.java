@@ -20,13 +20,13 @@ import basic.zBasic.ReflectClassZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelUserZZZ;
-import basic.zKernel.KernelZZZ;
+import basic.zKernel.IKernelZZZ;
 import basic.zKernelUI.component.model.EventComponentSelectionResetZZZ;
 import basic.zKernelUI.component.model.IListenerSelectionResetZZZ;
 import custom.zKernel.LogZZZ;
 
 public abstract class KernelJTextFieldListening4ComponentSelectionResetZZZ extends JTextField implements IObjectZZZ, IFlagZZZ, IKernelUserZZZ, IListenerSelectionResetZZZ{
-	private KernelZZZ objKernel;
+	private IKernelZZZ objKernel;
 	private LogZZZ objLog;
 	
 	private EventComponentSelectionResetZZZ eventPrevious;
@@ -38,7 +38,7 @@ public abstract class KernelJTextFieldListening4ComponentSelectionResetZZZ exten
 	
 	protected ExceptionZZZ objException = null;    // diese Exception hat jedes Objekt
 	
-	public KernelJTextFieldListening4ComponentSelectionResetZZZ(KernelZZZ objKernel, String sTextInitial){
+	public KernelJTextFieldListening4ComponentSelectionResetZZZ(IKernelZZZ objKernel, String sTextInitial){
 		super(sTextInitial);
 		this.objKernel = objKernel;
 		this.objLog = objKernel.getLogObject();			
@@ -58,11 +58,11 @@ public abstract class KernelJTextFieldListening4ComponentSelectionResetZZZ exten
 	}
 
 	
-	public KernelZZZ getKernelObject() {		
+	public IKernelZZZ getKernelObject() {		
 		return this.objKernel;
 	}
 
-	public void setKernelObject(KernelZZZ objKernel) {
+	public void setKernelObject(IKernelZZZ objKernel) {
 		this.objKernel = objKernel;
 	}
 
@@ -280,7 +280,7 @@ public boolean setFlag(String sFlagName, boolean bFlagValue){
 	/* @see basic.zBasic.IFlagZZZ#getFlagZ(java.lang.String)
 	 * 	 Weteire Voraussetzungen:
 	 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
-	 * - Innere Klassen m�ssen auch public deklariert werden.(non-Javadoc)
+	 * - Innere Klassen müssen auch public deklariert werden.(non-Javadoc)
 	 */
 	public boolean getFlagZ(String sFlagName) {
 		boolean bFunction = false;
@@ -298,5 +298,35 @@ public boolean setFlag(String sFlagName, boolean bFlagValue){
 		}	// end main:
 		
 		return bFunction;	
+	}
+	
+
+	@Override
+	public String[] getFlagZ(boolean bFlagValueToSearchFor) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public String[] getFlagZ() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public String[] getFlagZ_passable(boolean bValueToSearchFor,
+			IFlagZZZ objUsingFlagZ) throws ExceptionZZZ {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public String[] getFlagZ_passable(IFlagZZZ objUsingFlagZ)
+			throws ExceptionZZZ {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

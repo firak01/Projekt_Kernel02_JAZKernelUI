@@ -8,18 +8,18 @@ import basic.zBasic.IObjectZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernelUI.component.model.EventComponentSelectionResetZZZ;
 import basic.zKernelUI.component.model.IListenerSelectionResetZZZ;
-import basic.zKernel.KernelZZZ;
+import basic.zKernel.IKernelZZZ;
 import custom.zKernel.LogZZZ;
 
 public abstract class KernelJComboBoxListening4ComponentSelectionResetZZZ  extends JComboBox implements IConstantZZZ, IObjectZZZ, IKernelUserZZZ, IListenerSelectionResetZZZ{
-	private KernelZZZ objKernel;
+	private IKernelZZZ objKernel;
 	private LogZZZ objLog;
 	private Object objItemInitial;
 	boolean bObjectInitialSet=false;
 	
 	private EventComponentSelectionResetZZZ eventPrevious;
 	
-	public KernelJComboBoxListening4ComponentSelectionResetZZZ(KernelZZZ objKernel, Object objItemInitial){
+	public KernelJComboBoxListening4ComponentSelectionResetZZZ(IKernelZZZ objKernel, Object objItemInitial){
 		super();
 		this.objKernel = objKernel;
 		this.objLog = objKernel.getLogObject();
@@ -29,7 +29,7 @@ public abstract class KernelJComboBoxListening4ComponentSelectionResetZZZ  exten
 	/* (non-Javadoc)
 	 * @see javax.swing.JComboBox#addItem(java.lang.Object)
 	 * 
-	 * Weil im Konstruktor schon mitzugeben ist, welches item markiert werden soll, wird hier nach dem eigentlichen Hinzufügen ggf. die Markierung durchgeführt.
+	 * Weil im Konstruktor schon mitzugeben ist, welches item markiert werden soll, wird hier nach dem eigentlichen Hinzufï¿½gen ggf. die Markierung durchgefï¿½hrt.
 	 */
 	public void addItem(Object objItem){
 		super.addItem(objItem);
@@ -59,7 +59,7 @@ public abstract class KernelJComboBoxListening4ComponentSelectionResetZZZ  exten
 		}
 	}
 	
-	/** Gibt true zurück, wenn in der ITemListe der JComboBox das gesuchte Objekt vorhanden ist
+	/** Gibt true zurï¿½ck, wenn in der ITemListe der JComboBox das gesuchte Objekt vorhanden ist
 	* @param objItem
 	* @return
 	* 
@@ -89,11 +89,11 @@ public abstract class KernelJComboBoxListening4ComponentSelectionResetZZZ  exten
 		// TODO Auto-generated method stub		
 	}
 
-	public KernelZZZ getKernelObject() {	
+	public IKernelZZZ getKernelObject() {	
 		return this.objKernel;
 	}
 
-	public void setKernelObject(KernelZZZ objKernel) {
+	public void setKernelObject(IKernelZZZ objKernel) {
 		this.objKernel = objKernel;
 	}
 

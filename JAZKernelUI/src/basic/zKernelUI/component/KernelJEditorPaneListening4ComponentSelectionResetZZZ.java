@@ -2,7 +2,7 @@ package basic.zKernelUI.component;
 
 import javax.swing.JEditorPane;
 
-import basic.zKernel.KernelZZZ;
+import basic.zKernel.IKernelZZZ;
 import custom.zKernel.LogZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IConstantZZZ;
@@ -13,7 +13,7 @@ import basic.zKernelUI.component.model.EventComponentSelectionResetZZZ;
 import basic.zKernelUI.component.model.IListenerSelectionResetZZZ;
 
 public abstract class KernelJEditorPaneListening4ComponentSelectionResetZZZ extends JEditorPane implements IConstantZZZ, IObjectZZZ, IKernelUserZZZ, IListenerSelectionResetZZZ{
-	private KernelZZZ objKernel;
+	private IKernelZZZ objKernel;
 	private LogZZZ objLog;
 	
 	private EventComponentSelectionResetZZZ eventPrevious;
@@ -21,7 +21,7 @@ public abstract class KernelJEditorPaneListening4ComponentSelectionResetZZZ exte
 	private boolean bFlagDebug=false;
 	private boolean bFlagInit=false;
 	
-	public KernelJEditorPaneListening4ComponentSelectionResetZZZ(KernelZZZ objKernel, String sTextInitial){		
+	public KernelJEditorPaneListening4ComponentSelectionResetZZZ(IKernelZZZ objKernel, String sTextInitial){		
 		super("text/html", sTextInitial);  //Ansonsten muss man noch eine IOException abfangen
 		this.objKernel = objKernel;
 		this.objLog = objKernel.getLogObject();
@@ -36,10 +36,10 @@ public abstract class KernelJEditorPaneListening4ComponentSelectionResetZZZ exte
 		// TODO Auto-generated method stub
 		
 	}
-	public KernelZZZ getKernelObject() {	
+	public IKernelZZZ getKernelObject() {	
 		return this.objKernel;
 	}
-	public void setKernelObject(KernelZZZ objKernel) {
+	public void setKernelObject(IKernelZZZ objKernel) {
 		this.objKernel = objKernel;
 	}
 	public LogZZZ getLogObject() {	

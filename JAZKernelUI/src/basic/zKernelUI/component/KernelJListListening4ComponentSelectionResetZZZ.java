@@ -6,7 +6,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.ListModel;
 
-import basic.zKernel.KernelZZZ;
+import basic.zKernel.IKernelZZZ;
 import custom.zKernel.LogZZZ;
 
 
@@ -18,7 +18,7 @@ import basic.zKernelUI.component.model.EventComponentSelectionResetZZZ;
 import basic.zKernelUI.component.model.IListenerSelectionResetZZZ;
 
 public abstract class KernelJListListening4ComponentSelectionResetZZZ extends JList implements IConstantZZZ, IObjectZZZ, IKernelUserZZZ, IListenerSelectionResetZZZ{
-	KernelZZZ objKernel = null;
+	IKernelZZZ objKernel = null;
 	LogZZZ objLog = null;
 	
 	private EventComponentSelectionResetZZZ eventPrevious;
@@ -29,7 +29,7 @@ public abstract class KernelJListListening4ComponentSelectionResetZZZ extends JL
 	public KernelJListListening4ComponentSelectionResetZZZ(ListModel model){
 		super(model);
 	}
-	public KernelJListListening4ComponentSelectionResetZZZ(KernelZZZ objKernel, DefaultListModel model){
+	public KernelJListListening4ComponentSelectionResetZZZ(IKernelZZZ objKernel, DefaultListModel model){
 		super(model);
 		this.objKernel = objKernel;
 		this.objLog = objKernel.getLogObject();
@@ -40,7 +40,7 @@ public abstract class KernelJListListening4ComponentSelectionResetZZZ extends JL
 			DefaultListModel modelList = (DefaultListModel)  this.getModel();  //Das muss der JList im Konstruktor mitgegeben worden sein.
 			modelList.clear();	
 			
-			this.doResetCustom(eventNew); //Hier wird dann ggf. ein Worker Thread gestartet, der aufwendige Listen füllen soll
+			this.doResetCustom(eventNew); //Hier wird dann ggf. ein Worker Thread gestartet, der aufwendige Listen fï¿½llen soll
 			
 			this.setEventPrevious(eventNew);			
 		}
@@ -54,10 +54,10 @@ public abstract class KernelJListListening4ComponentSelectionResetZZZ extends JL
 		// TODO Auto-generated method stub
 		
 	}
-	public KernelZZZ getKernelObject() {
+	public IKernelZZZ getKernelObject() {
 		return this.objKernel;
 	}
-	public void setKernelObject(KernelZZZ objKernel) {
+	public void setKernelObject(IKernelZZZ objKernel) {
 		this.objKernel = objKernel;
 	}
 	public LogZZZ getLogObject() {

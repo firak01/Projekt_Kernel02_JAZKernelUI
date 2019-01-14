@@ -20,13 +20,13 @@ import basic.zBasic.ReflectClassZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelUserZZZ;
-import basic.zKernel.KernelZZZ;
+import basic.zKernel.IKernelZZZ;
 import basic.zKernelUI.component.model.EventComponentSelectionResetZZZ;
 import basic.zKernelUI.component.model.IListenerSelectionResetZZZ;
 import custom.zKernel.LogZZZ;
 
 public abstract class KernelJTextAreaListening4ComponentSelectionResetZZZ extends JTextArea implements IObjectZZZ, IFlagZZZ, IKernelUserZZZ, IListenerSelectionResetZZZ{
-	private KernelZZZ objKernel;
+	private IKernelZZZ objKernel;
 	private LogZZZ objLog;
 	
 	private EventComponentSelectionResetZZZ eventPrevious;
@@ -37,13 +37,13 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 	
 	protected ExceptionZZZ objException = null;    // diese Exception hat jedes Objekt
 	
-	public KernelJTextAreaListening4ComponentSelectionResetZZZ(KernelZZZ objKernel, String sTextInitial){
+	public KernelJTextAreaListening4ComponentSelectionResetZZZ(IKernelZZZ objKernel, String sTextInitial){
 		super(sTextInitial);
 		this.objKernel = objKernel;
 		this.objLog = objKernel.getLogObject();
 	}
 	
-	public KernelJTextAreaListening4ComponentSelectionResetZZZ(KernelZZZ objKernel, String sTextInitial, int iRow, int iColumn){
+	public KernelJTextAreaListening4ComponentSelectionResetZZZ(IKernelZZZ objKernel, String sTextInitial, int iRow, int iColumn){
 		super(sTextInitial, iRow, iColumn);
 		this.objKernel = objKernel;
 		this.objLog = objKernel.getLogObject();
@@ -62,11 +62,11 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 		}
 	}
 	
-	public KernelZZZ getKernelObject() {		
+	public IKernelZZZ getKernelObject() {		
 		return this.objKernel;
 	}
 
-	public void setKernelObject(KernelZZZ objKernel) {
+	public void setKernelObject(IKernelZZZ objKernel) {
 		this.objKernel = objKernel;
 	}
 
@@ -300,6 +300,29 @@ public boolean setFlag(String sFlagName, boolean bFlagValue){
 		}	// end main:
 		
 		return bFunction;	
+	}
+	
+	@Override
+	public String[] getFlagZ(boolean bFlagValueToSearchFor) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public String[] getFlagZ() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public String[] getFlagZ_passable(boolean bValueToSearchFor,
+			IFlagZZZ objUsingFlagZ) throws ExceptionZZZ {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public String[] getFlagZ_passable(IFlagZZZ objUsingFlagZ)
+			throws ExceptionZZZ {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 

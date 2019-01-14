@@ -2,12 +2,12 @@ package basic.zKernelUI.component.model;
 
 import java.util.ArrayList;
 
-import basic.zKernel.KernelZZZ;
+import basic.zKernel.IKernelZZZ;
 
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
 
-/** Diese Klasse implementiert alles, was benötigt wird, damit die eigenen Events "Auswahl hat sich geändert" abgefeuert werden kann
+/** Diese Klasse implementiert alles, was benï¿½tigt wird, damit die eigenen Events "Auswahl hat sich geï¿½ndert" abgefeuert werden kann
  *   und auch von den Componenten, die hier registriert sind empfangen wird. Damit fungieren Objekte dieser Klasse als "EventBroker".
  *   
  *   Wichtig: Diese Klasse darf nicht final sein, damit sie von anderen Klassen geerbt werden kann.
@@ -16,7 +16,7 @@ import basic.zKernel.KernelUseObjectZZZ;
  *
  */
 public class KernelSenderComponentSelectionResetZZZ extends KernelUseObjectZZZ implements ISenderSelectionResetZZZ{
-	public KernelSenderComponentSelectionResetZZZ(KernelZZZ objKernel){
+	public KernelSenderComponentSelectionResetZZZ(IKernelZZZ objKernel){
 		super(objKernel);
 	}
 	
@@ -24,8 +24,8 @@ public class KernelSenderComponentSelectionResetZZZ extends KernelUseObjectZZZ i
 	 * @see use.via.client.module.export.ISenderEventComponentReset#fireEvent(basic.zKernelUI.component.model.KernelEventComponentSelectionResetZZZ)
 	 */
 	private ArrayList listaLISTENER_REGISTERED = new ArrayList();  //Das ist die Arrayliste, in welche  die registrierten Komponenten eingetragen werden 
-																							  //wichtig: Sie muss private sein und kann nicht im Interace global definiert werden, weil es sonst nicht möglich ist 
-	                                                                                          //             mehrere Events, an verschiedenen Komponenten, unabhängig voneinander zu verwalten.
+																							  //wichtig: Sie muss private sein und kann nicht im Interace global definiert werden, weil es sonst nicht mï¿½glich ist 
+	                                                                                          //             mehrere Events, an verschiedenen Komponenten, unabhï¿½ngig voneinander zu verwalten.
 	public final void fireEvent(EventComponentSelectionResetZZZ event){	
 		if(event.getSource() instanceof ISenderSelectionResetZZZ){
 			ISenderSelectionResetZZZ sender = (ISenderSelectionResetZZZ) event.getSource();

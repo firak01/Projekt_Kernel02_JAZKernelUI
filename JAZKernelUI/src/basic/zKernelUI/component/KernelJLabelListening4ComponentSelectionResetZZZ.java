@@ -2,7 +2,7 @@ package basic.zKernelUI.component;
 
 import javax.swing.JLabel;
 
-import basic.zKernel.KernelZZZ;
+import basic.zKernel.IKernelZZZ;
 import custom.zKernel.LogZZZ;
 
 import basic.zBasic.ExceptionZZZ;
@@ -14,7 +14,7 @@ import basic.zKernelUI.component.model.IListenerSelectionResetZZZ;
 import basic.zKernelUI.component.model.EventComponentSelectionResetZZZ;
 
 public abstract class KernelJLabelListening4ComponentSelectionResetZZZ extends JLabel implements IConstantZZZ, IObjectZZZ, IKernelUserZZZ, IListenerSelectionResetZZZ{
-	private KernelZZZ objKernel;
+	private IKernelZZZ objKernel;
 	private LogZZZ objLog;
 	
 	private EventComponentSelectionResetZZZ eventPrevious;
@@ -22,7 +22,7 @@ public abstract class KernelJLabelListening4ComponentSelectionResetZZZ extends J
 	private boolean bFlagDebug=false;
 	private boolean bFlagInit=false;
 	
-	public KernelJLabelListening4ComponentSelectionResetZZZ(KernelZZZ objKernel, String sTextInitial){
+	public KernelJLabelListening4ComponentSelectionResetZZZ(IKernelZZZ objKernel, String sTextInitial){
 		super(sTextInitial);
 		this.objKernel = objKernel;
 		this.objLog = objKernel.getLogObject();
@@ -50,11 +50,11 @@ public abstract class KernelJLabelListening4ComponentSelectionResetZZZ extends J
 		// TODO Auto-generated method stub		
 	}
 
-	public KernelZZZ getKernelObject() {	
+	public IKernelZZZ getKernelObject() {	
 		return this.objKernel;
 	}
 
-	public void setKernelObject(KernelZZZ objKernel) {
+	public void setKernelObject(IKernelZZZ objKernel) {
 		this.objKernel = objKernel;
 	}
 
