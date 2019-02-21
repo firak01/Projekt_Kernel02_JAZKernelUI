@@ -55,7 +55,16 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	private boolean bFlagInit = false;
 	private boolean bFlagTerminate = false;
 	
-	
+	/**
+	 * DEFAULT Konstruktor, notwendig, damit man objClass.newInstance(); einfach machen kann.
+	 *                                 
+	 * lindhaueradmin, 23.07.2013
+	 */
+	public KernelJDialogExtendedZZZ(){// throws ExceptionZZZ{
+		//JFrame frameParent = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, (JComponent)this);
+	//20130723 raus:	KernelJFrameCascadedZZZ frameParent = (KernelJFrameCascadedZZZ) SwingUtilities.getAncestorOfClass((KernelJFrameCascadedZZZ.class), (JComponent) this);
+		//20130723 raus:		KernelJPanelCascadedNew_(null, frameParent, null);
+	}
 	public KernelJDialogExtendedZZZ(IKernelZZZ objKernel, KernelJFrameCascadedZZZ frameOwner, boolean bModal, HashMap<String, Boolean> hmFlag){
 		super(frameOwner, bModal);		//Das initialisiert JDialog
 		this.setKernelObject(objKernel);
@@ -204,6 +213,9 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			KernelJPanelCascadedZZZ panel2add = this.getPanelButton();
 			if(panel2add==null){
 				//FGL 20070305 check: KernelJPanelDialogButtonDefaultZZZ panel2add = new KernelJPanelDialogButtonDefaultZZZ(this.getKernelObject(), this, this.isButtonOkAvailable(), this.isButtonCancelAvailable());
+				//panel2add = new KernelJPanelDialogButtonDefaultZZZ(this.getKernelObject(), this, this.isButtonOkAvailable(), this.isButtonCancelAvailable());
+				//20190219: Die Dialogbox hinzuzufügen hat das Problem, dass Sie nicht als das Program-Definiert ist, welches für das Lesen/Schreiben der Werte in der Ini-Datei vorgesehen ist.
+				//          Das ist nämlich ein anderes, benachbartes Panel.
 				panel2add = new KernelJPanelDialogButtonDefaultZZZ(this.getKernelObject(), this, this.isButtonOkAvailable(), this.isButtonCancelAvailable());
 			}
 			
@@ -333,6 +345,9 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	}
 	public KernelJPanelCascadedZZZ getPanelSub(String sAlias){
 		return (KernelJPanelCascadedZZZ) this.objHtPanelSub.get(sAlias);
+	}
+	public Hashtable getPanelSubAll(){
+		return this.objHtPanelSub;
 	}
 	
 	public Frame getFrameParent(){

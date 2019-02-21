@@ -1,5 +1,7 @@
 package basic.zKernelUI.component;
 
+import java.util.Hashtable;
+
 import javax.swing.JFrame;
 
 public interface IFrameCascadedZZZ {
@@ -14,4 +16,6 @@ public interface IFrameCascadedZZZ {
 	
 	public abstract KernelJPanelCascadedZZZ getPanelSub(String sAlias);
 	public abstract void setPanelSub(String sAlias, KernelJPanelCascadedZZZ objJPanel);
+	
+	public abstract Hashtable getPanelSubAll(); 
 }

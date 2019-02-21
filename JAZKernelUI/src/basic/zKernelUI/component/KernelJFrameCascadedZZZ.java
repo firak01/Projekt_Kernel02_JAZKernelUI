@@ -60,7 +60,7 @@ public abstract class KernelJFrameCascadedZZZ extends JFrame  implements IObject
 //private boolean bFlagTerminate = false;
 
 public enum FLAGZ{
-	COMPONENTKERNELPROGRAM,COMPONENTDRAGGABLE,TERMINATE; //Merke: DEBUG und INIT aus ObjectZZZ sollen über IObjectZZZ eingebunden werden, weil von ObjectkZZZ kann man ja nicht erben. Es wird schon von File geerbt.
+	COMPONENT_KERNEL_PROGRAM,COMPONENT_DRAGGABLE,TERMINATE; //Merke: DEBUG und INIT aus ObjectZZZ sollen über IObjectZZZ eingebunden werden, weil von ObjectkZZZ kann man ja nicht erben. Es wird schon von File geerbt.
 }
 
 private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 20130721 ersetzt die einzelnen Flags, irgendwann...
@@ -571,6 +571,9 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 	}
 	public void setPanelSub(String sAlias, KernelJPanelCascadedZZZ objPanel) {
 		this.objHtPanelSub.put(sAlias, objPanel);
+	}
+	public Hashtable getPanelSubAll(){
+		return this.objHtPanelSub;
 	}
 	
 	

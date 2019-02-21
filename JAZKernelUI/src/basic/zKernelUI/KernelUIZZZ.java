@@ -1,6 +1,9 @@
 package basic.zKernelUI;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Set;
 
 import basic.zKernel.IKernelModuleUserZZZ;
 import basic.zKernel.IKernelZZZ;
@@ -21,7 +24,7 @@ import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
  *
  */
 public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ {
-	/**Diese Klasse enth�lt nur statische Methoden, also ist es nicht notwendig weitere Parameter zu �bergeben.
+	/**Diese Klasse enthält nur statische Methoden, also ist es nicht notwendig weitere Parameter zu übergeben.
 	 * Darum ist der Konstruktor auch verborgen.
 	 *  
 	 * lindhaueradmin, 06.07.2013
@@ -42,7 +45,6 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				throw ez;
 			}
 		
-			//if(panelCurrent.getFlag("isKernelProgram")){
 			if(panelCurrent.getFlagZ(KernelJPanelCascadedZZZ.FLAGZ.COMPONENT_KERNEL_PROGRAM.name())){
 				sReturn =  panelCurrent.getClass().getName();
 			}else{				
@@ -50,24 +52,80 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				KernelJPanelCascadedZZZ panelParent = panelCurrent.getPanelParent();
 				if(panelParent!=null) {
 					sReturn = KernelUIZZZ.getProgramName(panelParent); //Rekursion
-				}else{
-					//Suche ggf. nach einem ElternDialgo, das dieses Flag gesetzt hat.
-					KernelJDialogExtendedZZZ dialogParent = panelCurrent.getDialogParent();
-					if(dialogParent!=null){
-						sReturn = KernelUIZZZ.getProgramName(dialogParent);
-					}else{
-						//Suche ggf. nach einem elternFrame
+				}else{					
+					if(KernelUIZZZ.isChildOfDialog(panelCurrent)){//Suche ggf. nach einem ElternDialog, das dieses Flag gesetzt hat.					
+						KernelJDialogExtendedZZZ dialogParent = panelCurrent.getDialogParent();
+						KernelJPanelCascadedZZZ objPanel = KernelUIZZZ.searchProgramKernelComponentPanelFrom(dialogParent);
+						if(objPanel!=null){
+							sReturn = KernelUIZZZ.getProgramName(objPanel);
+							break main;	
+						}																
+						sReturn = KernelUIZZZ.getProgramName(dialogParent);//Erst wenn es keine Panels gibt, den Dialog ggfs. als Programname
+					}else if(KernelUIZZZ.isChildOfFrame(panelCurrent)){ //Suche ggf. nach einem elternFrame						
 						KernelJFrameCascadedZZZ frameParent = panelCurrent.getFrameParent();
-						if(frameParent!=null){
-							sReturn = KernelUIZZZ.getProgramName(frameParent);
-						}else{
-							break main;
-						}
-					}					
+						KernelJPanelCascadedZZZ objPanel = KernelUIZZZ.searchProgramKernelComponentPanelFrom(frameParent);
+						if(objPanel!=null){
+							sReturn = KernelUIZZZ.getProgramName(objPanel);
+							break main;	
+						}						
+						sReturn = KernelUIZZZ.getProgramName(frameParent);//Erst wenn es keine Panels gibt, den Frame ggfs. als Programname						
+					}else{
+						
+					}
 				}
 			}
 		}//end main:
 		return sReturn;
+	}
+	
+	public static KernelJPanelCascadedZZZ searchProgramKernelComponentPanelFrom(KernelJDialogExtendedZZZ dialogParent){
+		KernelJPanelCascadedZZZ objReturn = null;
+		main:{
+			if(dialogParent==null) break main;
+			
+			//20190219: Jetzt ist es zu früh den Frame als Program zurückzugeben.
+			//          Statt dessen musste man alle Unterpanels suchen und dahingehend analysieren, ob eines davon als "KernelProgram" per Flag defniert wurde.
+			Hashtable htSub = dialogParent.getPanelSubAll();
+			Set setPanel = htSub.keySet();
+			Iterator itPanel = setPanel.iterator();
+			while(itPanel.hasNext()){
+				Object obj = itPanel.next();
+				String sKey = (String) obj;								
+				KernelJPanelCascadedZZZ objPanel = (KernelJPanelCascadedZZZ) htSub.get(sKey);
+				boolean bIsProgram = objPanel.getFlagZ(KernelJFrameCascadedZZZ.FLAGZ.COMPONENT_KERNEL_PROGRAM.name());
+				if(bIsProgram){
+					objReturn = objPanel;
+					break main;
+				}								
+			}
+			
+		}//end main
+		return objReturn;
+	}
+	
+	public static KernelJPanelCascadedZZZ searchProgramKernelComponentPanelFrom(KernelJFrameCascadedZZZ frameParent){
+		KernelJPanelCascadedZZZ objReturn = null;
+		main:{
+			if(frameParent==null) break main;
+			
+			//20190219: Jetzt ist es zu früh den Frame als Program zurückzugeben.
+			//          Statt dessen musste man alle Unterpanels suchen und dahingehend analysieren, ob eines davon als "KernelProgram" per Flag defniert wurde.
+			Hashtable htSub = frameParent.getPanelSubAll();
+			Set setPanel = htSub.keySet();
+			Iterator itPanel = setPanel.iterator();
+			while(itPanel.hasNext()){
+				Object obj = itPanel.next();
+				String sKey = (String) obj;								
+				KernelJPanelCascadedZZZ objPanel = (KernelJPanelCascadedZZZ) htSub.get(sKey);
+				boolean bIsProgram = objPanel.getFlagZ(KernelJFrameCascadedZZZ.FLAGZ.COMPONENT_KERNEL_PROGRAM.name());
+				if(bIsProgram){
+					objReturn = objPanel;
+					break main;
+				}								
+			}
+			
+		}//end main
+		return objReturn;
 	}
 		
 		public static String getProgramName(KernelJDialogExtendedZZZ dialogCurrent) throws ExceptionZZZ{
@@ -156,13 +214,6 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 			/* FGL 2013-07-05: Ge�ndert, es wird die Methode in KErnelJPanelCascadedZZZ eingef�hrt.
 			 * Es ist fraglich, ob das immer das dar�bergeordnete Panel sein muss.
 			 */
-			/*
-			if(panelParent.getDialogParent()==null){
-				sReturn = panelParent.getPanelParent().getClass().getName();
-			}else{
-				sReturn = panelParent.getDialogParent().getClass().getName();
-			}*/
-			//if(panelCurrent.getFlag("isKernelProgram")){
 			String stemp = KernelJPanelCascadedZZZ.FLAGZ.COMPONENT_KERNEL_PROGRAM.name();
 			if(panelCurrent.getFlagZ(stemp)){
 				//NEIN, das w�re eine endlosschleife: sReturn = panelCurrent.getProgramAlias();
@@ -182,7 +233,25 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 	}
 	
 	
-
+	public static boolean isChildOfDialog(KernelJPanelCascadedZZZ panel){
+		boolean bReturn = false;
+		main:{
+			if(panel==null)break main;
+			KernelJDialogExtendedZZZ objDialog = panel.getDialogParent();
+			if(objDialog!=null) bReturn = true;
+		}//end main
+		return bReturn;
+	}
+	
+	public static boolean isChildOfFrame(KernelJPanelCascadedZZZ panel){
+		boolean bReturn = false;
+		main:{
+			if(panel==null)break main;
+			KernelJFrameCascadedZZZ objFrame = panel.getFrameParent();
+			if(objFrame!=null) bReturn = true;
+		}//end main
+		return bReturn;
+	}
 	
 	
 	public static boolean isModuleConfigured(KernelJFrameCascadedZZZ frame) throws ExceptionZZZ{
@@ -243,7 +312,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 			//................ Das Array aller Module dahingehend pr�fen, ob der Klassenname dort auftaucht.
 			//KernelZZZ objKernel = this.getKernelObject();
 			IKernelZZZ objKernel = frame.getKernelObject();
-			ArrayList listaModuleString = objKernel.getModuleAll(); //d.h. es werden die Module ber�cksichtigt, die in der Konfiguration definiert sind, aber die Existenz der Module ist nicht notwendig.
+			ArrayList<String> listaModuleString = objKernel.getModuleAll(); //d.h. es werden die Module ber�cksichtigt, die in der Konfiguration definiert sind, aber die Existenz der Module ist nicht notwendig.
 			if(listaModuleString.size() <= 0) break main;
 			
 			//.................. Alle frames mit ihren parent-Frames durchgehen. Pr�fen, ob der Framename als Modul definiert wurde.
