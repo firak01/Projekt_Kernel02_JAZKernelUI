@@ -2,14 +2,16 @@ package basic.zBasicUI.component;
 
 import java.awt.image.BufferedImage;
 
+import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 
 public class UIHelperAnalyseImage {
 	/**Analyse des übergebenen Bildes. Hier werden alle Pixel (nach Zeile und Spalte) in Schleifen durchlaufen.
-	 * Neben der RGB Angabe wird auch die Transparenz ausgegeben. */
+	 * Neben der RGB Angabe wird auch die Transparenz ausgegeben. 
+	 * @throws ExceptionZZZ */
 	  
-	public static void debugPrintImagePixelData(BufferedImage img, boolean bIncludeTransparency){
+	public static void debugPrintImagePixelData(BufferedImage img, boolean bIncludeTransparency) throws ExceptionZZZ{
 		
 		main:{
 		check:{
@@ -64,7 +66,7 @@ public class UIHelperAnalyseImage {
 	
 	}
 	
-	public static int[][] getImagePixelDataRGB(BufferedImage img, boolean bIncludeTransparency){
+	public static int[][] getImagePixelDataRGB(BufferedImage img, boolean bIncludeTransparency) throws ExceptionZZZ{
 		int[][] iaaReturn = null;
 		main:{
 		check:{
