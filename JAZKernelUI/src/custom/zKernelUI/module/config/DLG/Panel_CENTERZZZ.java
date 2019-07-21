@@ -128,7 +128,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements ICompone
 					//Das Value - Textfeld										
 					//TODO GOON: Das KernelObject zu verwenden ist eigentlich nicht sauber. Es muss ein eigenes Objekt f�r das zu konfigurierende Modul vorhanden sein.
 					//sValue = this.getKernelObject().getParameterByModuleFile(objFileIni, saProperty[icount]); //Parameter);
-					sValue = this.objKernel2configure.getParameterByModuleFile(objFileIni, saProperty[icount]); //Parameter);
+					sValue = this.objKernel2configure.getParameterByModuleFile(objFileIni, saProperty[icount]).getValue(); //Parameter);
 					
 					textfieldaValue[icount] = new JTextField(sValue, iTEXTFIELD_COLUMN_DEFAULT);
 					textfieldaValue[icount].setSize(dimensionTextfield);

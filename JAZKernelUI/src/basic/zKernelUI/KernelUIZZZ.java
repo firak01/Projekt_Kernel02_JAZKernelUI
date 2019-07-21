@@ -220,7 +220,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				
 				//Versuch den Alias direkt aus der Konfiguration auszulesen.
 				IKernelZZZ objKernel = panelCurrent.getKernelObject();
-				sReturn = objKernel.getParameter(panelCurrent.getProgramName()); //Also: Der Alias ist auf Modulebene (z.B: in einem Abschnitt [THM#01]) definiert und steht dort hinter dem Package + Klassennamen der Komponente.			
+				sReturn = objKernel.getParameter(panelCurrent.getProgramName()).getValue(); //Also: Der Alias ist auf Modulebene (z.B: in einem Abschnitt [THM#01]) definiert und steht dort hinter dem Package + Klassennamen der Komponente.			
 			}else{				
 				//Suche nach Elternpanel, das dieses Flag gesetzt hat ... als rekursiver Aufruf.
 				KernelJPanelCascadedZZZ panelParent = panelCurrent.getPanelParent();
