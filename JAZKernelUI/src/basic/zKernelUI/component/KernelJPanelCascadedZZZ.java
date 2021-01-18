@@ -34,6 +34,7 @@ import basic.zBasicUI.listener.ListenerMouseMove4DragableWindowZZZ;
 import basic.zKernel.IKernelModuleUserZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
+import basic.zKernel.KernelLogZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import basic.zUtil.io.KernelFileZZZ.FLAGZ;
 import custom.zKernel.LogZZZ;
@@ -896,6 +897,18 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	public void setExceptionObject(ExceptionZZZ objException) {
 		 this.objException = objException;
 	}
+	
+	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
+	@Override
+	public void logLineDate(String sLog) {
+		LogZZZ objLog = this.getLogObject();
+		if(objLog==null) {
+			String sTemp = KernelLogZZZ.computeLineDate(sLog);
+			System.out.println(sTemp);
+		}else {
+			objLog.WriteLineDate(sLog);
+		}		
+	}	
 	
 	
 	public JComponent getComponent(String sAlias) {

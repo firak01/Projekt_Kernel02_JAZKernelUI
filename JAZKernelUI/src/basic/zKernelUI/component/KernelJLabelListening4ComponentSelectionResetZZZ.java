@@ -3,8 +3,8 @@ package basic.zKernelUI.component;
 import javax.swing.JLabel;
 
 import basic.zKernel.IKernelZZZ;
+import basic.zKernel.KernelLogZZZ;
 import custom.zKernel.LogZZZ;
-
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IConstantZZZ;
 import basic.zBasic.IObjectZZZ;
@@ -49,6 +49,18 @@ public abstract class KernelJLabelListening4ComponentSelectionResetZZZ extends J
 	public void setExceptionObject(ExceptionZZZ objException) {
 		// TODO Auto-generated method stub		
 	}
+	
+	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
+	@Override
+	public void logLineDate(String sLog) {
+		LogZZZ objLog = this.getLogObject();
+		if(objLog==null) {
+			String sTemp = KernelLogZZZ.computeLineDate(sLog);
+			System.out.println(sTemp);
+		}else {
+			objLog.WriteLineDate(sLog);
+		}		
+	}	
 
 	public IKernelZZZ getKernelObject() {	
 		return this.objKernel;

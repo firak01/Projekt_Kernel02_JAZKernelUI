@@ -21,6 +21,7 @@ import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
+import basic.zKernel.KernelLogZZZ;
 import basic.zKernelUI.component.model.EventComponentSelectionResetZZZ;
 import basic.zKernelUI.component.model.IListenerSelectionResetZZZ;
 import custom.zKernel.LogZZZ;
@@ -266,6 +267,18 @@ public boolean setFlag(String sFlagName, boolean bFlagValue){
 	public void setExceptionObject(ExceptionZZZ objException) {
 		this.objException = objException;
 	}
+	
+	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
+	@Override
+	public void logLineDate(String sLog) {
+		LogZZZ objLog = this.getLogObject();
+		if(objLog==null) {
+			String sTemp = KernelLogZZZ.computeLineDate(sLog);
+			System.out.println(sTemp);
+		}else {
+			objLog.WriteLineDate(sLog);
+		}		
+	}	
 	
 	
 	/**Overwritten and using an object of jakarta.commons.lang

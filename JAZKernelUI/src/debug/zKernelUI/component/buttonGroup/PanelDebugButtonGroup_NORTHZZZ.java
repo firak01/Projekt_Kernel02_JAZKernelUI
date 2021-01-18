@@ -34,6 +34,7 @@ import basic.zKernelUI.component.KernelButtonGroupZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
+import basic.zKernel.KernelLogZZZ;
 import basic.zKernel.KernelZZZ;
 
 public class PanelDebugButtonGroup_NORTHZZZ extends KernelJPanelCascadedZZZ {
@@ -294,6 +295,18 @@ class SwingWorker4ProgramPLUS extends SwingWorker implements IObjectZZZ, IKernel
 		this.objException = objException;
 	}
 	
+	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
+	@Override
+	public void logLineDate(String sLog) {
+		LogZZZ objLog = this.getLogObject();
+		if(objLog==null) {
+			String sTemp = KernelLogZZZ.computeLineDate(sLog);
+			System.out.println(sTemp);
+		}else {
+			objLog.WriteLineDate(sLog);
+		}		
+	}	
+	
 	
 	/**Overwritten and using an object of jakarta.commons.lang
 	 * to create this string using reflection. 
@@ -449,6 +462,18 @@ class SwingWorker4ProgramMINUS extends SwingWorker implements IObjectZZZ, IKerne
 	public void setExceptionObject(ExceptionZZZ objException) {
 		this.objException = objException;
 	}
+	
+	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
+	@Override
+	public void logLineDate(String sLog) {
+		LogZZZ objLog = this.getLogObject();
+		if(objLog==null) {
+			String sTemp = KernelLogZZZ.computeLineDate(sLog);
+			System.out.println(sTemp);
+		}else {
+			objLog.WriteLineDate(sLog);
+		}		
+	}	
 	
 	
 	/**Overwritten and using an object of jakarta.commons.lang
@@ -609,6 +634,18 @@ class SwingWorker4ProgramENABLE extends SwingWorker implements IObjectZZZ, IKern
 		this.objException = objException;
 	}
 	
+	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
+	@Override
+	public void logLineDate(String sLog) {
+		LogZZZ objLog = this.getLogObject();
+		if(objLog==null) {
+			String sTemp = KernelLogZZZ.computeLineDate(sLog);
+			System.out.println(sTemp);
+		}else {
+			objLog.WriteLineDate(sLog);
+		}		
+	}	
+	
 	
 	/**Overwritten and using an object of jakarta.commons.lang
 	 * to create this string using reflection. 
@@ -759,6 +796,18 @@ class SwingWorker4ProgramDISABLE extends SwingWorker implements IObjectZZZ, IKer
 	public void setExceptionObject(ExceptionZZZ objException) {
 		this.objException = objException;
 	}
+	
+	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
+	@Override
+	public void logLineDate(String sLog) {
+		LogZZZ objLog = this.getLogObject();
+		if(objLog==null) {
+			String sTemp = KernelLogZZZ.computeLineDate(sLog);
+			System.out.println(sTemp);
+		}else {
+			objLog.WriteLineDate(sLog);
+		}		
+	}	
 	
 	
 	/**Overwritten and using an object of jakarta.commons.lang
@@ -912,6 +961,18 @@ class SwingWorker4ProgramTOGGLE_ALL extends SwingWorker implements IObjectZZZ, I
 	}
 	
 	
+	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
+	@Override
+	public void logLineDate(String sLog) {
+		LogZZZ objLog = this.getLogObject();
+		if(objLog==null) {
+			String sTemp = KernelLogZZZ.computeLineDate(sLog);
+			System.out.println(sTemp);
+		}else {
+			objLog.WriteLineDate(sLog);
+		}		
+	}	
+	
 	/**Overwritten and using an object of jakarta.commons.lang
 	 * to create this string using reflection. 
 	 * Remark: this is not yet formated. A style class is available in jakarta.commons.lang. 
@@ -1062,6 +1123,17 @@ class SwingWorker4ProgramDIFFER_ALL extends SwingWorker implements IObjectZZZ, I
 		this.objException = objException;
 	}
 	
+	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
+	@Override
+	public void logLineDate(String sLog) {
+		LogZZZ objLog = this.getLogObject();
+		if(objLog==null) {
+			String sTemp = KernelLogZZZ.computeLineDate(sLog);
+			System.out.println(sTemp);
+		}else {
+			objLog.WriteLineDate(sLog);
+		}		
+	}	
 	
 	/**Overwritten and using an object of jakarta.commons.lang
 	 * to create this string using reflection. 
@@ -1212,6 +1284,18 @@ class SwingWorker4ProgramSAME_ALL extends SwingWorker implements IObjectZZZ, IKe
 	public void setExceptionObject(ExceptionZZZ objException) {
 		this.objException = objException;
 	}
+	
+	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
+	@Override
+	public void logLineDate(String sLog) {
+		LogZZZ objLog = this.getLogObject();
+		if(objLog==null) {
+			String sTemp = KernelLogZZZ.computeLineDate(sLog);
+			System.out.println(sTemp);
+		}else {
+			objLog.WriteLineDate(sLog);
+		}		
+	}	
 	
 	
 	/**Overwritten and using an object of jakarta.commons.lang

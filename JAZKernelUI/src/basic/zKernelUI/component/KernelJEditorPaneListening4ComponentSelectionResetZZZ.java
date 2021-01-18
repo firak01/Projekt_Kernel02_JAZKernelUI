@@ -3,6 +3,7 @@ package basic.zKernelUI.component;
 import javax.swing.JEditorPane;
 
 import basic.zKernel.IKernelZZZ;
+import basic.zKernel.KernelLogZZZ;
 import custom.zKernel.LogZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IConstantZZZ;
@@ -36,6 +37,19 @@ public abstract class KernelJEditorPaneListening4ComponentSelectionResetZZZ exte
 		// TODO Auto-generated method stub
 		
 	}
+	
+	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
+	@Override
+	public void logLineDate(String sLog) {
+		LogZZZ objLog = this.getLogObject();
+		if(objLog==null) {
+			String sTemp = KernelLogZZZ.computeLineDate(sLog);
+			System.out.println(sTemp);
+		}else {
+			objLog.WriteLineDate(sLog);
+		}		
+	}	
+	
 	public IKernelZZZ getKernelObject() {	
 		return this.objKernel;
 	}

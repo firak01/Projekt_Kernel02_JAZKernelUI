@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import basic.zKernel.IKernelZZZ;
+import basic.zKernel.KernelLogZZZ;
 import basic.zKernel.KernelZZZ;
 import custom.zKernel.LogZZZ;
 
@@ -371,6 +372,18 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		// TODO Auto-generated method stub
 		
 	}
+	
+	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
+	@Override
+	public void logLineDate(String sLog) {
+		LogZZZ objLog = this.getLogObject();
+		if(objLog==null) {
+			String sTemp = KernelLogZZZ.computeLineDate(sLog);
+			System.out.println(sTemp);
+		}else {
+			objLog.WriteLineDate(sLog);
+		}		
+	}	
 
 	/* (non-Javadoc)
 	 * @see basic.zKernel.IKernelZZZ#getKernelObject()

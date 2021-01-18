@@ -7,6 +7,7 @@ import javax.swing.JList;
 import javax.swing.ListModel;
 
 import basic.zKernel.IKernelZZZ;
+import basic.zKernel.KernelLogZZZ;
 import custom.zKernel.LogZZZ;
 
 
@@ -54,6 +55,19 @@ public abstract class KernelJListListening4ComponentSelectionResetZZZ extends JL
 		// TODO Auto-generated method stub
 		
 	}
+	
+	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
+	@Override
+	public void logLineDate(String sLog) {
+		LogZZZ objLog = this.getLogObject();
+		if(objLog==null) {
+			String sTemp = KernelLogZZZ.computeLineDate(sLog);
+			System.out.println(sTemp);
+		}else {
+			objLog.WriteLineDate(sLog);
+		}		
+	}	
+	
 	public IKernelZZZ getKernelObject() {
 		return this.objKernel;
 	}
