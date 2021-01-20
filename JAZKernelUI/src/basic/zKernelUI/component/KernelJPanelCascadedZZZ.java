@@ -836,14 +836,46 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 				try{
 					KernelJFrameCascadedZZZ frameParent = this.getFrameParent(); //panelParent.getFrameParent();
 					if(frameParent==null){
-						this.getPanelParent().searchPanelRoot().getFrameParent();
-					}			
-					if(frameParent==null) {
-						throw new ExceptionZZZ("Keine FrameParent in diesem KernelJPanelCascadedZZZ vorhanden");
-					}
-					
-					JFrame frameRoot = frameParent.searchFrameRoot();//frameParent.getFrameParent().getClass().getName(); 
-					sReturn = frameRoot.getClass().getName();
+						KernelJPanelCascadedZZZ panelParent = this.getPanelParent();
+						if(panelParent==null) {
+							sReturn = this.getKernelObject().getApplicationKey();
+							break main;
+						}else {
+							KernelJPanelCascadedZZZ panelRoot = panelParent.searchPanelRoot();
+							if(panelRoot==null) {
+								sReturn = this.getKernelObject().getApplicationKey();
+								break main;
+							}else {
+								frameParent = panelRoot.getFrameParent();
+								if(frameParent==null) {
+									//Dann keinen Fehler werfen.
+									//throw new ExceptionZZZ("Keine FrameParent in diesem KernelJPanelCascadedZZZ vorhanden");
+									sReturn = panelRoot.getClass().getName();
+									break main;
+								}else {
+									//Wenn es ein frameParent gibt, ggfs. noch weiter runter, oder den Klassennamen als Modul
+									JFrame frameRoot = frameParent.searchFrameRoot();//frameParent.getFrameParent().getClass().getName();
+									if(frameRoot==null) {
+										sReturn = frameParent.getClass().getName();
+										break main;
+									}else {
+										sReturn = frameRoot.getClass().getName();
+										break main;
+									}									
+								}
+							}
+						}					
+					}else {
+						//Wenn es ein frameParent gibt, ggfs. noch weiter runter, oder den Klassennamen als Modul
+						JFrame frameRoot = frameParent.searchFrameRoot();//frameParent.getFrameParent().getClass().getName();
+						if(frameRoot==null) {
+							sReturn = frameParent.getClass().getName();
+							break main;
+						}else {
+							sReturn = frameRoot.getClass().getName();
+							break main;
+						}		
+					}															
 				} catch (ExceptionZZZ ez) {				
 					ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());
 				}
