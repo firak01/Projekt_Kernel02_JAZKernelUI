@@ -16,4 +16,7 @@ public abstract interface IPanelCascadedZZZ extends IComponentCascadedUserZZZ{
 	
 	public abstract KernelJPanelCascadedZZZ getPanelSub(String sAlias);
 	public abstract void setPanelSub(String sAlias, KernelJPanelCascadedZZZ objJPanel);
+	
+	
+	public abstract KernelJFrameCascadedZZZ getFrameParent();
 }

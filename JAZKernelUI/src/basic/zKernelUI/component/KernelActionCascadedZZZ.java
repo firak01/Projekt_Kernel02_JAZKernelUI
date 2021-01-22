@@ -8,8 +8,11 @@ import javax.swing.JPanel;
 
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
+import basic.zKernelUI.KernelUIZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ReflectCodeZZZ;
+import basic.zBasic.util.datatype.string.StringZZZ;
+import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
 
 public abstract class KernelActionCascadedZZZ extends KernelUseObjectZZZ  implements ActionListener, IButtonEventZZZ {
@@ -66,6 +69,95 @@ public abstract class KernelActionCascadedZZZ extends KernelUseObjectZZZ  implem
 			}
 		}
 		return panelReturn;
+	}
+	
+	/* Das ist eine Action innerhalb eines Panels. Also ist der Modulname ggfs. die Klasse des Panels.
+	 * (non-Javadoc)
+	 * @see basic.zKernel.KernelUseObjectZZZ#getModuleUsed()
+	 */
+	public String getModuleUsed(){
+		String sReturn = new String("");
+		main:{
+			try{								
+				if(this.getContextUsed() == null){													
+					sReturn = KernelUIZZZ.getModuleUsed(this);									
+			}else{
+				sReturn = this.getContextUsed().getProgramName();
+			}
+		} catch (ExceptionZZZ ez) {				
+			ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());
+		}
+	}//end main
+	return sReturn;
+	}
+	
+	/* Das ist eine Action innerhalb eines Panels. Also ist der Programname ggfs. nicht der Name des Buttons, sondern ggfs. die Klasse des Panels.
+	 * (non-Javadoc)
+	 * @see basic.zKernel.KernelUseObjectZZZ#getProgramUsed()
+	 */
+	public String getProgramUsed(){
+		String sReturn = new String("");
+		main:{
+			try{
+				//TODOGOON 20210122: Hier das Program finden. 
+				if(this.getContextUsed() == null){
+					//sReturn = KernelUIZZZ.getProgramName(this);
+					
+					
+					//return this.getClass().getName();
+					//####################
+	
+				KernelJFrameCascadedZZZ frameParent = this.getFrameParent(); //panelParent.getFrameParent();
+				if(frameParent==null){
+					KernelJPanelCascadedZZZ panelParent = this.getPanelParent();
+					if(panelParent==null) {
+						sReturn = this.getKernelObject().getApplicationKey();
+						break main;
+					}else {
+						KernelJPanelCascadedZZZ panelRoot = panelParent.searchPanelRoot();
+						if(panelRoot==null) {
+							sReturn = this.getKernelObject().getApplicationKey();
+							break main;
+						}else {
+							frameParent = panelRoot.getFrameParent();
+							if(frameParent==null) {
+								//Dann keinen Fehler werfen.
+								//throw new ExceptionZZZ("Keine FrameParent in diesem KernelJPanelCascadedZZZ vorhanden");
+								sReturn = panelRoot.getClass().getName();
+								break main;
+							}else {
+								//Wenn es ein frameParent gibt, ggfs. noch weiter runter, oder den Klassennamen als Modul
+								JFrame frameRoot = frameParent.searchFrameRoot();//frameParent.getFrameParent().getClass().getName();
+								if(frameRoot==null) {
+									sReturn = frameParent.getClass().getName();
+									break main;
+								}else {
+									sReturn = frameRoot.getClass().getName();
+									break main;
+								}									
+							}
+						}
+					}					
+				}else {
+					//Wenn es ein frameParent gibt, ggfs. noch weiter runter, oder den Klassennamen als Modul
+					JFrame frameRoot = frameParent.searchFrameRoot();//frameParent.getFrameParent().getClass().getName();
+					if(frameRoot==null) {
+						sReturn = frameParent.getClass().getName();
+						break main;
+					}else {
+						sReturn = frameRoot.getClass().getName();
+						break main;
+					}		
+				}															
+				//#####################
+			}else{
+				sReturn = this.getContextUsed().getProgramName();
+			}
+		} catch (ExceptionZZZ ez) {				
+			ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());
+		}
+	}//end main
+	return sReturn;
 	}
 
 

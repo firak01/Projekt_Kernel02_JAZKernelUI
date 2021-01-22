@@ -5,6 +5,8 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Set;
 
+import javax.swing.JFrame;
+
 import basic.zKernel.IKernelModuleUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
@@ -12,7 +14,9 @@ import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IConstantZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
+import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
+import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelJDialogExtendedZZZ;
 import basic.zKernelUI.component.KernelJFrameCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
@@ -380,6 +384,110 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				frameParentTemp = frameParentTemp.getFrameParent();
 			}
 			sReturn = frameParent.getClass().getName();   //diese Zeile sollte eigentlich nie erreicht werden.
+		}//end main
+		return sReturn;
+	}
+	
+	public static String getModuleUsed(IActionCascadedZZZ actionCascaded) {
+		//TODOGOON 202010122
+		//1. Es muss ein Interface IActionCascadedZZZ geben
+		//   analog zu : public abstract interface IPanelCascadedZZZ extends IComponentCascadedUserZZZ{
+		String sReturn = new String();
+		main:{
+			KernelJFrameCascadedZZZ frameParent = actionCascaded.getFrameParent(); //panelParent.getFrameParent();
+			if(frameParent==null){
+				KernelJPanelCascadedZZZ panelParent = actionCascaded.getPanelParent();
+				if(panelParent==null) {
+					sReturn = this.getKernelObject().getApplicationKey();
+					break main;
+				}else {
+					KernelJPanelCascadedZZZ panelRoot = panelParent.searchPanelRoot();
+					if(panelRoot==null) {
+						sReturn = actionCascaded.getKernelObject().getApplicationKey();
+						break main;
+					}else {
+						frameParent = panelRoot.getFrameParent();
+						if(frameParent==null) {
+							//Dann keinen Fehler werfen.
+							//throw new ExceptionZZZ("Keine FrameParent in diesem KernelJPanelCascadedZZZ vorhanden");
+							sReturn = panelRoot.getClass().getName();
+							break main;
+						}else {
+							//Wenn es ein frameParent gibt, ggfs. noch weiter runter, oder den Klassennamen als Modul
+							JFrame frameRoot = frameParent.searchFrameRoot();//frameParent.getFrameParent().getClass().getName();
+							if(frameRoot==null) {
+								sReturn = frameParent.getClass().getName();
+								break main;
+							}else {
+								sReturn = frameRoot.getClass().getName();
+								break main;
+							}									
+						}
+					}
+				}					
+			}else {
+				//Wenn es ein frameParent gibt, ggfs. noch weiter runter, oder den Klassennamen als Modul
+				JFrame frameRoot = frameParent.searchFrameRoot();//frameParent.getFrameParent().getClass().getName();
+				if(frameRoot==null) {
+					sReturn = frameParent.getClass().getName();
+					break main;
+				}else {
+					sReturn = frameRoot.getClass().getName();
+					break main;
+				}		
+			}						
+		}//end main:
+		return sReturn;
+	}
+	public static String getModuleUsed(IPanelCascadedZZZ panelCascaded) {
+		String sReturn = new String("");
+		main:{
+			try{
+				KernelJFrameCascadedZZZ frameParent = panelCascaded.getFrameParent(); //panelParent.getFrameParent();
+				if(frameParent==null){
+					KernelJPanelCascadedZZZ panelParent = panelCascaded.getPanelParent();
+					if(panelParent==null) {
+						sReturn = panelCascaded.getKernelObject().getApplicationKey();
+						break main;
+					}else {
+						KernelJPanelCascadedZZZ panelRoot = panelParent.searchPanelRoot();
+						if(panelRoot==null) {
+							sReturn = panelCascaded.getKernelObject().getApplicationKey();
+							break main;
+						}else {
+							frameParent = panelRoot.getFrameParent();
+							if(frameParent==null) {
+								//Dann keinen Fehler werfen.
+								//throw new ExceptionZZZ("Keine FrameParent in diesem KernelJPanelCascadedZZZ vorhanden");
+								sReturn = panelRoot.getClass().getName();
+								break main;
+							}else {
+								//Wenn es ein frameParent gibt, ggfs. noch weiter runter, oder den Klassennamen als Modul
+								JFrame frameRoot = frameParent.searchFrameRoot();//frameParent.getFrameParent().getClass().getName();
+								if(frameRoot==null) {
+									sReturn = frameParent.getClass().getName();
+									break main;
+								}else {
+									sReturn = frameRoot.getClass().getName();
+									break main;
+								}									
+							}
+						}
+					}					
+				}else {
+					//Wenn es ein frameParent gibt, ggfs. noch weiter runter, oder den Klassennamen als Modul
+					JFrame frameRoot = frameParent.searchFrameRoot();//frameParent.getFrameParent().getClass().getName();
+					if(frameRoot==null) {
+						sReturn = frameParent.getClass().getName();
+						break main;
+					}else {
+						sReturn = frameRoot.getClass().getName();
+						break main;
+					}		
+				}															
+			} catch (ExceptionZZZ ez) {				
+				ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());
+			}
 		}//end main
 		return sReturn;
 	}
