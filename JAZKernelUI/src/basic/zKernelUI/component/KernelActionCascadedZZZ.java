@@ -15,7 +15,7 @@ import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
 
-public abstract class KernelActionCascadedZZZ extends KernelUseObjectZZZ  implements ActionListener, IButtonEventZZZ {
+public abstract class KernelActionCascadedZZZ extends KernelUseObjectZZZ  implements ActionListener, IButtonEventZZZ, IActionCascadedZZZ {
 	private KernelJPanelCascadedZZZ panelParent;
 	
 	
@@ -81,13 +81,13 @@ public abstract class KernelActionCascadedZZZ extends KernelUseObjectZZZ  implem
 			try{								
 				if(this.getContextUsed() == null){													
 					sReturn = KernelUIZZZ.getModuleUsed(this);									
-			}else{
-				sReturn = this.getContextUsed().getProgramName();
+				}else{
+					sReturn = this.getContextUsed().getProgramName();
+				}
+			} catch (ExceptionZZZ ez) {				
+				ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());
 			}
-		} catch (ExceptionZZZ ez) {				
-			ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());
-		}
-	}//end main
+		}//end main
 	return sReturn;
 	}
 	
@@ -99,64 +99,11 @@ public abstract class KernelActionCascadedZZZ extends KernelUseObjectZZZ  implem
 		String sReturn = new String("");
 		main:{
 			try{
-				//TODOGOON 20210122: Hier das Program finden. 
-				if(this.getContextUsed() == null){
-					//sReturn = KernelUIZZZ.getProgramName(this);
-					
-					
-					//return this.getClass().getName();
-					//####################
-	
-				KernelJFrameCascadedZZZ frameParent = this.getFrameParent(); //panelParent.getFrameParent();
-				if(frameParent==null){
-					KernelJPanelCascadedZZZ panelParent = this.getPanelParent();
-					if(panelParent==null) {
-						sReturn = this.getKernelObject().getApplicationKey();
-						break main;
-					}else {
-						KernelJPanelCascadedZZZ panelRoot = panelParent.searchPanelRoot();
-						if(panelRoot==null) {
-							sReturn = this.getKernelObject().getApplicationKey();
-							break main;
-						}else {
-							frameParent = panelRoot.getFrameParent();
-							if(frameParent==null) {
-								//Dann keinen Fehler werfen.
-								//throw new ExceptionZZZ("Keine FrameParent in diesem KernelJPanelCascadedZZZ vorhanden");
-								sReturn = panelRoot.getClass().getName();
-								break main;
-							}else {
-								//Wenn es ein frameParent gibt, ggfs. noch weiter runter, oder den Klassennamen als Modul
-								JFrame frameRoot = frameParent.searchFrameRoot();//frameParent.getFrameParent().getClass().getName();
-								if(frameRoot==null) {
-									sReturn = frameParent.getClass().getName();
-									break main;
-								}else {
-									sReturn = frameRoot.getClass().getName();
-									break main;
-								}									
-							}
-						}
-					}					
-				}else {
-					//Wenn es ein frameParent gibt, ggfs. noch weiter runter, oder den Klassennamen als Modul
-					JFrame frameRoot = frameParent.searchFrameRoot();//frameParent.getFrameParent().getClass().getName();
-					if(frameRoot==null) {
-						sReturn = frameParent.getClass().getName();
-						break main;
-					}else {
-						sReturn = frameRoot.getClass().getName();
-						break main;
-					}		
-				}															
-				//#####################
-			}else{
-				sReturn = this.getContextUsed().getProgramName();
+				sReturn = KernelUIZZZ.getProgramName(this);				
+			} catch (ExceptionZZZ ez) {				
+				ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());
 			}
-		} catch (ExceptionZZZ ez) {				
-			ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());
-		}
-	}//end main
+		}//end main
 	return sReturn;
 	}
 

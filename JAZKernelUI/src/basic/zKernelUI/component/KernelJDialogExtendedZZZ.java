@@ -19,6 +19,7 @@ import javax.swing.SwingUtilities;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelLogZZZ;
 import basic.zKernel.KernelZZZ;
+import basic.zKernelUI.KernelUIZZZ;
 import custom.zKernel.LogZZZ;
 
 
@@ -28,6 +29,7 @@ import basic.zBasic.IObjectZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasicUI.adapter.AdapterJComponent4ScreenSnapperZZZ;
 import basic.zBasicUI.listener.ListenerMouseMove4DragableWindowZZZ;
+import basic.zKernel.IKernelModuleUserZZZ;
 import basic.zKernel.IKernelUserZZZ;
 
 /**Diese Klasse soll sicherstellen, das ein Dialogfenster auch nur einmal ge�ffnet wird.
@@ -35,7 +37,7 @@ import basic.zKernel.IKernelUserZZZ;
  * @author 0823
  *
  */
-public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConstantZZZ, IObjectZZZ, IKernelUserZZZ, IScreenFeatureZZZ, IMouseFeatureZZZ{
+public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConstantZZZ, IObjectZZZ, IKernelUserZZZ, IKernelModuleUserZZZ, IScreenFeatureZZZ, IMouseFeatureZZZ{
 	private IKernelZZZ objKernel;
 	private LogZZZ objLog;
 	private boolean bPanelCenterAdded=false;
@@ -50,7 +52,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	private 	boolean flagComponentDraggable=true;
 	private boolean flagComponentKernelProgram = false; // 2013-07-08: Damit wird gesagt, dass f�r dieses Panel ein "Program-Abschnitt" in der Kernel - Konfigurations .ini - Datei vorhanden ist.
     //             Bei der Suche nach Parametern wird von der aktuellen Komponente weiter "nach oben" durchgegangen und der Parameter f�r jede Programkomponente gesucht.
-
+	private boolean flagComponentKernelModule = false; //20210124: Analog zum Program hinzugenommen.
 
 	private boolean bFlagDebug = false;
 	private boolean bFlagInit = false;
@@ -116,6 +118,8 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 				bFunction = this.flagComponentDraggable;
 			}else if(stemp.equals("iskernelprogram")){
 				bFunction = this.flagComponentKernelProgram;
+			}else if(stemp.equals("iskernelmodule")){
+				bFunction = this.flagComponentKernelModule;
 			}else{
 				bFunction = false;
 			}		
@@ -160,6 +164,10 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 				break main;
 			}else if(stemp.equals("iskernelprogram")){
 				this.flagComponentKernelProgram = bFlagValue;
+				bFunction = true;
+				break main;
+			}else if(stemp.equals("iskernelmodule")){
+				this.flagComponentKernelModule = bFlagValue;
 				bFunction = true;
 				break main;
 			}else{
@@ -487,5 +495,30 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	 */
 	public boolean isCentered() {		
 		return true;
+	}
+	
+	//### AUS IKernelModuleUserZZZ
+	/* (non-Javadoc)
+	 * @see basic.zKernel.IKernelModuleUserZZZ#getModuleName()
+	 */
+	@Override
+	public String getModuleName() throws ExceptionZZZ {
+		return KernelUIZZZ.getModuleUsed(this);
+	}
+	/* (non-Javadoc)
+	 * @see basic.zKernel.IKernelModuleUserZZZ#getProgramName()
+	 */
+	@Override
+	public String getProgramName() throws ExceptionZZZ {
+		return KernelUIZZZ.getProgramName(this);
+	}
+
+	/* (non-Javadoc)
+	 * @see basic.zKernel.IKernelModuleUserZZZ#getProgramAlias()
+	 */
+	@Override
+	public String getProgramAlias() throws ExceptionZZZ {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
