@@ -56,6 +56,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	
 	private ListenerMouseMove4DragableWindowZZZ listenerDraggableWindow = null; 
 
+	private String sModuleName = null;
 	private String sProgramName  = null; //ggf. der Name des Elternprogramms, s. KernelKonfiguration
 	private String sProgramAlias = null; //ggf. der Alias des Elternprogramms, s. KernelKonfiguration
 	/*private boolean flagComponentKernelProgram = false; // 2013-07-08: Damit wird gesagt, dass f�r dieses Panel ein "Program-Abschnitt" in der Kernel - Konfigurations .ini - Datei vorhanden ist.
@@ -832,16 +833,10 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	//#################### Interface IKernelModuleUserZZZ
 		public String getModuleName() {
 			String sReturn = new String("");
-			main:{
-//				try{			//Merke 202010124: Noch gibt es kein Context für KernelJPanel...					
-//					if(this.getContextUsed() == null){													
-						sReturn = KernelUIZZZ.getModuleUsed(this);									
-//					}else{
-//						sReturn = this.getContextUsed().getProgramName();
-//					}
-//				} catch (ExceptionZZZ ez) {				
-//					ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());
-//				}
+			main:{	
+				if(StringZZZ.isEmpty(this.sModuleName))
+				sReturn = KernelUIZZZ.getModuleUsed(this);
+				this.sModuleName = sReturn;
 			}//end main
 			return sReturn;
 		}
