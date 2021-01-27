@@ -27,6 +27,7 @@ import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IConstantZZZ;
 import basic.zBasic.IObjectZZZ;
 import basic.zBasic.ReflectCodeZZZ;
+import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasicUI.adapter.AdapterJComponent4ScreenSnapperZZZ;
 import basic.zBasicUI.listener.ListenerMouseMove4DragableWindowZZZ;
 import basic.zKernel.IKernelModuleUserZZZ;
@@ -42,8 +43,14 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	private LogZZZ objLog;
 	private boolean bPanelCenterAdded=false;
 	private boolean bPanelButtonAdded=false;
-	private String sText4ButtonCancel="CANCEL";
-	private String sText4ButtonOk="OK";
+	
+	public static String sTEXT_ABORT="CANCEL";
+	private String sText4ButtonCancel="";
+	
+	public static String sTEXT_USEIT="CLOSE";
+	private String sText4ButtonOk="";
+	
+	
 	private String sText4ContentDefault = "";
 	
 	private Hashtable objHtPanelSub=new Hashtable();     //Die Panels, die im BorderLayout hinzugef�gt werden
@@ -437,14 +444,22 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	}
 	
 	public String getText4ButtonOk(){
-		return this.sText4ButtonOk;
+		String sReturn = this.sText4ButtonOk;
+		if(StringZZZ.isEmpty(sReturn)) {
+			sReturn = KernelJDialogExtendedZZZ.sTEXT_USEIT;
+		}
+		return sReturn;
 	}
 	public void setText4ButtonOk(String sText){
 		this.sText4ButtonOk = sText;
 	}
 	
 	public String getText4ButtonCancel(){
-		return this.sText4ButtonCancel;
+		String sReturn = this.sText4ButtonCancel;
+		if(StringZZZ.isEmpty(sReturn)) {
+			sReturn = KernelJDialogExtendedZZZ.sTEXT_ABORT;
+		}
+		return sReturn;
 	}
 	public void setText4ButtonCancel(String sText){
 		this.sText4ButtonCancel = sText;
