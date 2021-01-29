@@ -7,9 +7,9 @@ import java.util.Set;
 
 import javax.swing.JFrame;
 
-import basic.zKernel.IKernelModuleUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
+import basic.zKernel.module.IKernelModuleUserZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IConstantZZZ;
 import basic.zBasic.ReflectCodeZZZ;
@@ -214,12 +214,11 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 					throw ez;
 				}
 			
-//				if(objUsingKernelModule.getFlag("isKernelProgram")){
-//					sReturn =  objUsingKernelModule.getClass().getName();
-//				}
-				
-				sReturn = objUsingKernelModule.getClass().getName();
-				
+				if(objUsingKernelModule.getFlag("isKernelProgram")){
+					sReturn =  objUsingKernelModule.getClass().getName();
+				}else {
+					sReturn = objUsingKernelModule.getClass().getName();
+				}	
 			}//end main:
 			return sReturn;
 		}

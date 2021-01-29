@@ -7,8 +7,11 @@ import java.awt.Frame;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Set;
 
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -19,18 +22,23 @@ import javax.swing.SwingUtilities;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelLogZZZ;
 import basic.zKernel.KernelZZZ;
+import basic.zKernel.module.IKernelModuleUserZZZ;
 import basic.zKernelUI.KernelUIZZZ;
+import basic.zUtil.io.KernelFileZZZ.FLAGZ;
 import custom.zKernel.LogZZZ;
 
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IConstantZZZ;
+import basic.zBasic.IFlagZZZ;
 import basic.zBasic.IObjectZZZ;
+import basic.zBasic.ObjectZZZ;
+import basic.zBasic.ReflectClassZZZ;
 import basic.zBasic.ReflectCodeZZZ;
+import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasicUI.adapter.AdapterJComponent4ScreenSnapperZZZ;
 import basic.zBasicUI.listener.ListenerMouseMove4DragableWindowZZZ;
-import basic.zKernel.IKernelModuleUserZZZ;
 import basic.zKernel.IKernelUserZZZ;
 
 /**Diese Klasse soll sicherstellen, das ein Dialogfenster auch nur einmal ge�ffnet wird.
@@ -61,9 +69,14 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
     //             Bei der Suche nach Parametern wird von der aktuellen Komponente weiter "nach oben" durchgegangen und der Parameter f�r jede Programkomponente gesucht.
 	private boolean flagComponentKernelModule = false; //20210124: Analog zum Program hinzugenommen.
 
-	private boolean bFlagDebug = false;
-	private boolean bFlagInit = false;
-	private boolean bFlagTerminate = false;
+	
+//	private boolean bFlagDebug = false;
+//	private boolean bFlagInit = false;
+//	private boolean bFlagTerminate = false;
+	public enum FLAGZ{
+		TERMINATE,ISDRAGGABLE; //Merke: DEBUG und INIT über IFlagZZZ eingebunden werden, weil von ObjectkZZZ kann man ja nicht erben. Es wird schon von anderer Objektklasse geerbt.
+	}
+	private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); 
 	
 	/**
 	 * DEFAULT Konstruktor, notwendig, damit man objClass.newInstance(); einfach machen kann.
@@ -96,95 +109,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		this.getContentPane().setLayout(new BorderLayout());
 	}
 	
-	/*
-	 * @param sFlagName
-	 * @return
-	 * lindhaueradmin, 06.07.2013
-	 */
-	public boolean getFlag(String sFlagName) {
-		boolean bFunction = false;
-		main:{
-			if(sFlagName == null) break main;
-			if(sFlagName.equals("")) break main;
-			
-			// hier keine Superclass aufrufen, ist ja schon ObjectZZZ
-			// bFunction = super.getFlag(sFlagName);
-			// if(bFunction == true) break main;
-			
-			// Die Flags dieser Klasse setzen
-			String stemp = sFlagName.toLowerCase();
-			if(stemp.equals("debug")){
-				bFunction = this.bFlagDebug;
-				break main;
-			}else if(stemp.equals("init")){
-				bFunction = this.bFlagInit;
-				break main;
-			}else if(stemp.equals("terminate")){
-				bFunction = this.bFlagTerminate;
-			}else if(stemp.equals("isdraggable")){
-				bFunction = this.flagComponentDraggable;
-			}else if(stemp.equals("iskernelprogram")){
-				bFunction = this.flagComponentKernelProgram;
-			}else if(stemp.equals("iskernelmodule")){
-				bFunction = this.flagComponentKernelModule;
-			}else{
-				bFunction = false;
-			}		
-		}	// end main:
-		
-		return bFunction;	
-		}
-
-	/**
-	 * @param sFlagName
-	 * @param bFlagValue
-	 * @return
-	 * lindhaueradmin, 06.07.2013
-	 */
-	public boolean setFlag(String sFlagName, boolean bFlagValue) {
-		boolean bFunction = true;
-		main:{
-			if(sFlagName == null) break main;
-			if(sFlagName.equals("")) break main;
-			
-			// hier keine Superclass aufrufen, ist ja schon ObjectZZZ
-			// bFunction = super.setFlag(sFlagName, bFlagValue);
-			// if(bFunction == true) break main;
-			
-			// Die Flags dieser Klasse setzen
-			String stemp = sFlagName.toLowerCase();
-			if(stemp.equals("debug")){
-				this.bFlagDebug = bFlagValue;
-				bFunction = true;                            //durch diesen return wert kann man "reflexiv" ermitteln, ob es in dem ganzen hierarchie-strang das flag �berhaupt gibt !!!
-				break main;
-			}else if(stemp.equals("init")){
-				this.bFlagInit = bFlagValue;
-				bFunction = true;
-				break main;
-			}else if(stemp.equals("terminate")){
-				this.bFlagTerminate = bFlagValue;
-				bFunction = true;
-				break main;
-			}else if(stemp.equals("isdraggabel")){
-				this.flagComponentDraggable = bFlagValue;
-				bFunction = true;
-				break main;
-			}else if(stemp.equals("iskernelprogram")){
-				this.flagComponentKernelProgram = bFlagValue;
-				bFunction = true;
-				break main;
-			}else if(stemp.equals("iskernelmodule")){
-				this.flagComponentKernelModule = bFlagValue;
-				bFunction = true;
-				break main;
-			}else{
-				bFunction = false;
-			}	
-			
-		}	// end main:
-		
-		return bFunction;	
-	}
+	
 	
 	public void addPanelCenter(KernelJPanelCascadedZZZ panelCenter) throws ExceptionZZZ{
 		main:{
@@ -536,4 +461,328 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	//### FlagMethods ##########################	
+		@Override
+		public Class getClassFlagZ(){
+			return FLAGZ.class;
+		}
+		
+		public HashMap<String, Boolean>getHashMapFlagZ(){
+			return this.hmFlag;
+		} 
+		
+		/* @see basic.zBasic.IFlagZZZ#getFlagZ(java.lang.String)
+		 * 	 Weteire Voraussetzungen:
+		 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
+		 * - Innere Klassen müssen auch public deklariert werden.(non-Javadoc)
+		 */
+		@Override
+		public boolean getFlagZ(String sFlagName) {
+			boolean bFunction = false;
+			main:{
+				if(StringZZZ.isEmpty(sFlagName)) break main;
+											
+				HashMap<String, Boolean> hmFlag = this.getHashMapFlagZ();
+				Boolean objBoolean = hmFlag.get(sFlagName.toUpperCase());
+				if(objBoolean==null){
+					bFunction = false;
+				}else{
+					bFunction = objBoolean.booleanValue();
+				}
+								
+			}	// end main:
+			
+			return bFunction;	
+		}
+		
+		
+		/*
+		 * @param sFlagName
+		 * @return
+		 * lindhaueradmin, 06.07.2013
+		 */
+		//Version Vor Java 1.6
+//		public boolean getFlag(String sFlagName) {
+//			boolean bFunction = false;
+//			main:{
+//				if(sFlagName == null) break main;
+//				if(sFlagName.equals("")) break main;
+//				
+//				// hier keine Superclass aufrufen, ist ja schon ObjectZZZ
+//				// bFunction = super.getFlag(sFlagName);
+//				// if(bFunction == true) break main;
+//				
+//				// Die Flags dieser Klasse setzen
+//				String stemp = sFlagName.toLowerCase();
+//				if(stemp.equals("debug")){
+//					bFunction = this.bFlagDebug;
+//					break main;
+//				}else if(stemp.equals("init")){
+//					bFunction = this.bFlagInit;
+//					break main;
+//				}else if(stemp.equals("terminate")){
+//					bFunction = this.bFlagTerminate;
+//				}else if(stemp.equals("isdraggable")){
+//					bFunction = this.flagComponentDraggable;
+//				}else if(stemp.equals("iskernelprogram")){
+//					bFunction = this.flagComponentKernelProgram;
+//				}else if(stemp.equals("iskernelmodule")){
+//					bFunction = this.flagComponentKernelModule;
+//				}else{
+//					bFunction = false;
+//				}		
+//			}	// end main:
+//			
+//			return bFunction;	
+//			}
+
+		/**
+		 * @param sFlagName
+		 * @param bFlagValue
+		 * @return
+		 * lindhaueradmin, 06.07.2013
+		 */
+//		public boolean setFlag(String sFlagName, boolean bFlagValue) {
+//			boolean bFunction = true;
+//			main:{
+//				if(sFlagName == null) break main;
+//				if(sFlagName.equals("")) break main;
+//				
+//				// hier keine Superclass aufrufen, ist ja schon ObjectZZZ
+//				// bFunction = super.setFlag(sFlagName, bFlagValue);
+//				// if(bFunction == true) break main;
+//				
+//				// Die Flags dieser Klasse setzen
+//				String stemp = sFlagName.toLowerCase();
+//				if(stemp.equals("debug")){
+//					this.bFlagDebug = bFlagValue;
+//					bFunction = true;                            //durch diesen return wert kann man "reflexiv" ermitteln, ob es in dem ganzen hierarchie-strang das flag �berhaupt gibt !!!
+//					break main;
+//				}else if(stemp.equals("init")){
+//					this.bFlagInit = bFlagValue;
+//					bFunction = true;
+//					break main;
+//				}else if(stemp.equals("terminate")){
+//					this.bFlagTerminate = bFlagValue;
+//					bFunction = true;
+//					break main;
+//				}else if(stemp.equals("isdraggable")){
+//					this.flagComponentDraggable = bFlagValue;
+//					bFunction = true;
+//					break main;
+//				}else if(stemp.equals("iskernelprogram")){
+//					this.flagComponentKernelProgram = bFlagValue;
+//					bFunction = true;
+//					break main;
+//				}else if(stemp.equals("iskernelmodule")){
+//					this.flagComponentKernelModule = bFlagValue;
+//					bFunction = true;
+//					break main;
+//				}else{
+//					bFunction = false;
+//				}	
+//				
+//			}	// end main:
+//			
+//			return bFunction;	
+//		}
+		
+		
+//		@Override
+		public boolean getFlag(String sFlagName) {
+			return this.getFlagZ(sFlagName);
+		}
+		@Override
+		public boolean setFlag(String sFlagName, boolean bFlagValue) {
+			try {
+				return this.setFlagZ(sFlagName, bFlagValue);
+			} catch (ExceptionZZZ e) {
+				System.out.println("ExceptionZZZ (aus compatibilitaetgruenden mit Version vor Java 6 nicht weitergereicht) : " + e.getDetailAllLast());
+				return false;
+			}
+		}
+		
+		
+		
+		/** DIESE METHODE MUSS IN ALLEN KLASSEN VORHANDEN SEIN - über Vererbung -, DIE IHRE FLAGS SETZEN WOLLEN
+		 * Weteire Voraussetzungen:
+		 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
+		 * - Innere Klassen müssen auch public deklariert werden.
+		 * @param objClassParent
+		 * @param sFlagName
+		 * @param bFlagValue
+		 * @return
+		 * lindhaueradmin, 23.07.2013
+		 */
+		@Override
+		public boolean setFlagZ(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
+			boolean bFunction = false;
+			main:{
+				if(StringZZZ.isEmpty(sFlagName)) break main;
+				
+
+				bFunction = this.proofFlagZExists(sFlagName);												
+				if(bFunction == true){
+					
+					//Setze das Flag nun in die HashMap
+					HashMap<String, Boolean> hmFlag = this.getHashMapFlagZ();
+					hmFlag.put(sFlagName.toUpperCase(), bFlagValue);
+					bFunction = true;								
+				}										
+			}	// end main:
+			
+			return bFunction;	
+		}
+		
+		//Aus IFlagZZZ, siehe ObjectZZZ
+		/**Gibt alle möglichen FlagZ Werte als Array zurück. 
+		 * @return
+		 */
+		public String[] getFlagZ(){
+			String[] saReturn = null;
+			main:{				
+					Class objClass4Enum = this.getClassFlagZ();	//Aufgrund des Interfaces IFlagZZZ wird vorausgesetzt, dass diese Methode vorhanden ist.
+					String sFilterName = objClass4Enum.getSimpleName();
+					
+					ArrayList<Class<?>> listEmbedded = ReflectClassZZZ.getEmbeddedClasses(this.getClass(), sFilterName);
+					if(listEmbedded == null) break main;
+					//out.format("%s# ListEmbeddedClasses.size()...%s%n", ReflectCodeZZZ.getPositionCurrent(), listEmbedded.size());
+					
+					ArrayList <String> listasTemp = new ArrayList<String>();
+					for(Class objClass : listEmbedded){
+						//out.format("%s# Class...%s%n", ReflectCodeZZZ.getPositionCurrent(), objClass.getName());
+						Field[] fields = objClass.getDeclaredFields();
+						for(Field field : fields){
+							if(!field.isSynthetic()){ //Sonst wird ENUM$VALUES auch zurückgegeben.
+								//out.format("%s# Field...%s%n", ReflectCodeZZZ.getPositionCurrent(), field.getName());
+								listasTemp.add(field.getName());
+							}				
+					}//end for
+				}//end for
+					
+				//20170307: Durch das Verschieben von FLAGZ mit den Werten DEBUG und INIT in das IObjectZZZ Interface, muss man explizit auch dort nachsehen.
+			   //                Merke: Das Verschieben ist deshalb notwenig, weil nicht alle Klassen direkt von ObjectZZZ erben können, sondern das Interface implementieren müsssen.
+			
+												
+				//+++ Nun die aktuelle Klasse 
+				Class<FLAGZ> enumClass = FLAGZ.class;								
+				for(Object obj : FLAGZ.class.getEnumConstants()){
+					//System.out.println(obj + "; "+obj.getClass().getName());
+					listasTemp.add(obj.toString());
+				}
+				saReturn = listasTemp.toArray(new String[listasTemp.size()]);
+			}//end main:
+			return saReturn;
+		}
+
+		/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück. 
+		 * @return
+		 */
+		public String[] getFlagZ(boolean bValueToSearchFor){
+			String[] saReturn = null;
+			main:{
+				
+				
+				ArrayList<String>listasTemp=new ArrayList<String>();
+				
+				//FALLUNTERSCHEIDUNG: Alle gesetzten FlagZ werden in der HashMap gespeichert. Aber die noch nicht gesetzten FlagZ stehen dort nicht drin.
+				//                                  Diese kann man nur durch Einzelprüfung ermitteln.
+				if(bValueToSearchFor==true){
+					HashMap<String,Boolean>hmFlag=this.getHashMapFlagZ();
+					if(hmFlag==null) break main;
+					
+					Set<String> setKey = hmFlag.keySet();
+					for(String sKey : setKey){
+						boolean btemp = hmFlag.get(sKey);
+						if(btemp==bValueToSearchFor){
+							listasTemp.add(sKey);
+						}
+					}
+				}else{
+					String[]saFlagZ = this.getFlagZ();
+					for(String sFlagZ : saFlagZ){
+						boolean btemp = this.getFlagZ(sFlagZ);
+						if(btemp==bValueToSearchFor ){ //also 'false'
+							listasTemp.add(sFlagZ);
+						}
+					}
+				}
+				saReturn = listasTemp.toArray(new String[listasTemp.size()]);
+			}//end main:
+			return saReturn;
+		}
+		
+		/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück, die auch als FLAGZ in dem anderen Objekt überhaupt vorhanden sind.
+		 *  Merke: Diese Methode ist dazu gedacht FlagZ-Werte von einem Objekt auf ein anderes zu übertragen.	
+		 *    
+		 * @return
+		 * @throws ExceptionZZZ 
+		 */
+		public String[] getFlagZ_passable(boolean bValueToSearchFor, IFlagZZZ objUsingFlagZ) throws ExceptionZZZ{
+			String[] saReturn = null;
+			main:{
+				
+				//1. Hole alle FlagZ, DIESER Klasse, mit dem gewünschten Wert.
+				String[] saFlag = this.getFlagZ(bValueToSearchFor);
+				
+				//2. Hole alle FlagZ der Zielklasse
+				String[] saFlagTarget = objUsingFlagZ.getFlagZ();
+				
+				ArrayList<String>listasFlagPassable=new ArrayList<String>();
+				//Nun nur die Schnittmenge der beiden StringÄrrays hiolen.
+				
+				saReturn = StringArrayZZZ.intersect(saFlag, saFlagTarget);
+			}//end main:
+			return saReturn;
+		}
+		
+		/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück, die auch als FLAGZ in dem anderen Objekt überhaupt vorhanden sind.
+		 *  Merke: Diese Methode ist dazu gedacht FlagZ-Werte von einem Objekt auf ein anderes zu übertragen.	
+		 *    
+		 * @return
+		 * @throws ExceptionZZZ 
+		 */
+		public String[] getFlagZ_passable(IFlagZZZ objUsingFlagZ) throws ExceptionZZZ{
+			String[] saReturn = null;
+			main:{
+				
+				//1. Hole alle FlagZ, DIESER Klasse, mit dem gewünschten Wert.
+				String[] saFlag = this.getFlagZ();
+				
+				//2. Hole alle FlagZ der Zielklasse
+				String[] saFlagTarget = objUsingFlagZ.getFlagZ();
+				
+				ArrayList<String>listasFlagPassable=new ArrayList<String>();
+				//Nun nur die Schnittmenge der beiden StringÄrrays hiolen.
+				
+				saReturn = StringArrayZZZ.intersect(saFlag, saFlagTarget);
+			}//end main:
+			return saReturn;
+		}
+		
+		//Aus IObjectZZZ, siehe FileZZZ
+			@Override
+			public boolean proofFlagZExists(String sFlagName) {
+				boolean bReturn = false;
+				main:{
+					bReturn = ObjectZZZ.proofFlagZExists(this.getClass(), sFlagName);
+				
+					//Schon die oberste IObjectZZZ nutzende Klasse, darum ist der Aufruf einer Elternklasse mit der Methode nicht möglich. 
+					//boolean bReturn = super.proofFlagZExists(sFlagName);
+				
+					if(!bReturn){			
+						Class<FLAGZ> enumClass = FLAGZ.class;				
+						for(Object obj : FLAGZ.class.getEnumConstants()){
+							//System.out.println(obj + "; "+obj.getClass().getName());
+							if(sFlagName.equalsIgnoreCase(obj.toString())) {
+								bReturn = true;
+								break main;
+							}
+						}				
+					}
+				}//end main:
+				return bReturn;
+			}
+		
 }
