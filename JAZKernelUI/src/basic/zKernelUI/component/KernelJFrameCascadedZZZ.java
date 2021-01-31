@@ -35,12 +35,14 @@ import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelLogZZZ;
 import basic.zKernel.KernelZZZ;
+import basic.zKernel.module.IKernelModuleZZZ;
+import basic.zKernelUI.KernelUIZZZ;
 import custom.zKernel.LogZZZ;
 
 /** Class is base for all frames used by the configuration module
  * @author Lindhauer
  */
-public abstract class KernelJFrameCascadedZZZ extends JFrame  implements IObjectZZZ, IFlagZZZ, IKernelUserZZZ, IComponentCascadedUserZZZ, IFrameCascadedZZZ, IFrameLaunchableZZZ, IScreenFeatureZZZ{
+public abstract class KernelJFrameCascadedZZZ extends JFrame  implements IObjectZZZ, IFlagZZZ, IKernelUserZZZ, IKernelModuleZZZ, IComponentCascadedUserZZZ, IFrameCascadedZZZ, IFrameLaunchableZZZ, IScreenFeatureZZZ{
 	private IKernelZZZ objKernel;
 	private LogZZZ objLog; 
 	private KernelJFrameCascadedZZZ frameParent=null;
@@ -61,7 +63,7 @@ public abstract class KernelJFrameCascadedZZZ extends JFrame  implements IObject
 //private boolean bFlagTerminate = false;
 
 public enum FLAGZ{
-	COMPONENT_KERNEL_PROGRAM,COMPONENT_DRAGGABLE,TERMINATE; //Merke: DEBUG und INIT aus ObjectZZZ sollen über IObjectZZZ eingebunden werden, weil von ObjectkZZZ kann man ja nicht erben. Es wird schon von File geerbt.
+	COMPONENT_DRAGGABLE,TERMINATE; //Merke: DEBUG und INIT aus ObjectZZZ sollen über IObjectZZZ eingebunden werden, weil von ObjectkZZZ kann man ja nicht erben. Es wird schon von File geerbt.
 }
 
 private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 20130721 ersetzt die einzelnen Flags, irgendwann...
@@ -358,8 +360,9 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 	//Aus IFlagZZZ, siehe ObjectZZZ
 	/**Gibt alle möglichen FlagZ Werte als Array zurück. 
 	 * @return
+	 * @throws ExceptionZZZ 
 	 */
-	public String[] getFlagZ(){
+	public String[] getFlagZ() throws ExceptionZZZ{
 		String[] saReturn = null;
 		main:{				
 				Class objClass4Enum = this.getClassFlagZ();	//Aufgrund des Interfaces IFlagZZZ wird vorausgesetzt, dass diese Methode vorhanden ist.
@@ -398,8 +401,9 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 
 	/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück. 
 	 * @return
+	 * @throws ExceptionZZZ 
 	 */
-	public String[] getFlagZ(boolean bValueToSearchFor){
+	public String[] getFlagZ(boolean bValueToSearchFor) throws ExceptionZZZ{
 		String[] saReturn = null;
 		main:{
 			
@@ -483,7 +487,7 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 	
 	//Aus IObjectZZZ, siehe FileZZZ
 	@Override
-	public boolean proofFlagZExists(String sFlagName) {
+	public boolean proofFlagZExists(String sFlagName) throws ExceptionZZZ {
 		boolean bReturn = false;
 		main:{
 			bReturn = ObjectZZZ.proofFlagZExists(this.getClass(), sFlagName);
@@ -555,6 +559,22 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
     	return bReturn;
         
     }
+    
+    //##### aus IKernelModuleZZZ
+    @Override
+	public String getModuleName() throws ExceptionZZZ {
+		return KernelUIZZZ.getModule(this);
+	}
+
+	@Override
+	public String getProgramName() throws ExceptionZZZ {
+		return KernelUIZZZ.getProgram(this);
+	}
+
+	@Override
+	public String getProgramAlias() throws ExceptionZZZ {
+		return KernelUIZZZ.getProgramAlias(this);
+	}
 	
 	//#######################################
 	//### Getter / Setter

@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
-import basic.zKernel.module.IKernelModuleUserZZZ;
+import basic.zKernel.module.IKernelModuleZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IConstantZZZ;
 import basic.zBasic.ReflectCodeZZZ;
@@ -97,7 +97,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				Object obj = itPanel.next();
 				String sKey = (String) obj;								
 				KernelJPanelCascadedZZZ objPanel = (KernelJPanelCascadedZZZ) htSub.get(sKey);
-				boolean bIsProgram = objPanel.getFlagZ(KernelJFrameCascadedZZZ.FLAGZ.COMPONENT_KERNEL_PROGRAM.name());
+				boolean bIsProgram = objPanel.getFlagZ(IKernelModuleZZZ.FLAGZ.ISKERNELPROGRAM.name());
 				if(bIsProgram){
 					objReturn = objPanel;
 					break main;
@@ -122,7 +122,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				Object obj = itPanel.next();
 				String sKey = (String) obj;								
 				KernelJPanelCascadedZZZ objPanel = (KernelJPanelCascadedZZZ) htSub.get(sKey);
-				boolean bIsProgram = objPanel.getFlagZ(KernelJFrameCascadedZZZ.FLAGZ.COMPONENT_KERNEL_PROGRAM.name());
+				boolean bIsProgram = objPanel.getFlagZ(IKernelModuleZZZ.FLAGZ.ISKERNELPROGRAM.name());
 				if(bIsProgram){
 					objReturn = objPanel;
 					break main;
@@ -206,7 +206,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 			return sReturn;
 		}
 		
-		public static String getProgramName(IKernelModuleUserZZZ objUsingKernelModule) throws ExceptionZZZ{
+		public static String getProgram(IKernelModuleZZZ objUsingKernelModule) throws ExceptionZZZ{
 			String sReturn = null;
 			main:{
 				if(objUsingKernelModule==null){
@@ -216,15 +216,13 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 			
 				if(objUsingKernelModule.getFlag("isKernelProgram")){
 					sReturn =  objUsingKernelModule.getClass().getName();
-				}else {
-					sReturn = objUsingKernelModule.getClass().getName();
-				}	
+				}
 			}//end main:
 			return sReturn;
 		}
 		
 		
-		public static String getProgramAlias(IKernelModuleUserZZZ objUsingKernelModule) throws ExceptionZZZ{
+		public static String getProgramAlias(IKernelModuleZZZ objUsingKernelModule) throws ExceptionZZZ{
 			String sReturn = null;
 			main:{
 				if(objUsingKernelModule==null){
@@ -234,8 +232,6 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 							
 				if(objUsingKernelModule instanceof KernelJFrameCascadedZZZ){
 					sReturn = KernelUIZZZ.readProgramAlias((KernelJPanelCascadedZZZ) objUsingKernelModule);
-				}else{				
-					sReturn = objUsingKernelModule.getClass().getName();
 				}
 			}//end main:
 			return sReturn;
@@ -456,6 +452,30 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 		return sReturn;
 	}
 	
+	public static String getModule(IKernelModuleZZZ objUI) throws ExceptionZZZ {		
+		String sReturn = null;
+		main:{
+			if(objUI==null){
+				ExceptionZZZ ez = new ExceptionZZZ("UI Object missing", iERROR_PARAMETER_MISSING, KernelUIZZZ.class,ReflectCodeZZZ.getMethodCurrentName() );
+				throw ez;
+			}
+		
+			if(objUI.getFlag(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())){
+				sReturn =  objUI.getClass().getName();
+			}else {
+				//PROBLEM 20210124: Wenn man hier das Panel abfragt, wird es erzeugt. Beim Erzeugen werden ggfs. vom Panel wiederum Programname/Modulname abgefragt.
+				//                  Man kommt also in eine Endlosschleife.
+//				KernelJPanelCascadedZZZ panelContent = dialogCurrent.getPanelContent();
+//				if(panelContent==null) {
+//					sReturn = dialogCurrent.getKernelObject().getApplicationKey();
+//				}else {
+//					sReturn = panelContent.getModuleName();
+//				}
+			}				
+		}//end main:
+		return sReturn;
+		
+	}
 	public static String getModuleUsed(KernelJDialogExtendedZZZ dialogCurrent) throws ExceptionZZZ {		
 		String sReturn = null;
 		main:{
@@ -464,7 +484,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				throw ez;
 			}
 		
-			if(dialogCurrent.getFlag("isKernelModule")){
+			if(dialogCurrent.getFlag(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())){
 				sReturn =  dialogCurrent.getClass().getName();
 			}else {
 				//PROBLEM 20210124: Wenn man hier das Panel abfragt, wird es erzeugt. Beim Erzeugen werden ggfs. vom Panel wiederum Programname/Modulname abgefragt.

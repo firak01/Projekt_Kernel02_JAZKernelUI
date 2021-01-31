@@ -35,5 +35,23 @@ public class FrameCascadedRootDummyZZZ extends KernelJFrameCascadedZZZ{
 		return true;
 	}
 
+	@Override
+	public String getModuleName() throws ExceptionZZZ {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getProgramName() throws ExceptionZZZ {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getProgramAlias() throws ExceptionZZZ {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

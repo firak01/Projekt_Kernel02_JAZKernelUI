@@ -34,7 +34,7 @@ import basic.zBasicUI.listener.ListenerMouseMove4DragableWindowZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelLogZZZ;
-import basic.zKernel.module.IKernelModuleUserZZZ;
+import basic.zKernel.module.IKernelModuleZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import basic.zUtil.io.KernelFileZZZ.FLAGZ;
 import custom.zKernel.LogZZZ;
@@ -42,7 +42,7 @@ import custom.zKernel.LogZZZ;
 /** Klasse bietet als Erweiterung zu JPanel die Verschachtelung von Panels an.
  * Merke: Ohne ein JFrame als Parent funktioniert es nicht, das Panel per Drag mit der Maus zu bewegen 
  */
-public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IComponentCascadedUserZZZ, IConstantZZZ,  IKernelModuleUserZZZ, IObjectZZZ, IMouseFeatureZZZ, IFlagZZZ{
+public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IComponentCascadedUserZZZ, IConstantZZZ,  IKernelModuleZZZ, IObjectZZZ, IMouseFeatureZZZ, IFlagZZZ{
 	protected IKernelZZZ objKernel;   //das "protected" erlaubt es hiervon erbende Klassen mit XYXErbendeKlasse.objKernel zu arbeiten.
 	protected LogZZZ objLog;
 	private ExceptionZZZ objException;
@@ -576,6 +576,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	 * @param bFlagValue
 	 * @return
 	 * lindhaueradmin, 23.07.2013
+	 * @throws ExceptionZZZ 
 	 */
 	/* 20170123 Teste, ob die aus ObjectZZZ entlehnet Methode nicht besser ist.
 	public boolean proofFlagZExists(String sParentClassName, String sFlagName){
@@ -633,7 +634,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	*/
 	
 	//Methode aus ObjectZZZ, notwendig, weil IFlagZ implementiert ist, aber nicht von ObjectZZZ geerbt wird. 
-	public static boolean proofFlagZExists(String sClassName, String sFlagName){
+	public static boolean proofFlagZExists(String sClassName, String sFlagName) throws ExceptionZZZ{
 		boolean bReturn = false;
 		main:{
 			if(StringZZZ.isEmpty(sFlagName))break main;
@@ -831,11 +832,11 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	}
 	
 	//#################### Interface IKernelModuleUserZZZ
-		public String getModuleName() {
+		public String getModuleName() throws ExceptionZZZ {
 			String sReturn = new String("");
 			main:{	
 				if(StringZZZ.isEmpty(this.sModuleName))
-				sReturn = KernelUIZZZ.getModuleUsed(this);
+				sReturn = KernelUIZZZ.getModule(this);
 				this.sModuleName = sReturn;
 			}//end main
 			return sReturn;
@@ -1007,8 +1008,9 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	//Aus IFlagZZZ, siehe ObjectZZZ
 	/**Gibt alle möglichen FlagZ Werte als Array zurück. 
 	 * @return
+	 * @throws ExceptionZZZ 
 	 */
-	public String[] getFlagZ(){
+	public String[] getFlagZ() throws ExceptionZZZ{
 		String[] saReturn = null;
 		main:{				
 				Class objClass4Enum = this.getClassFlagZ();	//Aufgrund des Interfaces IFlagZZZ wird vorausgesetzt, dass diese Methode vorhanden ist.
@@ -1047,8 +1049,9 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 
 	/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück. 
 	 * @return
+	 * @throws ExceptionZZZ 
 	 */
-	public String[] getFlagZ(boolean bValueToSearchFor){
+	public String[] getFlagZ(boolean bValueToSearchFor) throws ExceptionZZZ{
 		String[] saReturn = null;
 		main:{
 			
@@ -1130,7 +1133,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 		return saReturn;
 	}
 
-	public boolean proofFlagZExists(String sFlagName) {
+	public boolean proofFlagZExists(String sFlagName) throws ExceptionZZZ {
 		boolean bReturn = false;
 		main:{
 			bReturn = ObjectZZZ.proofFlagZExists(this.getClass().getName(), sFlagName);

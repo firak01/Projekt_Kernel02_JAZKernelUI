@@ -22,7 +22,7 @@ import javax.swing.SwingUtilities;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelLogZZZ;
 import basic.zKernel.KernelZZZ;
-import basic.zKernel.module.IKernelModuleUserZZZ;
+import basic.zKernel.module.IKernelModuleZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import basic.zUtil.io.KernelFileZZZ.FLAGZ;
 import custom.zKernel.LogZZZ;
@@ -46,7 +46,7 @@ import basic.zKernel.IKernelUserZZZ;
  * @author 0823
  *
  */
-public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConstantZZZ, IObjectZZZ, IKernelUserZZZ, IKernelModuleUserZZZ, IScreenFeatureZZZ, IMouseFeatureZZZ{
+public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConstantZZZ, IObjectZZZ, IKernelUserZZZ, IKernelModuleZZZ, IScreenFeatureZZZ, IMouseFeatureZZZ{
 	private IKernelZZZ objKernel;
 	private LogZZZ objLog;
 	private boolean bPanelCenterAdded=false;
@@ -64,10 +64,10 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	private Hashtable objHtPanelSub=new Hashtable();     //Die Panels, die im BorderLayout hinzugef�gt werden
 	//private Hashtable objHtComponent = new Hashtable(); //Soll Komponenenten, wie z.B. ein Textfield per "Alias" greifbar machen.
 	
-	private 	boolean flagComponentDraggable=true;
-	private boolean flagComponentKernelProgram = false; // 2013-07-08: Damit wird gesagt, dass f�r dieses Panel ein "Program-Abschnitt" in der Kernel - Konfigurations .ini - Datei vorhanden ist.
+	//private 	boolean flagComponentDraggable=true;
+	//private boolean flagComponentKernelProgram = false; // 2013-07-08: Damit wird gesagt, dass f�r dieses Panel ein "Program-Abschnitt" in der Kernel - Konfigurations .ini - Datei vorhanden ist.
     //             Bei der Suche nach Parametern wird von der aktuellen Komponente weiter "nach oben" durchgegangen und der Parameter f�r jede Programkomponente gesucht.
-	private boolean flagComponentKernelModule = false; //20210124: Analog zum Program hinzugenommen.
+	//private boolean flagComponentKernelModule = false; //20210124: Analog zum Program hinzugenommen.
 
 	
 //	private boolean bFlagDebug = false;
@@ -361,11 +361,11 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	}
 	
 	public boolean isJComponentContentDraggable(){
-		return this.flagComponentDraggable;
+		return this.getFlag(KernelJDialogExtendedZZZ.FLAGZ.ISDRAGGABLE.name());
 	}
 	
 	public void setJComponentContentDraggable(boolean bValue){
-		this.flagComponentDraggable=bValue;
+		this.setFlag(KernelJDialogExtendedZZZ.FLAGZ.ISDRAGGABLE.name(), bValue);
 	}
 	
 	public String getText4ButtonOk(){
@@ -638,8 +638,9 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		//Aus IFlagZZZ, siehe ObjectZZZ
 		/**Gibt alle möglichen FlagZ Werte als Array zurück. 
 		 * @return
+		 * @throws ExceptionZZZ 
 		 */
-		public String[] getFlagZ(){
+		public String[] getFlagZ() throws ExceptionZZZ{
 			String[] saReturn = null;
 			main:{				
 					Class objClass4Enum = this.getClassFlagZ();	//Aufgrund des Interfaces IFlagZZZ wird vorausgesetzt, dass diese Methode vorhanden ist.
@@ -678,8 +679,9 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 
 		/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück. 
 		 * @return
+		 * @throws ExceptionZZZ 
 		 */
-		public String[] getFlagZ(boolean bValueToSearchFor){
+		public String[] getFlagZ(boolean bValueToSearchFor) throws ExceptionZZZ{
 			String[] saReturn = null;
 			main:{
 				
@@ -763,14 +765,31 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		
 		//Aus IObjectZZZ, siehe FileZZZ
 			@Override
-			public boolean proofFlagZExists(String sFlagName) {
+			public boolean proofFlagZExists(String sFlagName) throws ExceptionZZZ {
 				boolean bReturn = false;
 				main:{
 					bReturn = ObjectZZZ.proofFlagZExists(this.getClass(), sFlagName);
 				
-					//Schon die oberste IObjectZZZ nutzende Klasse, darum ist der Aufruf einer Elternklasse mit der Methode nicht möglich. 
-					//boolean bReturn = super.proofFlagZExists(sFlagName);
+					//Merke: In der obersten IObjectZZZ nutzenden Klasse, ist der Aufruf einer Elternklasse mit der Methode nicht möglich.
+					//Hier aber zwingend notwendig, um die Flags der anderen Interfaces abgreifen zu können.
+					//Ausser diese Klasse erbt von einer NICHT Kernel Klasse, dann wieder auskommentiert. 
+					//bReturn = super.proofFlagZExists(sFlagName);
 				
+					/* Zugriff auf die Interfaces einer Klasse. Diese müssen auch auf die Flag geprüft werden.
+					  static void printInterfaceNames(Object o) {
+	      Class c = o.getClass();
+	      Class[] theInterfaces = c.getInterfaces();
+	      for (int i = 0; i < theInterfaces.length; i++) {
+	         String interfaceName = theInterfaces[i].getName();
+	         System.out.println(interfaceName);
+	      }
+	   }
+					 */
+					
+					
+					
+					
+					//Zugriff auf die ENUM-FLAGZ Werte dieser Klasse
 					if(!bReturn){			
 						Class<FLAGZ> enumClass = FLAGZ.class;				
 						for(Object obj : FLAGZ.class.getEnumConstants()){

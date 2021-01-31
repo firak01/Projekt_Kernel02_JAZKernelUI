@@ -41,7 +41,7 @@ public class KernelJPanelCascadedZZZTest  extends TestCase{
 		frameMainTest.dispose();
 	}
 	
-	public void testFlagZExistsProof(){
+	public void testFlagZExistsProof() throws ExceptionZZZ{
 //		try{
 		
 			PanelMain objPanelMainTest = new PanelMain();
