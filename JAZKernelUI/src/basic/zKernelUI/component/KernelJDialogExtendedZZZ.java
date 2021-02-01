@@ -22,6 +22,7 @@ import javax.swing.SwingUtilities;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelLogZZZ;
 import basic.zKernel.KernelZZZ;
+import basic.zKernel.flag.IFlagZZZ;
 import basic.zKernel.module.IKernelModuleZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import basic.zUtil.io.KernelFileZZZ.FLAGZ;
@@ -30,7 +31,6 @@ import custom.zKernel.LogZZZ;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IConstantZZZ;
-import basic.zBasic.IFlagZZZ;
 import basic.zBasic.IObjectZZZ;
 import basic.zBasic.ObjectZZZ;
 import basic.zBasic.ReflectClassZZZ;

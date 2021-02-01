@@ -21,7 +21,6 @@ import javax.swing.SwingUtilities;
 
 import basic.javareflection.mopex.Mopex;
 import basic.zBasic.IConstantZZZ;
-import basic.zBasic.IFlagZZZ;
 import basic.zBasic.IObjectZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ObjectZZZ;
@@ -34,6 +33,7 @@ import basic.zBasicUI.listener.ListenerMouseMove4DragableWindowZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelLogZZZ;
+import basic.zKernel.flag.IFlagZZZ;
 import basic.zKernel.module.IKernelModuleZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import basic.zUtil.io.KernelFileZZZ.FLAGZ;

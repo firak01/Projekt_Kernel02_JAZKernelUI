@@ -13,7 +13,6 @@ import javax.swing.JTextArea;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
 import basic.zBasic.ExceptionZZZ;
-import basic.zBasic.IFlagZZZ;
 import basic.zBasic.IObjectZZZ;
 import basic.zBasic.ObjectZZZ;
 import basic.zBasic.ReflectClassZZZ;
@@ -22,6 +21,7 @@ import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelLogZZZ;
+import basic.zKernel.flag.IFlagZZZ;
 import basic.zKernelUI.component.model.EventComponentSelectionResetZZZ;
 import basic.zKernelUI.component.model.IListenerSelectionResetZZZ;
 import custom.zKernel.LogZZZ;

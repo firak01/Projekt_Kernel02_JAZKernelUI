@@ -10,12 +10,12 @@ import javax.swing.JToggleButton;
 
 import custom.zKernel.LogZZZ;
 import basic.zBasic.ExceptionZZZ;
-import basic.zBasic.IFlagZZZ;
 import basic.zBasic.IObjectZZZ;
 import basic.zBasic.util.abstractList.HashMapExtendedZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
 import basic.zKernel.KernelZZZ;
+import basic.zKernel.flag.IFlagZZZ;
 
 public class KernelButtonGroupZZZ<T,X>  extends KernelUseObjectZZZ{
 
