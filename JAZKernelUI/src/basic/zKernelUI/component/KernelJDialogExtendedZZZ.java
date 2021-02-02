@@ -22,6 +22,7 @@ import javax.swing.SwingUtilities;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelLogZZZ;
 import basic.zKernel.KernelZZZ;
+import basic.zKernel.flag.FlagZHelperZZZ;
 import basic.zKernel.flag.IFlagZZZ;
 import basic.zKernel.module.IKernelModuleZZZ;
 import basic.zKernelUI.KernelUIZZZ;
@@ -763,45 +764,12 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			return saReturn;
 		}
 		
-		//Aus IObjectZZZ, siehe FileZZZ
-			@Override
-			public boolean proofFlagZExists(String sFlagName) throws ExceptionZZZ {
-				boolean bReturn = false;
-				main:{
-					bReturn = ObjectZZZ.proofFlagZExists(this.getClass(), sFlagName);
-				
-					//Merke: In der obersten IObjectZZZ nutzenden Klasse, ist der Aufruf einer Elternklasse mit der Methode nicht möglich.
-					//Hier aber zwingend notwendig, um die Flags der anderen Interfaces abgreifen zu können.
-					//Ausser diese Klasse erbt von einer NICHT Kernel Klasse, dann wieder auskommentiert. 
-					//bReturn = super.proofFlagZExists(sFlagName);
-				
-					/* Zugriff auf die Interfaces einer Klasse. Diese müssen auch auf die Flag geprüft werden.
-					  static void printInterfaceNames(Object o) {
-	      Class c = o.getClass();
-	      Class[] theInterfaces = c.getInterfaces();
-	      for (int i = 0; i < theInterfaces.length; i++) {
-	         String interfaceName = theInterfaces[i].getName();
-	         System.out.println(interfaceName);
-	      }
-	   }
-					 */
-					
-					
-					
-					
-					//Zugriff auf die ENUM-FLAGZ Werte dieser Klasse
-					if(!bReturn){			
-						Class<FLAGZ> enumClass = FLAGZ.class;				
-						for(Object obj : FLAGZ.class.getEnumConstants()){
-							//System.out.println(obj + "; "+obj.getClass().getName());
-							if(sFlagName.equalsIgnoreCase(obj.toString())) {
-								bReturn = true;
-								break main;
-							}
-						}				
-					}
-				}//end main:
-				return bReturn;
-			}
-		
+		@Override
+		public boolean proofFlagZExists(String sFlagName) throws ExceptionZZZ {
+			boolean bReturn = false;
+			main:{
+				bReturn = FlagZHelperZZZ.proofFlagZExists(this.getClass(), sFlagName);										
+			}//end main:
+			return bReturn;
+		}		
 }

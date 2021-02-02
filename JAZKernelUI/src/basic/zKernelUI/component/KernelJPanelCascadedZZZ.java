@@ -33,6 +33,7 @@ import basic.zBasicUI.listener.ListenerMouseMove4DragableWindowZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelLogZZZ;
+import basic.zKernel.flag.FlagZHelperZZZ;
 import basic.zKernel.flag.IFlagZZZ;
 import basic.zKernel.module.IKernelModuleZZZ;
 import basic.zKernelUI.KernelUIZZZ;
@@ -645,33 +646,12 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 				System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# ObjektInstanz erzeugen für '" + sClassName + "'");
 				Class objClass = Class.forName(sClassName);		
 				
-				//!!! f�r abstrakte Klassen gilt: Es kann per Reflection keine neue Objektinstanz geholt werden.
-				if(!ReflectClassZZZ.isAbstract(objClass)){
-				
-					IFlagZZZ objcp = (IFlagZZZ)objClass.newInstance();  //Aus der Objektinstanz kann dann gut die Enumeration FLAGZ ausgelesen werden.				
-					if(objcp==null){
-					}else{
-						System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# ObjektInstanz f�r '" + objcp.getClass().getName() + "' erfolgreich erzeugt. Nun daraus Enum Klasse holen... .");
-						bReturn = ObjectZZZ.proofFlagZExists(objcp, sFlagName);
-					}
-				}else{
-					System.out.println("Abstrakte Klasse, weiter zur Elternklasse.");
-					Class objcp2 = objClass.getSuperclass();
-					if(objcp2!=null){
-						bReturn = ObjectZZZ.proofFlagZExists(objcp2.getName(), sFlagName);
-					}
-				}
+				bReturn = FlagZHelperZZZ.proofFlagZExists(objClass, sFlagName);
 				
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (InstantiationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			} 
 		}//end main:
 		return bReturn;
 	}
@@ -1136,21 +1116,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	public boolean proofFlagZExists(String sFlagName) throws ExceptionZZZ {
 		boolean bReturn = false;
 		main:{
-			bReturn = ObjectZZZ.proofFlagZExists(this.getClass().getName(), sFlagName);
-		
-			//Schon die oberste IObjectZZZ nutzende Klasse, darum ist der Aufruf einer Elternklasse mit der Methode nicht möglich. 
-			//boolean bReturn = super.proofFlagZExists(sFlagName);
-		
-			if(!bReturn){			   
-				Class<FLAGZ> enumClass = FLAGZ.class;		
-				for(Object obj : FLAGZ.class.getEnumConstants()){
-					//System.out.println(obj + "; "+obj.getClass().getName());
-					if(sFlagName.equalsIgnoreCase(obj.toString())) {
-						bReturn = true;
-						break main;
-					}
-				}				
-			}
+			bReturn = FlagZHelperZZZ.proofFlagZExists(this.getClass(), sFlagName);				
 		}//end main:
 		return bReturn;
 	}
