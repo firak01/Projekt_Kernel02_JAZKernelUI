@@ -19,4 +19,5 @@ public abstract interface IPanelCascadedZZZ extends IComponentCascadedUserZZZ{
 	
 	
 	public abstract KernelJFrameCascadedZZZ getFrameParent();
+	public abstract KernelJDialogExtendedZZZ getDialogParent();
 }
