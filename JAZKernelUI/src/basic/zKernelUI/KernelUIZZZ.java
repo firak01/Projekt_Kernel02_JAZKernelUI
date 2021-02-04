@@ -9,7 +9,9 @@ import javax.swing.JFrame;
 
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
-import basic.zKernel.module.IKernelModuleZZZ;
+import basic.zKernel.component.IKernelModuleUserZZZ;
+import basic.zKernel.component.IKernelModuleZZZ;
+import basic.zKernel.component.IKernelProgramZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IConstantZZZ;
 import basic.zBasic.ReflectCodeZZZ;
@@ -42,7 +44,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 		super(objKernel);
 	}*/
 	
-	public static String getProgramName(KernelJPanelCascadedZZZ panelCurrent) throws ExceptionZZZ{
+	public static String getProgramUsedName(KernelJPanelCascadedZZZ panelCurrent) throws ExceptionZZZ{
 		String sReturn = null;
 		main:{
 			if(panelCurrent==null){
@@ -56,24 +58,24 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				//Suche nach Elternpanel, das dieses Flag gesetzt hat ... als rekursiver Aufruf.
 				KernelJPanelCascadedZZZ panelParent = panelCurrent.getPanelParent();
 				if(panelParent!=null) {
-					sReturn = KernelUIZZZ.getProgramName(panelParent); //Rekursion
+					sReturn = KernelUIZZZ.getProgramUsedName(panelParent); //Rekursion
 				}else{					
 					if(KernelUIZZZ.isChildOfDialog(panelCurrent)){//Suche ggf. nach einem ElternDialog, das dieses Flag gesetzt hat.					
 						KernelJDialogExtendedZZZ dialogParent = panelCurrent.getDialogParent();
 						KernelJPanelCascadedZZZ objPanel = KernelUIZZZ.searchProgramKernelComponentPanelFrom(dialogParent);
 						if(objPanel!=null){
-							sReturn = KernelUIZZZ.getProgramName(objPanel);
+							sReturn = KernelUIZZZ.getProgramUsedName(objPanel);
 							break main;	
 						}																
-						sReturn = KernelUIZZZ.getProgramName(dialogParent);//Erst wenn es keine Panels gibt, den Dialog ggfs. als Programname
+						sReturn = KernelUIZZZ.getProgramUsedName(dialogParent);//Erst wenn es keine Panels gibt, den Dialog ggfs. als Programname
 					}else if(KernelUIZZZ.isChildOfFrame(panelCurrent)){ //Suche ggf. nach einem elternFrame						
 						KernelJFrameCascadedZZZ frameParent = panelCurrent.getFrameParent();
 						KernelJPanelCascadedZZZ objPanel = KernelUIZZZ.searchProgramKernelComponentPanelFrom(frameParent);
 						if(objPanel!=null){
-							sReturn = KernelUIZZZ.getProgramName(objPanel);
+							sReturn = KernelUIZZZ.getProgramUsedName(objPanel);
 							break main;	
 						}						
-						sReturn = KernelUIZZZ.getProgramName(frameParent);//Erst wenn es keine Panels gibt, den Frame ggfs. als Programname						
+						sReturn = KernelUIZZZ.getProgramUsedName(frameParent);//Erst wenn es keine Panels gibt, den Frame ggfs. als Programname						
 					}else{
 						
 					}
@@ -97,7 +99,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				Object obj = itPanel.next();
 				String sKey = (String) obj;								
 				KernelJPanelCascadedZZZ objPanel = (KernelJPanelCascadedZZZ) htSub.get(sKey);
-				boolean bIsProgram = objPanel.getFlagZ(IKernelModuleZZZ.FLAGZ.ISKERNELPROGRAM.name());
+				boolean bIsProgram = objPanel.getFlagZ(IKernelProgramZZZ.FLAGZ.ISKERNELPROGRAM.name());
 				if(bIsProgram){
 					objReturn = objPanel;
 					break main;
@@ -122,7 +124,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				Object obj = itPanel.next();
 				String sKey = (String) obj;								
 				KernelJPanelCascadedZZZ objPanel = (KernelJPanelCascadedZZZ) htSub.get(sKey);
-				boolean bIsProgram = objPanel.getFlagZ(IKernelModuleZZZ.FLAGZ.ISKERNELPROGRAM.name());
+				boolean bIsProgram = objPanel.getFlagZ(IKernelProgramZZZ.FLAGZ.ISKERNELPROGRAM.name());
 				if(bIsProgram){
 					objReturn = objPanel;
 					break main;
@@ -133,7 +135,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 		return objReturn;
 	}
 		
-	public static String getProgramName(IActionCascadedZZZ actionCurrent) throws ExceptionZZZ{
+	public static String getProgramUsedName(IActionCascadedZZZ actionCurrent) throws ExceptionZZZ{
 		String sReturn = null;
 		main:{
 			if(actionCurrent==null){
@@ -166,7 +168,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 		return sReturn;
 	}
 	
-		public static String getProgramName(KernelJDialogExtendedZZZ dialogCurrent) throws ExceptionZZZ{
+		public static String getProgramUsedName(KernelJDialogExtendedZZZ dialogCurrent) throws ExceptionZZZ{
 			String sReturn = null;
 			main:{
 				if(dialogCurrent==null){
@@ -190,7 +192,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 			return sReturn;
 		}
 		
-		public static String getProgramName(KernelJFrameCascadedZZZ frameCurrent) throws ExceptionZZZ{
+		public static String getProgramUsedName(KernelJFrameCascadedZZZ frameCurrent) throws ExceptionZZZ{
 			String sReturn = null;
 			main:{
 				if(frameCurrent==null){
@@ -206,23 +208,8 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 			return sReturn;
 		}
 		
-		public static String getProgram(IKernelModuleZZZ objUsingKernelModule) throws ExceptionZZZ{
-			String sReturn = null;
-			main:{
-				if(objUsingKernelModule==null){
-					ExceptionZZZ ez = new ExceptionZZZ("objUsingKernelModule missing", iERROR_PARAMETER_MISSING, KernelUIZZZ.class,ReflectCodeZZZ.getMethodCurrentName() );
-					throw ez;
-				}
-			
-				if(objUsingKernelModule.getFlag("isKernelProgram")){
-					sReturn =  objUsingKernelModule.getClass().getName();
-				}
-			}//end main:
-			return sReturn;
-		}
 		
-		
-		public static String getProgramAlias(IKernelModuleZZZ objUsingKernelModule) throws ExceptionZZZ{
+		public static String getProgramUsedAlias(IKernelModuleZZZ objUsingKernelModule) throws ExceptionZZZ{
 			String sReturn = null;
 			main:{
 				if(objUsingKernelModule==null){
@@ -486,7 +473,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 		return sReturn;
 	}
 	
-	public static String getModuleUsed(IActionCascadedZZZ actionCascaded) throws ExceptionZZZ{
+	public static String getModuleUsedName(IActionCascadedZZZ actionCascaded) throws ExceptionZZZ{
 		String sReturn = new String();
 		main:{
 			KernelJFrameCascadedZZZ frameParent = actionCascaded.getFrameParent(); //panelParent.getFrameParent();
@@ -513,7 +500,21 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 		return sReturn;
 	}
 	
-	public static String getModule(IKernelModuleZZZ objUI) throws ExceptionZZZ {		
+	public static String getModuleUsedName(IKernelModuleUserZZZ objUI) throws ExceptionZZZ {		
+		String sReturn = null;
+		main:{
+			if(objUI==null){
+				ExceptionZZZ ez = new ExceptionZZZ("Module Object missing", iERROR_PARAMETER_MISSING, KernelUIZZZ.class,ReflectCodeZZZ.getMethodCurrentName() );
+				throw ez;
+			}			
+			IKernelModuleZZZ objModule = objUI.getModule();
+			sReturn = objModule.getModuleName();			
+		}//end main:
+		return sReturn;
+		
+	}
+	
+	public static String getModuleUsedName(IKernelModuleZZZ objUI) throws ExceptionZZZ {		
 		String sReturn = null;
 		main:{
 			if(objUI==null){
@@ -537,7 +538,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 		return sReturn;
 		
 	}
-	public static String getModuleUsed(KernelJDialogExtendedZZZ dialogCurrent) throws ExceptionZZZ {		
+	public static String getModuleUsedName(KernelJDialogExtendedZZZ dialogCurrent) throws ExceptionZZZ {		
 		String sReturn = null;
 		main:{
 			if(dialogCurrent==null){
@@ -550,21 +551,28 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 			}else {				
 				//PROBLEM 20210124: Wenn man hier das Panel abfragt, wird es erzeugt. Beim Erzeugen werden ggfs. vom Panel wiederum Programname/Modulname abgefragt.
 				//                  Man kommt also in eine Endlosschleife.
-//				KernelJPanelCascadedZZZ panelContent = dialogCurrent.getPanelContent();
-//				if(panelContent==null) {
-//					sReturn = dialogCurrent.getKernelObject().getApplicationKey();
-//				}else {
-//					sReturn = panelContent.getModuleName();
-//				}
+				KernelJPanelCascadedZZZ panelContent = dialogCurrent.getPanelContent();
+				if(panelContent==null) {
+					sReturn = dialogCurrent.getKernelObject().getSystemKey();
+				}else {
+					sReturn = panelContent.getModuleName();
+				}
 			}				
 		}//end main:
 		return sReturn;
 		
 	}
-	public static String getModuleUsed(IPanelCascadedZZZ panelCascaded) {
+	public static String getModuleUsedName(IPanelCascadedZZZ panelCascaded) throws ExceptionZZZ{
 		String sReturn = new String("");
 		main:{
-			try{
+			if(panelCascaded==null){
+				ExceptionZZZ ez = new ExceptionZZZ("panelCascaded missing", iERROR_PARAMETER_MISSING, KernelUIZZZ.class,ReflectCodeZZZ.getMethodCurrentName() );
+				throw ez;
+			}
+			
+			if(panelCascaded.getFlag(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())){
+				sReturn =  panelCascaded.getClass().getName();
+			}else {	
 				KernelJDialogExtendedZZZ dialog = panelCascaded.getDialogParent();
 				KernelJFrameCascadedZZZ frameParent = null;
 				if(dialog==null){
@@ -574,8 +582,6 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 					System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# This is a dialog.....");
 					sReturn = dialog.getModuleName();				
 				}
-			} catch (ExceptionZZZ ez) {				
-				ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());
 			}
 		}//end main
 		return sReturn;

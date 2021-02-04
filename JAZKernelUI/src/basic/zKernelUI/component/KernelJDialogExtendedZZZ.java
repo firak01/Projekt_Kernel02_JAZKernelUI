@@ -22,9 +22,9 @@ import javax.swing.SwingUtilities;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelLogZZZ;
 import basic.zKernel.KernelZZZ;
+import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.flag.FlagZHelperZZZ;
 import basic.zKernel.flag.IFlagZZZ;
-import basic.zKernel.module.IKernelModuleZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import basic.zUtil.io.KernelFileZZZ.FLAGZ;
 import custom.zKernel.LogZZZ;
@@ -444,23 +444,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	 */
 	@Override
 	public String getModuleName() throws ExceptionZZZ {
-		return KernelUIZZZ.getModuleUsed(this);
-	}
-	/* (non-Javadoc)
-	 * @see basic.zKernel.IKernelModuleUserZZZ#getProgramName()
-	 */
-	@Override
-	public String getProgramName() throws ExceptionZZZ {
-		return KernelUIZZZ.getProgramName(this);
-	}
-
-	/* (non-Javadoc)
-	 * @see basic.zKernel.IKernelModuleUserZZZ#getProgramAlias()
-	 */
-	@Override
-	public String getProgramAlias() throws ExceptionZZZ {
-		// TODO Auto-generated method stub
-		return null;
+		return KernelUIZZZ.getModuleUsedName(this);
 	}
 	
 	//### FlagMethods ##########################	

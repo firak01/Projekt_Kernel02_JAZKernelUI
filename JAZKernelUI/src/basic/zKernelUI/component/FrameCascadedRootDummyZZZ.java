@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
+import basic.zKernelUI.KernelUIZZZ;
 import basic.zKernelUI.util.JFrameHelperZZZ;
 import basic.zBasic.ExceptionZZZ;
 
@@ -37,21 +38,6 @@ public class FrameCascadedRootDummyZZZ extends KernelJFrameCascadedZZZ{
 
 	@Override
 	public String getModuleName() throws ExceptionZZZ {
-		// TODO Auto-generated method stub
-		return null;
+		return KernelUIZZZ.getModuleUsedName(this);
 	}
-
-	@Override
-	public String getProgramName() throws ExceptionZZZ {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getProgramAlias() throws ExceptionZZZ {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
 }

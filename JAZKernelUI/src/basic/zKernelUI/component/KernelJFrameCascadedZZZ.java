@@ -33,10 +33,10 @@ import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelLogZZZ;
 import basic.zKernel.KernelZZZ;
+import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.flag.FlagZHelperZZZ;
 import basic.zKernel.flag.IFlagZZZ;
 import basic.zKernel.flag.IFlagZZZ.FLAGZ;
-import basic.zKernel.module.IKernelModuleZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import custom.zKernel.LogZZZ;
 
@@ -549,19 +549,9 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
     //##### aus IKernelModuleZZZ
     @Override
 	public String getModuleName() throws ExceptionZZZ {
-		return KernelUIZZZ.getModule(this);
+		return KernelUIZZZ.getModuleUsedName(this);
 	}
-
-	@Override
-	public String getProgramName() throws ExceptionZZZ {
-		return KernelUIZZZ.getProgram(this);
-	}
-
-	@Override
-	public String getProgramAlias() throws ExceptionZZZ {
-		return KernelUIZZZ.getProgramAlias(this);
-	}
-	
+    
 	//#######################################
 	//### Getter / Setter
 	public boolean isLaunched(){

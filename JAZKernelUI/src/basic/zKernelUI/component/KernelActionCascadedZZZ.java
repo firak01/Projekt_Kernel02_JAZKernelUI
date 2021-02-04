@@ -80,7 +80,7 @@ public abstract class KernelActionCascadedZZZ extends KernelUseObjectZZZ  implem
 		main:{
 			try{								
 				if(this.getContextUsed() == null){													
-					sReturn = KernelUIZZZ.getModuleUsed(this);									
+					sReturn = KernelUIZZZ.getModuleUsedName(this);									
 				}else{
 					sReturn = this.getContextUsed().getProgramName();
 				}
@@ -99,7 +99,7 @@ public abstract class KernelActionCascadedZZZ extends KernelUseObjectZZZ  implem
 		String sReturn = new String("");
 		main:{
 			try{
-				sReturn = KernelUIZZZ.getProgramName(this);				
+				sReturn = KernelUIZZZ.getProgramUsedName(this);				
 			} catch (ExceptionZZZ ez) {				
 				ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());
 			}

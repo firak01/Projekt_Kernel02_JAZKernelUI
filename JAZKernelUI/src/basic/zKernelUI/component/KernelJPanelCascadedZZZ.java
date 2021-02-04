@@ -33,9 +33,9 @@ import basic.zBasicUI.listener.ListenerMouseMove4DragableWindowZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelLogZZZ;
+import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.flag.FlagZHelperZZZ;
 import basic.zKernel.flag.IFlagZZZ;
-import basic.zKernel.module.IKernelModuleZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import basic.zUtil.io.KernelFileZZZ.FLAGZ;
 import custom.zKernel.LogZZZ;
@@ -526,7 +526,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 			String sReturn = new String("");
 			main:{	
 				if(StringZZZ.isEmpty(this.sModuleName)) {
-					this.sModuleName = KernelUIZZZ.getModuleUsed(this); //.getModule(this);
+					this.sModuleName = KernelUIZZZ.getModuleUsedName((IPanelCascadedZZZ)this);
 				}
 				sReturn = this.sModuleName;
 			}//end main
@@ -540,7 +540,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 			String sReturn = null;
 			main:{
 				if(StringZZZ.isEmpty(this.sProgramName)){
-					this.sProgramName = KernelUIZZZ.getProgramName(this);
+					this.sProgramName = KernelUIZZZ.getProgramUsedName(this);
 				}
 				sReturn = this.sProgramName;				
 			}//end main:
@@ -558,7 +558,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 					
 					//FGL 20180402: Es scheint mir sinnvoll, wenn der Alias nicht definiert ist, denn Programmnamen selbst zurückzugeben...
 					if(StringZZZ.isEmpty(this.sProgramAlias)){
-						this.sProgramAlias = KernelUIZZZ.getProgramName(this);
+						this.sProgramAlias = KernelUIZZZ.getProgramUsedName(this);
 					}					
 				}
 				sReturn = this.sProgramAlias;
