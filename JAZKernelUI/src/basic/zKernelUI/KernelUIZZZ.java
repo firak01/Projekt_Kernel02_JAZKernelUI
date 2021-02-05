@@ -508,7 +508,9 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				throw ez;
 			}			
 			IKernelModuleZZZ objModule = objUI.getModule();
-			sReturn = objModule.getModuleName();			
+			if(objModule!=null) {
+				sReturn = objModule.getModuleName();
+			}
 		}//end main:
 		return sReturn;
 		
