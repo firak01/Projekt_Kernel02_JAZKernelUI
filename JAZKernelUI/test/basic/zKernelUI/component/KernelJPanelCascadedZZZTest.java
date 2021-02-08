@@ -14,6 +14,7 @@ import basic.zKernelUI.component.KernelJFrameCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.util.JFrameHelperZZZ;
 import basic.zKernel.KernelZZZ;
+import basic.zKernel.component.IKernelProgramZZZ;
 
 /**
  * @author 0823
@@ -76,7 +77,7 @@ public class KernelJPanelCascadedZZZTest  extends TestCase{
 			assertTrue(btemp);
 			
 			//Test auf Flags aus dem component-Bereich
-			btemp = panelMainTest.proofFlagZExists(KernelJPanelCascadedZZZ.FLAGZ.COMPONENT_KERNEL_PROGRAM.name());
+			btemp = panelMainTest.proofFlagZExists(IKernelProgramZZZ.FLAGZ.ISKERNELPROGRAM.name());
 			assertTrue(btemp);
 //		} catch (ExceptionZZZ ez) {
 //			fail("Method throws an exception." + ez.getMessageLast());

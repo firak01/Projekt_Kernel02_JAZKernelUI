@@ -13,20 +13,18 @@ import basic.zKernel.KernelZZZ;
 
 public class Panel_DLGBOXZZZ extends KernelJPanelCascadedZZZ {
 	protected IKernelZZZ objKernelChoosen;
-	private String sModule;
-
+	
 	//private Panel_CENTERZZZ panelCenter;
 	
 	
 	public Panel_DLGBOXZZZ(IKernelZZZ objKernel, JFrame frameParent, IKernelZZZ objKernelChoosen, String sModule, String sProgram) throws ExceptionZZZ{
 		super(objKernel,frameParent); //Es gibt kein Parent Panel !!!
-		//try {
-			this.setModule(sModule);
+		//try {			
 			this.setLayout(new BorderLayout());
 			this.objKernelChoosen = objKernelChoosen;
 			
 			//### PANEL NORTH
-			Panel_NORTHZZZ objPanelNorth = new Panel_NORTHZZZ(objKernel, objKernelChoosen, this.getModule(), sProgram, this);
+			Panel_NORTHZZZ objPanelNorth = new Panel_NORTHZZZ(objKernel, objKernelChoosen, sModule, sProgram, this);
 			this.add(objPanelNorth, BorderLayout.NORTH);
 			this.setPanelSub("NORTH", objPanelNorth);
 			
@@ -121,12 +119,7 @@ public class Panel_DLGBOXZZZ extends KernelJPanelCascadedZZZ {
 	
 	//##################################################################
 	//######### GETTER UND SETTER 
-	public void setModule(String sModule) {
-		this.sModule = sModule;
-	}
-	public String getModule(){
-		return this.sModule;
-	}
+	
 		
 	}//END Class
 	

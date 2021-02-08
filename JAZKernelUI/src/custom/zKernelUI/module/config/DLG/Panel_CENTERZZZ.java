@@ -176,14 +176,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements ICompone
 		}//END main:
 		return strReturn;
 	}
-	
-	/* (non-Javadoc)
-	 * @see custom.zKernelUI.module.config.DLG.IComponentTableZZZ#getModule()
-	 */
-	public String getModule(){
-		return this.sModule;
-	}
-	
+		
 	/* (non-Javadoc)
 	 * @see custom.zKernelUI.module.config.DLG.IComponentTableZZZ#getTableAlias()
 	 */

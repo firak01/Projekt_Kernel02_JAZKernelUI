@@ -34,6 +34,7 @@ import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelLogZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
+import basic.zKernel.component.IKernelProgramZZZ;
 import basic.zKernel.flag.FlagZHelperZZZ;
 import basic.zKernel.flag.IFlagZZZ;
 import basic.zKernelUI.KernelUIZZZ;
@@ -43,7 +44,9 @@ import custom.zKernel.LogZZZ;
 /** Klasse bietet als Erweiterung zu JPanel die Verschachtelung von Panels an.
  * Merke: Ohne ein JFrame als Parent funktioniert es nicht, das Panel per Drag mit der Maus zu bewegen 
  */
-public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IComponentCascadedUserZZZ, IConstantZZZ,  IKernelModuleZZZ, IObjectZZZ, IMouseFeatureZZZ, IFlagZZZ{
+public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IComponentCascadedUserZZZ, IConstantZZZ,  IKernelModuleZZZ, IKernelProgramZZZ, IObjectZZZ, IMouseFeatureZZZ, IFlagZZZ{
+	protected IKernelModuleZZZ objModule=null; //Das Modul, z.B. die Dialogbox, in der das Program gestartet wird.
+	
 	protected IKernelZZZ objKernel;   //das "protected" erlaubt es hiervon erbende Klassen mit XYXErbendeKlasse.objKernel zu arbeiten.
 	protected LogZZZ objLog;
 	private ExceptionZZZ objException;
@@ -72,7 +75,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	 * 
 	 */
 	public enum FLAGZ{
-		COMPONENT_DRAGGABLE, TERMINATE, COMPONENT_KERNEL_PROGRAM;
+		COMPONENT_DRAGGABLE, TERMINATE;
 	}
 	
 	
@@ -827,4 +830,12 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 		}//end main:
 		return bReturn;
 	}
+
+	//### Aus IKernelModuleUserZZZ
+		public IKernelModuleZZZ getModule() {
+			return this.objModule;
+		}
+		public void setModule(IKernelModuleZZZ objModule) {
+			this.objModule = objModule;
+		}
 }

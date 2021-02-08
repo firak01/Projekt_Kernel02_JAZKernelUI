@@ -11,12 +11,7 @@ public interface IComponentTableZZZ {
 	 * @return
 	 */
 	public abstract String getValue(int iPosition);
-
-	/**Im Kontruktor wurde das Modul mitgegeben. Über dieses Methode kann man den Wert wieder auslesen.
-	 * @return, String
-	 */
-	public abstract String getModule();
-
+	
 	/**Gibt den Alias der Tabelle zurück. Dies entspricht dem Namen der Section in der Ini-Datei.
 	 * Merke: Der aktuelle Section-Name entspricht dem objKernel.getSystemKey()
 	 * @return String

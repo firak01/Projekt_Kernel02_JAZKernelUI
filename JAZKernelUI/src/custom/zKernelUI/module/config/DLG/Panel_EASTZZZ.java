@@ -17,6 +17,7 @@ import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernel.KernelZZZ;
+import basic.zKernel.component.IKernelModuleZZZ;
 import custom.zKernel.file.ini.FileIniZZZ;
 
 public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
@@ -123,7 +124,8 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 			
 			
 //			+++ Den Namen des Moduls auslesen = TabellenAlias
-			String sModule = objPanelCenter.getModule();
+			IKernelModuleZZZ objModule = objPanelCenter.getModule();
+			String sModule = objModule.getModuleName();
 			//System.out.println("Name des Moduls: " + sModule);
 			
 			//+++ Den Namen der zu verarbeitenden Section auslesen

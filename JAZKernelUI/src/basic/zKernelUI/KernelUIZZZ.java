@@ -52,7 +52,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				throw ez;
 			}
 		
-			if(panelCurrent.getFlagZ(KernelJPanelCascadedZZZ.FLAGZ.COMPONENT_KERNEL_PROGRAM.name())){
+			if(panelCurrent.getFlagZ(IKernelProgramZZZ.FLAGZ.ISKERNELPROGRAM.name())){
 				sReturn =  panelCurrent.getClass().getName();
 			}else{				
 				//Suche nach Elternpanel, das dieses Flag gesetzt hat ... als rekursiver Aufruf.
@@ -242,7 +242,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 			/* FGL 2013-07-05: Ge�ndert, es wird die Methode in KErnelJPanelCascadedZZZ eingef�hrt.
 			 * Es ist fraglich, ob das immer das dar�bergeordnete Panel sein muss.
 			 */
-			String stemp = KernelJPanelCascadedZZZ.FLAGZ.COMPONENT_KERNEL_PROGRAM.name();
+			String stemp = IKernelProgramZZZ.FLAGZ.ISKERNELPROGRAM.name();
 			if(panelCurrent.getFlagZ(stemp)){
 				//NEIN, das w�re eine endlosschleife: sReturn = panelCurrent.getProgramAlias();
 				
