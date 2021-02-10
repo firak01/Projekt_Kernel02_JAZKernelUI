@@ -55,12 +55,20 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	
 	public static String sTEXT_ABORT="CANCEL";
 	private String sText4ButtonCancel="";
+	private boolean bIsCanceled=false;
 	
-	public static String sTEXT_USEIT="CLOSE";
+	public static String sTEXT_CLOSE="CLOSE";
+	private String sText4ButtonClose="";
+	
+	public static String sTEXT_USEIT="APPLY";
 	private String sText4ButtonOk="";
 	
-	
 	private String sText4ContentDefault = "";
+	
+	
+	//Dient dazu festzuhalten, ob diese Dialogbox schon mal komplett geschlossen wurde, also komplett neu geladen werden muss.
+	private boolean bDisposed=false;
+	
 	
 	private Hashtable objHtPanelSub=new Hashtable();     //Die Panels, die im BorderLayout hinzugef�gt werden
 	//private Hashtable objHtComponent = new Hashtable(); //Soll Komponenenten, wie z.B. ein Textfield per "Alias" greifbar machen.
@@ -158,7 +166,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 				//panel2add = new KernelJPanelDialogButtonDefaultZZZ(this.getKernelObject(), this, this.isButtonOkAvailable(), this.isButtonCancelAvailable());
 				//20190219: Die Dialogbox hinzuzufügen hat das Problem, dass Sie nicht als das Program-Definiert ist, welches für das Lesen/Schreiben der Werte in der Ini-Datei vorgesehen ist.
 				//          Das ist nämlich ein anderes, benachbartes Panel.
-				panel2add = new KernelJPanelDialogButtonDefaultZZZ(this.getKernelObject(), this, this.isButtonOkAvailable(), this.isButtonCancelAvailable());
+				panel2add = new KernelJPanelDialogButtonDefaultZZZ(this.getKernelObject(), this, this.isButtonOkAvailable(), this.isButtonCancelAvailable(), this.isButtonCloseAvailable());
 			}
 			
 			
@@ -354,6 +362,36 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		this.objLog = objLog;
 	}
 
+	
+	//### ######################
+		public boolean isDisposed() {
+			return this.bDisposed;
+		}
+		
+
+		private void isDisposed(boolean bDispose) {
+			this.bDisposed = bDispose;
+		}
+
+
+		public void setDisposed() {
+			//Wenn man direkt auf den Dialog, z.B. aus einem Button heraus zugreifen möchte:
+			//JDialog dialogParent = (JDialog) SwingUtilities.getAncestorOfClass(JDialog.class, this.getPanelParent());
+			//dialogParent.dispose();
+			this.dispose();
+			this.isDisposed(true);
+		}
+		
+		public void setHidden() {
+			//Wenn man direkt auf den Dialog, z.B. aus einem Button heraus zugreifen möchte:
+			//JDialog dialogParent = (JDialog) SwingUtilities.getAncestorOfClass(JDialog.class, this.getPanelParent());
+			//dialogParent.setVisible(false);	//dialogParent.hide();
+			this.setVisible(false);
+			this.isDisposed(false);
+		}
+		
+		//#####################################
+	
 	/* (non-Javadoc)
 	 * @see basic.zKernelUI.IScreenFeatureZZZ#isJComponentSnappedToScreen()
 	 */
@@ -378,6 +416,17 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	}
 	public void setText4ButtonOk(String sText){
 		this.sText4ButtonOk = sText;
+	}
+	
+	public String getText4ButtonClose(){
+		String sReturn = this.sText4ButtonClose;
+		if(StringZZZ.isEmpty(sReturn)) {
+			sReturn = KernelJDialogExtendedZZZ.sTEXT_CLOSE;
+		}
+		return sReturn;
+	}
+	public void setText4ButtonClose(String sText){
+		this.sText4ButtonClose = sText;
 	}
 	
 	public String getText4ButtonCancel(){
@@ -428,6 +477,13 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	 * @see basic.zKernelUI.IPanelDialogZZZ#isButtonCancelAvailable()
 	 */
 	public boolean isButtonCancelAvailable() {		
+		return true;
+	}
+	
+	/* (non-Javadoc)
+	 * @see basic.zKernelUI.IPanelDialogZZZ#isButtonCancelAvailable()
+	 */
+	public boolean isButtonCloseAvailable() {		
 		return true;
 	}
 
