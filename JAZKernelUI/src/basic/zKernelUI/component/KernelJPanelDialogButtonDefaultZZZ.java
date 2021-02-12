@@ -252,6 +252,7 @@ public class KernelJPanelDialogButtonDefaultZZZ extends KernelJPanelCascadedZZZ 
 			System.out.println(stemp);
 			*/
 			System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# default ok button");
+			this.getPanelParent().getDialogParent().setDisposed();
 			return true;
 		}
 		public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult){
