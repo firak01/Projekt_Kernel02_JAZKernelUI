@@ -19,6 +19,7 @@ import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
 import basic.zKernelUI.component.IActionCascadedZZZ;
+import basic.zKernelUI.component.IFrameCascadedZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelJDialogExtendedZZZ;
 import basic.zKernelUI.component.KernelJFrameCascadedZZZ;
@@ -578,8 +579,9 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				KernelJDialogExtendedZZZ dialog = panelCascaded.getDialogParent();
 				KernelJFrameCascadedZZZ frameParent = null;
 				if(dialog==null){
-					frameParent = panelCascaded.getFrameParent();									
-					sReturn = KernelUIZZZ.searchModuleFirstConfiguredClassname(frameParent); 						
+					System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# This is a frame.....");
+					frameParent = panelCascaded.getFrameParent();
+					sReturn = frameParent.getModuleName();																								
 				}else{
 					System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# This is a dialog.....");
 					sReturn = dialog.getModuleName();				
@@ -588,4 +590,22 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 		}//end main
 		return sReturn;
 	}
+	
+	public static String getModuleUsedName(IFrameCascadedZZZ frameCascaded) throws ExceptionZZZ{
+		String sReturn = new String("");
+		main:{
+			if(frameCascaded==null){
+				ExceptionZZZ ez = new ExceptionZZZ("frameCascaded missing", iERROR_PARAMETER_MISSING, KernelUIZZZ.class,ReflectCodeZZZ.getMethodCurrentName() );
+				throw ez;
+			}
+			
+			if(frameCascaded.getFlag(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())){
+				sReturn =  frameCascaded.getClass().getName();
+			}else {	
+				sReturn = KernelUIZZZ.searchModuleFirstConfiguredClassname((KernelJFrameCascadedZZZ) frameCascaded); 	
+			}
+		}//end main
+		return sReturn;
+	}
+	
 }

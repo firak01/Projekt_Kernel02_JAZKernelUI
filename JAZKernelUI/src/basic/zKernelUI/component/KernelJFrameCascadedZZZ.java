@@ -549,7 +549,7 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
     //##### aus IKernelModuleZZZ
     @Override
 	public String getModuleName() throws ExceptionZZZ {
-		return KernelUIZZZ.getModuleUsedName(this);
+		return KernelUIZZZ.getModuleUsedName((IFrameCascadedZZZ)this);
 	}
     
 	//#######################################

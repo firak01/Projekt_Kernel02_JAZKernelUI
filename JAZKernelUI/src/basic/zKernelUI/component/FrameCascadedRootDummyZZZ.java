@@ -35,9 +35,5 @@ public class FrameCascadedRootDummyZZZ extends KernelJFrameCascadedZZZ{
 		JFrameHelperZZZ.setSizeDefault(this);
 		return true;
 	}
-
-	@Override
-	public String getModuleName() throws ExceptionZZZ {
-		return KernelUIZZZ.getModuleUsedName(this);
-	}
 }
+	

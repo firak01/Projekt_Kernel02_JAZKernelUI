@@ -27,6 +27,7 @@ import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IObjectZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasic.util.abstractList.HashMapMultiZZZ;
+import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zBasicUI.thread.SwingWorker;
 import basic.zKernelUI.component.KernelActionCascadedZZZ;
@@ -36,6 +37,7 @@ import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelLogZZZ;
 import basic.zKernel.KernelZZZ;
+import basic.zKernel.component.IKernelProgramZZZ;
 
 public class PanelDebugButtonGroup_NORTHZZZ extends KernelJPanelCascadedZZZ {
 	private KernelZZZ objKernelChoosen;
@@ -55,6 +57,24 @@ public class PanelDebugButtonGroup_NORTHZZZ extends KernelJPanelCascadedZZZ {
 		super(objKernel, panelParent);
 		main:{
 		try {		
+			//Diese Panel ist Grundlage für diverse INI-Werte auf die über Buttons auf "Programname" zugegriffen wird.
+			this.setFlagZ(IKernelProgramZZZ.FLAGZ.ISKERNELPROGRAM.name(), true);	
+			
+			//Wichtige Informationen, zum Auslesen von Parametern aus der KernelConfiguration
+			String sProgram; String sModule;
+			sModule = this.getModuleName();
+			if(StringZZZ.isEmpty(sModule)){
+				ExceptionZZZ ez = new ExceptionZZZ("No module configured for this component '" + this.getClass().getName() + "'", iERROR_CONFIGURATION_MISSING, this, ReflectCodeZZZ.getMethodCurrentName());
+				throw ez;
+			}
+			
+			sProgram = this.getProgramName();
+			if(StringZZZ.isEmpty(sProgram)){
+				ExceptionZZZ ez = new ExceptionZZZ("No program '" + sProgram + "' configured for the module: '" +  sModule + "'", iERROR_CONFIGURATION_MISSING, this, ReflectCodeZZZ.getMethodCurrentName());
+				throw ez;
+			}
+			
+			
 			//TODO Komplizierteres aber sch�neres Layout durch einen anderen Layoutmanager
 			this.setLayout(new GridLayout(6,2)); //6 Zeilen, 2 Spalten
 	
@@ -63,7 +83,7 @@ public class PanelDebugButtonGroup_NORTHZZZ extends KernelJPanelCascadedZZZ {
 			this.setBorder(borderEtched);
 					
 			// +++ Werte aus der KoernelKonfiguration auslesen und anzeigen
-			String sLabelButtonGroup01 = this.getKernelObject().getParameterByProgramAlias("PanelNorth", "LabelButtonGroup01").getValue();
+			String sLabelButtonGroup01 = this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButtonGroup01").getValue();
 			JLabel labelModuleText = new JLabel(sLabelButtonGroup01, SwingConstants.LEFT);
 			this.add(labelModuleText);
 			

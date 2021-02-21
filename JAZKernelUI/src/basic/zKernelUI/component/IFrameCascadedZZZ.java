@@ -4,7 +4,9 @@ import java.util.Hashtable;
 
 import javax.swing.JFrame;
 
-public interface IFrameCascadedZZZ {
+import basic.zKernel.flag.IFlagZZZ;
+
+public interface IFrameCascadedZZZ extends IFlagZZZ{
 
 	public  abstract KernelJFrameCascadedZZZ getFrameParent();
 
