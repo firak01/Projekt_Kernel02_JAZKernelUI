@@ -238,10 +238,10 @@ public class KernelJPanelDialogButtonDefaultZZZ extends KernelJPanelCascadedZZZ 
 		* 
 		* lindhaueradmin; 09.01.2007 09:03:32
 		 */
-		public boolean actionPerformQueryCustom(ActionEvent ae){
+		public boolean actionPerformQueryCustom(ActionEvent ae)throws ExceptionZZZ{
 			return true;
 		}
-		public boolean actionPerformCustom(ActionEvent ae, boolean bQueryResult){
+		public boolean actionPerformCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ{
 			/* BEISPIEL, normalerweise wird eine andere Klasse verwendet, wenn zusaetzlich zur Default Aktion noch hier etwas gemacht werden soll
 			// BEISPIEL: Den Inhalt des Labels in einem anderen Panel hier ausgeben.
 			System.out.println("ok");					
@@ -255,7 +255,7 @@ public class KernelJPanelDialogButtonDefaultZZZ extends KernelJPanelCascadedZZZ 
 			this.getPanelParent().getDialogParent().setDisposed();
 			return true;
 		}
-		public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult){
+		public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ{
 			
 		}
 
