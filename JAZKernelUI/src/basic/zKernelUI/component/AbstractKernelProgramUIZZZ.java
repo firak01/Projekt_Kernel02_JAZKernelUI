@@ -1,14 +1,24 @@
 package basic.zKernelUI.component;
 
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
+import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.component.AbstractKernelProgramZZZ;
 import basic.zKernel.component.IKernelProgramZZZ;
 
-public class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZZ{
+public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZZ{
+	private KernelJPanelCascadedZZZ panel = null;
+	private String sTextfield4Update;
+	private String sText2Update;    //Der Wert, der ins Label geschreiben werden soll. Hier als Variable, damit die interne Runner-Klasse darauf zugreifen kann.
+	// Auch: Dieser Wert wird aus dem Web ausgelesen und danach in das Label des Panels geschrieben.
 
+	
+	
 	/**Z.B. Wg. Reflection immer den Standardkonstruktor zur Verfügung stellen.
 	 * 
 	 * 31.01.2021, 12:15:10, Fritz Lindhauer
@@ -74,6 +84,46 @@ public class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZZ{
 		
 	}//END main
 		
+	}
+	
+	//### Getter / Setter
+		public KernelJPanelCascadedZZZ getPanelParent(){
+			return this.panel;
+		}
+		public void setPanelParent(KernelJPanelCascadedZZZ panel){
+			this.panel = panel;
+		}
+	
+	//#### METHIDEN ###############################################	
+	public abstract void updateLabel(String stext);
+	public void reset() {
+		this.sText2Update = ""; 
+	}
+	
+	/**Aus dem Worker-Thread heraus wird ein Thread gestartet (der sich in die EventQueue von Swing einreiht.)
+	* @param stext
+	* 
+	* lindhaueradmin; 17.01.2007 12:09:17
+	 */
+	public void updateLabel(String sComponentName, String stext){
+		this.sTextfield4Update = sComponentName;
+		this.sText2Update = stext;
+		
+//		Das Schreiben des Ergebnisses wieder an den EventDispatcher thread �bergeben
+		Runnable runnerUpdateLabel= new Runnable(){
+
+			public void run(){
+//				In das Textfeld den gefundenen Wert eintragen, der Wert ist ganz oben als private Variable deklariert			
+				ReportLogZZZ.write(ReportLogZZZ.DEBUG, "Writing '" + sText2Update + "' to the JTextField '" + sTextfield4Update + "'");				
+				JTextField textField = (JTextField) getPanelParent().getComponent(sTextfield4Update);
+				if(textField!=null) {
+					textField.setText(sText2Update);
+					textField.setCaretPosition(0);   //Das soll bewirken, dass der Anfang jedes neu eingegebenen Textes sichtbar ist.
+				}
+			}
+		};
+		
+		SwingUtilities.invokeLater(runnerUpdateLabel);				
 	}
 	
 }
