@@ -82,7 +82,7 @@ public class PanelDebugButtonGroup_NORTHZZZ extends KernelJPanelCascadedZZZ {
 			Border borderEtched = BorderFactory.createEtchedBorder();
 			this.setBorder(borderEtched);
 					
-			// +++ Werte aus der KoernelKonfiguration auslesen und anzeigen
+			// +++ Werte aus der KernelKonfiguration auslesen und anzeigen
 			String sLabelButtonGroup01 = this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButtonGroup01").getValue();
 			JLabel labelModuleText = new JLabel(sLabelButtonGroup01, SwingConstants.LEFT);
 			this.add(labelModuleText);
