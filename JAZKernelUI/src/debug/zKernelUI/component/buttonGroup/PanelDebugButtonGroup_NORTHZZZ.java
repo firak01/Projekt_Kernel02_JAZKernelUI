@@ -76,7 +76,7 @@ public class PanelDebugButtonGroup_NORTHZZZ extends KernelJPanelCascadedZZZ {
 			
 			
 			//TODO Komplizierteres aber sch�neres Layout durch einen anderen Layoutmanager
-			this.setLayout(new GridLayout(6,2)); //6 Zeilen, 2 Spalten
+			this.setLayout(new GridLayout(0,3)); //6 Zeilen, 3 Spalten. Merke new GridLayout(6,3)); funktioniert nicht, wohl wenn die Anzahl der Zellen nicht ganz passt. 
 	
 			//Einen Rahmen um das Panel zeichnen
 			Border borderEtched = BorderFactory.createEtchedBorder();
@@ -110,6 +110,12 @@ public class PanelDebugButtonGroup_NORTHZZZ extends KernelJPanelCascadedZZZ {
 			groupButton.add(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_MINUS,buttonMinus);
 			groupButton02.add(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_MINUS,buttonMinus);
 			
+			
+			//+++++++++++
+			String sLabel02 = ".";
+			JLabel label02 = new JLabel(sLabel02, SwingConstants.LEFT);
+			this.add(label02);
+			
 			JButton buttonEnable = new JButton("Enable all");
 			ActionEnable actionEnable = new ActionEnable(objKernel, this);
 			buttonEnable.addActionListener(actionEnable);		
@@ -125,6 +131,12 @@ public class PanelDebugButtonGroup_NORTHZZZ extends KernelJPanelCascadedZZZ {
 			this.add(buttonDisable);
 			//Also diesen Button nicht hinzufügen. Sonst kriegt man sie nie wieder enabled:
 			//groupButton.add(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_DISABLE,buttonDisable);
+			
+			
+			//++++++++++++
+			String sLabel03 = ".";
+			JLabel label03 = new JLabel(sLabel03, SwingConstants.LEFT);
+			this.add(label03);
 			
 			JButton buttonToggle_all = new JButton("Toggle all");
 			ActionToggle_all actionToggle_all = new ActionToggle_all(objKernel, this);
@@ -152,7 +164,11 @@ public class PanelDebugButtonGroup_NORTHZZZ extends KernelJPanelCascadedZZZ {
 		       // toggleButton.addActionListener(actionListener);
 			
 			 
-			 
+			//++++++++++++
+			String sLabel04 = ".";
+			JLabel label04 = new JLabel(sLabel04, SwingConstants.LEFT);
+			this.add(label04);
+
 			JButton buttonDiffer_all = new JButton("Differ all: Like 'A toggle button' selection");
 			ActionDiffer_all actionDiffer_all = new ActionDiffer_all(objKernel, this);
 			buttonDiffer_all.addActionListener(actionDiffer_all);		
@@ -173,6 +189,8 @@ public class PanelDebugButtonGroup_NORTHZZZ extends KernelJPanelCascadedZZZ {
 			this.getHashtableButtonGroup().put("EINS", groupButton);  
 			this.getHashtableButtonGroup().put("ZWEI", groupButton02); 
 			
+			//+++ Das Layout validieren, mit dem Ziel die Komponenten passend anzuordnen.
+			this.validate();
 			} catch (ExceptionZZZ ez) {
 				String sError = ReflectCodeZZZ.getMethodCurrentName() + ": " + ez.getDetailAllLast();
 				System.out.println(sError);

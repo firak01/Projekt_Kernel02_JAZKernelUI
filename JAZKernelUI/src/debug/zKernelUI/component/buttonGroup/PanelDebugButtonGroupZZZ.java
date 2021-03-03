@@ -1,6 +1,7 @@
 package debug.zKernelUI.component.buttonGroup;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.util.Hashtable;
 
 import javax.swing.JButton;
