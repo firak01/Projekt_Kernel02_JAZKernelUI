@@ -12,16 +12,20 @@ import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernel.KernelZZZ;
 
 public class Panel_DLGBOXZZZ extends KernelJPanelCascadedZZZ {
-	protected IKernelZZZ objKernelChoosen;
-	
-	//private Panel_CENTERZZZ panelCenter;
-	
 	
 	public Panel_DLGBOXZZZ(IKernelZZZ objKernel, JFrame frameParent, IKernelZZZ objKernelChoosen, String sModule, String sProgram) throws ExceptionZZZ{
 		super(objKernel,frameParent); //Es gibt kein Parent Panel !!!
 		//try {			
 			this.setLayout(new BorderLayout());
-			this.objKernelChoosen = objKernelChoosen;
+			this.setKernelObject(objKernel);
+			
+			TODOGOON; //20210306: Hier ein Abstaktes Modulobjekt erstellen
+			//ausgehend von dem Modulnamen sModule,
+			//Übergib dem Modul den Kernel!!!
+			
+			
+			
+			
 			
 			//### PANEL NORTH
 			Panel_NORTHZZZ objPanelNorth = new Panel_NORTHZZZ(objKernel, objKernelChoosen, sModule, sProgram, this);

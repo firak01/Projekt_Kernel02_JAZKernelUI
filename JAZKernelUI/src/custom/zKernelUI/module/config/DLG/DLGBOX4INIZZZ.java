@@ -66,23 +66,20 @@ public class DLGBOX4INIZZZ  extends KernelJFrameCascadedZZZ  implements IJNILotu
 				sSystemNumber = StringZZZ.right(sSystemKey, "!");
 			}
 			
-			//Programme sollen erst auf Modulebenen konfigurierbar sein, trotzdem ein m�glicherweise wertvoller Parameter.
+			//Programme sollen erst auf Modulebenen konfigurierbar sein, trotzdem ein moeglicherweise wertvoller Parameter.
 			String sProgram = new String("");
-						
-			//TEST: LogObjekt
-			//LogZZZ objLogJAZ = new LogZZZ("d:\\tempfgl", "Testnow.txt");
 			
-			//Ein Kernel-Objekt f�r das zu startende Modul erstellen.
+			//Ein Kernel-Objekt fuer das zu startende Modul erstellen.
 			this.objKernelChoosen = new KernelZZZ(sApplication, sSystemNumber, this.getKernelObject(),null);
-						
-			//Grundfl�che in den Rahmen hinzuf�gen...
+									
+			//Grundflaeche in den Rahmen hinzufuegen...
 			Panel_DLGBOXZZZ objPanel = new Panel_DLGBOXZZZ(this.getKernelObject(),this, this.objKernelChoosen, sModule, sProgram);
 			
 			//... das wird nun �ber das ContentPane der Frames gemacht
 			this.getContentPane().add(objPanel);
 			this.setPanelSub("ContentPane", objPanel);
 						
-			//... sichtbar machen erst, nachdem alle Elemente im Frame hinzugef�gt wurden !!!
+			//... sichtbar machen erst, nachdem alle Elemente im Frame hinzugefuegt wurden !!!
 			//depreciated in 1.5 frame.show();
 			//statt dessen...
 			setVisible(true);

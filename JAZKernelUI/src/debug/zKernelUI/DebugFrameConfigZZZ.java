@@ -10,12 +10,12 @@ public static void main(String[] args) {
 		
 
 			try {
-				//1. Kernel Objekt initialisieren. Dies ist für das Logging grundlegend.
+				//1. Kernel Objekt initialisieren. Dies ist fuer das Logging grundlegend.
 				KernelZZZ objKernel = new KernelZZZ("FGL", "01", "", "ZKernelConfigConfig_default.ini",(String)null);
 				LogZZZ objLog = objKernel.getLogObject();
 				
 				
-				//2. Frame initialisieren und öffnen. Die Applikation JDX soll verarbeite werden
+				//2. Frame initialisieren und ï¿½ffnen. Die Applikation JDX soll verarbeite werden
 				FrameConfigZZZ objFrame = new FrameConfigZZZ(objKernel, "JDX", "01");
 				boolean btemp = objFrame.launch();
 				

@@ -28,15 +28,14 @@ public class DebugDLGBox4IniZZZ {
 	
 		DLGBOX4INIZZZ frameDLG = new DLGBOX4INIZZZ(objKernel, null);
 	
-		// !!! Diese section und dieses Modul m�ssen in der oben f�r die Kernel-Konfiguration angegebenen Datei stehen. 
-		// !!! Die konfigurationsdatei f�r dieses Modul muss vorhanden sein.
+		// !!! Diese section und dieses Modul muessen in der oben fuer die Kernel-Konfiguration angegebenen Datei stehen. 
+		// !!! Die konfigurationsdatei fuer dieses Modul muss vorhanden sein.
 		String[] saParam = new String[2];
 		saParam[0]="JDX!01";
 		saParam[1]=sModule;
 		frameDLG.launch(saParam);
 	
 	} catch (ExceptionZZZ ez) {
-		// TODO Auto-generated catch block
 		ez.printStackTrace();
 	}
 	}
