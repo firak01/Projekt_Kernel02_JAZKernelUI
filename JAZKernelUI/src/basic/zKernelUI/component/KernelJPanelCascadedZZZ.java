@@ -528,6 +528,9 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 		public String getModuleName() throws ExceptionZZZ {
 			String sReturn = new String("");
 			main:{	
+				TODOGOON; //20210310: Jetzt gibt es ja noch ggfs. ein Abstraktes Module-Objekt.
+				//                    Wenn das abstrakte Modul Objekt vorhanden ist, dann den ModulNamen daraus verwenden.
+				//                    Ist das abstrakte Modul Objekt nicht vorhanden, dann den Modulnamen wie bisher anhand des Panels selbst ermitteln.
 				if(StringZZZ.isEmpty(this.sModuleName)) {
 					this.sModuleName = KernelUIZZZ.getModuleUsedName((IPanelCascadedZZZ)this);
 				}

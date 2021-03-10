@@ -10,6 +10,9 @@ import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernel.KernelZZZ;
+import basic.zKernel.component.AbstractKernelModuleZZZ;
+import basic.zKernel.component.IKernelModuleZZZ;
+import basic.zKernel.component.KernelModuleZZZ;
 
 public class Panel_DLGBOXZZZ extends KernelJPanelCascadedZZZ {
 	
@@ -19,16 +22,13 @@ public class Panel_DLGBOXZZZ extends KernelJPanelCascadedZZZ {
 			this.setLayout(new BorderLayout());
 			this.setKernelObject(objKernel);
 			
-			TODOGOON; //20210306: Hier ein Abstaktes Modulobjekt erstellen
+			//TODOGOON; //20210306: Hier ein Abstaktes Modulobjekt erstellen
+			IKernelModuleZZZ objModule = new KernelModuleZZZ(objKernel, sModule);
 			//ausgehend von dem Modulnamen sModule,
 			//Übergib dem Modul den Kernel!!!
 			
-			
-			
-			
-			
 			//### PANEL NORTH
-			Panel_NORTHZZZ objPanelNorth = new Panel_NORTHZZZ(objKernel, objKernelChoosen, sModule, sProgram, this);
+			Panel_NORTHZZZ objPanelNorth = new Panel_NORTHZZZ(objKernel, objKernelChoosen, objModule, sProgram, this);
 			this.add(objPanelNorth, BorderLayout.NORTH);
 			this.setPanelSub("NORTH", objPanelNorth);
 			
@@ -58,12 +58,12 @@ public class Panel_DLGBOXZZZ extends KernelJPanelCascadedZZZ {
 		
 			//!!! Wichtig ist es, dass das EAST-Panel VOR dem CENTER-PANEL eingef�gt wird !!!
      		//### PANEL EAST
-     		Panel_EASTZZZ objPanelEast = new Panel_EASTZZZ(objKernel, this, objKernelChoosen, sModule, sProgram);
+     		Panel_EASTZZZ objPanelEast = new Panel_EASTZZZ(objKernel, this, objKernelChoosen, objModule, sProgram);
      		this.add(objPanelEast, BorderLayout.EAST);
      		this.setPanelSub("EAST", objPanelEast); //Damit es von anderen Panels "greifbar" wird.
 
      		/* Am einfachsten ist es den JScrollPane anzuwenden. */
-			Panel_CENTERZZZ objPanelCenter = new Panel_CENTERZZZ(objKernel, this, objKernelChoosen, sModule, sProgram);	
+			Panel_CENTERZZZ objPanelCenter = new Panel_CENTERZZZ(objKernel, this, objKernelChoosen, objModule, sProgram);	
 			JScrollPane jsp = new JScrollPane(objPanelCenter);					
      		this.add(jsp, BorderLayout.CENTER);  			 //Mit Bildlaufleisten. ALSO: �ber die JScrollPane wird das Panel_CENTERZZZ-Objekt eingebunden.
      		this.setPanelSub("CENTER", objPanelCenter); //Damit es von anderen Panels "greifbar" wird.

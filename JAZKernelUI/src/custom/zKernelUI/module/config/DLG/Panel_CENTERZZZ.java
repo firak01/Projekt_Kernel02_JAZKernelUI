@@ -22,6 +22,7 @@ import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernel.KernelZZZ;
+import basic.zKernel.component.IKernelModuleZZZ;
 import custom.zKernel.LogZZZ;
 import custom.zKernel.file.ini.FileIniZZZ;
 
@@ -36,17 +37,20 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements ICompone
 	private JTextField[] textfieldaValue = null; 
 	
 
-	public Panel_CENTERZZZ(IKernelZZZ objKernel, JPanel panelParent, IKernelZZZ objKernelChoosen, String sModule, String sProgram) throws ExceptionZZZ {
+	public Panel_CENTERZZZ(IKernelZZZ objKernel, JPanel panelParent, IKernelZZZ objKernelChoosen,  IKernelModuleZZZ objModuleChoosen, String sProgram) throws ExceptionZZZ {
 		super(objKernel, panelParent);
 		main:{
 		try {			
-			this.sModule = sModule;
-			this.objKernel2configure = objKernelChoosen;
+			this.objKernel2configure = objKernelChoosen;//TODOGOON 20210310: Kann man kernelChoosen komplett durch ModuleChoosen ersetzen????
+			this.setModule(objModuleChoosen);//Merke 20210310: Das ist ggfs. auch ein ganz abstraktes Moduluobjekt, also nicht etwas, das konkret existiert wie z.B. ein anderes Panel.
+			
 			
 			Border borderEtched = BorderFactory.createEtchedBorder();
 			this.setBorder(borderEtched);	
 			
 			//+++ Vor dem Anlegen der Components erst einmal pr�fen, ob es �berhaupt etwas zu tun gibt
+			String sModule = this.getModule().getModuleName();
+			
 			//TODO GOON: Das KernelObject zu verwenden ist eigentlich nicht sauber. Es muss ein eigenes Objekt f�r das zu konfigurierende Modul vorhanden sein.
 			//boolean bModuleConfigured = this.getKernelObject().proofModuleIsConfigured(sModule);
 			boolean bModuleConfigured = this.objKernel2configure.proofModuleFileIsConfigured(sModule);

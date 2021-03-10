@@ -15,17 +15,19 @@ import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
+import basic.zKernel.component.IKernelModuleZZZ;
 
 public class Panel_NORTHZZZ extends KernelJPanelCascadedZZZ {
 	private IKernelZZZ objKernelChoosen;
 	private static final int iLABEL_COLUMN_DEFAULT = 10;
 
 	
-	public Panel_NORTHZZZ(IKernelZZZ objKernel, IKernelZZZ objKernelChoosen, String sModule, String sProgram, JPanel panelParent) throws ExceptionZZZ {
+	public Panel_NORTHZZZ(IKernelZZZ objKernel, IKernelZZZ objKernelChoosen, IKernelModuleZZZ objModuleChoosen, String sProgram, JPanel panelParent) throws ExceptionZZZ {
 		super(objKernel, panelParent);
 		main:{
 		try {
-		this.objKernelChoosen = objKernelChoosen;
+		this.objKernelChoosen = objKernelChoosen;//TODOGOON 20210310: Kann man kernelChoosen komplett durch ModuleChoosen ersetzen????
+		this.setModule(objModuleChoosen);//Merke 20210310: Das ist ggfs. auch ein ganz abstraktes Moduluobjekt, also nicht etwas, das konkret existiert wie z.B. ein anderes Panel.
 		
 		//TODO Komplizierteres aber sch�neres Layout durch einen anderen Layoutmanager
 		this.setLayout(new GridLayout(6,2)); //6 Zeilen, 2 Spalten
@@ -41,16 +43,18 @@ public class Panel_NORTHZZZ extends KernelJPanelCascadedZZZ {
 			this.add(labelModuleText);
 			
 			check:{				
-				if(sModule==null){
-//					Kein Modul �bergeben: NULL
+				if(objModule==null){
+//					Kein Modul uebergeben: NULL
 					JLabel labelModuleValue = new JLabel("No module selected", SwingConstants.LEFT);
 					this.add(labelModuleValue);				
-				}else if(sModule.equals("")){
-					//Kein Modul �bergeben: ""
+				}else if(objModule!=null && objModule.getModuleName().equals("")){
+					//Kein Modul uebergeben: ""
 					JLabel labelModuleValue = new JLabel("No module selected", SwingConstants.LEFT);
 					this.add(labelModuleValue);					
 				}else{
-					//ModuleExists ?			
+					//ModuleExists ?
+					String sModule = objModule.getModuleName();
+					
 					boolean bModuleConfigured = this.objKernelChoosen.proofModuleFileIsConfigured(sModule);
 					if(bModuleConfigured==false){
 						//Fall: Modul nicht configuriert

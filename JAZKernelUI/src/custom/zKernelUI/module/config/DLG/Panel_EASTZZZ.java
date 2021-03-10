@@ -24,11 +24,12 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 	private IKernelZZZ objKernelChoosen;
 	private static final int iLABEL_COLUMN_DEFAULT = 10;
 	
-	public Panel_EASTZZZ(IKernelZZZ objKernel, JPanel panelParent, IKernelZZZ objKernelChoosen, String sModule, String sProgram) throws ExceptionZZZ {
+	public Panel_EASTZZZ(IKernelZZZ objKernel, JPanel panelParent, IKernelZZZ objKernelChoosen, IKernelModuleZZZ objModuleChoosen, String sProgram) throws ExceptionZZZ {
 		super(objKernel, panelParent);
 		main:{
 		try{	
-		this.objKernelChoosen = objKernelChoosen;
+		this.objKernelChoosen = objKernelChoosen;//TODOGOON 20210310: Kann man kernelChoosen komplett durch ModuleChoosen ersetzen????
+		this.setModule(objModuleChoosen);//Merke 20210310: Das ist ggfs. auch ein ganz abstraktes Moduluobjekt, also nicht etwas, das konkret existiert wie z.B. ein anderes Panel.
 		
 		
 			//TODO Komplizierteres aber sch�neres Layout durch einen anderen Layoutmanager
@@ -40,13 +41,13 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 			
 			check:{
 				//Kein Modul �bergeben
-				if(sModule==null){
+				if(objModule==null){
 					//Statt Button eine Meldung TODO: Wie graut man einen Button aus ???
 					JLabel labelModuleValue = new JLabel("Save unavailable", SwingConstants.LEFT);
 					this.add(labelModuleValue);
 					break main;
 					//TODO: Falls kein Modul �bergeben wurde, so k�nnen sp�ter immer noch Buttons wie "create new module", etc. angezeigt werden.
-				}else if(sModule.equals("")){
+				}else if(objModule!=null && objModule.getModuleName().equals("")){
 					//Statt Button eine Meldung TODO: Wie graut man einen Button aus ???
 					JLabel labelModuleValue = new JLabel("Save unavailable", SwingConstants.LEFT);
 					this.add(labelModuleValue);
@@ -54,6 +55,8 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 					//TODO: Falls kein Modul �bergeben wurde, so k�nnen sp�ter immer noch Buttons wie "create new module", etc. angezeigt werden.
 				}else{
 					//ModuleExists ?
+					String sModule = objModule.getModuleName();
+										
 					boolean bModuleConfigured = this.objKernelChoosen.proofModuleFileIsConfigured(sModule);
 					if(bModuleConfigured==false){
 						//Fall: Modul nicht configuriert
