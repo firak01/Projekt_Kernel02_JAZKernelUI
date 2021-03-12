@@ -386,14 +386,21 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				throw ez;
 			}
 			
+			TODOGOON; //20210312 müsste sReturn jetzt nicht aus dem aktullen panel Kommmen?
+			//Vorausgesetzt das isModule()-Flag ist gesetzt?
+			
+			TODOGOON; //20210312 die Untersuchung nach dem frameParent doch erst machen, wenn keines der Elternpanel ein Modul ist.
 			KernelJFrameCascadedZZZ frameParent = panelCascaded.getFrameParent();
 			if(frameParent==null){
 				KernelJPanelCascadedZZZ panelParent = panelCascaded.getPanelParent();
-				if(panelParent==null) {
+				if(panelParent==null) {		
+					TODOGOON; //20210312 Müsste dann nicht auf frameParent untersucht werden?
 					String sReturn = panelCascaded.getKernelObject().getApplicationKey();
 					objReturn = new KernelModuleZZZ(panelCascaded.getKernelObject(), sReturn);
 					break main;
 				}else {
+					TODOGOON; //20210312 Müsste hier nicht rekursiv die Methode aufgerufen werden?
+					
 					KernelJPanelCascadedZZZ panelRoot = panelParent.searchPanelRoot();
 					if(panelRoot==null) {
 						String sReturn = panelCascaded.getKernelObject().getApplicationKey();
