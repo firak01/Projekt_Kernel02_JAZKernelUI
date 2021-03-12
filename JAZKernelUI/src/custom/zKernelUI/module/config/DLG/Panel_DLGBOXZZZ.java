@@ -22,11 +22,10 @@ public class Panel_DLGBOXZZZ extends KernelJPanelCascadedZZZ {
 			this.setLayout(new BorderLayout());
 			this.setKernelObject(objKernel);
 			
-			//TODOGOON; //20210306: Hier ein Abstaktes Modulobjekt erstellen
+			//20210306: Hier ein Abstaktes Modulobjekt erstellen
+			//Übergib dem Modul den Kernel!!! 			
 			IKernelModuleZZZ objModule = new KernelModuleZZZ(objKernel, sModule);
-			//ausgehend von dem Modulnamen sModule,
-			//Übergib dem Modul den Kernel!!!
-			
+									
 			//### PANEL NORTH
 			Panel_NORTHZZZ objPanelNorth = new Panel_NORTHZZZ(objKernel, objKernelChoosen, objModule, sProgram, this);
 			this.add(objPanelNorth, BorderLayout.NORTH);

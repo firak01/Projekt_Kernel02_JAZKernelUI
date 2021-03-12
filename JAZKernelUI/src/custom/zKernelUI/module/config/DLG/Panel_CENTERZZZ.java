@@ -17,18 +17,25 @@ import javax.swing.border.Border;
 import basic.zBasic.IObjectZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ReflectCodeZZZ;
+import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasicUI.layoutmanager.EntryLayout;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
+import basic.zKernelUI.KernelUIZZZ;
+import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernel.KernelZZZ;
+import basic.zKernel.component.IKernelModuleUserZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import custom.zKernel.LogZZZ;
 import custom.zKernel.file.ini.FileIniZZZ;
 
-public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IComponentTableZZZ {
-	private String sModule;
+public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelModuleZZZ, IComponentTableZZZ {
 	private IKernelZZZ objKernel2configure;
+	
+	//Besonderes Panel. hat das Module intus... 
+	protected IKernelModuleZZZ objModule=null; //Das Modul, das zur Bearbeitung ausgewählt wurde.
+	private String sModuleName = null;
 	
 	private static final int iTEXTFIELD_COLUMN_DEFAULT = 10;             //Wie breit ein Textfeld sein soll
 	private static final int iNR_OF_TEXTFIELD_SHOWN_DEFAULT = 10; //Wieviele Textfields angezeigt werden sollen
@@ -41,52 +48,45 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements ICompone
 		super(objKernel, panelParent);
 		main:{
 		try {			
-			this.objKernel2configure = objKernelChoosen;//TODOGOON 20210310: Kann man kernelChoosen komplett durch ModuleChoosen ersetzen????
+			this.objKernel2configure = objKernelChoosen;//TODOGOON 20210310: Kann man kernelChoosen komplett durch ModuleChoosen ersetzen???? BZW. es sollte KernelChoosen das einzige KernelObjekt sein!!!
 			this.setModule(objModuleChoosen);//Merke 20210310: Das ist ggfs. auch ein ganz abstraktes Moduluobjekt, also nicht etwas, das konkret existiert wie z.B. ein anderes Panel.
 			
 			
 			Border borderEtched = BorderFactory.createEtchedBorder();
 			this.setBorder(borderEtched);	
 			
-			//+++ Vor dem Anlegen der Components erst einmal pr�fen, ob es �berhaupt etwas zu tun gibt
-			String sModule = this.getModule().getModuleName();
-			
-			//TODO GOON: Das KernelObject zu verwenden ist eigentlich nicht sauber. Es muss ein eigenes Objekt f�r das zu konfigurierende Modul vorhanden sein.
-			//boolean bModuleConfigured = this.getKernelObject().proofModuleIsConfigured(sModule);
+			//+++ Vor dem Anlegen der Components erst einmal pruefen, ob es ueberhaupt etwas zu tun gibt
+			String sModule = KernelUIZZZ.getModuleUsedName((IKernelModuleZZZ) this);//20210312 Hier KernelUIZZZ als Hilfsklasse verwenden, um den Modulnamen auszulesen. besser als: String sModule = this.getModule().getModuleName();
+									
+			//Das KernelObject zu verwenden ist nicht sauber. Es muss ein eigenes Objekt fuer das zu konfigurierende Modul vorhanden sein.
 			boolean bModuleConfigured = this.objKernel2configure.proofModuleFileIsConfigured(sModule);
 			if(bModuleConfigured==false){
-				//Fall: Modul nicht configuriert
-				break main;
+				break main;	//Fall: Modul nicht configuriert
 			}else{
-				//TODO GOON: Das KernelObject zu verwenden ist eigentlich nicht sauber. Es muss ein eigenes Objekt f�r das zu konfigurierende Modul vorhanden sein.
-			//boolean bModuleExists = this.getKernelObject().proofModuleExists(sModule);
+				//Das KernelObject zu verwenden ist nicht sauber. Es muss ein eigenes Objekt fuer das zu konfigurierende Modul vorhanden sein.
 				boolean bModuleExists = this.objKernel2configure.proofModuleFileExists(sModule);
-			if(bModuleExists==false){
-				//Fall: Konfiguriertes Modul existiert nicht physikalisch als Datei am erwarteten Ort/mit dem erwarteten Namen
-				break main;
+				if(bModuleExists==false){				
+					break main;//Fall: Konfiguriertes Modul existiert nicht physikalisch als Datei am erwarteten Ort/mit dem erwarteten Namen
+				}
 			}
-			}
-			
-			
+						
 			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++			
 			int iLines2Show = 0; //Alle anzuzeigenden Label-Zeilen, ggf. mit leeren aufgefülllt.			
 			int iLinesWithValue = 0; //Momentan anzuzeigende "gefüllte" Label-Zeilen
 			int iLines2Fill = 0; //Die zum auffüllen verwendeten "leeren" Label-Zeilen
 			
-			//SystemKey als Schl�ssel f�r die Section
-			//TODO GOON: Das KernelObject zu verwenden ist eigentlich nicht sauber. Es muss ein eigenes Objekt f�r das zu konfigurierende Modul vorhanden sein.
-			//String sSystemKey = this.getKernelObject().getSystemKey();
+			//SystemKey als Schluessel fuer die Section
+			//Das KernelObject zu verwenden ist nicht sauber. Es muss ein eigenes Objekt fuer das zu konfigurierende Modul vorhanden sein.
 			String sSystemKey = this.objKernel2configure.getSystemKey();
 			
 			//FileIniZZZ Objekt holen
-			//TODO GOON: Das KernelObject zu verwenden ist eigentlich nicht sauber. Es muss ein eigenes Objekt f�r das zu konfigurierende Modul vorhanden sein.
-			//FileIniZZZ objFileIni = this.getKernelObject().getFileConfigIniByAlias(sModule);
+			//Das KernelObject zu verwenden ist nicht sauber. Es muss ein eigenes Objekt fuer das zu konfigurierende Modul vorhanden sein.
 			FileIniZZZ objFileIni = this.objKernel2configure.getFileConfigIniByAlias(sModule);
 			
 			//Alle Einträge dieses Keys holen
 			String[] saProperty = objFileIni.getPropertyAll(sSystemKey);
 			if(saProperty==null){
-				//Hinweis: Keine Eintr�ge gefunden
+				//Hinweis: Keine Eintraege gefunden
 				iLines2Show = 1; //Die Hinweiszeile
 				iLines2Fill = iNR_OF_TEXTFIELD_SHOWN_DEFAULT - iLines2Show;
 				
@@ -130,8 +130,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements ICompone
 					this.add(labelaText[icount]);
 					
 					//Das Value - Textfeld										
-					//TODO GOON: Das KernelObject zu verwenden ist eigentlich nicht sauber. Es muss ein eigenes Objekt f�r das zu konfigurierende Modul vorhanden sein.
-					//sValue = this.getKernelObject().getParameterByModuleFile(objFileIni, saProperty[icount]); //Parameter);
+					//Das KernelObject zu verwenden ist nicht sauber. Es muss ein eigenes Objekt fuer das zu konfigurierende Modul vorhanden sein.
 					sValue = this.objKernel2configure.getParameterByModuleFile(objFileIni, saProperty[icount]).getValue(); //Parameter);
 					
 					textfieldaValue[icount] = new JTextField(sValue, iTEXTFIELD_COLUMN_DEFAULT);
@@ -240,4 +239,30 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements ICompone
 	//#######################################################
 	//### GETTER / SETTER
 
+	//### Aus IKernelModuleUserZZZ
+	public IKernelModuleZZZ getModule() {
+		return this.objModule;
+	}
+	public void setModule(IKernelModuleZZZ objModule) {
+		this.objModule = objModule;
+	}
+	
+	//#################### Interface IKernelModuleUserZZZ
+			public String getModuleName() throws ExceptionZZZ {
+				String sReturn = new String("");
+				main:{	
+					//TODOGOON; //20210310: Jetzt gibt es ja noch ggfs. ein Abstraktes Module-Objekt.
+					//                    Wenn das abstrakte Modul Objekt vorhanden ist, dann den ModulNamen daraus verwenden.
+					//                    Ist das abstrakte Modul Objekt nicht vorhanden, dann den Modulnamen wie bisher anhand des Panels selbst ermitteln.				
+					if(StringZZZ.isEmpty(this.sModuleName)) {
+						if(this.getModule()!=null) {
+							this.sModuleName = KernelUIZZZ.getModuleUsedName((IKernelModuleZZZ)this.getModule());
+						}else {
+							this.sModuleName = KernelUIZZZ.getModuleUsedName((IPanelCascadedZZZ)this);
+						}
+					}
+					sReturn = this.sModuleName;
+				}//end main
+				return sReturn;
+			}
 }

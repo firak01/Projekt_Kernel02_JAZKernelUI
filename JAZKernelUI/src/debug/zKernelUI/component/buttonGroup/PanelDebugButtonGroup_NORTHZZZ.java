@@ -30,6 +30,7 @@ import basic.zBasic.util.abstractList.HashMapMultiZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zBasicUI.thread.SwingWorker;
+import basic.zKernelUI.KernelUIZZZ;
 import basic.zKernelUI.component.KernelActionCascadedZZZ;
 import basic.zKernelUI.component.KernelButtonGroupZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
@@ -37,10 +38,10 @@ import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelLogZZZ;
 import basic.zKernel.KernelZZZ;
+import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.component.IKernelProgramZZZ;
 
 public class PanelDebugButtonGroup_NORTHZZZ extends KernelJPanelCascadedZZZ {
-	private KernelZZZ objKernelChoosen;
 	private static final int iLABEL_COLUMN_DEFAULT = 10;
 	
     private static final String sBUTTON_PLUS = "buttonPlus";
@@ -62,7 +63,7 @@ public class PanelDebugButtonGroup_NORTHZZZ extends KernelJPanelCascadedZZZ {
 			
 			//Wichtige Informationen, zum Auslesen von Parametern aus der KernelConfiguration
 			String sProgram; String sModule;
-			sModule = this.getModuleName();
+			sModule = KernelUIZZZ.getModuleUsedName((IKernelModuleZZZ) this);
 			if(StringZZZ.isEmpty(sModule)){
 				ExceptionZZZ ez = new ExceptionZZZ("No module configured for this component '" + this.getClass().getName() + "'", iERROR_CONFIGURATION_MISSING, this, ReflectCodeZZZ.getMethodCurrentName());
 				throw ez;

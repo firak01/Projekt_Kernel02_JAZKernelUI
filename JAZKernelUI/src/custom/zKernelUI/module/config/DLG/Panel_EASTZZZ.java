@@ -15,21 +15,24 @@ import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
+import basic.zKernelUI.KernelUIZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernel.KernelZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import custom.zKernel.file.ini.FileIniZZZ;
 
 public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
-	private IKernelZZZ objKernelChoosen;
+	private IKernelZZZ objKernelChoosen=null;
+	private IKernelModuleZZZ objModuleChoosen=null;
+	
 	private static final int iLABEL_COLUMN_DEFAULT = 10;
 	
 	public Panel_EASTZZZ(IKernelZZZ objKernel, JPanel panelParent, IKernelZZZ objKernelChoosen, IKernelModuleZZZ objModuleChoosen, String sProgram) throws ExceptionZZZ {
 		super(objKernel, panelParent);
 		main:{
 		try{	
-		this.objKernelChoosen = objKernelChoosen;//TODOGOON 20210310: Kann man kernelChoosen komplett durch ModuleChoosen ersetzen????
-		this.setModule(objModuleChoosen);//Merke 20210310: Das ist ggfs. auch ein ganz abstraktes Moduluobjekt, also nicht etwas, das konkret existiert wie z.B. ein anderes Panel.
+		this.setKernelChoosen(objKernelChoosen);//TODOGOON 20210310: Kann man kernelChoosen komplett durch ModuleChoosen ersetzen????
+		this.setModuleChoosen(objModuleChoosen);//Merke 20210310: Das ist ggfs. auch ein ganz abstraktes Moduluobjekt, also nicht etwas, das konkret existiert wie z.B. ein anderes Panel.
 		
 		
 			//TODO Komplizierteres aber sch�neres Layout durch einen anderen Layoutmanager
@@ -41,13 +44,13 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 			
 			check:{
 				//Kein Modul �bergeben
-				if(objModule==null){
+				if(this.getModuleChoosen()==null){
 					//Statt Button eine Meldung TODO: Wie graut man einen Button aus ???
 					JLabel labelModuleValue = new JLabel("Save unavailable", SwingConstants.LEFT);
 					this.add(labelModuleValue);
 					break main;
 					//TODO: Falls kein Modul �bergeben wurde, so k�nnen sp�ter immer noch Buttons wie "create new module", etc. angezeigt werden.
-				}else if(objModule!=null && objModule.getModuleName().equals("")){
+				}else if(this.getModuleChoosen()!=null && this.getModuleChoosen().getModuleName().equals("")){
 					//Statt Button eine Meldung TODO: Wie graut man einen Button aus ???
 					JLabel labelModuleValue = new JLabel("Save unavailable", SwingConstants.LEFT);
 					this.add(labelModuleValue);
@@ -55,7 +58,7 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 					//TODO: Falls kein Modul �bergeben wurde, so k�nnen sp�ter immer noch Buttons wie "create new module", etc. angezeigt werden.
 				}else{
 					//ModuleExists ?
-					String sModule = objModule.getModuleName();
+					String sModule = this.getModuleChoosen().getModuleName();
 										
 					boolean bModuleConfigured = this.objKernelChoosen.proofModuleFileIsConfigured(sModule);
 					if(bModuleConfigured==false){
@@ -88,6 +91,22 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 			}
 		}//END main:
 	}
+	
+	public IKernelZZZ getKernelChoosen() {
+		return this.objKernelChoosen;
+	}
+	public void setKernelChoosen(IKernelZZZ objKernelChoosen) {
+		this.objKernelChoosen = objKernelChoosen;
+	}
+	
+	public IKernelModuleZZZ getModuleChoosen() {
+		return this.objModuleChoosen;
+	}
+	public void setModuleChoosen(IKernelModuleZZZ objModuleChoosen) {
+		this.objModuleChoosen = objModuleChoosen;
+	}
+	
+	
 	
 	
 	public static class ActionSaveSection extends KernelUseObjectZZZ  implements ActionListener{
@@ -127,8 +146,10 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 			
 			
 //			+++ Den Namen des Moduls auslesen = TabellenAlias
-			IKernelModuleZZZ objModule = objPanelCenter.getModule();
-			String sModule = objModule.getModuleName();
+			//IKernelModuleZZZ objModule = objPanelCenter.getModule();
+			//String sModule = objModule.getModuleName();
+			
+			String sModule = KernelUIZZZ.getModuleUsedName((IKernelModuleZZZ) objPanelCenter);
 			//System.out.println("Name des Moduls: " + sModule);
 			
 			//+++ Den Namen der zu verarbeitenden Section auslesen

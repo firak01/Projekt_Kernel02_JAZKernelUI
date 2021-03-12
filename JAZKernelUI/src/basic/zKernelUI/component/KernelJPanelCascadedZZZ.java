@@ -33,6 +33,7 @@ import basic.zBasicUI.listener.ListenerMouseMove4DragableWindowZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelLogZZZ;
+import basic.zKernel.component.IKernelModuleUserZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.component.IKernelProgramZZZ;
 import basic.zKernel.flag.FlagZHelperZZZ;
@@ -44,8 +45,9 @@ import custom.zKernel.LogZZZ;
 /** Klasse bietet als Erweiterung zu JPanel die Verschachtelung von Panels an.
  * Merke: Ohne ein JFrame als Parent funktioniert es nicht, das Panel per Drag mit der Maus zu bewegen 
  */
-public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IComponentCascadedUserZZZ, IConstantZZZ,  IKernelModuleZZZ, IKernelProgramZZZ, IObjectZZZ, IMouseFeatureZZZ, IFlagZZZ{
+public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IKernelModuleUserZZZ, IObjectZZZ, IMouseFeatureZZZ, IFlagZZZ{
 	protected IKernelModuleZZZ objModule=null; //Das Modul, z.B. die Dialogbox, in der das Program gestartet wird.
+	//Merke: Nur einige besondere Panels sind selbst Module.
 	
 	protected IKernelZZZ objKernel;   //das "protected" erlaubt es hiervon erbende Klassen mit XYXErbendeKlasse.objKernel zu arbeiten.
 	protected LogZZZ objLog;
@@ -60,7 +62,6 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	
 	private ListenerMouseMove4DragableWindowZZZ listenerDraggableWindow = null; 
 
-	private String sModuleName = null;
 	private String sProgramName  = null; //ggf. der Name des Elternprogramms, s. KernelKonfiguration
 	private String sProgramAlias = null; //ggf. der Alias des Elternprogramms, s. KernelKonfiguration
 	/*private boolean flagComponentKernelProgram = false; // 2013-07-08: Damit wird gesagt, dass f�r dieses Panel ein "Program-Abschnitt" in der Kernel - Konfigurations .ini - Datei vorhanden ist.
@@ -525,19 +526,24 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	}
 	
 	//#################### Interface IKernelModuleUserZZZ
-		public String getModuleName() throws ExceptionZZZ {
-			String sReturn = new String("");
-			main:{	
-				//TODOGOON; //20210310: Jetzt gibt es ja noch ggfs. ein Abstraktes Module-Objekt.
-				//                    Wenn das abstrakte Modul Objekt vorhanden ist, dann den ModulNamen daraus verwenden.
-				//                    Ist das abstrakte Modul Objekt nicht vorhanden, dann den Modulnamen wie bisher anhand des Panels selbst ermitteln.
-				if(StringZZZ.isEmpty(this.sModuleName)) {
-					this.sModuleName = KernelUIZZZ.getModuleUsedName((IPanelCascadedZZZ)this);
-				}
-				sReturn = this.sModuleName;
-			}//end main
-			return sReturn;
-		}
+//	@Override
+//	public String getModuleName() throws ExceptionZZZ {
+//			String sReturn = new String("");
+//			main:{	
+//				//TODOGOON; //20210310: Jetzt gibt es ja noch ggfs. ein Abstraktes Module-Objekt.
+//				//                    Wenn das abstrakte Modul Objekt vorhanden ist, dann den ModulNamen daraus verwenden.
+//				//                    Ist das abstrakte Modul Objekt nicht vorhanden, dann den Modulnamen wie bisher anhand des Panels selbst ermitteln.				
+//				if(StringZZZ.isEmpty(this.sModuleName)) {
+//					if(this.getModule()!=null) {
+//						this.sModuleName = KernelUIZZZ.getModuleUsedName((IKernelModuleZZZ)this.getModule());
+//					}else {
+//						this.sModuleName = KernelUIZZZ.getModuleUsedName((IPanelCascadedZZZ)this);
+//					}
+//				}
+//				sReturn = this.sModuleName;
+//			}//end main
+//			return sReturn;
+//		}
 
 		/* (non-Javadoc)
 		 * @see basic.zKernel.IKernelModuleUserZZZ#getProgramName()
@@ -834,11 +840,16 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 		return bReturn;
 	}
 
-	//### Aus IKernelModuleUserZZZ
-		public IKernelModuleZZZ getModule() {
-			return this.objModule;
+	@Override
+	public IKernelModuleZZZ getModule() throws ExceptionZZZ {
+		if(this.objModule==null) {
+			this.objModule = KernelUIZZZ.searchModule(this);
 		}
-		public void setModule(IKernelModuleZZZ objModule) {
-			this.objModule = objModule;
-		}
+		return this.objModule;
+	}
+
+	@Override
+	public void setModule(IKernelModuleZZZ objModule) {
+		this.objModule = objModule;		
+	}
 }

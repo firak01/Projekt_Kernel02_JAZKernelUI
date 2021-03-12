@@ -12,6 +12,7 @@ import basic.zKernel.KernelZZZ;
 import basic.zKernel.component.IKernelModuleUserZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.component.IKernelProgramZZZ;
+import basic.zKernel.component.KernelModuleZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IConstantZZZ;
 import basic.zBasic.ReflectCodeZZZ;
@@ -377,47 +378,45 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 		return sReturn;
 		}
 	
-	/** TODOGOON 20210203: wohl früher mal verwendet. sieht aber gut aus.
-	 * 
-	 * @param frame
-	 * @return
-	 * @throws ExceptionZZZ
-	 * @author Fritz Lindhauer, 03.02.2021, 09:16:18
-	 */
-	public static String searchModule(KernelJPanelCascadedZZZ panelCascaded) throws ExceptionZZZ{
-		String sReturn = null;
+	public static IKernelModuleZZZ searchModule(KernelJPanelCascadedZZZ panelCascaded) throws ExceptionZZZ{
+		IKernelModuleZZZ objReturn = null;
 		main:{
 			if(panelCascaded == null){
 				ExceptionZZZ ez = new ExceptionZZZ("KernelJPanelCascadedZZZ", iERROR_PARAMETER_MISSING, KernelUIZZZ.class, ReflectCodeZZZ.getMethodCurrentName());
 				throw ez;
 			}
 			
-			KernelJFrameCascadedZZZ frameParent = panelCascaded.getFrameParent(); //panelParent.getFrameParent();
+			KernelJFrameCascadedZZZ frameParent = panelCascaded.getFrameParent();
 			if(frameParent==null){
 				KernelJPanelCascadedZZZ panelParent = panelCascaded.getPanelParent();
 				if(panelParent==null) {
-					sReturn = panelCascaded.getKernelObject().getApplicationKey();
+					String sReturn = panelCascaded.getKernelObject().getApplicationKey();
+					objReturn = new KernelModuleZZZ(panelCascaded.getKernelObject(), sReturn);
 					break main;
 				}else {
 					KernelJPanelCascadedZZZ panelRoot = panelParent.searchPanelRoot();
 					if(panelRoot==null) {
-						sReturn = panelCascaded.getKernelObject().getApplicationKey();
+						String sReturn = panelCascaded.getKernelObject().getApplicationKey();
+						objReturn = new KernelModuleZZZ(panelCascaded.getKernelObject(), sReturn);
 						break main;
 					}else {
 						frameParent = panelRoot.getFrameParent();
 						if(frameParent==null) {
 							//Dann keinen Fehler werfen.
 							//throw new ExceptionZZZ("Keine FrameParent in diesem KernelJPanelCascadedZZZ vorhanden");
-							sReturn = panelRoot.getClass().getName();
+							String sReturn = panelRoot.getClass().getName();
+							objReturn = new KernelModuleZZZ(panelCascaded.getKernelObject(), sReturn);
 							break main;
 						}else {
 							//Wenn es ein frameParent gibt, ggfs. noch weiter runter, oder den Klassennamen als Modul
 							JFrame frameRoot = frameParent.searchFrameRoot();//frameParent.getFrameParent().getClass().getName();
 							if(frameRoot==null) {
-								sReturn = frameParent.getClass().getName();
+								String sReturn = frameParent.getClass().getName();
+								objReturn = new KernelModuleZZZ(panelCascaded.getKernelObject(), sReturn);
 								break main;
 							}else {
-								sReturn = frameRoot.getClass().getName();
+								String sReturn = frameRoot.getClass().getName();
+								objReturn = new KernelModuleZZZ(panelCascaded.getKernelObject(), sReturn);
 								break main;
 							}									
 						}
@@ -427,14 +426,33 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				//Wenn es ein frameParent gibt, ggfs. noch weiter runter, oder den Klassennamen als Modul
 				JFrame frameRoot = frameParent.searchFrameRoot();//frameParent.getFrameParent().getClass().getName();
 				if(frameRoot==null) {
-					sReturn = frameParent.getClass().getName();
+					String sReturn = frameParent.getClass().getName();
+					objReturn = new KernelModuleZZZ(panelCascaded.getKernelObject(), sReturn);
 					break main;
 				}else {
-					sReturn = frameRoot.getClass().getName();
+					String sReturn = frameRoot.getClass().getName();
+					objReturn = new KernelModuleZZZ(panelCascaded.getKernelObject(), sReturn);
 					break main;
 				}		
 			}		
 			
+			}//end main
+		return objReturn;
+	}
+	
+	/** 
+	 * @param frame
+	 * @return
+	 * @throws ExceptionZZZ
+	 * @author Fritz Lindhauer, 03.02.2021, 09:16:18
+	 */
+	public static String searchModuleClassname(KernelJPanelCascadedZZZ panelCascaded) throws ExceptionZZZ{
+		String sReturn = null;
+		main:{
+			IKernelModuleZZZ objModule = KernelUIZZZ.searchModule(panelCascaded);
+			if(objModule!=null) {
+				sReturn = objModule.getModuleName();
+			}
 			}//end main
 		return sReturn;
 	}
@@ -484,7 +502,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 					sReturn = actionCascaded.getKernelObject().getApplicationKey();
 					break main;
 				}else {
-					sReturn = panelParent.getModuleName();
+					sReturn = KernelUIZZZ.searchModuleClassname(panelParent);
 				}					
 			}else {
 				//Wenn es ein frameParent gibt, ggfs. noch weiter runter, oder den Klassennamen als Modul
@@ -524,19 +542,8 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				ExceptionZZZ ez = new ExceptionZZZ("UI Object missing", iERROR_PARAMETER_MISSING, KernelUIZZZ.class,ReflectCodeZZZ.getMethodCurrentName() );
 				throw ez;
 			}
-		
-			if(objUI.getFlag(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())){
-				sReturn =  objUI.getClass().getName();
-			}else {
-				//PROBLEM 20210124: Wenn man hier das Panel abfragt, wird es erzeugt. Beim Erzeugen werden ggfs. vom Panel wiederum Programname/Modulname abgefragt.
-				//                  Man kommt also in eine Endlosschleife.
-//				KernelJPanelCascadedZZZ panelContent = dialogCurrent.getPanelContent();
-//				if(panelContent==null) {
-//					sReturn = dialogCurrent.getKernelObject().getApplicationKey();
-//				}else {
-//					sReturn = panelContent.getModuleName();
-//				}
-			}				
+
+			sReturn = objUI.getModuleName();										
 		}//end main:
 		return sReturn;
 		
@@ -558,7 +565,8 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				if(panelContent==null) {
 					sReturn = dialogCurrent.getKernelObject().getSystemKey();
 				}else {
-					sReturn = panelContent.getModuleName();
+					IKernelModuleZZZ objReturn = panelContent.getModule();
+					sReturn = objReturn.getModuleName();
 				}
 			}				
 		}//end main:
@@ -575,7 +583,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 			
 			if(panelCascaded.getFlag(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())){
 				sReturn =  panelCascaded.getClass().getName();
-			}else {	
+			}else {					
 				KernelJDialogExtendedZZZ dialog = panelCascaded.getDialogParent();
 				KernelJFrameCascadedZZZ frameParent = null;
 				if(dialog==null){
@@ -607,5 +615,4 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 		}//end main
 		return sReturn;
 	}
-	
 }

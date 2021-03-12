@@ -9,6 +9,7 @@ import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.component.AbstractKernelProgramZZZ;
+import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.component.IKernelProgramZZZ;
 
 public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZZ{
@@ -54,7 +55,7 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 			}//End check
 		
 		//WICHTIG, DAS IST DER UI UNTERSCHIED ZUM BACKEND PROGRAM
-		this.setModule(panel);
+		this.setModule((IKernelModuleZZZ) panel);
 //				
 //		String sModuleName = this.getModuleName();
 //		if(StringZZZ.isEmpty(sModuleName)){
