@@ -56,10 +56,17 @@ public class PanelDebugButtonGroup_NORTHZZZ extends KernelJPanelCascadedZZZ {
 	
 	public PanelDebugButtonGroup_NORTHZZZ(IKernelZZZ objKernel, JPanel panelParent) throws ExceptionZZZ {
 		super(objKernel, panelParent);
-		main:{
+		String stemp; boolean btemp;
+		main:{			
 		try {		
 			//Diese Panel ist Grundlage für diverse INI-Werte auf die über Buttons auf "Programname" zugegriffen wird.
-			this.setFlagZ(IKernelProgramZZZ.FLAGZ.ISKERNELPROGRAM.name(), true);	
+			stemp = IKernelProgramZZZ.FLAGZ.ISKERNELPROGRAM.name();
+			btemp = this.setFlagZ(stemp, true);	
+			if(btemp==false){
+				ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available. Maybe an interface is not implemented.", iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
+				throw ez;		 
+			}
+			
 			
 			//Wichtige Informationen, zum Auslesen von Parametern aus der KernelConfiguration
 			String sProgram; String sModule;

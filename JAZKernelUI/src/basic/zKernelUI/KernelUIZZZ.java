@@ -378,6 +378,76 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 		return sReturn;
 		}
 	
+	public static IKernelModuleZZZ searchModule(KernelJDialogExtendedZZZ dialog) throws ExceptionZZZ{
+		IKernelModuleZZZ objReturn = null;
+		main:{
+			if(dialog == null){
+				ExceptionZZZ ez = new ExceptionZZZ("KernelJDialogExtendedZZZ", iERROR_PARAMETER_MISSING, KernelUIZZZ.class, ReflectCodeZZZ.getMethodCurrentName());
+				throw ez;
+			}
+			
+			if(dialog.getFlagZ(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())) {
+				objReturn = (IKernelModuleZZZ) dialog;
+				break main;
+			}
+			
+			KernelJPanelCascadedZZZ panelContent = dialog.getPanelContent();
+			if(panelContent!=null) {
+				objReturn = KernelUIZZZ.searchModule(panelContent);
+				if(objReturn!=null) break main;												
+			}else{
+				KernelJFrameCascadedZZZ frameParent = (KernelJFrameCascadedZZZ) dialog.getFrameParent();
+				if(frameParent!=null) {
+					objReturn = KernelUIZZZ.searchModule(frameParent);
+					if(objReturn!=null)break main;
+				}else {												
+					//Dann keinen Fehler werfen.
+					//throw new ExceptionZZZ("Kein Modul in diesem KernelJDialogExtendedZZZ vorhanden");												
+				}				
+			}//panelContent						
+		}//end main
+	return objReturn;
+	}
+	
+	public static IKernelModuleZZZ searchModule(KernelJFrameCascadedZZZ frameCascaded) throws ExceptionZZZ{
+		IKernelModuleZZZ objReturn = null;
+		main:{
+			if(frameCascaded == null){
+				ExceptionZZZ ez = new ExceptionZZZ("KernelJFrameCascadedZZZ", iERROR_PARAMETER_MISSING, KernelUIZZZ.class, ReflectCodeZZZ.getMethodCurrentName());
+				throw ez;
+			}
+												
+			if(frameCascaded.getFlagZ(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())) {
+				objReturn = (IKernelModuleZZZ) frameCascaded;
+				break main;
+			}
+			
+			KernelJFrameCascadedZZZ frameParent = frameCascaded.getFrameParent();
+			if(frameParent!=null) {
+				if(frameParent.getFlagZ(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())) {
+					objReturn = (IKernelModuleZZZ) frameParent;
+					break main;
+				}
+				
+				//Wenn es ein frameParent gibt, ggfs. noch weiter runter, oder den Klassennamen als Modul
+				JFrame frameRoot = frameParent.searchFrameRoot();//frameParent.getFrameParent().getClass().getName();
+				if(frameRoot==null) {
+					String sReturn = frameCascaded.getKernelObject().getApplicationKey();
+					objReturn = new KernelModuleZZZ(frameCascaded.getKernelObject(), sReturn);
+					break main;
+				}else {
+					String sReturn = frameRoot.getClass().getName();
+					objReturn = new KernelModuleZZZ(frameCascaded.getKernelObject(), sReturn);
+					break main;
+				}							
+			}else {												
+				//Dann keinen Fehler werfen.
+				//throw new ExceptionZZZ("Kein Modul in diesem KernelJDialogExtendedZZZ vorhanden");												
+			}
+			
+		}//end main:
+		return objReturn;
+	}
 	public static IKernelModuleZZZ searchModule(KernelJPanelCascadedZZZ panelCascaded) throws ExceptionZZZ{
 		IKernelModuleZZZ objReturn = null;
 		main:{
@@ -385,66 +455,38 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				ExceptionZZZ ez = new ExceptionZZZ("KernelJPanelCascadedZZZ", iERROR_PARAMETER_MISSING, KernelUIZZZ.class, ReflectCodeZZZ.getMethodCurrentName());
 				throw ez;
 			}
+												
+			if(panelCascaded.getFlagZ(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())) {
+				objReturn = (IKernelModuleZZZ) panelCascaded;
+				break main;
+			}
 			
-			TODOGOON; //20210312 müsste sReturn jetzt nicht aus dem aktullen panel Kommmen?
-			//Vorausgesetzt das isModule()-Flag ist gesetzt?
-			
-			TODOGOON; //20210312 die Untersuchung nach dem frameParent doch erst machen, wenn keines der Elternpanel ein Modul ist.
-			KernelJFrameCascadedZZZ frameParent = panelCascaded.getFrameParent();
-			if(frameParent==null){
-				KernelJPanelCascadedZZZ panelParent = panelCascaded.getPanelParent();
-				if(panelParent==null) {		
-					TODOGOON; //20210312 Müsste dann nicht auf frameParent untersucht werden?
-					String sReturn = panelCascaded.getKernelObject().getApplicationKey();
-					objReturn = new KernelModuleZZZ(panelCascaded.getKernelObject(), sReturn);
+			KernelJPanelCascadedZZZ panelParent = panelCascaded.getPanelParent();
+			if(panelParent!=null) {
+				if(panelParent.getFlagZ(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())) {
+					objReturn = (IKernelModuleZZZ) panelParent;
 					break main;
-				}else {
-					TODOGOON; //20210312 Müsste hier nicht rekursiv die Methode aufgerufen werden?
-					
-					KernelJPanelCascadedZZZ panelRoot = panelParent.searchPanelRoot();
-					if(panelRoot==null) {
-						String sReturn = panelCascaded.getKernelObject().getApplicationKey();
-						objReturn = new KernelModuleZZZ(panelCascaded.getKernelObject(), sReturn);
-						break main;
-					}else {
-						frameParent = panelRoot.getFrameParent();
-						if(frameParent==null) {
-							//Dann keinen Fehler werfen.
-							//throw new ExceptionZZZ("Keine FrameParent in diesem KernelJPanelCascadedZZZ vorhanden");
-							String sReturn = panelRoot.getClass().getName();
-							objReturn = new KernelModuleZZZ(panelCascaded.getKernelObject(), sReturn);
-							break main;
-						}else {
-							//Wenn es ein frameParent gibt, ggfs. noch weiter runter, oder den Klassennamen als Modul
-							JFrame frameRoot = frameParent.searchFrameRoot();//frameParent.getFrameParent().getClass().getName();
-							if(frameRoot==null) {
-								String sReturn = frameParent.getClass().getName();
-								objReturn = new KernelModuleZZZ(panelCascaded.getKernelObject(), sReturn);
-								break main;
-							}else {
-								String sReturn = frameRoot.getClass().getName();
-								objReturn = new KernelModuleZZZ(panelCascaded.getKernelObject(), sReturn);
-								break main;
-							}									
-						}
-					}
-				}		
-			}else {
-				//Wenn es ein frameParent gibt, ggfs. noch weiter runter, oder den Klassennamen als Modul
-				JFrame frameRoot = frameParent.searchFrameRoot();//frameParent.getFrameParent().getClass().getName();
-				if(frameRoot==null) {
-					String sReturn = frameParent.getClass().getName();
-					objReturn = new KernelModuleZZZ(panelCascaded.getKernelObject(), sReturn);
+				}
+			}
+				
+			KernelJPanelCascadedZZZ panelRoot = panelParent.searchPanelRoot();
+			if(panelRoot!=null) {
+				if(panelRoot.getFlagZ(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())) {
+					objReturn = (IKernelModuleZZZ) panelRoot;
 					break main;
-				}else {
-					String sReturn = frameRoot.getClass().getName();
-					objReturn = new KernelModuleZZZ(panelCascaded.getKernelObject(), sReturn);
-					break main;
-				}		
-			}		
-			
-			}//end main
-		return objReturn;
+				}
+				
+				KernelJFrameCascadedZZZ frameParent = panelRoot.getFrameParent();
+				if(frameParent!=null) {
+					objReturn = (IKernelModuleZZZ) KernelUIZZZ.searchModule(frameParent);
+					if(objReturn!=null) break main;
+				}else {												
+					//Dann keinen Fehler werfen.
+					//throw new ExceptionZZZ("Kein Modul in diesem KernelJDialogExtendedZZZ vorhanden");												
+				}
+			}//panelRoot
+		}//end main
+	return objReturn;
 	}
 	
 	/** 

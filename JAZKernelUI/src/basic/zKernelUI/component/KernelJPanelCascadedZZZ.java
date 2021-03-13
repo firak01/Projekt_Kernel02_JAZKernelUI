@@ -45,7 +45,7 @@ import custom.zKernel.LogZZZ;
 /** Klasse bietet als Erweiterung zu JPanel die Verschachtelung von Panels an.
  * Merke: Ohne ein JFrame als Parent funktioniert es nicht, das Panel per Drag mit der Maus zu bewegen 
  */
-public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IKernelModuleUserZZZ, IObjectZZZ, IMouseFeatureZZZ, IFlagZZZ{
+public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IKernelModuleUserZZZ, IObjectZZZ, IMouseFeatureZZZ, IFlagZZZ{
 	protected IKernelModuleZZZ objModule=null; //Das Modul, z.B. die Dialogbox, in der das Program gestartet wird.
 	//Merke: Nur einige besondere Panels sind selbst Module.
 	
@@ -192,11 +192,17 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	
 	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialog,  HashMap<String, Boolean>hmFlag) throws ExceptionZZZ{
 		this(objKernel, dialog);
+		String stemp; boolean btemp; String sLog;
 		
 		//Die ggf. vorhandenen Flags setzen.
 		if(hmFlag!=null){
 			for(String sKey:hmFlag.keySet()){
-				this.setFlagZ(sKey, hmFlag.get(sKey));
+				stemp = sKey;
+				btemp = this.setFlagZ(sKey, hmFlag.get(sKey));
+				if(btemp==false){
+					ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available (passed by hashmap). Maybe an interface is not implemented.", iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
+					throw ez;		 
+				}			
 			}
 		}
 	}
@@ -231,6 +237,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	}
 	
 	private void KernelJPanelCascadedNew_(IKernelZZZ objKernel, KernelJFrameCascadedZZZ frameParent, HashMap<String, Boolean> hmFlag ) throws ExceptionZZZ{
+		String stemp; boolean btemp;
 		if(objKernel!= null){
 			this.objKernel = objKernel;
 			this.objLog = objKernel.getLogObject();
@@ -240,8 +247,13 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 		
 		//Die ggf. vorhandenen Flags setzen.
 		if(hmFlag!=null){
-			for(String sKey:hmFlag.keySet()){
-				this.setFlagZ(sKey, hmFlag.get(sKey));
+			for(String sKey:hmFlag.keySet()){				
+				stemp = sKey;
+				btemp = this.setFlagZ(sKey, hmFlag.get(sKey));
+				if(btemp==false){
+					ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available (passed by hashmap). Maybe an interface is not implemented.", iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
+					throw ez;		 
+				}	
 			}
 		}
 		
@@ -671,6 +683,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 	 * @see basic.zKernelUI.component.IMouseFeatureZZZ#setJComponentContentDraggable(boolean)
 	 */
 	public void setJComponentContentDraggable(boolean bValue) {
+		String stemp; boolean btemp;
 		if(bValue==true){
 			if(this.listenerDraggableWindow==null && this.getFrameParent()!=null){
 				this.listenerDraggableWindow = new ListenerMouseMove4DragableWindowZZZ((JPanel)this,this.getFrameParent());
@@ -685,9 +698,14 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 				this.listenerDraggableWindow = null;
 			}
 		}
-		//this.flagComponentDraggable=bValue;
+		
 		try {
-			this.setFlagZ(FLAGZ.COMPONENT_DRAGGABLE.name(), bValue);
+			stemp = FLAGZ.COMPONENT_DRAGGABLE.name();
+			btemp = this.setFlagZ(stemp, bValue);
+			if(btemp==false){
+				ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available. Maybe an interface is not implemented.", iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
+				throw ez;		 
+			}	
 		} catch (ExceptionZZZ e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -840,6 +858,7 @@ public class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ
 		return bReturn;
 	}
 
+	//### AUS IKernelModuleUserZZZ
 	@Override
 	public IKernelModuleZZZ getModule() throws ExceptionZZZ {
 		if(this.objModule==null) {

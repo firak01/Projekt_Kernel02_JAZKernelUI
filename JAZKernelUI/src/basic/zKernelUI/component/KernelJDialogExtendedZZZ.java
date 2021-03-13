@@ -22,6 +22,7 @@ import javax.swing.SwingUtilities;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelLogZZZ;
 import basic.zKernel.KernelZZZ;
+import basic.zKernel.component.IKernelModuleUserZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.flag.FlagZHelperZZZ;
 import basic.zKernel.flag.IFlagZZZ;
@@ -46,9 +47,11 @@ import basic.zKernel.IKernelUserZZZ;
  * @author 0823
  *
  */
-public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConstantZZZ, IObjectZZZ, IKernelUserZZZ, IKernelModuleZZZ, IScreenFeatureZZZ, IMouseFeatureZZZ{
+public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConstantZZZ, IObjectZZZ, IKernelUserZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IScreenFeatureZZZ, IMouseFeatureZZZ, IFlagZZZ{	
 	private IKernelZZZ objKernel;
 	private LogZZZ objLog;
+	protected IKernelModuleZZZ objModule=null; //Das Modul, z.B. für die Dialogbox
+	
 	private boolean bPanelCenterAdded=false;
 	private boolean bPanelButtonAdded=false;
 	
@@ -489,16 +492,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	public boolean isCentered() {		
 		return true;
 	}
-	
-	//### AUS IKernelModuleUserZZZ
-	/* (non-Javadoc)
-	 * @see basic.zKernel.IKernelModuleUserZZZ#getModuleName()
-	 */
-	@Override
-	public String getModuleName() throws ExceptionZZZ {
-		return KernelUIZZZ.getModuleUsedName(this);
-	}
-	
+		
 	//### FlagMethods ##########################	
 		@Override
 		public Class getClassFlagZ(){
@@ -808,4 +802,24 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			}//end main:
 			return bReturn;
 		}		
+		
+	    //##### aus IKernelModuleZZZ
+	    @Override
+		public String getModuleName() throws ExceptionZZZ {
+			return KernelUIZZZ.getModuleUsedName(this);
+		}
+		
+		//### AUS IKernelModuleUserZZZ
+		@Override
+		public IKernelModuleZZZ getModule() throws ExceptionZZZ {
+			if(this.objModule==null && this.getFlagZ(IKernelModuleUserZZZ.FLAGZ.ISKERNELMODULEUSER.name())) {
+				this.objModule = KernelUIZZZ.searchModule(this);
+			}
+			return this.objModule;
+		}
+
+		@Override
+		public void setModule(IKernelModuleZZZ objModule) {
+			this.objModule = objModule;		
+		}
 }
