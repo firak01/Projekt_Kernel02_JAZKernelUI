@@ -54,6 +54,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	
 	private boolean bPanelCenterAdded=false;
 	private boolean bPanelButtonAdded=false;
+	private boolean bPanelNavigatorAdded=false;
 	
 	public static String sTEXT_ABORT="CANCEL";
 	private String sText4ButtonCancel="";
@@ -120,7 +121,43 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		this.getContentPane().setLayout(new BorderLayout());
 	}
 	
-	
+	public void addPanelNavigator(KernelJPanelCascadedZZZ panelNavigator) throws ExceptionZZZ{
+		main:{
+		if(panelNavigator == null){
+			//Nun das Standard Content Panel hinzuf�gen
+			String sText = this.getText4ContentDefault();
+			
+			TODOGOON; //20210316 
+			KernelJPanelCascadedZZZ panel2add = this.getPanelNavigator();
+			if(panel2add==null){
+				panel2add = new KernelJPanelDialogContentDefaultZZZ(this.getKernelObject(), this, sText);
+			}
+			
+			if(this.isJComponentContentDraggable()){								
+				//Nun den Listener fuer diese Komponente hinzuf�gen, der es erlaubt durch Drag mit der Maus auf das Panel des Dialogs den ganzen Dialog zu bewegen.
+				ListenerMouseMove4DragableWindowZZZ mml = new ListenerMouseMove4DragableWindowZZZ((JPanel)panel2add, (JDialog)this);
+				panel2add.addMouseListener(mml);
+				panel2add.addMouseMotionListener(mml);
+			}
+			
+			this.getContentPane().add(panel2add, BorderLayout.WEST);	
+			this.setPanelSub("WEST", panel2add);
+			this.bPanelNavigatorAdded = true;
+
+		}else{
+			if(this.isJComponentContentDraggable()){								
+				//Nun den Listener fuer diese Komponente hinzufuegen, der es erlaubt durch Drag mit der Maus auf das Panel des Dialogs den ganzen Dialog zu bewegen.
+				ListenerMouseMove4DragableWindowZZZ mml = new ListenerMouseMove4DragableWindowZZZ((JPanel)panelNavigator, (JDialog)this);
+				panelNavigator.addMouseListener(mml);
+				panelNavigator.addMouseMotionListener(mml);
+			}
+			
+			this.getContentPane().add(panelNavigator, BorderLayout.CENTER);	
+			this.setPanelSub("WEST", panelNavigator);
+			this.bPanelNavigatorAdded = true;
+			}
+		}
+	}
 	
 	public void addPanelCenter(KernelJPanelCascadedZZZ panelCenter) throws ExceptionZZZ{
 		main:{
@@ -441,7 +478,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	
 	public abstract KernelJPanelCascadedZZZ getPanelButton();
 	public abstract KernelJPanelCascadedZZZ getPanelContent() throws ExceptionZZZ;
-	
+	public abstract KernelJPanelCascadedZZZ getPanelNavigator(); 
 	
 	/** Kann von einer Dialogbox �berschrieben werden, wenn ein anderes Panel als das "Default" Panel verwendet werden soll.
 	* @return
@@ -456,6 +493,12 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		KernelJPanelCascadedZZZ panel = new KernelJPanelDialogContentDefaultZZZ(this.getKernelObject(), this, this.getText4ContentDefault());
 		return panel;
 	}
+	public KernelJPanelCascadedZZZ getPanelNavigatorDefault() {
+		TODOGOON; //20210316 Hier ein EmptyPanel, z.B. 
+		KernelJPanelDialogEmptyDefaultZZZ panel = new KernelJPanelDialogEmptyDefaultZZZ(this.getKernelObject(), this);
+		return panel;
+	}
+	
 	
 	public String getText4ContentDefault(){
 		return this.sText4ContentDefault;
