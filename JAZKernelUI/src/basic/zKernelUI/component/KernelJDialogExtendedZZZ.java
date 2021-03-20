@@ -149,7 +149,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 				panelNavigator.addMouseMotionListener(mml);
 			}
 			
-			this.getContentPane().add(panelNavigator, BorderLayout.CENTER);	
+			this.getContentPane().add(panelNavigator, BorderLayout.WEST);	
 			this.setPanelSub("WEST", panelNavigator);
 			this.bPanelNavigatorAdded = true;
 			}

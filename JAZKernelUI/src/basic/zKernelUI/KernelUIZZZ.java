@@ -476,13 +476,35 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 					break main;
 				}
 				
+				KernelJDialogExtendedZZZ dialogRootParent = panelRoot.getDialogParent();
+				if(dialogRootParent!=null) {
+					objReturn = (IKernelModuleZZZ) KernelUIZZZ.searchModule(dialogRootParent);
+					if(objReturn!=null) break main;
+					
+					KernelJFrameCascadedZZZ frameDialogParent = (KernelJFrameCascadedZZZ) dialogRootParent.getFrameParent();
+					if(frameDialogParent!=null) {
+						objReturn = (IKernelModuleZZZ) KernelUIZZZ.searchModule(frameDialogParent);
+						if(objReturn!=null) break main;
+					}else {												
+						//Dann keinen Fehler werfen. Es wird NULL zurückgegeben.
+						//throw new ExceptionZZZ("Kein Modul in diesem KernelJDialogExtendedZZZ vorhanden");												
+					}
+				}
+				
 				KernelJFrameCascadedZZZ frameParent = panelRoot.getFrameParent();
 				if(frameParent!=null) {
 					objReturn = (IKernelModuleZZZ) KernelUIZZZ.searchModule(frameParent);
 					if(objReturn!=null) break main;
+					
+									
 				}else {												
 					//Dann keinen Fehler werfen. Es wird NULL zurückgegeben.
 					//throw new ExceptionZZZ("Kein Modul in diesem KernelJDialogExtendedZZZ vorhanden");												
+				}
+				
+				KernelJDialogExtendedZZZ dialogParent = panelRoot.getDialogParent();
+				if(dialogParent!=null) {
+					
 				}
 			}//panelRoot
 		}//end main
