@@ -124,17 +124,14 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	public void addPanelNavigator(KernelJPanelCascadedZZZ panelNavigator) throws ExceptionZZZ{
 		main:{
 		if(panelNavigator == null){
-			//Nun das Standard Content Panel hinzuf�gen
-			String sText = this.getText4ContentDefault();
-			
-			TODOGOON; //20210316 
+			//Nun das Standard NavigatorPanel hinzufuegen						
 			KernelJPanelCascadedZZZ panel2add = this.getPanelNavigator();
 			if(panel2add==null){
-				panel2add = new KernelJPanelDialogContentDefaultZZZ(this.getKernelObject(), this, sText);
+				panel2add = new KernelJPanelDialogContentEmptyZZZ(this.getKernelObject(), this);
 			}
 			
 			if(this.isJComponentContentDraggable()){								
-				//Nun den Listener fuer diese Komponente hinzuf�gen, der es erlaubt durch Drag mit der Maus auf das Panel des Dialogs den ganzen Dialog zu bewegen.
+				//Nun den Listener fuer diese Komponente hinzufuegen, der es erlaubt durch Drag mit der Maus auf das Panel des Dialogs den ganzen Dialog zu bewegen.
 				ListenerMouseMove4DragableWindowZZZ mml = new ListenerMouseMove4DragableWindowZZZ((JPanel)panel2add, (JDialog)this);
 				panel2add.addMouseListener(mml);
 				panel2add.addMouseMotionListener(mml);
@@ -201,11 +198,10 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		if(panelButton == null){ 
 			KernelJPanelCascadedZZZ panel2add = this.getPanelButton();
 			if(panel2add==null){
-				//FGL 20070305 check: KernelJPanelDialogButtonDefaultZZZ panel2add = new KernelJPanelDialogButtonDefaultZZZ(this.getKernelObject(), this, this.isButtonOkAvailable(), this.isButtonCancelAvailable());
-				//panel2add = new KernelJPanelDialogButtonDefaultZZZ(this.getKernelObject(), this, this.isButtonOkAvailable(), this.isButtonCancelAvailable());
+				//FGL 20070305 check: KernelJPanelDialogButtonDefaultZZZ panel2add = new KernelJPanelDialogButtonDefaultZZZ(this.getKernelObject(), this, this.isButtonOkAvailable(), this.isButtonCancelAvailable());				
 				//20190219: Die Dialogbox hinzuzufügen hat das Problem, dass Sie nicht als das Program-Definiert ist, welches für das Lesen/Schreiben der Werte in der Ini-Datei vorgesehen ist.
-				//          Das ist nämlich ein anderes, benachbartes Panel.
-				panel2add = new KernelJPanelDialogButtonDefaultZZZ(this.getKernelObject(), this, this.isButtonOkAvailable(), this.isButtonCancelAvailable(), this.isButtonCloseAvailable());
+				//          Das ist nämlich ein anderes, benachbartes Panel.				
+				panel2add = this.getPanelButtonDefault();
 			}
 			
 			
@@ -309,6 +305,11 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			if(this.bPanelCenterAdded==false){
 				KernelJPanelCascadedZZZ panelContent = this.getPanelContent();
 				this.addPanelCenter(panelContent);
+			}
+			
+			if(this.bPanelNavigatorAdded==false) {
+				KernelJPanelCascadedZZZ panelNavigator = this.getPanelNavigator();
+				this.addPanelNavigator(panelNavigator);
 			}
 			
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -486,16 +487,15 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	* lindhaueradmin; 11.01.2007 08:27:54
 	 */
 	public KernelJPanelCascadedZZZ getPanelButtonDefault(){
-		KernelJPanelCascadedZZZ panel = new KernelJPanelDialogButtonDefaultZZZ(this.getKernelObject(), this, this.isButtonOkAvailable(), this.isButtonCancelAvailable());
+		KernelJPanelCascadedZZZ panel = new KernelJPanelDialogButtonDefaultZZZ(this.getKernelObject(), this, this.isButtonOkAvailable(), this.isButtonCancelAvailable(), this.isButtonCloseAvailable());
 		return panel;
 	}
 	public KernelJPanelCascadedZZZ getPanelContentDefault(){
 		KernelJPanelCascadedZZZ panel = new KernelJPanelDialogContentDefaultZZZ(this.getKernelObject(), this, this.getText4ContentDefault());
 		return panel;
 	}
-	public KernelJPanelCascadedZZZ getPanelNavigatorDefault() {
-		TODOGOON; //20210316 Hier ein EmptyPanel, z.B. 
-		KernelJPanelDialogEmptyDefaultZZZ panel = new KernelJPanelDialogEmptyDefaultZZZ(this.getKernelObject(), this);
+	public KernelJPanelCascadedZZZ getPanelNavigatorDefault() {		
+		KernelJPanelDialogContentEmptyZZZ panel = new KernelJPanelDialogContentEmptyZZZ(this.getKernelObject(), this);
 		return panel;
 	}
 	

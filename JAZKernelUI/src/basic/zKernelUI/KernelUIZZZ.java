@@ -469,7 +469,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				}
 			}
 				
-			KernelJPanelCascadedZZZ panelRoot = panelParent.searchPanelRoot();
+			KernelJPanelCascadedZZZ panelRoot = panelCascaded.searchPanelRoot();
 			if(panelRoot!=null) {
 				if(panelRoot.getFlagZ(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())) {
 					objReturn = (IKernelModuleZZZ) panelRoot;
@@ -481,7 +481,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 					objReturn = (IKernelModuleZZZ) KernelUIZZZ.searchModule(frameParent);
 					if(objReturn!=null) break main;
 				}else {												
-					//Dann keinen Fehler werfen.
+					//Dann keinen Fehler werfen. Es wird NULL zurückgegeben.
 					//throw new ExceptionZZZ("Kein Modul in diesem KernelJDialogExtendedZZZ vorhanden");												
 				}
 			}//panelRoot

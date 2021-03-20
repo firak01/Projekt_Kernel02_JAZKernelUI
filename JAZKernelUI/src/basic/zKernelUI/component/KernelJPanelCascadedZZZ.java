@@ -43,10 +43,14 @@ import basic.zUtil.io.KernelFileZZZ.FLAGZ;
 import custom.zKernel.LogZZZ;
 
 /** Klasse bietet als Erweiterung zu JPanel die Verschachtelung von Panels an.
- * Merke: Ohne ein JFrame als Parent funktioniert es nicht, das Panel per Drag mit der Maus zu bewegen 
+ * Merke: Ohne ein JFrame als Parent funktioniert es nicht, das Panel per Drag mit der Maus zu bewegen.
+ * 
+ *  Merke: Die Panels können sowohl nur modulnutzer als auch selber Modul sein. Darum werden beide Interfaces implementiert.
  */
-public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IKernelModuleUserZZZ, IObjectZZZ, IMouseFeatureZZZ, IFlagZZZ{
+public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IObjectZZZ, IMouseFeatureZZZ, IFlagZZZ{
 	protected IKernelModuleZZZ objModule=null; //Das Modul, z.B. die Dialogbox, in der das Program gestartet wird.
+	protected String sModuleName=null;         //Notwendig, wenn das Panel selbst das Modul ist.
+	
 	//Merke: Nur einige besondere Panels sind selbst Module.
 	
 	protected IKernelZZZ objKernel;   //das "protected" erlaubt es hiervon erbende Klassen mit XYXErbendeKlasse.objKernel zu arbeiten.
@@ -329,7 +333,6 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	public KernelJPanelCascadedZZZ searchPanelRoot(){
 		KernelJPanelCascadedZZZ panelReturn = null;
 		main:{
-			//if(this.panelParent==null){
 			if(this.getPanelParent()==null){
 				panelReturn = this;
 			}else{
@@ -870,5 +873,28 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	@Override
 	public void setModule(IKernelModuleZZZ objModule) {
 		this.objModule = objModule;		
+	}
+	
+	@Override
+	public String getModuleName() throws ExceptionZZZ {
+		String sReturn = null;
+		main:{
+			if(StringZZZ.isEmpty(this.sModuleName)) {
+				if(this.objModule!=null) {
+					if(this.objModule.getClass().isInstance(this.getClass())||this.objModule.getClass().equals(this.getClass())) {
+						sReturn = KernelUIZZZ.getModuleUsedName((IPanelCascadedZZZ)this);	
+						this.sModuleName = sReturn;
+					}else {
+						sReturn = KernelUIZZZ.getModuleUsedName(objModule);						
+					}
+				}else {
+					sReturn = KernelUIZZZ.getModuleUsedName((IPanelCascadedZZZ)this);	
+					this.sModuleName = sReturn;
+				}				
+			}else {
+				sReturn = this.sModuleName;				
+			}								
+		}//end main:		
+		return sReturn;
 	}
 }

@@ -43,7 +43,6 @@ public class KernelJPanelDialogContentDefaultZZZ extends KernelJPanelCascadedZZZ
 		return bReturn;
 	}
 	
-	
 	//#### Getter / Setter ##########################
 
 
