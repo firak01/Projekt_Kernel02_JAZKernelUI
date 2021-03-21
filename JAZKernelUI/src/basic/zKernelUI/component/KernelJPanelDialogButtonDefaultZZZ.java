@@ -23,8 +23,8 @@ import basic.zBasic.IObjectZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zKernel.IKernelUserZZZ;
 
-public class KernelJPanelDialogButtonDefaultZZZ extends KernelJPanelCascadedZZZ implements IConstantZZZ,  IKernelUserZZZ, IObjectZZZ, IPanelDialogButtonZZZ{
-	//Buttons f�r den JPane	
+public class KernelJPanelDialogButtonDefaultZZZ extends KernelJPanelCascadedZZZ implements IPanelDialogButtonZZZ{
+	//Buttons fuer den JPane	
 	private JButton buttonOk = null;
 	private JButton buttonCancel = null;
 	private JButton buttonClose = null;

@@ -15,9 +15,10 @@ import basic.zBasic.IObjectZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
+import basic.zKernel.flag.IFlagZZZ;
 import custom.zKernel.LogZZZ;
 
-public class KernelJPanelDialogContentEmptyZZZ extends KernelJPanelCascadedZZZ implements IConstantZZZ,  IKernelUserZZZ, IObjectZZZ{
+public class KernelJPanelDialogContentEmptyZZZ extends KernelJPanelCascadedZZZ{
 	
 	public KernelJPanelDialogContentEmptyZZZ() throws ExceptionZZZ{
 		super();
@@ -25,6 +26,19 @@ public class KernelJPanelDialogContentEmptyZZZ extends KernelJPanelCascadedZZZ i
 	
 	public KernelJPanelDialogContentEmptyZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended){
 		super(objKernel, dialogExtended);
+		KernelJPanelDialogContentEmptyNew_();
+	}
+	
+	private boolean KernelJPanelDialogContentEmptyNew_() {
+		boolean bReturn = false;
+		main:{			
+			if(this.getFlag(IFlagZZZ.FLAGZ.DEBUG.name())) {
+				JLabel label = new JLabel(this.getClass().getName());
+				this.add(label);
+			}			
+			bReturn = true;
+		}
+		return bReturn;
 	}
 	
 	

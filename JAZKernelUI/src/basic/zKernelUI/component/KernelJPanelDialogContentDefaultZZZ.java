@@ -17,7 +17,7 @@ import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
 import custom.zKernel.LogZZZ;
 
-public class KernelJPanelDialogContentDefaultZZZ extends KernelJPanelCascadedZZZ implements IConstantZZZ,  IKernelUserZZZ, IObjectZZZ{
+public class KernelJPanelDialogContentDefaultZZZ extends KernelJPanelCascadedZZZ{
 	private String sText4ContentDefault="";
 	private boolean bIsTextContentDefaultAvailable=false;
 	
@@ -47,30 +47,6 @@ public class KernelJPanelDialogContentDefaultZZZ extends KernelJPanelCascadedZZZ
 
 
 	//#### Interfaces ##############################
-	public IKernelZZZ getKernelObject() {
-		return this.objKernel;
-	}
-
-	public void setKernelObject(IKernelZZZ objKernel) {
-		this.objKernel = objKernel;
-	}
-
-	public LogZZZ getLogObject() {
-		return this.objLog;
-	}
-
-	public void setLogObject(LogZZZ objLog) {
-		this.objLog = objLog;
-	}
-
-	public ExceptionZZZ getExceptionObject() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void setExceptionObject(ExceptionZZZ objException) {
-		// TODO Auto-generated method stub		
-	}
 	
 	
 	//### Action Klassen
