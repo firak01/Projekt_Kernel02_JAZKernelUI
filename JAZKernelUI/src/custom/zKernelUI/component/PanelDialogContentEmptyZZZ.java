@@ -15,11 +15,12 @@ import basic.zBasic.IObjectZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
+import basic.zKernel.flag.IFlagZZZ;
 import basic.zKernelUI.component.KernelJDialogExtendedZZZ;
 import basic.zKernelUI.component.KernelJPanelDialogContentEmptyZZZ;
 import custom.zKernel.LogZZZ;
 
-public class PanelDialogContentEmptyZZZ extends KernelJPanelDialogContentEmptyZZZ implements IConstantZZZ,  IKernelUserZZZ, IObjectZZZ{
+public class PanelDialogContentEmptyZZZ extends KernelJPanelDialogContentEmptyZZZ {
 	
 	public PanelDialogContentEmptyZZZ() throws ExceptionZZZ{
 		super();
@@ -29,6 +30,19 @@ public class PanelDialogContentEmptyZZZ extends KernelJPanelDialogContentEmptyZZ
 		super(objKernel, dialogExtended);
 	}
 	
+	private boolean PanelDialogContentEmptyNew_() {
+		boolean bReturn = false;
+		main:{
+			if(this.getFlag(IFlagZZZ.FLAGZ.DEBUG.name())) {
+				//Label, das keine Konfigurierten Module zur Verf�gung stehen
+				JLabel labelDebug = new JLabel(this.getClass().getName());
+				this.add(labelDebug);
+				this.setComponent("LabelDebug", labelDebug);	
+			}
+			bReturn=true;
+		}//end main;
+		return bReturn;
+	}
 	
 	//#### Getter / Setter ##########################
 

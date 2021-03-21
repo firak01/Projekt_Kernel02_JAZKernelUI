@@ -34,6 +34,7 @@ import basic.zKernelUI.KernelUIZZZ;
 import basic.zKernelUI.component.KernelActionCascadedZZZ;
 import basic.zKernelUI.component.KernelButtonGroupZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
+import basic.zKernelUI.thread.KernelSwingWorkerZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelLogZZZ;
@@ -41,7 +42,7 @@ import basic.zKernel.KernelZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.component.IKernelProgramZZZ;
 
-public class PanelDebugButtonGroup_NORTHZZZ extends KernelJPanelCascadedZZZ {
+public class PanelDebugButtonGroup_NORTHZZZ extends KernelJPanelCascadedZZZ implements IKernelProgramZZZ {
 	private static final int iLABEL_COLUMN_DEFAULT = 10;
 	
     private static final String sBUTTON_PLUS = "buttonPlus";
@@ -234,24 +235,16 @@ public boolean actionPerformQueryCustom(ActionEvent ae) throws ExceptionZZZ {
 public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ {
 }			 							
 
-class SwingWorker4ProgramPLUS extends SwingWorker implements IObjectZZZ, IKernelUserZZZ{
-	private IKernelZZZ objKernel;
-	private LogZZZ objLog;
+class SwingWorker4ProgramPLUS extends KernelSwingWorkerZZZ{
 	private KernelJPanelCascadedZZZ panel;
-	private String[] saFlag4Program;
-	
+	private String[] saFlag4Program;	
 	private String sText2Update;    //Der Wert, der ins Label geschreiben werden soll. Jier als Variable, damit die intene Runner-Klasse darauf zugreifen kann.
 												// Auch: Dieser Wert wird aus dem Web ausgelesen und danach in das Label des Panels geschrieben.
-	
-				
-	protected ExceptionZZZ objException = null;    // diese Exception hat jedes Objekt
-	
+						
 	public SwingWorker4ProgramPLUS(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panel, String[] saFlag4Program){
-		super();
-		this.objKernel = objKernel;
-		this.objLog = objKernel.getLogObject();
+		super(objKernel);
 		this.panel = panel;
-		this.saFlag4Program = saFlag4Program;					
+		this.saFlag4Program = saFlag4Program;	
 	}
 	
 	//#### abstracte - Method aus SwingWorker
@@ -285,7 +278,7 @@ class SwingWorker4ProgramPLUS extends SwingWorker implements IObjectZZZ, IKernel
 //				try {							
 					
 					System.out.println("PLUS GECLICKT");
-					
+					logLineDate("PLUS GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ					
 					KernelButtonGroupZZZ<String, AbstractButton> groupButton = panel.getHashtableButtonGroup().get("EINS");
 					if(groupButton!=null){
 						groupButton.disableOther(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_PLUS);
@@ -293,9 +286,6 @@ class SwingWorker4ProgramPLUS extends SwingWorker implements IObjectZZZ, IKernel
 					
 					panel.validate();
 					panel.repaint();	
-					
-																									
-					
 					 							
 //				} catch (ExceptionZZZ e) {
 //					e.printStackTrace();
@@ -307,53 +297,7 @@ class SwingWorker4ProgramPLUS extends SwingWorker implements IObjectZZZ, IKernel
 		//Ggfs. nach dem Swing Worker eine Statuszeile etc. aktualisieren....
 
 	}
-	
-	
-	public IKernelZZZ getKernelObject() {
-		return this.objKernel;
-	}
-
-	public void setKernelObject(IKernelZZZ objKernel) {
-		this.objKernel = objKernel;
-	}
-
-	public LogZZZ getLogObject() {
-		return this.objLog;
-	}
-
-	public void setLogObject(LogZZZ objLog) {
-		this.objLog = objLog;
-	}
-	
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see zzzKernel.basic.KernelAssetObjectZZZ#getExceptionObject()
-	 */
-	public ExceptionZZZ getExceptionObject() {
-		return this.objException;
-	}
-	/* (non-Javadoc)
-	 * @see zzzKernel.basic.KernelAssetObjectZZZ#setExceptionObject(zzzKernel.custom.ExceptionZZZ)
-	 */
-	public void setExceptionObject(ExceptionZZZ objException) {
-		this.objException = objException;
-	}
-	
-	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
-	@Override
-	public void logLineDate(String sLog) {
-		LogZZZ objLog = this.getLogObject();
-		if(objLog==null) {
-			String sTemp = KernelLogZZZ.computeLineDate(sLog);
-			System.out.println(sTemp);
-		}else {
-			objLog.WriteLineDate(sLog);
-		}		
-	}	
-	
-	
+		
 	/**Overwritten and using an object of jakarta.commons.lang
 	 * to create this string using reflection. 
 	 * Remark: this is not yet formated. A style class is available in jakarta.commons.lang. 
@@ -403,22 +347,14 @@ return true;
 public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ {
 }			 							
 
-class SwingWorker4ProgramMINUS extends SwingWorker implements IObjectZZZ, IKernelUserZZZ{
-	private IKernelZZZ objKernel;
-	private LogZZZ objLog;
+class SwingWorker4ProgramMINUS extends KernelSwingWorkerZZZ{
 	private KernelJPanelCascadedZZZ panel;
-	private String[] saFlag4Program;
-	
+	private String[] saFlag4Program;	
 	private String sText2Update;    //Der Wert, der ins Label geschreiben werden soll. Jier als Variable, damit die intene Runner-Klasse darauf zugreifen kann.
 												// Auch: Dieser Wert wird aus dem Web ausgelesen und danach in das Label des Panels geschrieben.
 	
-				
-	protected ExceptionZZZ objException = null;    // diese Exception hat jedes Objekt
-	
 	public SwingWorker4ProgramMINUS(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panel, String[] saFlag4Program){
-		super();
-		this.objKernel = objKernel;
-		this.objLog = objKernel.getLogObject();
+		super(objKernel);
 		this.panel = panel;
 		this.saFlag4Program = saFlag4Program;					
 	}
@@ -454,6 +390,7 @@ class SwingWorker4ProgramMINUS extends SwingWorker implements IObjectZZZ, IKerne
 //				try {							
 					
 					System.out.println("MINUS GECLICKT");
+					logLineDate("MINUS GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ
 					
 					KernelButtonGroupZZZ<String, AbstractButton> groupButton = panel.getHashtableButtonGroup().get("EINS");
 					if(groupButton!=null){
@@ -475,52 +412,6 @@ class SwingWorker4ProgramMINUS extends SwingWorker implements IObjectZZZ, IKerne
 		//Ggfs. nach dem Swing Worker eine Statuszeile etc. aktualisieren....
 
 	}
-	
-	
-	public IKernelZZZ getKernelObject() {
-		return this.objKernel;
-	}
-
-	public void setKernelObject(IKernelZZZ objKernel) {
-		this.objKernel = objKernel;
-	}
-
-	public LogZZZ getLogObject() {
-		return this.objLog;
-	}
-
-	public void setLogObject(LogZZZ objLog) {
-		this.objLog = objLog;
-	}
-	
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see zzzKernel.basic.KernelAssetObjectZZZ#getExceptionObject()
-	 */
-	public ExceptionZZZ getExceptionObject() {
-		return this.objException;
-	}
-	/* (non-Javadoc)
-	 * @see zzzKernel.basic.KernelAssetObjectZZZ#setExceptionObject(zzzKernel.custom.ExceptionZZZ)
-	 */
-	public void setExceptionObject(ExceptionZZZ objException) {
-		this.objException = objException;
-	}
-	
-	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
-	@Override
-	public void logLineDate(String sLog) {
-		LogZZZ objLog = this.getLogObject();
-		if(objLog==null) {
-			String sTemp = KernelLogZZZ.computeLineDate(sLog);
-			System.out.println(sTemp);
-		}else {
-			objLog.WriteLineDate(sLog);
-		}		
-	}	
-	
 	
 	/**Overwritten and using an object of jakarta.commons.lang
 	 * to create this string using reflection. 
@@ -570,22 +461,14 @@ public boolean actionPerformQueryCustom(ActionEvent ae) throws ExceptionZZZ {
 public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ {
 }			 							
 
-class SwingWorker4ProgramENABLE extends SwingWorker implements IObjectZZZ, IKernelUserZZZ{
-	private IKernelZZZ objKernel;
-	private LogZZZ objLog;
+class SwingWorker4ProgramENABLE extends KernelSwingWorkerZZZ{
 	private KernelJPanelCascadedZZZ panel;
-	private String[] saFlag4Program;
-	
+	private String[] saFlag4Program;	
 	private String sText2Update;    //Der Wert, der ins Label geschreiben werden soll. Jier als Variable, damit die intene Runner-Klasse darauf zugreifen kann.
 												// Auch: Dieser Wert wird aus dem Web ausgelesen und danach in das Label des Panels geschrieben.
 	
-				
-	protected ExceptionZZZ objException = null;    // diese Exception hat jedes Objekt
-	
 	public SwingWorker4ProgramENABLE(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panel, String[] saFlag4Program){
-		super();
-		this.objKernel = objKernel;
-		this.objLog = objKernel.getLogObject();
+		super(objKernel);
 		this.panel = panel;
 		this.saFlag4Program = saFlag4Program;					
 	}
@@ -621,6 +504,7 @@ class SwingWorker4ProgramENABLE extends SwingWorker implements IObjectZZZ, IKern
 //				try {							
 					
 					System.out.println("ENABLE ALL GECLICKT");
+					logLineDate("ENABLE ALL GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ
 					
 					KernelButtonGroupZZZ<String, AbstractButton> groupButton = panel.getHashtableButtonGroup().get("EINS");
 					if(groupButton!=null){
@@ -646,52 +530,6 @@ class SwingWorker4ProgramENABLE extends SwingWorker implements IObjectZZZ, IKern
 		//Ggfs. nach dem Swing Worker eine Statuszeile etc. aktualisieren....
 
 	}
-	
-	
-	public IKernelZZZ getKernelObject() {
-		return this.objKernel;
-	}
-
-	public void setKernelObject(IKernelZZZ objKernel) {
-		this.objKernel = objKernel;
-	}
-
-	public LogZZZ getLogObject() {
-		return this.objLog;
-	}
-
-	public void setLogObject(LogZZZ objLog) {
-		this.objLog = objLog;
-	}
-	
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see zzzKernel.basic.KernelAssetObjectZZZ#getExceptionObject()
-	 */
-	public ExceptionZZZ getExceptionObject() {
-		return this.objException;
-	}
-	/* (non-Javadoc)
-	 * @see zzzKernel.basic.KernelAssetObjectZZZ#setExceptionObject(zzzKernel.custom.ExceptionZZZ)
-	 */
-	public void setExceptionObject(ExceptionZZZ objException) {
-		this.objException = objException;
-	}
-	
-	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
-	@Override
-	public void logLineDate(String sLog) {
-		LogZZZ objLog = this.getLogObject();
-		if(objLog==null) {
-			String sTemp = KernelLogZZZ.computeLineDate(sLog);
-			System.out.println(sTemp);
-		}else {
-			objLog.WriteLineDate(sLog);
-		}		
-	}	
-	
 	
 	/**Overwritten and using an object of jakarta.commons.lang
 	 * to create this string using reflection. 
@@ -740,22 +578,14 @@ public boolean actionPerformQueryCustom(ActionEvent ae) throws ExceptionZZZ {
 public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ {
 }			 							
 
-class SwingWorker4ProgramDISABLE extends SwingWorker implements IObjectZZZ, IKernelUserZZZ{
-	private IKernelZZZ objKernel;
-	private LogZZZ objLog;
+class SwingWorker4ProgramDISABLE extends KernelSwingWorkerZZZ {
 	private KernelJPanelCascadedZZZ panel;
-	private String[] saFlag4Program;
-	
+	private String[] saFlag4Program;	
 	private String sText2Update;    //Der Wert, der ins Label geschreiben werden soll. Jier als Variable, damit die intene Runner-Klasse darauf zugreifen kann.
 												// Auch: Dieser Wert wird aus dem Web ausgelesen und danach in das Label des Panels geschrieben.
 	
-				
-	protected ExceptionZZZ objException = null;    // diese Exception hat jedes Objekt
-	
 	public SwingWorker4ProgramDISABLE(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panel, String[] saFlag4Program){
-		super();
-		this.objKernel = objKernel;
-		this.objLog = objKernel.getLogObject();
+		super(objKernel);
 		this.panel = panel;
 		this.saFlag4Program = saFlag4Program;					
 	}
@@ -791,6 +621,8 @@ class SwingWorker4ProgramDISABLE extends SwingWorker implements IObjectZZZ, IKer
 //				try {							
 					
 					System.out.println("DISABLE GECLICKT");
+					logLineDate("DISABLE GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ
+					
 					
 					KernelButtonGroupZZZ<String, AbstractButton> groupButton = panel.getHashtableButtonGroup().get("EINS");
 					if(groupButton!=null){
@@ -809,53 +641,7 @@ class SwingWorker4ProgramDISABLE extends SwingWorker implements IObjectZZZ, IKer
 		//Ggfs. nach dem Swing Worker eine Statuszeile etc. aktualisieren....
 
 	}
-	
-	
-	public IKernelZZZ getKernelObject() {
-		return this.objKernel;
-	}
-
-	public void setKernelObject(IKernelZZZ objKernel) {
-		this.objKernel = objKernel;
-	}
-
-	public LogZZZ getLogObject() {
-		return this.objLog;
-	}
-
-	public void setLogObject(LogZZZ objLog) {
-		this.objLog = objLog;
-	}
-	
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see zzzKernel.basic.KernelAssetObjectZZZ#getExceptionObject()
-	 */
-	public ExceptionZZZ getExceptionObject() {
-		return this.objException;
-	}
-	/* (non-Javadoc)
-	 * @see zzzKernel.basic.KernelAssetObjectZZZ#setExceptionObject(zzzKernel.custom.ExceptionZZZ)
-	 */
-	public void setExceptionObject(ExceptionZZZ objException) {
-		this.objException = objException;
-	}
-	
-	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
-	@Override
-	public void logLineDate(String sLog) {
-		LogZZZ objLog = this.getLogObject();
-		if(objLog==null) {
-			String sTemp = KernelLogZZZ.computeLineDate(sLog);
-			System.out.println(sTemp);
-		}else {
-			objLog.WriteLineDate(sLog);
-		}		
-	}	
-	
-	
+		
 	/**Overwritten and using an object of jakarta.commons.lang
 	 * to create this string using reflection. 
 	 * Remark: this is not yet formated. A style class is available in jakarta.commons.lang. 
@@ -903,22 +689,14 @@ public boolean actionPerformQueryCustom(ActionEvent ae) throws ExceptionZZZ {
 public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ {
 }			 							
 
-class SwingWorker4ProgramTOGGLE_ALL extends SwingWorker implements IObjectZZZ, IKernelUserZZZ{
-	private IKernelZZZ objKernel;
-	private LogZZZ objLog;
+class SwingWorker4ProgramTOGGLE_ALL extends KernelSwingWorkerZZZ implements IObjectZZZ, IKernelUserZZZ{
 	private KernelJPanelCascadedZZZ panel;
-	private String[] saFlag4Program;
-	
+	private String[] saFlag4Program;	
 	private String sText2Update;    //Der Wert, der ins Label geschreiben werden soll. Jier als Variable, damit die intene Runner-Klasse darauf zugreifen kann.
 												// Auch: Dieser Wert wird aus dem Web ausgelesen und danach in das Label des Panels geschrieben.
 	
-				
-	protected ExceptionZZZ objException = null;    // diese Exception hat jedes Objekt
-	
 	public SwingWorker4ProgramTOGGLE_ALL(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panel, String[] saFlag4Program){
-		super();
-		this.objKernel = objKernel;
-		this.objLog = objKernel.getLogObject();
+		super(objKernel);
 		this.panel = panel;
 		this.saFlag4Program = saFlag4Program;					
 	}
@@ -954,6 +732,7 @@ class SwingWorker4ProgramTOGGLE_ALL extends SwingWorker implements IObjectZZZ, I
 //				try {							
 					
 					System.out.println("TOGGLE ALL GECLICKT");
+					logLineDate("TOGGLE ALL GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ
 					
 					KernelButtonGroupZZZ<String, AbstractButton> groupButton = panel.getHashtableButtonGroup().get("EINS");
 					if(groupButton!=null){
@@ -972,52 +751,6 @@ class SwingWorker4ProgramTOGGLE_ALL extends SwingWorker implements IObjectZZZ, I
 		//Ggfs. nach dem Swing Worker eine Statuszeile etc. aktualisieren....
 
 	}
-	
-	
-	public IKernelZZZ getKernelObject() {
-		return this.objKernel;
-	}
-
-	public void setKernelObject(IKernelZZZ objKernel) {
-		this.objKernel = objKernel;
-	}
-
-	public LogZZZ getLogObject() {
-		return this.objLog;
-	}
-
-	public void setLogObject(LogZZZ objLog) {
-		this.objLog = objLog;
-	}
-	
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see zzzKernel.basic.KernelAssetObjectZZZ#getExceptionObject()
-	 */
-	public ExceptionZZZ getExceptionObject() {
-		return this.objException;
-	}
-	/* (non-Javadoc)
-	 * @see zzzKernel.basic.KernelAssetObjectZZZ#setExceptionObject(zzzKernel.custom.ExceptionZZZ)
-	 */
-	public void setExceptionObject(ExceptionZZZ objException) {
-		this.objException = objException;
-	}
-	
-	
-	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
-	@Override
-	public void logLineDate(String sLog) {
-		LogZZZ objLog = this.getLogObject();
-		if(objLog==null) {
-			String sTemp = KernelLogZZZ.computeLineDate(sLog);
-			System.out.println(sTemp);
-		}else {
-			objLog.WriteLineDate(sLog);
-		}		
-	}	
 	
 	/**Overwritten and using an object of jakarta.commons.lang
 	 * to create this string using reflection. 
@@ -1066,22 +799,14 @@ public boolean actionPerformQueryCustom(ActionEvent ae) throws ExceptionZZZ {
 public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ {
 }			 							
 
-class SwingWorker4ProgramDIFFER_ALL extends SwingWorker implements IObjectZZZ, IKernelUserZZZ{
-	private IKernelZZZ objKernel;
-	private LogZZZ objLog;
+class SwingWorker4ProgramDIFFER_ALL extends KernelSwingWorkerZZZ {	
 	private KernelJPanelCascadedZZZ panel;
-	private String[] saFlag4Program;
-	
+	private String[] saFlag4Program;	
 	private String sText2Update;    //Der Wert, der ins Label geschreiben werden soll. Jier als Variable, damit die intene Runner-Klasse darauf zugreifen kann.
 												// Auch: Dieser Wert wird aus dem Web ausgelesen und danach in das Label des Panels geschrieben.
 	
-				
-	protected ExceptionZZZ objException = null;    // diese Exception hat jedes Objekt
-	
 	public SwingWorker4ProgramDIFFER_ALL(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panel, String[] saFlag4Program){
-		super();
-		this.objKernel = objKernel;
-		this.objLog = objKernel.getLogObject();
+		super(objKernel);				
 		this.panel = panel;
 		this.saFlag4Program = saFlag4Program;					
 	}
@@ -1117,6 +842,7 @@ class SwingWorker4ProgramDIFFER_ALL extends SwingWorker implements IObjectZZZ, I
 //				try {							
 					
 					System.out.println("DIFFER ALL GECLICKT");
+					logLineDate("DIFFER ALL GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ
 					
 					KernelButtonGroupZZZ<String, AbstractButton> groupButton = panel.getHashtableButtonGroup().get("ZWEI");
 					if(groupButton!=null){
@@ -1135,51 +861,6 @@ class SwingWorker4ProgramDIFFER_ALL extends SwingWorker implements IObjectZZZ, I
 		//Ggfs. nach dem Swing Worker eine Statuszeile etc. aktualisieren....
 
 	}
-	
-	
-	public IKernelZZZ getKernelObject() {
-		return this.objKernel;
-	}
-
-	public void setKernelObject(IKernelZZZ objKernel) {
-		this.objKernel = objKernel;
-	}
-
-	public LogZZZ getLogObject() {
-		return this.objLog;
-	}
-
-	public void setLogObject(LogZZZ objLog) {
-		this.objLog = objLog;
-	}
-	
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see zzzKernel.basic.KernelAssetObjectZZZ#getExceptionObject()
-	 */
-	public ExceptionZZZ getExceptionObject() {
-		return this.objException;
-	}
-	/* (non-Javadoc)
-	 * @see zzzKernel.basic.KernelAssetObjectZZZ#setExceptionObject(zzzKernel.custom.ExceptionZZZ)
-	 */
-	public void setExceptionObject(ExceptionZZZ objException) {
-		this.objException = objException;
-	}
-	
-	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
-	@Override
-	public void logLineDate(String sLog) {
-		LogZZZ objLog = this.getLogObject();
-		if(objLog==null) {
-			String sTemp = KernelLogZZZ.computeLineDate(sLog);
-			System.out.println(sTemp);
-		}else {
-			objLog.WriteLineDate(sLog);
-		}		
-	}	
 	
 	/**Overwritten and using an object of jakarta.commons.lang
 	 * to create this string using reflection. 
@@ -1228,22 +909,14 @@ public boolean actionPerformQueryCustom(ActionEvent ae) throws ExceptionZZZ {
 public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ {
 }			 							
 
-class SwingWorker4ProgramSAME_ALL extends SwingWorker implements IObjectZZZ, IKernelUserZZZ{
-	private IKernelZZZ objKernel;
-	private LogZZZ objLog;
+class SwingWorker4ProgramSAME_ALL extends KernelSwingWorkerZZZ implements IObjectZZZ, IKernelUserZZZ{
 	private KernelJPanelCascadedZZZ panel;
-	private String[] saFlag4Program;
-	
+	private String[] saFlag4Program;	
 	private String sText2Update;    //Der Wert, der ins Label geschreiben werden soll. Jier als Variable, damit die intene Runner-Klasse darauf zugreifen kann.
 												// Auch: Dieser Wert wird aus dem Web ausgelesen und danach in das Label des Panels geschrieben.
 	
-				
-	protected ExceptionZZZ objException = null;    // diese Exception hat jedes Objekt
-	
 	public SwingWorker4ProgramSAME_ALL(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panel, String[] saFlag4Program){
-		super();
-		this.objKernel = objKernel;
-		this.objLog = objKernel.getLogObject();
+		super(objKernel);
 		this.panel = panel;
 		this.saFlag4Program = saFlag4Program;					
 	}
@@ -1279,6 +952,7 @@ class SwingWorker4ProgramSAME_ALL extends SwingWorker implements IObjectZZZ, IKe
 //				try {							
 					
 					System.out.println("SAME ALL GECLICKT");
+					logLineDate("SAME ALL GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ
 					
 					KernelButtonGroupZZZ<String, AbstractButton> groupButton02 = panel.getHashtableButtonGroup().get("ZWEI");
 					if(groupButton02!=null){
@@ -1297,52 +971,6 @@ class SwingWorker4ProgramSAME_ALL extends SwingWorker implements IObjectZZZ, IKe
 		//Ggfs. nach dem Swing Worker eine Statuszeile etc. aktualisieren....
 
 	}
-	
-	
-	public IKernelZZZ getKernelObject() {
-		return this.objKernel;
-	}
-
-	public void setKernelObject(IKernelZZZ objKernel) {
-		this.objKernel = objKernel;
-	}
-
-	public LogZZZ getLogObject() {
-		return this.objLog;
-	}
-
-	public void setLogObject(LogZZZ objLog) {
-		this.objLog = objLog;
-	}
-	
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see zzzKernel.basic.KernelAssetObjectZZZ#getExceptionObject()
-	 */
-	public ExceptionZZZ getExceptionObject() {
-		return this.objException;
-	}
-	/* (non-Javadoc)
-	 * @see zzzKernel.basic.KernelAssetObjectZZZ#setExceptionObject(zzzKernel.custom.ExceptionZZZ)
-	 */
-	public void setExceptionObject(ExceptionZZZ objException) {
-		this.objException = objException;
-	}
-	
-	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
-	@Override
-	public void logLineDate(String sLog) {
-		LogZZZ objLog = this.getLogObject();
-		if(objLog==null) {
-			String sTemp = KernelLogZZZ.computeLineDate(sLog);
-			System.out.println(sTemp);
-		}else {
-			objLog.WriteLineDate(sLog);
-		}		
-	}	
-	
 	
 	/**Overwritten and using an object of jakarta.commons.lang
 	 * to create this string using reflection. 
