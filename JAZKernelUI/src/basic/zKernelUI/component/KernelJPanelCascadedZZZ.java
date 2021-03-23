@@ -16,6 +16,7 @@ import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -261,8 +262,15 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			}
 		}
 		
+		//Ein Label hinzufuegen, in dem der Panel-Klassennamen steht (zu Debug- und Analysezwecken)
+		if(this.getFlag(IFlagZZZ.FLAGZ.DEBUG.name())) {
+			//Label, das keine Konfigurierten Module zur Verfuegung stehen
+			JLabel labelDebug = new JLabel(this.getClass().getName());
+			this.add(labelDebug);
+			this.setComponent("LabelDebug", labelDebug);	
+		}			
 		
-		//Einen Mouse Listener hinzuf�gen, der es erlaubt Fenster zu ziehen (auch im Panel und nicht nur in der Titelleiste)
+		//Einen Mouse Listener hinzufuegen, der es erlaubt Fenster zu ziehen (auch im Panel und nicht nur in der Titelleiste)
 		//if(this.getFlag("isdraggable")){
 		if(this.getFlagZ(FLAGZ.COMPONENT_DRAGGABLE.name())){	
 			
@@ -442,14 +450,14 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	
 	
 	//### FLAGS ####################
-	/** DIESE METHODE MUSS IN ALLEN KLASSEN VORHANDEN SEIN - �ber Vererbung -, DIE IHRE FLAGS SETZEN WOLLEN
+	/** DIESE METHODE MUSS IN ALLEN KLASSEN VORHANDEN SEIN - �ueer Vererbung -, DIE IHRE FLAGS SETZEN WOLLEN
 	 * @param objClassParent
 	 * @param sFlagName
 	 * @param bFlagValue
 	 * @return
 	 * lindhaueradmin, 23.07.2013
 	 */
-	//Direkt aus Object ZZZ �bernommen
+	//Direkt aus Object ZZZ uebernommen
 	public boolean setFlagZ(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
 		boolean bFunction = false;
 		main:{

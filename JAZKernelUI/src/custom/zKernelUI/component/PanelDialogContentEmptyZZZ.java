@@ -33,12 +33,7 @@ public class PanelDialogContentEmptyZZZ extends KernelJPanelDialogContentEmptyZZ
 	private boolean PanelDialogContentEmptyNew_() {
 		boolean bReturn = false;
 		main:{
-			if(this.getFlag(IFlagZZZ.FLAGZ.DEBUG.name())) {
-				//Label, das keine Konfigurierten Module zur Verf�gung stehen
-				JLabel labelDebug = new JLabel(this.getClass().getName());
-				this.add(labelDebug);
-				this.setComponent("LabelDebug", labelDebug);	
-			}
+			
 			bReturn=true;
 		}//end main;
 		return bReturn;
