@@ -481,7 +481,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	public abstract KernelJPanelCascadedZZZ getPanelContent() throws ExceptionZZZ;
 	public abstract KernelJPanelCascadedZZZ getPanelNavigator(); 
 	
-	/** Kann von einer Dialogbox �berschrieben werden, wenn ein anderes Panel als das "Default" Panel verwendet werden soll.
+	/** Kann von einer Dialogbox ueberschrieben werden, wenn ein anderes Panel als das "Default" Panel verwendet werden soll.
 	* @return
 	* 
 	* lindhaueradmin; 11.01.2007 08:27:54
@@ -498,8 +498,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		KernelJPanelDialogContentEmptyZZZ panel = new KernelJPanelDialogContentEmptyZZZ(this.getKernelObject(), this);
 		return panel;
 	}
-	
-	
+		
 	public String getText4ContentDefault(){
 		return this.sText4ContentDefault;
 	}
