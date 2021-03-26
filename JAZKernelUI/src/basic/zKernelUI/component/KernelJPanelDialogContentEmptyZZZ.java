@@ -15,7 +15,7 @@ import basic.zBasic.IObjectZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
-import basic.zKernel.flag.IFlagZZZ;
+import basic.zKernel.flag.IFlagUserZZZ;
 import custom.zKernel.LogZZZ;
 
 public class KernelJPanelDialogContentEmptyZZZ extends KernelJPanelCascadedZZZ{
@@ -32,7 +32,7 @@ public class KernelJPanelDialogContentEmptyZZZ extends KernelJPanelCascadedZZZ{
 	private boolean KernelJPanelDialogContentEmptyNew_() {
 		boolean bReturn = false;
 		main:{			
-			if(this.getFlag(IFlagZZZ.FLAGZ.DEBUG.name())) {
+			if(this.getFlag(IFlagUserZZZ.FLAGZ.DEBUG.name())) {
 				JLabel label = new JLabel(this.getClass().getName());
 				this.add(label);
 			}			

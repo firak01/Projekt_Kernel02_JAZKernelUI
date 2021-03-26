@@ -25,7 +25,7 @@ import basic.zKernel.KernelZZZ;
 import basic.zKernel.component.IKernelModuleUserZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.flag.FlagZHelperZZZ;
-import basic.zKernel.flag.IFlagZZZ;
+import basic.zKernel.flag.IFlagUserZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import basic.zUtil.io.KernelFileZZZ.FLAGZ;
 import custom.zKernel.LogZZZ;
@@ -47,7 +47,7 @@ import basic.zKernel.IKernelUserZZZ;
  * @author 0823
  *
  */
-public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConstantZZZ, IObjectZZZ, IKernelUserZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IScreenFeatureZZZ, IMouseFeatureZZZ, IFlagZZZ{	
+public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConstantZZZ, IObjectZZZ, IKernelUserZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IScreenFeatureZZZ, IMouseFeatureZZZ, IFlagUserZZZ{	
 	private IKernelZZZ objKernel;
 	private LogZZZ objLog;
 	protected IKernelModuleZZZ objModule=null; //Das Modul, z.B. für die Dialogbox
@@ -794,7 +794,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		 * @return
 		 * @throws ExceptionZZZ 
 		 */
-		public String[] getFlagZ_passable(boolean bValueToSearchFor, IFlagZZZ objUsingFlagZ) throws ExceptionZZZ{
+		public String[] getFlagZ_passable(boolean bValueToSearchFor, IFlagUserZZZ objUsingFlagZ) throws ExceptionZZZ{
 			String[] saReturn = null;
 			main:{
 				
@@ -818,7 +818,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		 * @return
 		 * @throws ExceptionZZZ 
 		 */
-		public String[] getFlagZ_passable(IFlagZZZ objUsingFlagZ) throws ExceptionZZZ{
+		public String[] getFlagZ_passable(IFlagUserZZZ objUsingFlagZ) throws ExceptionZZZ{
 			String[] saReturn = null;
 			main:{
 				

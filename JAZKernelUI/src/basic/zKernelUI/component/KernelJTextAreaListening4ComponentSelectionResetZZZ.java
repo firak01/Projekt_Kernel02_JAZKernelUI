@@ -21,12 +21,12 @@ import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelLogZZZ;
-import basic.zKernel.flag.IFlagZZZ;
+import basic.zKernel.flag.IFlagUserZZZ;
 import basic.zKernelUI.component.model.EventComponentSelectionResetZZZ;
 import basic.zKernelUI.component.model.IListenerSelectionResetZZZ;
 import custom.zKernel.LogZZZ;
 
-public abstract class KernelJTextAreaListening4ComponentSelectionResetZZZ extends JTextArea implements IObjectZZZ, IFlagZZZ, IKernelUserZZZ, IListenerSelectionResetZZZ{
+public abstract class KernelJTextAreaListening4ComponentSelectionResetZZZ extends JTextArea implements IObjectZZZ, IFlagUserZZZ, IKernelUserZZZ, IListenerSelectionResetZZZ{
 	private IKernelZZZ objKernel;
 	private LogZZZ objLog;
 	
@@ -328,12 +328,12 @@ public boolean setFlag(String sFlagName, boolean bFlagValue){
 	}
 	@Override
 	public String[] getFlagZ_passable(boolean bValueToSearchFor,
-			IFlagZZZ objUsingFlagZ) throws ExceptionZZZ {
+			IFlagUserZZZ objUsingFlagZ) throws ExceptionZZZ {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String[] getFlagZ_passable(IFlagZZZ objUsingFlagZ)
+	public String[] getFlagZ_passable(IFlagUserZZZ objUsingFlagZ)
 			throws ExceptionZZZ {
 		// TODO Auto-generated method stub
 		return null;

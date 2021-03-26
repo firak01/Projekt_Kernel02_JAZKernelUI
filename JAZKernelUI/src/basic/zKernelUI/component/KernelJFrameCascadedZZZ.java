@@ -35,15 +35,15 @@ import basic.zKernel.KernelLogZZZ;
 import basic.zKernel.KernelZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.flag.FlagZHelperZZZ;
-import basic.zKernel.flag.IFlagZZZ;
-import basic.zKernel.flag.IFlagZZZ.FLAGZ;
+import basic.zKernel.flag.IFlagUserZZZ;
+import basic.zKernel.flag.IFlagUserZZZ.FLAGZ;
 import basic.zKernelUI.KernelUIZZZ;
 import custom.zKernel.LogZZZ;
 
 /** Class is base for all frames used by the configuration module
  * @author Lindhauer
  */
-public abstract class KernelJFrameCascadedZZZ extends JFrame  implements IObjectZZZ, IFlagZZZ, IKernelUserZZZ, IKernelModuleZZZ, IComponentCascadedUserZZZ, IFrameCascadedZZZ, IFrameLaunchableZZZ, IScreenFeatureZZZ{
+public abstract class KernelJFrameCascadedZZZ extends JFrame  implements IObjectZZZ, IFlagUserZZZ, IKernelUserZZZ, IKernelModuleZZZ, IComponentCascadedUserZZZ, IFrameCascadedZZZ, IFrameLaunchableZZZ, IScreenFeatureZZZ{
 	private IKernelZZZ objKernel;
 	private LogZZZ objLog; 
 	private KernelJFrameCascadedZZZ frameParent=null;
@@ -444,7 +444,7 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 	 * @return
 	 * @throws ExceptionZZZ 
 	 */
-	public String[] getFlagZ_passable(boolean bValueToSearchFor, IFlagZZZ objUsingFlagZ) throws ExceptionZZZ{
+	public String[] getFlagZ_passable(boolean bValueToSearchFor, IFlagUserZZZ objUsingFlagZ) throws ExceptionZZZ{
 		String[] saReturn = null;
 		main:{
 			
@@ -468,7 +468,7 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 	 * @return
 	 * @throws ExceptionZZZ 
 	 */
-	public String[] getFlagZ_passable(IFlagZZZ objUsingFlagZ) throws ExceptionZZZ{
+	public String[] getFlagZ_passable(IFlagUserZZZ objUsingFlagZ) throws ExceptionZZZ{
 		String[] saReturn = null;
 		main:{
 			

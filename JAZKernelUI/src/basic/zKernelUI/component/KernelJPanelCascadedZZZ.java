@@ -38,7 +38,7 @@ import basic.zKernel.component.IKernelModuleUserZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.component.IKernelProgramZZZ;
 import basic.zKernel.flag.FlagZHelperZZZ;
-import basic.zKernel.flag.IFlagZZZ;
+import basic.zKernel.flag.IFlagUserZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import basic.zUtil.io.KernelFileZZZ.FLAGZ;
 import custom.zKernel.LogZZZ;
@@ -48,7 +48,7 @@ import custom.zKernel.LogZZZ;
  * 
  *  Merke: Die Panels können sowohl nur modulnutzer als auch selber Modul sein. Darum werden beide Interfaces implementiert.
  */
-public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IKernelUserZZZ, IObjectZZZ, IMouseFeatureZZZ, IFlagZZZ{
+public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IKernelUserZZZ, IObjectZZZ, IMouseFeatureZZZ, IFlagUserZZZ{
 	protected IKernelModuleZZZ objModule=null; //Das Modul, z.B. die Dialogbox, in der das Program gestartet wird.
 	protected String sModuleName=null;         //Notwendig, wenn das Panel selbst das Modul ist.
 	
@@ -263,7 +263,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		}
 		
 		//Ein Label hinzufuegen, in dem der Panel-Klassennamen steht (zu Debug- und Analysezwecken)
-		if(this.getFlag(IFlagZZZ.FLAGZ.DEBUG.name())) {
+		if(this.getFlag(IFlagUserZZZ.FLAGZ.DEBUG.name())) {
 			//Label, das keine Konfigurierten Module zur Verfuegung stehen
 			JLabel labelDebug = new JLabel(this.getClass().getName());
 			this.add(labelDebug);
@@ -819,7 +819,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	 * @return
 	 * @throws ExceptionZZZ 
 	 */
-	public String[] getFlagZ_passable(boolean bValueToSearchFor, IFlagZZZ objUsingFlagZ) throws ExceptionZZZ{
+	public String[] getFlagZ_passable(boolean bValueToSearchFor, IFlagUserZZZ objUsingFlagZ) throws ExceptionZZZ{
 		String[] saReturn = null;
 		main:{
 			
@@ -843,7 +843,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	 * @return
 	 * @throws ExceptionZZZ 
 	 */
-	public String[] getFlagZ_passable(IFlagZZZ objUsingFlagZ) throws ExceptionZZZ{
+	public String[] getFlagZ_passable(IFlagUserZZZ objUsingFlagZ) throws ExceptionZZZ{
 		String[] saReturn = null;
 		main:{
 			
