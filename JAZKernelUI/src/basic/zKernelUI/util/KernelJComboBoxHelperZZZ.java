@@ -17,7 +17,7 @@ import basic.zKernel.KernelUseObjectZZZ;
 public class KernelJComboBoxHelperZZZ extends KernelUseObjectZZZ{
 private JComboBox objCombo;
 
-	public KernelJComboBoxHelperZZZ(IKernelZZZ objKernel, JComboBox objCombo){
+	public KernelJComboBoxHelperZZZ(IKernelZZZ objKernel, JComboBox objCombo) throws ExceptionZZZ{
 		super(objKernel);
 		this.setJComboBox(objCombo);
 	}

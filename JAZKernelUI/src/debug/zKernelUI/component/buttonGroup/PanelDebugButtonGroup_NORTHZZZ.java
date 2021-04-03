@@ -212,7 +212,7 @@ public class PanelDebugButtonGroup_NORTHZZZ extends KernelJPanelCascadedZZZ impl
 	//######################################
 //PLUS BUTTON GUI - Innere Klassen, welche eine Action behandelt	
 class ActionPlus extends  KernelActionCascadedZZZ{ //KernelUseObjectZZZ implements ActionListener{						
-public ActionPlus(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
+public ActionPlus(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent) throws ExceptionZZZ{
 	super(objKernel, panelParent);			
 }
 
@@ -324,7 +324,7 @@ public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {
 //######################################
 //MINUS BUTTON GUI - Innere Klassen, welche eine Action behandelt	
 class ActionMinus extends  KernelActionCascadedZZZ{ //KernelUseObjectZZZ implements ActionListener{						
-public ActionMinus(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
+public ActionMinus(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent) throws ExceptionZZZ{
 super(objKernel, panelParent);			
 }
 
@@ -438,7 +438,7 @@ public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {
 //######################################
 //ENABLE BUTTON GUI - Innere Klassen, welche eine Action behandelt	
 class ActionEnable extends  KernelActionCascadedZZZ{ //KernelUseObjectZZZ implements ActionListener{						
-public ActionEnable(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
+public ActionEnable(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent) throws ExceptionZZZ{
 	super(objKernel, panelParent);			
 }
 
@@ -555,7 +555,7 @@ public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {
 //######################################
 //DISABLE BUTTON GUI - Innere Klassen, welche eine Action behandelt	
 class ActionDisable extends  KernelActionCascadedZZZ{ //KernelUseObjectZZZ implements ActionListener{						
-public ActionDisable(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
+public ActionDisable(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent) throws ExceptionZZZ{
 	super(objKernel, panelParent);			
 }
 
@@ -666,7 +666,7 @@ public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {
 //######################################
 //TOGGLE_ALL BUTTON GUI - Innere Klassen, welche eine Action behandelt	
 class ActionToggle_all extends  KernelActionCascadedZZZ{ //KernelUseObjectZZZ implements ActionListener{						
-public ActionToggle_all(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
+public ActionToggle_all(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent) throws ExceptionZZZ{
 	super(objKernel, panelParent);			
 }
 
@@ -776,7 +776,7 @@ public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {
 //######################################
 //DIFFER_ALL BUTTON GUI - Innere Klassen, welche eine Action behandelt	
 class ActionDiffer_all extends  KernelActionCascadedZZZ{ //KernelUseObjectZZZ implements ActionListener{						
-public ActionDiffer_all(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
+public ActionDiffer_all(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent) throws ExceptionZZZ{
 	super(objKernel, panelParent);			
 }
 
@@ -886,7 +886,7 @@ public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {
 //######################################
 //SAME_ALL BUTTON GUI - Innere Klassen, welche eine Action behandelt	
 class ActionSame_all extends  KernelActionCascadedZZZ{ //KernelUseObjectZZZ implements ActionListener{						
-public ActionSame_all(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
+public ActionSame_all(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent) throws ExceptionZZZ{
 	super(objKernel, panelParent);			
 }
 

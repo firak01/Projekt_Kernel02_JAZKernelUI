@@ -68,7 +68,8 @@ public enum FLAGZ{
 }
 
 private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 20130721 ersetzt die einzelnen Flags, irgendwann...
-	
+private HashMap<String, Boolean>hmFlagPassed = new HashMap<String, Boolean>();
+
 	public KernelJFrameCascadedZZZ(){
 		super();
 		KernelJFrameCascadedNew_();
@@ -193,12 +194,24 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 		return FLAGZ.class;
 	}
 
+	@Override
 	public HashMap<String, Boolean>getHashMapFlagZ(){
 		return this.hmFlag;
 	} 
 	
+	@Override
+	public HashMap<String, Boolean> getHashMapFlagZpassed() {
+		return this.hmFlagPassed;
+	}
+	
+	@Override
+	public void setHashMapFlagZpassed(HashMap<String, Boolean> hmFlagPassed) {
+		this.hmFlagPassed = hmFlagPassed;
+	}	
+	
+	
 	/* @see basic.zBasic.IFlagZZZ#getFlagZ(java.lang.String)
-	 * 	 Weteire Voraussetzungen:
+	 * Weitere Voraussetzungen:
 	 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
 	 * - Innere Klassen müssen auch public deklariert werden.(non-Javadoc)
 	 */

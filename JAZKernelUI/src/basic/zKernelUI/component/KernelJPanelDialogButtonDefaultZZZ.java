@@ -96,13 +96,31 @@ public class KernelJPanelDialogButtonDefaultZZZ extends KernelJPanelCascadedZZZ 
 
 	//#### Interfaces ##############################
 	public KernelActionCascadedZZZ getActionListenerButtonOk(KernelJPanelCascadedZZZ panelButton){
-		return new ActionListenerButtonOkDefaultZZZ(this.getKernelObject(), panelButton);
+		KernelActionCascadedZZZ objReturn = null;
+		try {
+			objReturn = new ActionListenerButtonOkDefaultZZZ(this.getKernelObject(), panelButton);
+		} catch (ExceptionZZZ e) {			
+			e.printStackTrace();
+		}
+		return objReturn;
 	}
 	public KernelActionCascadedZZZ getActionListenerButtonClose(KernelJPanelCascadedZZZ panelButton){
-		return new ActionListenerButtonCloseDefaultZZZ(this.getKernelObject(), panelButton);
+		KernelActionCascadedZZZ objReturn = null;
+		try {
+			objReturn = new ActionListenerButtonCloseDefaultZZZ(this.getKernelObject(), panelButton);
+		} catch (ExceptionZZZ e) {			
+			e.printStackTrace();
+		}
+		return objReturn;
 	}
 	public KernelActionCascadedZZZ getActionListenerButtonCancel(KernelJPanelCascadedZZZ panelButton){
-		return new ActionListenerButtonCancelDefaultZZZ(this.getKernelObject(), panelButton);
+		KernelActionCascadedZZZ objReturn = null;
+		try {
+			objReturn = new ActionListenerButtonCancelDefaultZZZ(this.getKernelObject(), panelButton);
+		} catch (ExceptionZZZ e) {			
+			e.printStackTrace();
+		}
+		return objReturn;
 	}
 	
 	public boolean isButtonOkAvailable() {		
@@ -127,7 +145,7 @@ public class KernelJPanelDialogButtonDefaultZZZ extends KernelJPanelCascadedZZZ 
 	 */
 	public class ActionListenerButtonCancelDefaultZZZ extends KernelActionCascadedZZZ {
 
-		public ActionListenerButtonCancelDefaultZZZ(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent) {
+		public ActionListenerButtonCancelDefaultZZZ(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent) throws ExceptionZZZ {
 			super(objKernel, panelParent);
 		}
 
@@ -163,7 +181,7 @@ public class KernelJPanelDialogButtonDefaultZZZ extends KernelJPanelCascadedZZZ 
 	 */
 	public class ActionListenerButtonCloseDefaultZZZ extends KernelActionCascadedZZZ {
 
-		public ActionListenerButtonCloseDefaultZZZ(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent) {
+		public ActionListenerButtonCloseDefaultZZZ(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent) throws ExceptionZZZ {
 			super(objKernel, panelParent);
 		}
 
@@ -200,7 +218,7 @@ public class KernelJPanelDialogButtonDefaultZZZ extends KernelJPanelCascadedZZZ 
 	 */
 	public class ActionListenerButtonOkDefaultZZZ extends KernelActionCascadedZZZ implements ActionListener {
 
-		public ActionListenerButtonOkDefaultZZZ(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent) {
+		public ActionListenerButtonOkDefaultZZZ(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent) throws ExceptionZZZ {
 			super(objKernel, panelParent);
 		}
 		

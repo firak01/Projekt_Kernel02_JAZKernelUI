@@ -69,17 +69,18 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 
 	private String sProgramName  = null; //ggf. der Name des Elternprogramms, s. KernelKonfiguration
 	private String sProgramAlias = null; //ggf. der Alias des Elternprogramms, s. KernelKonfiguration
-	/*private boolean flagComponentKernelProgram = false; // 2013-07-08: Damit wird gesagt, dass f�r dieses Panel ein "Program-Abschnitt" in der Kernel - Konfigurations .ini - Datei vorhanden ist.
+	
+	/**20130721: Umgestellt auf HashMap und die Enum-Flags, Compiler auf 1.7 ge�ndert
+	 * 
+	 */
+	/*private boolean flagComponentKernelProgram = false; // 2013-07-08: Damit wird gesagt, dass fuer dieses Panel ein "Program-Abschnitt" in der Kernel - Konfigurations .ini - Datei vorhanden ist.
 	                                                    //             Bei der Suche nach Parametern wird von der aktuellen Komponente weiter "nach oben" durchgegangen und der Parameter f�r jede Programkomponente gesucht.
-
 	private boolean flagComponentDraggable = true;
 	private boolean bFlagDebug = false;
 	private boolean bFlagInit = false;
 	private boolean bFlagTerminate = false;*/
 	private HashMap<String, Boolean>hmFlag=new HashMap<String, Boolean>();
-	/**20130721: Umgestellt auf HashMap und die Enum-Flags, Compiler auf 1.7 ge�ndert
-	 * 
-	 */
+	private HashMap<String, Boolean>hmFlagPassed = new HashMap<String, Boolean>();
 	public enum FLAGZ{
 		COMPONENT_DRAGGABLE, TERMINATE;
 	}
@@ -727,6 +728,16 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	public HashMap<String, Boolean> getHashMapFlagZ() {
 		return this.hmFlag;
 	}
+	
+	@Override
+	public HashMap<String, Boolean> getHashMapFlagZpassed() {
+		return this.hmFlagPassed;
+	}
+	
+	@Override
+	public void setHashMapFlagZpassed(HashMap<String, Boolean> hmFlagPassed) {
+		this.hmFlagPassed = hmFlagPassed;
+	}	
 
 	@Override
 	public Class getClassFlagZ() {

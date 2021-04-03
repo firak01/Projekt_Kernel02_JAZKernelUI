@@ -3,7 +3,7 @@ package basic.zKernelUI.component.model;
 import java.util.ArrayList;
 
 import basic.zKernel.IKernelZZZ;
-
+import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
 
@@ -16,7 +16,7 @@ import basic.zKernel.KernelUseObjectZZZ;
  *
  */
 public class KernelSenderComponentSelectionResetZZZ extends KernelUseObjectZZZ implements ISenderSelectionResetZZZ{
-	public KernelSenderComponentSelectionResetZZZ(IKernelZZZ objKernel){
+	public KernelSenderComponentSelectionResetZZZ(IKernelZZZ objKernel) throws ExceptionZZZ{
 		super(objKernel);
 	}
 	

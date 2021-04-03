@@ -48,7 +48,7 @@ public class PanelConfig_SOUTHZZZ extends KernelJPanelCascadedZZZ {
 		 */
 		private IKernelZZZ objKernel2Config;
 				
-		public ActionEditModule(IKernelZZZ objKernel, IKernelZZZ objKernel2Config, KernelJPanelCascadedZZZ panelParent){
+		public ActionEditModule(IKernelZZZ objKernel, IKernelZZZ objKernel2Config, KernelJPanelCascadedZZZ panelParent) throws ExceptionZZZ{
 			super(objKernel, panelParent);			
 			this.objKernel2Config = objKernel2Config;
 		} 

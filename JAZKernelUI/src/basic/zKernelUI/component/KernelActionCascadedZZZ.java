@@ -19,7 +19,7 @@ public abstract class KernelActionCascadedZZZ extends KernelUseObjectZZZ  implem
 	private KernelJPanelCascadedZZZ panelParent;
 	
 	
-	public KernelActionCascadedZZZ(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent){
+	public KernelActionCascadedZZZ(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent) throws ExceptionZZZ{
 		super(objKernel);
 		this.panelParent = panelParent;	
 	}

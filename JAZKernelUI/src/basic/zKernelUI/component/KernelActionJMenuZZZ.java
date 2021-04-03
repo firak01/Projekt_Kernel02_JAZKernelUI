@@ -3,6 +3,7 @@ package basic.zKernelUI.component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import basic.zBasic.ExceptionZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
@@ -10,7 +11,7 @@ import basic.zKernel.KernelUseObjectZZZ;
 public class KernelActionJMenuZZZ extends KernelUseObjectZZZ  implements ActionListener{
 	KernelJFrameCascadedZZZ frameParentCascaded = null;
 	
-	public KernelActionJMenuZZZ(IKernelZZZ objKernel, KernelJFrameCascadedZZZ frameParentCascaded ){
+	public KernelActionJMenuZZZ(IKernelZZZ objKernel, KernelJFrameCascadedZZZ frameParentCascaded ) throws ExceptionZZZ{
 		super(objKernel);
 		this.frameParentCascaded = frameParentCascaded;
 	}

@@ -88,7 +88,8 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	public enum FLAGZ{
 		TERMINATE,ISDRAGGABLE; //Merke: DEBUG und INIT über IFlagZZZ eingebunden werden, weil von ObjectkZZZ kann man ja nicht erben. Es wird schon von anderer Objektklasse geerbt.
 	}
-	private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); 
+	private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>();
+	private HashMap<String, Boolean>hmFlagPassed = new HashMap<String, Boolean>();
 	
 	/**
 	 * DEFAULT Konstruktor, notwendig, damit man objClass.newInstance(); einfach machen kann.
@@ -541,9 +542,20 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			return FLAGZ.class;
 		}
 		
+		@Override
 		public HashMap<String, Boolean>getHashMapFlagZ(){
 			return this.hmFlag;
 		} 
+		
+		@Override
+		public HashMap<String, Boolean> getHashMapFlagZpassed() {
+			return this.hmFlagPassed;
+		}
+		
+		@Override
+		public void setHashMapFlagZpassed(HashMap<String, Boolean> hmFlagPassed) {
+			this.hmFlagPassed = hmFlagPassed;
+		}	
 		
 		/* @see basic.zBasic.IFlagZZZ#getFlagZ(java.lang.String)
 		 * 	 Weteire Voraussetzungen:

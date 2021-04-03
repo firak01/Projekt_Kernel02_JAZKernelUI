@@ -115,7 +115,7 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 		 */
 		private JPanel panelParent;
 		private IKernelZZZ objKernelChoosen;
-		public ActionSaveSection(IKernelZZZ objKernel,IKernelZZZ objKernelChoosen,  JPanel panelParent){
+		public ActionSaveSection(IKernelZZZ objKernel,IKernelZZZ objKernelChoosen,  JPanel panelParent) throws ExceptionZZZ{
 			super(objKernel);
 			this.panelParent = panelParent;	
 			this.objKernelChoosen = objKernelChoosen;

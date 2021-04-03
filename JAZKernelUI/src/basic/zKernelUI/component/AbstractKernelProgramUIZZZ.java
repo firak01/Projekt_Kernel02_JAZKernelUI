@@ -28,7 +28,7 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 		super();
 	}
 	
-	public AbstractKernelProgramUIZZZ(IKernelZZZ objKernel) {
+	public AbstractKernelProgramUIZZZ(IKernelZZZ objKernel) throws ExceptionZZZ {
 		super(objKernel); 		
 	}
 	
