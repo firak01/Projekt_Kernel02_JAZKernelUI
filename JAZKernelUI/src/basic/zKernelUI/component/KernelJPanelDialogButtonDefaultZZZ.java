@@ -38,17 +38,17 @@ public class KernelJPanelDialogButtonDefaultZZZ extends KernelJPanelCascadedZZZ 
 		super();
 	}
 	
-	public KernelJPanelDialogButtonDefaultZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended, boolean bIsButtonOkAvailable){
+	public KernelJPanelDialogButtonDefaultZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended, boolean bIsButtonOkAvailable) throws ExceptionZZZ{
 		super(objKernel, dialogExtended);
 		KernelJPanelDialogButtonDefaultNew_(objKernel, dialogExtended, bIsButtonOkAvailable, false, false);
 	}
 	
-	public KernelJPanelDialogButtonDefaultZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended, boolean bIsButtonOkAvailable, boolean bIsButtonCancelAvailable){
+	public KernelJPanelDialogButtonDefaultZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended, boolean bIsButtonOkAvailable, boolean bIsButtonCancelAvailable) throws ExceptionZZZ{
 		super(objKernel, dialogExtended);
 		KernelJPanelDialogButtonDefaultNew_(objKernel, dialogExtended, bIsButtonOkAvailable, bIsButtonCancelAvailable, false);
 	}
 	
-	public KernelJPanelDialogButtonDefaultZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended, boolean bIsButtonOkAvailable, boolean bIsButtonCancelAvailable, boolean bIsButtonCloseAvailable){
+	public KernelJPanelDialogButtonDefaultZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended, boolean bIsButtonOkAvailable, boolean bIsButtonCancelAvailable, boolean bIsButtonCloseAvailable) throws ExceptionZZZ{
 		super(objKernel, dialogExtended);
 		KernelJPanelDialogButtonDefaultNew_(objKernel, dialogExtended, bIsButtonOkAvailable, bIsButtonCancelAvailable, bIsButtonCloseAvailable);
 	}

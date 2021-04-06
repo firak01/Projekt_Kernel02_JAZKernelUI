@@ -11,6 +11,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import javax.swing.JComponent;
@@ -41,6 +43,7 @@ import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasicUI.adapter.AdapterJComponent4ScreenSnapperZZZ;
 import basic.zBasicUI.listener.ListenerMouseMove4DragableWindowZZZ;
+import basic.zKernel.IKernelConfigZZZ;
 import basic.zKernel.IKernelUserZZZ;
 
 /**Diese Klasse soll sicherstellen, das ein Dialogfenster auch nur einmal geoeffnet wird.
@@ -48,8 +51,9 @@ import basic.zKernel.IKernelUserZZZ;
  *
  */
 public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConstantZZZ, IObjectZZZ, IKernelUserZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IScreenFeatureZZZ, IMouseFeatureZZZ, IFlagUserZZZ{	
-	private IKernelZZZ objKernel;
-	private LogZZZ objLog;
+	protected IKernelZZZ objKernel;
+	protected LogZZZ objLog;
+	protected ExceptionZZZ objException;
 	protected IKernelModuleZZZ objModule=null; //Das Modul, z.B. für die Dialogbox
 	
 	private boolean bPanelCenterAdded=false;
@@ -97,29 +101,73 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	 * lindhaueradmin, 23.07.2013
 	 */
 	public KernelJDialogExtendedZZZ(){// throws ExceptionZZZ{
-		//JFrame frameParent = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, (JComponent)this);
-	//20130723 raus:	KernelJFrameCascadedZZZ frameParent = (KernelJFrameCascadedZZZ) SwingUtilities.getAncestorOfClass((KernelJFrameCascadedZZZ.class), (JComponent) this);
-		//20130723 raus:		KernelJPanelCascadedNew_(null, frameParent, null);
+		//Jetzt muss im Prinzip alles gemacht werden, das in KernelUseObjectZZZ auch gemacht wird. 
+		//Leider kann diese Klasse nicht davon erben.
+		
+		//20080422 wenn objekte diese klasse erweitern scheint dies immer ausgeführt zu werden. Darum hier nicht setzen !!! this.setFlag("init", true);
 	}
-	public KernelJDialogExtendedZZZ(IKernelZZZ objKernel, KernelJFrameCascadedZZZ frameOwner, boolean bModal, HashMap<String, Boolean> hmFlag){
-		super(frameOwner, bModal);		//Das initialisiert JDialog
+	public KernelJDialogExtendedZZZ(IKernelZZZ objKernel, KernelJFrameCascadedZZZ frameOwner, boolean bModal, HashMap<String, Boolean> hmFlag) throws ExceptionZZZ{
+		super(frameOwner, bModal);	//Das initialisiert JDialog
+		KernelJDialogExtendedNew_(objKernel, frameOwner, bModal, hmFlag);
+	}
+	
+	private boolean KernelJDialogExtendedNew_(IKernelZZZ objKernel, KernelJFrameCascadedZZZ frameOwner, boolean bModal, HashMap<String, Boolean> hmFlag) throws ExceptionZZZ {
+		boolean bReturn = false;
+		main:{
+		//Jetzt muss im Prinzip alles gemacht werden, das in KernelUseObjectZZZ und ObjectZZZ auch gemacht wird. 
+		//Leider kann diese Klasse nicht davon erben.
 		this.setKernelObject(objKernel);
 		this.setLogObject(objKernel.getLogObject());
-		
-		//		Die ggf. vorhandenen Flags setzen.
+				
+		//Die ggf. vorhandenen Flags setzen.
 		if(hmFlag!=null){
 			for(String sKey:hmFlag.keySet()){
-				this.setFlag(sKey, hmFlag.get(sKey));
+				String stemp = sKey;
+				boolean btemp = this.setFlagZ(sKey, hmFlag.get(sKey));
+				if(btemp==false){
+					ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available (passed by hashmap).", iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
+					throw ez;		 
+				}
 			}
 		}
 		
-		
+		//++++++++++++++++++++++++++++++
+		boolean btemp; String sLog;		
+		//HIER geht es darum ggfs. die Flags zu übernehmen, die irgendwo gesetzt werden sollen und aus dem Kommandozeilenargument -z stammen.
+		//D.h. ggfs. stehen sie in dieser Klasse garnicht zur Verfügung
+		//Kommandozeilen-Argument soll alles übersteuern. Darum auch FALSE setzbar. Darum auch nach den "normalen" Flags verarbeiten.
+		if(this.getKernelObject()!=null) {
+			IKernelConfigZZZ objConfig = this.getKernelObject().getConfigObject();
+			if(objConfig!=null) {
+				//Übernimm die als Kommandozeilenargument gesetzten FlagZ... die können auch "false" sein.
+				Map<String,Boolean>hmFlagZpassed = objConfig.getHashMapFlagZpassed();		
+				Set<String> setFlag = hmFlagZpassed.keySet();
+				Iterator<String> itFlag = setFlag.iterator();
+				while(itFlag.hasNext()) {
+					String sKey = itFlag.next();
+					 if(!StringZZZ.isEmpty(sKey)){
+						 Boolean booValue = hmFlagZpassed.get(sKey);
+						 btemp = setFlag(sKey, booValue.booleanValue());//setzen der "auf Verdacht" indirekt übergebenen Flags
+						 if(btemp==false){						 
+							 sLog = "the passed flag '" + sKey + "' is not available for class '" + this.getClass() + "'.";
+							 this.logLineDate(ReflectCodeZZZ.getPositionCurrent() + ": " + sLog);
+	//						  Bei der "Übergabe auf Verdacht" keinen Fehler werfen!!!
+	//						  ExceptionZZZ ez = new ExceptionZZZ(sLog, iERROR_PARAMETER_VALUE, this,  ReflectCodeZZZ.getMethodCurrentName()); 
+	//						  throw ez;		 
+						  }
+					 }
+				}
+			}																										
+		}
+		//+++++++++++++++++++++++++++++++	
 		if(this.isJComponentSnappedToScreen()){
 			AdapterJComponent4ScreenSnapperZZZ snapAdapter = new AdapterJComponent4ScreenSnapperZZZ();
 			this.addComponentListener(snapAdapter);
 		}		
 		
 		this.getContentPane().setLayout(new BorderLayout());
+		}//end main:
+		return bReturn;
 	}
 	
 	public void addPanelNavigator(KernelJPanelCascadedZZZ panelNavigator) throws ExceptionZZZ{
@@ -194,7 +242,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			}
 		}
 
-	public void addPanelButton(KernelJPanelCascadedZZZ panelButton){
+	public void addPanelButton(KernelJPanelCascadedZZZ panelButton) throws ExceptionZZZ{
 		//Nun den standard Button Panel hinzuf�gen
 		if(panelButton == null){ 
 			KernelJPanelCascadedZZZ panel2add = this.getPanelButton();
@@ -345,106 +393,33 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		Frame frameParent = (Frame) SwingUtilities.getAncestorOfClass(Frame.class, this);
 		return frameParent;
 	}
-
-	//######## aus interfaces #################
-	/* (non-Javadoc)
-	 * @see basic.zBasic.IObjectZZZ#getExceptionObject()
-	 */
-	public ExceptionZZZ getExceptionObject() {
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see basic.zBasic.IObjectZZZ#setExceptionObject(basic.zBasic.ExceptionZZZ)
-	 */
-	public void setExceptionObject(ExceptionZZZ objException) {		
+	
+	public boolean isDisposed() {
+		return this.bDisposed;
 	}
 	
-	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
-	@Override
-	public void logLineDate(String sLog) {
-		LogZZZ objLog = this.getLogObject();
-		if(objLog==null) {
-			String sTemp = KernelLogZZZ.computeLineDate(sLog);
-			System.out.println(sTemp);
-		}else {
-			objLog.WriteLineDate(sLog);
-		}		
-	}	
 
-	/* (non-Javadoc)
-	 * @see basic.zKernel.IKernelZZZ#getKernelObject()
-	 */
-	public IKernelZZZ getKernelObject() {
-		return this.objKernel;
+	private void isDisposed(boolean bDispose) {
+		this.bDisposed = bDispose;
 	}
 
-	/* (non-Javadoc)
-	 * @see basic.zKernel.IKernelZZZ#setKernelObject(custom.zKernel.KernelZZZ)
-	 */
-	public void setKernelObject(IKernelZZZ objKernel) {
-		this.objKernel = objKernel;
-	}
 
-	/* (non-Javadoc)
-	 * @see basic.zKernel.IKernelZZZ#getLogObject()
-	 */
-	public LogZZZ getLogObject() {
-		return this.objLog;
-	}
-
-	/* (non-Javadoc)
-	 * @see basic.zKernel.IKernelZZZ#setLogObject(custom.zKernel.LogZZZ)
-	 */
-	public void setLogObject(LogZZZ objLog) {
-		this.objLog = objLog;
-	}
-
-	
-	//### ######################
-		public boolean isDisposed() {
-			return this.bDisposed;
-		}
-		
-
-		private void isDisposed(boolean bDispose) {
-			this.bDisposed = bDispose;
-		}
-
-
-		public void setDisposed() {
-			//Wenn man direkt auf den Dialog, z.B. aus einem Button heraus zugreifen möchte:
-			//JDialog dialogParent = (JDialog) SwingUtilities.getAncestorOfClass(JDialog.class, this.getPanelParent());
-			//dialogParent.dispose();
-			this.dispose();
-			this.isDisposed(true);
-		}
-		
-		public void setHidden() {
-			//Wenn man direkt auf den Dialog, z.B. aus einem Button heraus zugreifen möchte:
-			//JDialog dialogParent = (JDialog) SwingUtilities.getAncestorOfClass(JDialog.class, this.getPanelParent());
-			//dialogParent.setVisible(false);	//dialogParent.hide();
-			this.setVisible(false);
-			this.isDisposed(false);
-		}
-		
-		//#####################################
-	
-	/* (non-Javadoc)
-	 * @see basic.zKernelUI.IScreenFeatureZZZ#isJComponentSnappedToScreen()
-	 */
-	public boolean isJComponentSnappedToScreen() {
-		return false;
+	public void setDisposed() {
+		//Wenn man direkt auf den Dialog, z.B. aus einem Button heraus zugreifen möchte:
+		//JDialog dialogParent = (JDialog) SwingUtilities.getAncestorOfClass(JDialog.class, this.getPanelParent());
+		//dialogParent.dispose();
+		this.dispose();
+		this.isDisposed(true);
 	}
 	
-	public boolean isJComponentContentDraggable(){
-		return this.getFlag(KernelJDialogExtendedZZZ.FLAGZ.ISDRAGGABLE.name());
+	public void setHidden() {
+		//Wenn man direkt auf den Dialog, z.B. aus einem Button heraus zugreifen möchte:
+		//JDialog dialogParent = (JDialog) SwingUtilities.getAncestorOfClass(JDialog.class, this.getPanelParent());
+		//dialogParent.setVisible(false);	//dialogParent.hide();
+		this.setVisible(false);
+		this.isDisposed(false);
 	}
-	
-	public void setJComponentContentDraggable(boolean bValue){
-		this.setFlag(KernelJDialogExtendedZZZ.FLAGZ.ISDRAGGABLE.name(), bValue);
-	}
-	
+			
 	public String getText4ButtonOk(){
 		String sReturn = this.sText4ButtonOk;
 		if(StringZZZ.isEmpty(sReturn)) {
@@ -478,24 +453,25 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		this.sText4ButtonCancel = sText;
 	}
 	
-	public abstract KernelJPanelCascadedZZZ getPanelButton();
+	public abstract KernelJPanelCascadedZZZ getPanelButton() throws ExceptionZZZ;
 	public abstract KernelJPanelCascadedZZZ getPanelContent() throws ExceptionZZZ;
-	public abstract KernelJPanelCascadedZZZ getPanelNavigator(); 
+	public abstract KernelJPanelCascadedZZZ getPanelNavigator() throws ExceptionZZZ; 
 	
 	/** Kann von einer Dialogbox ueberschrieben werden, wenn ein anderes Panel als das "Default" Panel verwendet werden soll.
 	* @return
 	* 
 	* lindhaueradmin; 11.01.2007 08:27:54
+	 * @throws ExceptionZZZ 
 	 */
-	public KernelJPanelCascadedZZZ getPanelButtonDefault(){
+	public KernelJPanelCascadedZZZ getPanelButtonDefault() throws ExceptionZZZ{
 		KernelJPanelCascadedZZZ panel = new KernelJPanelDialogButtonDefaultZZZ(this.getKernelObject(), this, this.isButtonOkAvailable(), this.isButtonCancelAvailable(), this.isButtonCloseAvailable());
 		return panel;
 	}
-	public KernelJPanelCascadedZZZ getPanelContentDefault(){
+	public KernelJPanelCascadedZZZ getPanelContentDefault() throws ExceptionZZZ{
 		KernelJPanelCascadedZZZ panel = new KernelJPanelDialogContentDefaultZZZ(this.getKernelObject(), this, this.getText4ContentDefault());
 		return panel;
 	}
-	public KernelJPanelCascadedZZZ getPanelNavigatorDefault() {		
+	public KernelJPanelCascadedZZZ getPanelNavigatorDefault() throws ExceptionZZZ {		
 		KernelJPanelDialogContentEmptyZZZ panel = new KernelJPanelDialogContentEmptyZZZ(this.getKernelObject(), this);
 		return panel;
 	}
@@ -506,7 +482,87 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	public void setText4ContentDefault(String sText){
 		this.sText4ContentDefault = sText;
 	}
+		
+
+	//######## aus interfaces #################
+	//#################### Interface IObjectZZZ
+		@Override
+		public ExceptionZZZ getExceptionObject() {
+			return this.objException;
+		}
+
+		@Override
+		public void setExceptionObject(ExceptionZZZ objException) {
+			 this.objException = objException;
+		}
+		
+		//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
+		@Override
+		public void logLineDate(String sLog) {
+			LogZZZ objLog = this.getLogObject();
+			if(objLog==null) {
+				String sTemp = KernelLogZZZ.computeLineDate(sLog);
+				System.out.println(sTemp);
+			}else {
+				objLog.WriteLineDate(sLog);
+			}		
+		}	
+
+		//#################### Interface IKernelUserZZZ
+		/* (non-Javadoc)
+		 * @see basic.zKernel.IKernelUserZZZ#getKernelObject()
+		 */
+		@Override
+		public IKernelZZZ getKernelObject() {
+			return objKernel;
+		}
+
+		/* (non-Javadoc)
+		 * @see basic.zKernel.IKernelUserZZZ#setKernelObject(basic.zKernel.IKernelZZZ)
+		 */
+		@Override
+		public void setKernelObject(IKernelZZZ objKernel) {
+			this.objKernel = objKernel;
+		}
+
+		/* (non-Javadoc)
+		 * @see basic.zKernel.IKernelLogUserZZZ#getLogObject()
+		 */
+		@Override
+		public LogZZZ getLogObject() {
+			return this.objLog;
+		}
+
+		/* (non-Javadoc)
+		 * @see basic.zKernel.IKernelLogUserZZZ#setLogObject(custom.zKernel.LogZZZ)
+		 */
+		@Override
+		public void setLogObject(LogZZZ objLog) {
+			this.objLog = objLog;
+		}
 	
+		
+	//#####################################
+	/* (non-Javadoc)
+	 * @see basic.zKernelUI.IScreenFeatureZZZ#isJComponentSnappedToScreen()
+	 */
+	public boolean isJComponentSnappedToScreen() {
+		return false;
+	}
+	
+	/* (non-Javadoc)
+	 * @see basic.zKernelUI.component.IMouseFeatureZZZ#isJComponentContentDraggable()
+	 */
+	public boolean isJComponentContentDraggable(){
+		return this.getFlag(KernelJDialogExtendedZZZ.FLAGZ.ISDRAGGABLE.name());
+	}
+	
+	/* (non-Javadoc)
+	 * @see basic.zKernelUI.component.IMouseFeatureZZZ#setJComponentContentDraggable(boolean)
+	 */
+	public void setJComponentContentDraggable(boolean bValue){
+		this.setFlag(KernelJDialogExtendedZZZ.FLAGZ.ISDRAGGABLE.name(), bValue);
+	}
 
 	/* (non-Javadoc)
 	 * @see basic.zKernelUI.IPanelDialogZZZ#isButtonOkAvailable()
@@ -688,10 +744,9 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			}
 		}
 		
-		
-		
+				
 		/** DIESE METHODE MUSS IN ALLEN KLASSEN VORHANDEN SEIN - über Vererbung -, DIE IHRE FLAGS SETZEN WOLLEN
-		 * Weteire Voraussetzungen:
+		 * Weitere Voraussetzungen:
 		 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
 		 * - Innere Klassen müssen auch public deklariert werden.
 		 * @param objClassParent

@@ -24,7 +24,7 @@ public class KernelJPanelDialogContentEmptyZZZ extends KernelJPanelCascadedZZZ{
 		super();
 	}
 	
-	public KernelJPanelDialogContentEmptyZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended){
+	public KernelJPanelDialogContentEmptyZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended) throws ExceptionZZZ{
 		super(objKernel, dialogExtended);
 		KernelJPanelDialogContentEmptyNew_();
 	}

@@ -25,7 +25,7 @@ public class KernelJPanelDialogContentDefaultZZZ extends KernelJPanelCascadedZZZ
 		super();
 	}
 	
-	public KernelJPanelDialogContentDefaultZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended, String sText4ContentDefault){
+	public KernelJPanelDialogContentDefaultZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended, String sText4ContentDefault) throws ExceptionZZZ{
 		super(objKernel, dialogExtended);
 		this.sText4ContentDefault= sText4ContentDefault;
 		this.addContentDefault();

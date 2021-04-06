@@ -26,7 +26,7 @@ public class PanelDialogContentEmptyZZZ extends KernelJPanelDialogContentEmptyZZ
 		super();
 	}
 	
-	public PanelDialogContentEmptyZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended){
+	public PanelDialogContentEmptyZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended) throws ExceptionZZZ{
 		super(objKernel, dialogExtended);
 	}
 	
