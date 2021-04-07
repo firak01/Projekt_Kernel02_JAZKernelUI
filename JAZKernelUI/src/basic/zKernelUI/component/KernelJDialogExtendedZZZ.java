@@ -140,24 +140,26 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			IKernelConfigZZZ objConfig = this.getKernelObject().getConfigObject();
 			if(objConfig!=null) {
 				//Übernimm die als Kommandozeilenargument gesetzten FlagZ... die können auch "false" sein.
-				Map<String,Boolean>hmFlagZpassed = objConfig.getHashMapFlagZpassed();		
-				Set<String> setFlag = hmFlagZpassed.keySet();
-				Iterator<String> itFlag = setFlag.iterator();
-				while(itFlag.hasNext()) {
-					String sKey = itFlag.next();
-					 if(!StringZZZ.isEmpty(sKey)){
-						 Boolean booValue = hmFlagZpassed.get(sKey);
-						 btemp = setFlag(sKey, booValue.booleanValue());//setzen der "auf Verdacht" indirekt übergebenen Flags
-						 if(btemp==false){						 
-							 sLog = "the passed flag '" + sKey + "' is not available for class '" + this.getClass() + "'.";
-							 this.logLineDate(ReflectCodeZZZ.getPositionCurrent() + ": " + sLog);
-	//						  Bei der "Übergabe auf Verdacht" keinen Fehler werfen!!!
-	//						  ExceptionZZZ ez = new ExceptionZZZ(sLog, iERROR_PARAMETER_VALUE, this,  ReflectCodeZZZ.getMethodCurrentName()); 
-	//						  throw ez;		 
-						  }
-					 }
-				}
-			}																										
+				Map<String,Boolean>hmFlagZpassed = objConfig.getHashMapFlagZpassed();
+				if(hmFlagZpassed!=null) {
+					Set<String> setFlag = hmFlagZpassed.keySet();
+					Iterator<String> itFlag = setFlag.iterator();
+					while(itFlag.hasNext()) {
+						String sKey = itFlag.next();
+						 if(!StringZZZ.isEmpty(sKey)){
+							 Boolean booValue = hmFlagZpassed.get(sKey);
+							 btemp = setFlag(sKey, booValue.booleanValue());//setzen der "auf Verdacht" indirekt übergebenen Flags
+							 if(btemp==false){						 
+								 sLog = "the passed flag '" + sKey + "' is not available for class '" + this.getClass() + "'.";
+								 this.logLineDate(ReflectCodeZZZ.getPositionCurrent() + ": " + sLog);
+		//						  Bei der "Übergabe auf Verdacht" keinen Fehler werfen!!!
+		//						  ExceptionZZZ ez = new ExceptionZZZ(sLog, iERROR_PARAMETER_VALUE, this,  ReflectCodeZZZ.getMethodCurrentName()); 
+		//						  throw ez;		 
+							  }
+						 }
+					}
+				}		
+			}
 		}
 		//+++++++++++++++++++++++++++++++	
 		if(this.isJComponentSnappedToScreen()){
