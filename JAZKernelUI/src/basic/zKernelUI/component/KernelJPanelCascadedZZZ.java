@@ -311,7 +311,8 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		//Ein Label hinzufuegen, in dem der Panel-Klassennamen steht (zu Debug- und Analysezwecken)
 		if(this.getFlagZ(IComponentCascadedUserZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())) {
 			//Label, das keine Konfigurierten Module zur Verfuegung stehen
-			JLabel labelDebug = new JLabel(this.getClass().getName());
+			stemp = this.getClass().getName();
+			JLabel labelDebug = new JLabel(stemp);
 			this.add(labelDebug);
 			this.setComponent("LabelDebug", labelDebug);	
 		}			
@@ -319,14 +320,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		//Einen Mouse Listener hinzufuegen, der es erlaubt Fenster zu ziehen (auch im Panel und nicht nur in der Titelleiste)
 		//if(this.getFlag("isdraggable")){
 		if(this.getFlagZ(FLAGZ.COMPONENT_DRAGGABLE.name())){	
-			
 			this.setJComponentContentDraggable(this.isJComponentContentDraggable());
-		
-			/*
-				ListenerMouseMove4DragableWindowZZZ mml = new ListenerMouseMove4DragableWindowZZZ((JPanel)this, frameParent);
-				this.addMouseListener(mml);
-				this.addMouseMotionListener(mml);
-			*/
 		}
 			bReturn = true;
 		}//end main:
