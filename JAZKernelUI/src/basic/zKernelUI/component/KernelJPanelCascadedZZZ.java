@@ -22,6 +22,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.RowSpec;
+import com.jgoodies.forms.layout.Sizes;
+
 import basic.javareflection.mopex.Mopex;
 import basic.zBasic.IConstantZZZ;
 import basic.zBasic.IObjectZZZ;
@@ -51,7 +56,7 @@ import custom.zKernel.LogZZZ;
  * 
  *  Merke: Die Panels können sowohl nur modulnutzer als auch selber Modul sein. Darum werden beide Interfaces implementiert.
  */
-public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IKernelUserZZZ, IObjectZZZ, IMouseFeatureZZZ, IFlagUserZZZ{
+public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IFormLayoutUserZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IKernelUserZZZ, IObjectZZZ, IMouseFeatureZZZ, IFlagUserZZZ{
 	protected IKernelZZZ objKernel;   //das "protected" erlaubt es hiervon erbende Klassen mit XYXErbendeKlasse.objKernel zu arbeiten.
 	protected LogZZZ objLog;
 	protected ExceptionZZZ objException;
@@ -72,6 +77,8 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 
 	private String sProgramName  = null; //ggf. der Name des Elternprogramms, s. KernelKonfiguration
 	private String sProgramAlias = null; //ggf. der Alias des Elternprogramms, s. KernelKonfiguration
+	
+	FormLayout formLayoutUsed = null;
 	
 	/**20130721: Umgestellt auf HashMap und die Enum-Flags, Compiler auf 1.7 ge�ndert
 	 * 
@@ -976,5 +983,80 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			}								
 		}//end main:		
 		return sReturn;
+	}
+	
+	//##### IFormLayoutUserZZZ
+	@Override
+	public FormLayout getFormLayoutUsed() {
+		//Wenn man das rein im Konstruktor erstellt, z.B.:
+		//Erste Zeile sind die Spalten
+		//Zweite Zeile sind die Zeilen (hier immer mit einer "Zwischenzeile",zum Abstand halten)
+		//FormLayout layout = new FormLayout(
+		//"5dlu, right:pref:grow(0.5), 5dlu:grow(0.5), left:50dlu:grow(0.5), 5dlu, center:pref:grow(0.5),5dlu",  
+		//"5dlu, center:10dlu, 5dlu"); 
+		
+		if(this.formLayoutUsed==null) {
+			this.formLayoutUsed = this.buildFormLayoutUsed();
+		}
+		return this.formLayoutUsed;
+	}
+	@Override
+	public void setFormLayoutUsed(FormLayout formLayout) {
+		this.formLayoutUsed = formLayout;
+	}
+	@Override
+	public FormLayout buildFormLayoutUsed() {
+		FormLayout objReturn = new FormLayout();
+		main:{		
+			ArrayList<RowSpec> listRow = this.buildRowSpecs();
+			if(listRow!=null) {
+				for(RowSpec row:listRow) {
+					objReturn.appendRow(row);
+				}
+			}
+			
+			RowSpec rowGap = this.buildRowSpecGap();
+			if(rowGap!=null) {
+				objReturn.appendRow(rowGap);
+			}
+			
+			RowSpec rowDebug = this.buildRowSpecDebug();
+			if(rowDebug!=null && listRow!=null) {				
+				objReturn.insertRow(1, rowDebug);//RowIndex beginnt mit 1
+			}
+			
+			ArrayList<ColumnSpec>listColumn = this.buildColumnSpecs();
+			if(listColumn!=null) {
+				for(ColumnSpec column:listColumn) {
+					objReturn.appendColumn(column);
+				}
+			}
+		}//end main;
+		return objReturn;
+	}
+	
+	
+	@Override
+	public RowSpec buildRowSpecDebug() {
+		return null; //falls keine Debugzeile implementiert wird
+	}
+	@Override
+	public ArrayList<RowSpec> buildRowSpecs() {
+		return null; //Falls das FormLayout nicht genutzt wird, oder direkt implementiert wird.
+	}
+	
+	@Override
+	public ArrayList<ColumnSpec> buildColumnSpecs() {
+		return null; //Falls das FormLayout nicht genutzt wird, oder direkt implementiert wird.
+	}
+	
+	@Override
+	public RowSpec buildRowSpecGap() {		
+		return null; //Falls das FormLayout nicht genutzt wird, oder direkt implementiert wird.
+	}
+	
+	@Override
+	public ColumnSpec buildColumnSpecGap() {		
+		return null; //Falls das FormLayout nicht genutzt wird, oder direkt implementiert wird.
 	}
 }

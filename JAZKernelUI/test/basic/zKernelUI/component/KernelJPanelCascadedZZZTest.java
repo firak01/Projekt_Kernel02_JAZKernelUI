@@ -5,6 +5,8 @@ package basic.zKernelUI.component;
 
 import javax.swing.JComponent;
 
+import com.jgoodies.forms.layout.RowSpec;
+
 import junit.framework.TestCase;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ObjectZZZ;
@@ -127,8 +129,7 @@ public class KernelJPanelCascadedZZZTest  extends TestCase{
 		}
 		public PanelMain(KernelZZZ objKernel) throws ExceptionZZZ{
 			super(objKernel);
-		}
-		
+		}			
 	}
 }//END class KernelUIZZZTest
 
