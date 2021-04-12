@@ -22,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
@@ -1036,6 +1037,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	}
 	
 	
+	//DIESE METHODEN MÜSSEN DANN VON DEN LAYOUT-USER-KLASSEN UEBERSCHRIEBEN WERDEN
 	@Override
 	public RowSpec buildRowSpecDebug() {
 		return null; //falls keine Debugzeile implementiert wird
@@ -1058,5 +1060,15 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	@Override
 	public ColumnSpec buildColumnSpecGap() {		
 		return null; //Falls das FormLayout nicht genutzt wird, oder direkt implementiert wird.
+	}
+	
+	@Override
+	public boolean fillRowDebug(CellConstraints cc) {
+		return false;
+	}
+	
+	@Override
+	public boolean fillRow(CellConstraints cc, int iRow) {
+		return false;
 	}
 }
