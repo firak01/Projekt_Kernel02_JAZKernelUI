@@ -318,7 +318,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		//Ein Label hinzufuegen, in dem der Panel-Klassennamen steht (zu Debug- und Analysezwecken)
 		if(this.getFlagZ(IComponentCascadedUserZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())) {
 			//Label, das keine Konfigurierten Module zur Verfuegung stehen
-			stemp = this.getClass().getName();
+			stemp = this.getClass().getSimpleName();
 			JLabel labelDebug = new JLabel(stemp);
 			this.add(labelDebug);
 			this.setComponent("LabelDebug", labelDebug);	
