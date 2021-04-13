@@ -987,6 +987,23 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	}
 	
 	//##### IFormLayoutUserZZZ
+	@Override 
+	public boolean initFormLayout() throws ExceptionZZZ {
+		boolean bReturn = false;
+		main:{					
+			FormLayout layout = this.getFormLayoutUsed();
+			if(layout!=null) {
+				this.setLayout(layout);              //!!! wichtig: Das layout muss dem Panel zugewiesen werden BEVOR mit constraints die Componenten positioniert werden.
+				CellConstraints cc = new CellConstraints();
+				this.fillRowDebug(cc);
+				this.fillRow(cc, 1);
+				
+				bReturn = true;
+			}
+		}//end main:
+		return bReturn;
+	}
+	
 	@Override
 	public FormLayout getFormLayoutUsed() {
 		//Wenn man das rein im Konstruktor erstellt, z.B.:
@@ -1014,11 +1031,6 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				for(RowSpec row:listRow) {
 					objReturn.appendRow(row);
 				}
-			}
-			
-			RowSpec rowGap = this.buildRowSpecGap();
-			if(rowGap!=null) {
-				objReturn.appendRow(rowGap);
 			}
 			
 			RowSpec rowDebug = this.buildRowSpecDebug();
@@ -1068,7 +1080,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	}
 	
 	@Override
-	public boolean fillRow(CellConstraints cc, int iRow) {
+	public boolean fillRow(CellConstraints cc, int iRow) throws ExceptionZZZ {
 		return false;
 	}
 }

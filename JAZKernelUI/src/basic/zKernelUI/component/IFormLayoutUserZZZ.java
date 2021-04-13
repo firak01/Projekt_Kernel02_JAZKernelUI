@@ -7,7 +7,11 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
+import basic.zBasic.ExceptionZZZ;
+
 public interface IFormLayoutUserZZZ {
+	public abstract boolean initFormLayout() throws ExceptionZZZ;
+	
 	public abstract FormLayout getFormLayoutUsed();
 	public abstract void setFormLayoutUsed(FormLayout formLayout);
 	
@@ -21,6 +25,6 @@ public interface IFormLayoutUserZZZ {
 	public abstract ColumnSpec buildColumnSpecGap();
 	
 	public abstract boolean fillRowDebug(CellConstraints cc);
-	public abstract boolean fillRow(CellConstraints cc, int iRow);
+	public abstract boolean fillRow(CellConstraints cc, int iRow) throws ExceptionZZZ;
 	
 }
