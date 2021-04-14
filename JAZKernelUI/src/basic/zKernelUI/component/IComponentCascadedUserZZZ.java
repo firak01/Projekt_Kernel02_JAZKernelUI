@@ -11,4 +11,6 @@ public interface IComponentCascadedUserZZZ extends IKernelUserZZZ{
 	public abstract JComponent getComponent(String sAlias);
 	public abstract void setComponent(String sAlias, JComponent objComponent);
 
+	
+	public abstract boolean createDebugUI();//Mache eine Debugausgabe, um die Komponente zu indentifizieren
 }

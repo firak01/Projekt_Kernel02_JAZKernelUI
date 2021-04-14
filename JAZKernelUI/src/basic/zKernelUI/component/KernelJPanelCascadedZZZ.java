@@ -20,6 +20,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import com.jgoodies.forms.layout.CellConstraints;
@@ -57,7 +58,7 @@ import custom.zKernel.LogZZZ;
  * 
  *  Merke: Die Panels können sowohl nur modulnutzer als auch selber Modul sein. Darum werden beide Interfaces implementiert.
  */
-public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IFormLayoutUserZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IKernelUserZZZ, IObjectZZZ, IMouseFeatureZZZ, IFlagUserZZZ{
+public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IKernelUserZZZ, IObjectZZZ, IMouseFeatureZZZ, IFlagUserZZZ{
 	protected IKernelZZZ objKernel;   //das "protected" erlaubt es hiervon erbende Klassen mit XYXErbendeKlasse.objKernel zu arbeiten.
 	protected LogZZZ objLog;
 	protected ExceptionZZZ objException;
@@ -78,8 +79,6 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 
 	private String sProgramName  = null; //ggf. der Name des Elternprogramms, s. KernelKonfiguration
 	private String sProgramAlias = null; //ggf. der Alias des Elternprogramms, s. KernelKonfiguration
-	
-	FormLayout formLayoutUsed = null;
 	
 	/**20130721: Umgestellt auf HashMap und die Enum-Flags, Compiler auf 1.7 ge�ndert
 	 * 
@@ -315,15 +314,9 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			frameParent.getContentPane().add(this);	
 		}
 		
-				
-		//Ein Label hinzufuegen, in dem der Panel-Klassennamen steht (zu Debug- und Analysezwecken)
-		if(this.getFlagZ(IComponentCascadedUserZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())) {
-			//Label, das keine Konfigurierten Module zur Verfuegung stehen
-			stemp = this.getClass().getSimpleName();
-			JLabel labelDebug = new JLabel(stemp);
-			this.add(labelDebug);
-			this.setComponent("LabelDebug", labelDebug);	
-		}			
+		//Ggfs. die DebugUI-Angaben hinzufügen, das kann z.B. nur das Label mit dem Klassennamen sein.
+		//Gesteuert werde soll das durch Flags, die auch über die Kommandozeile übergeben werden können.
+		boolean bDebugUI = createDebugUI();
 		
 		//Einen Mouse Listener hinzufuegen, der es erlaubt Fenster zu ziehen (auch im Panel und nicht nur in der Titelleiste)
 		//if(this.getFlag("isdraggable")){
@@ -986,101 +979,22 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		return sReturn;
 	}
 	
-	//##### IFormLayoutUserZZZ
-	@Override 
-	public boolean initFormLayout() throws ExceptionZZZ {
+	//#### IComponentCascadedUserZZZ
+	@Override
+	public boolean createDebugUI() {
 		boolean bReturn = false;
-		main:{					
-			FormLayout layout = this.getFormLayoutUsed();
-			if(layout!=null) {
-				this.setLayout(layout);              //!!! wichtig: Das layout muss dem Panel zugewiesen werden BEVOR mit constraints die Componenten positioniert werden.
-				CellConstraints cc = new CellConstraints();
-				this.fillRowDebug(cc);
-				this.fillRow(cc, 1);
-				
-				bReturn = true;
-			}
+		main:{
+			String stemp;
+			
+			//Ein Label hinzufuegen, in dem der Panel-Klassennamen steht (zu Debug- und Analysezwecken)
+			if(this.getFlagZ(IComponentCascadedUserZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())) {
+				//Label, das keine Konfigurierten Module zur Verfuegung stehen
+				stemp = this.getClass().getSimpleName();
+				JLabel labelDebug = new JLabel("Cascaded: " + stemp);
+				this.add(labelDebug);
+				this.setComponent("LabelDebug", labelDebug);	
+			}		
 		}//end main:
-		return bReturn;
-	}
-	
-	@Override
-	public FormLayout getFormLayoutUsed() {
-		//Wenn man das rein im Konstruktor erstellt, z.B.:
-		//Erste Zeile sind die Spalten
-		//Zweite Zeile sind die Zeilen (hier immer mit einer "Zwischenzeile",zum Abstand halten)
-		//FormLayout layout = new FormLayout(
-		//"5dlu, right:pref:grow(0.5), 5dlu:grow(0.5), left:50dlu:grow(0.5), 5dlu, center:pref:grow(0.5),5dlu",  
-		//"5dlu, center:10dlu, 5dlu"); 
-		
-		if(this.formLayoutUsed==null) {
-			this.formLayoutUsed = this.buildFormLayoutUsed();
-		}
-		return this.formLayoutUsed;
-	}
-	@Override
-	public void setFormLayoutUsed(FormLayout formLayout) {
-		this.formLayoutUsed = formLayout;
-	}
-	@Override
-	public FormLayout buildFormLayoutUsed() {
-		FormLayout objReturn = new FormLayout();
-		main:{		
-			ArrayList<RowSpec> listRow = this.buildRowSpecs();
-			if(listRow!=null) {
-				for(RowSpec row:listRow) {
-					objReturn.appendRow(row);
-				}
-			}
-			
-			RowSpec rowDebug = this.buildRowSpecDebug();
-			if(rowDebug!=null && listRow!=null) {				
-				objReturn.insertRow(1, rowDebug);//RowIndex beginnt mit 1
-			}
-			
-			ArrayList<ColumnSpec>listColumn = this.buildColumnSpecs();
-			if(listColumn!=null) {
-				for(ColumnSpec column:listColumn) {
-					objReturn.appendColumn(column);
-				}
-			}
-		}//end main;
-		return objReturn;
-	}
-	
-	
-	//DIESE METHODEN MÜSSEN DANN VON DEN LAYOUT-USER-KLASSEN UEBERSCHRIEBEN WERDEN
-	@Override
-	public RowSpec buildRowSpecDebug() {
-		return null; //falls keine Debugzeile implementiert wird
-	}
-	@Override
-	public ArrayList<RowSpec> buildRowSpecs() {
-		return null; //Falls das FormLayout nicht genutzt wird, oder direkt implementiert wird.
-	}
-	
-	@Override
-	public ArrayList<ColumnSpec> buildColumnSpecs() {
-		return null; //Falls das FormLayout nicht genutzt wird, oder direkt implementiert wird.
-	}
-	
-	@Override
-	public RowSpec buildRowSpecGap() {		
-		return null; //Falls das FormLayout nicht genutzt wird, oder direkt implementiert wird.
-	}
-	
-	@Override
-	public ColumnSpec buildColumnSpecGap() {		
-		return null; //Falls das FormLayout nicht genutzt wird, oder direkt implementiert wird.
-	}
-	
-	@Override
-	public boolean fillRowDebug(CellConstraints cc) {
-		return false;
-	}
-	
-	@Override
-	public boolean fillRow(CellConstraints cc, int iRow) throws ExceptionZZZ {
-		return false;
+		return bReturn;		
 	}
 }
