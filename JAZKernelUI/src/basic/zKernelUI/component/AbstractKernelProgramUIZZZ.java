@@ -11,6 +11,7 @@ import basic.zKernel.IKernelZZZ;
 import basic.zKernel.component.AbstractKernelProgramZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.component.IKernelProgramZZZ;
+import basic.zKernelUI.util.JTextFieldHelperZZZ;
 
 public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZZ{
 	private KernelJPanelCascadedZZZ panel = null;
@@ -119,7 +120,8 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 				JTextField textField = (JTextField) getPanelParent().getComponent(sTextfield4Update);
 				if(textField!=null) {
 					textField.setText(sText2Update);
-					textField.setCaretPosition(0);   //Das soll bewirken, dass der Anfang jedes neu eingegebenen Textes sichtbar ist.
+					
+					JTextFieldHelperZZZ.markAndFocus(textField);//Merke: Jetzt den Cursor noch verändern macht dies wieder rückgängig.										
 				}
 			}
 		};
