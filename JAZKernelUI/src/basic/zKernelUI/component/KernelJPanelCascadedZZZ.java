@@ -990,7 +990,10 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			if(this.getFlagZ(IComponentCascadedUserZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())) {
 				//Label, das keine Konfigurierten Module zur Verfuegung stehen
 				stemp = this.getClass().getSimpleName();
-				JLabel labelDebug = new JLabel("Cascaded: " + stemp);
+				//das ist zu lange und nicht aussagekräftig genug String sParent = this.getClass().getSuperclass().getSimpleName();
+				String sParent = "Cascaded";
+				String sHtml = "<html><body>"+sParent+":<br>"+stemp+"</body></html>";				
+				JLabel labelDebug = new JLabel(sHtml);
 				this.add(labelDebug);
 				this.setComponent("LabelDebug", labelDebug);	
 			}		

@@ -182,10 +182,14 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 				if(listCs==null)break main;
 				
 				int iColumns = listCs.size(); 
-				
-				JLabel label = new JLabel("FormLayout: " + this.getClass().getSimpleName());
-				label.setHorizontalAlignment(JTextField.LEFT);
-				this.add(label, cc.xyw(iStartingColumn,iStartingRow, iColumns));
+
+				String stemp = this.getClass().getSimpleName();
+				//das ist zu lange und nicht aussagekräftig genug String sParent = this.getClass().getSuperclass().getSimpleName();
+				String sParent = "FormLayouted";
+				String sHtml = "<html><body>"+sParent+":<br>"+stemp+"</body></html>";				
+				JLabel labelDebug = new JLabel(sHtml);
+				labelDebug.setHorizontalAlignment(JTextField.LEFT);
+				this.add(labelDebug, cc.xyw(iStartingColumn,iStartingRow, iColumns));
 				
 				bReturn = true;
 			}//end main;
