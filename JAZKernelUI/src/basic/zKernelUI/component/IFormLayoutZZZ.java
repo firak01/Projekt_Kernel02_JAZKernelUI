@@ -22,7 +22,7 @@ public interface IFormLayoutZZZ {
 	public abstract ArrayList<ColumnSpec> getColumnSpecs();
 	public abstract ArrayList<ColumnSpec> buildColumnSpecs();
 		
-	public abstract boolean fillRowDebug(CellConstraints cc);
+	public abstract boolean fillRowDebug(CellConstraints cc) throws ExceptionZZZ;
 	public abstract boolean fillRowContent(CellConstraints cc, int iRow) throws ExceptionZZZ;
 	
 }

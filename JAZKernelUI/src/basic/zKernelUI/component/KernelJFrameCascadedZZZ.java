@@ -140,12 +140,8 @@ private HashMap<String, Boolean>hmFlagPassed = new HashMap<String, Boolean>();
 		}		
 	}
 	
+	//############################################
 	//############ Interfaces
-	//IComponentCascadedUserZZZ
-	@Override
-	public boolean createDebugUI() {
-		return false;
-	}
 	
 	/**Overwritten and using an object of jakarta.commons.lang
 	 * to create this string using reflection. 

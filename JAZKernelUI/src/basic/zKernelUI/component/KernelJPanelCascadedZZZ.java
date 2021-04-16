@@ -36,6 +36,7 @@ import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ObjectZZZ;
 import basic.zBasic.ReflectClassZZZ;
 import basic.zBasic.ReflectCodeZZZ;
+import basic.zBasic.util.abstractList.ArrayListZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasic.util.log.ReportLogZZZ;
@@ -58,7 +59,7 @@ import custom.zKernel.LogZZZ;
  * 
  *  Merke: Die Panels können sowohl nur modulnutzer als auch selber Modul sein. Darum werden beide Interfaces implementiert.
  */
-public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IKernelUserZZZ, IObjectZZZ, IMouseFeatureZZZ, IFlagUserZZZ{
+public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IKernelUserZZZ, IObjectZZZ, IMouseFeatureZZZ, IDebugUiZZZ, IFlagUserZZZ{
 	protected IKernelZZZ objKernel;   //das "protected" erlaubt es hiervon erbende Klassen mit XYXErbendeKlasse.objKernel zu arbeiten.
 	protected LogZZZ objLog;
 	protected ExceptionZZZ objException;
@@ -316,7 +317,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		
 		//Ggfs. die DebugUI-Angaben hinzufügen, das kann z.B. nur das Label mit dem Klassennamen sein.
 		//Gesteuert werde soll das durch Flags, die auch über die Kommandozeile übergeben werden können.
-		boolean bDebugUI = createDebugUI();
+		boolean bDebugUI = createDebugUi();
 		
 		//Einen Mouse Listener hinzufuegen, der es erlaubt Fenster zu ziehen (auch im Panel und nicht nur in der Titelleiste)
 		//if(this.getFlag("isdraggable")){
@@ -981,19 +982,25 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	
 	//#### IComponentCascadedUserZZZ
 	@Override
-	public boolean createDebugUI() {
+	public boolean createDebugUi() throws ExceptionZZZ {
 		boolean bReturn = false;
 		main:{
 			String stemp;
 			
 			//Ein Label hinzufuegen, in dem der Panel-Klassennamen steht (zu Debug- und Analysezwecken)
-			if(this.getFlagZ(IComponentCascadedUserZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())) {
+			if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())) {
 				//Label, das keine Konfigurierten Module zur Verfuegung stehen
 				stemp = this.getClass().getSimpleName();
+				
 				//das ist zu lange und nicht aussagekräftig genug String sParent = this.getClass().getSuperclass().getSimpleName();
-				String sParent = "Cascaded";
-				String sHtml = "<html><body>"+sParent+":<br>"+stemp+"</body></html>";				
-				JLabel labelDebug = new JLabel(sHtml);
+				ArrayList<String> listaParent = new ArrayList<String>();
+				listaParent.add("Cascaded");
+				listaParent.add(stemp);				
+
+				String[]saParent=ArrayListZZZ.toStringArray(listaParent);				
+				String sHtml = StringArrayZZZ.asHtml(saParent);	
+				
+				JLabel labelDebug = new JLabel(sHtml);						
 				this.add(labelDebug);
 				this.setComponent("LabelDebug", labelDebug);	
 			}		

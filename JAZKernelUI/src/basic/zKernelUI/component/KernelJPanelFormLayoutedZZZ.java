@@ -12,6 +12,8 @@ import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.Sizes;
 
 import basic.zBasic.ExceptionZZZ;
+import basic.zBasic.util.abstractList.ArrayListZZZ;
+import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zKernel.IKernelZZZ;
 
 public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZZ implements IFormLayoutZZZ, IFormLayoutUserZZZ{
@@ -63,7 +65,7 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 		int iReturn=0;
 		main:{
 			int iRowOffset=0;
-			if(this.getFlag(IComponentCascadedUserZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())) {
+			if(this.getFlag(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())) {
 				iRowOffset=1;
 			}
 			iReturn = iRow + iRowOffset;
@@ -172,7 +174,7 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 		}
 			
 		@Override
-		public boolean fillRowDebug(CellConstraints cc) {
+		public boolean fillRowDebug(CellConstraints cc) throws ExceptionZZZ{
 			boolean bReturn = false;
 			main:{			
 				int iStartingRow = 1; //Die Debugzeile ist immer oben
@@ -185,8 +187,13 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 
 				String stemp = this.getClass().getSimpleName();
 				//das ist zu lange und nicht aussagekräftig genug String sParent = this.getClass().getSuperclass().getSimpleName();
-				String sParent = "FormLayouted";
-				String sHtml = "<html><body>"+sParent+":<br>"+stemp+"</body></html>";				
+				ArrayList<String> listaParent = new ArrayList<String>();
+				listaParent.add("FormLayouted");
+				listaParent.add(stemp);
+				
+				String[]saParent=ArrayListZZZ.toStringArray(listaParent);				
+				String sHtml = StringArrayZZZ.asHtml(saParent);	
+				
 				JLabel labelDebug = new JLabel(sHtml);
 				labelDebug.setHorizontalAlignment(JTextField.LEFT);
 				this.add(labelDebug, cc.xyw(iStartingColumn,iStartingRow, iColumns));
