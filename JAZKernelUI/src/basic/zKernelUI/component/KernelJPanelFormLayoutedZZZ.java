@@ -73,7 +73,8 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 		return iReturn;
 	}
 	
-	//##### IFormLayoutZZZ
+	//##### IFormLayoutZZZ #########
+	//weitere Methoden müssen dann von dem konkreten FormLayouted nutzenden Panel implementiert werden.
 		@Override 
 		public boolean initFormLayoutDebug() throws ExceptionZZZ {
 			boolean bReturn = false;
@@ -208,20 +209,10 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 			return rs;
 		}
 		
+		//+++ von den eingentlichen Klassen zu implementieren
+		public abstract ArrayList<RowSpec> buildRowSpecs();
+		public abstract ArrayList<ColumnSpec> buildColumnSpecs();
+		public abstract boolean fillRowContent(CellConstraints cc, int iRow) throws ExceptionZZZ;
 		
-		//DIESE METHODEN MÜSSEN DANN VON DEN LAYOUT-USER-KLASSEN UEBERSCHRIEBEN WERDEN
-		@Override
-		public ArrayList<RowSpec> buildRowSpecs() {
-			return null; //Falls das FormLayout nicht genutzt wird, oder direkt implementiert wird.
-		}
-		
-		@Override
-		public ArrayList<ColumnSpec> buildColumnSpecs() {
-			return null; //Falls das FormLayout nicht genutzt wird, oder direkt implementiert wird.
-		}
-						
-		@Override
-		public boolean fillRowContent(CellConstraints cc, int iRow) throws ExceptionZZZ {
-			return false;
-		}
+		//###### 
 }
