@@ -995,14 +995,40 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				//das ist zu lange und nicht aussagekräftig genug String sParent = this.getClass().getSuperclass().getSimpleName();
 				ArrayList<String> listaParent = new ArrayList<String>();
 				listaParent.add("Cascaded");
-				listaParent.add(stemp);				
-
-				String[]saParent=ArrayListZZZ.toStringArray(listaParent);				
-				String sHtml = StringArrayZZZ.asHtml(saParent);	
+				listaParent.add(stemp);	
+								
+//				String sModule = this.getModuleName();
+//				StringZZZ.abbreviateDynamic(sModule, 10);
+//				listaParent.add("Module:" + sModule);
 				
+				String[]saParent=ArrayListZZZ.toStringArray(listaParent);				
+				String sHtml = StringArrayZZZ.asHtml(saParent);
+								
+				int iIndex=0;
 				JLabel labelDebug = new JLabel(sHtml);						
 				this.add(labelDebug);
-				this.setComponent("LabelDebug", labelDebug);	
+				this.setComponent("LabelDebug"+iIndex, labelDebug);
+				
+				
+				//TODOGOON; //20210419 Bei vielen Zeilen im Label "verwischt" dann das UI
+				//Idee: Führe eine "Label-Gruppe" ein und einen Button, der diese Labels dann der Reihe nach durchschalten kann.
+				/*
+				String sProgram = this.getProgramName();
+				listaParent.add("Program: " + sProgram);
+				if(!StringZZZ.isEmpty(sProgram)) {
+					String sProgramAlias = this.getProgramAlias();
+					if(sProgram.equals(sProgramAlias)) sProgramAlias="dito";
+					listaParent.add("ProgramAlias: " + sProgramAlias);
+				}
+									
+				for(String sLabel:listaParent) {
+					String sHtml = StringZZZ.asHtml(sLabel);
+					JLabel labelDebug = new JLabel(sHtml);						
+					this.add(labelDebug);
+					this.setComponent("LabelDebug"+iIndex, labelDebug);
+					iIndex++;
+				}
+				*/
 			}		
 		}//end main:
 		return bReturn;		
