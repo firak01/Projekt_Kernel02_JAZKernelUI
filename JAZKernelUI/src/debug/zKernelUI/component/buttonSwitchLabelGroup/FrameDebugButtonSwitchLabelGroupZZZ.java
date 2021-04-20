@@ -67,7 +67,6 @@ public void setKernelConfigObject(KernelZZZ objKernelConfig){
 	this.objKernelChoosen = objKernelConfig;
 }
 public JComponent getPaneContent(String sAlias) throws ExceptionZZZ {
-	// TODO Auto-generated method stub
 	//Hier wird nix in einen anderen Pane als den ContentPane gestellt.
 	return null;
 }

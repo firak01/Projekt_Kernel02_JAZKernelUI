@@ -354,6 +354,10 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 			//                   Als Program-Namen verwendet man am besten einen Alias. Merke: Die Aktion-Listener-Klassen mit ihren Namen sind dann zu konfigurieren.
 			
 			while(frameParentTemp!=null){
+				//Merke: Der Root-Frame hat sich selbst zum ParentFrame
+				if(frameParentTemp.equals(frameParent)) break main; //ggf. auch die Methode verlassen, ohne dass etwas gefunden wurde
+				
+				
 				String sClassnameParentTemp = frameParentTemp.getClass().getName(); 
 				String sClassnameParent = null;
 //				!!! hier wird ggf. ein $xyz - Wert angeh�ngt, z.B. im Debugmodus mit JUnit, was wohletwas mit der ReflectionAPI zu tun haben muss
@@ -364,13 +368,13 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				}
 												
 				for(int icount = 0; icount<= listaModuleString.size()-1; icount++){
-					sReturn = (String) listaModuleString.get(icount);							
-					if(sClassnameParent.equals(sReturn)) break main;
-				}			
-			
-				//Merke: Der Root-Frame hat sich selbst zum ParentFrame
-				if(frameParentTemp.equals(frameParent)) break main; //ggf. auch die Methode verlassen, ohne dass etwas gefunden wurde
-				
+					String stemp = (String) listaModuleString.get(icount);							
+					if(sClassnameParent.equals(stemp)) {
+						sReturn=stemp;
+						break main;
+					}
+				}//end for			
+							
 				frameParent = frameParentTemp;
 				frameParentTemp = frameParentTemp.getFrameParent();							
 			}//end while
@@ -654,16 +658,24 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 			
 			if(panelCascaded.getFlag(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())){
 				sReturn =  panelCascaded.getClass().getName();
-			}else {					
+			}else {		
+				KernelJPanelCascadedZZZ panelParent = panelCascaded.getPanelParent();
+				if(panelParent!=null) {
+					sReturn = panelParent.getModuleName();
+					if(!StringZZZ.isEmpty(sReturn)) break main;
+				}
+				
 				KernelJDialogExtendedZZZ dialog = panelCascaded.getDialogParent();
 				KernelJFrameCascadedZZZ frameParent = null;
 				if(dialog==null){
 					System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# This is a frame.....");
 					frameParent = panelCascaded.getFrameParent();
-					sReturn = frameParent.getModuleName();																								
+					sReturn = frameParent.getModuleName();		
+					if(!StringZZZ.isEmpty(sReturn)) break main;
 				}else{
 					System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# This is a dialog.....");
-					sReturn = dialog.getModuleName();				
+					sReturn = dialog.getModuleName();			
+					if(!StringZZZ.isEmpty(sReturn)) break main;
 				}
 			}
 		}//end main

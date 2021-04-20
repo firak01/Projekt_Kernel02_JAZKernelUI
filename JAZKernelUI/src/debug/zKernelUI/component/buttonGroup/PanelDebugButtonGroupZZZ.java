@@ -12,6 +12,7 @@ import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
+import basic.zKernelUI.component.KernelJFrameCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernel.KernelZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
@@ -21,13 +22,30 @@ import custom.zKernelUI.module.config.DLG.Panel_NORTHZZZ;
 
 
 public class PanelDebugButtonGroupZZZ extends KernelJPanelCascadedZZZ implements IKernelModuleZZZ{
-   private IKernelZZZ objKernelChoosen;
-	
+   
+   	public PanelDebugButtonGroupZZZ(IKernelZZZ objKernel, KernelJFrameCascadedZZZ frameParent) throws ExceptionZZZ{
+   		super(objKernel, frameParent);
+        //this.setKernelConfigObject(objKernelChoosen);
+   		PanelDebugButtonGroup_();
+   	}
 	public PanelDebugButtonGroupZZZ(IKernelZZZ objKernel, JFrame frameParent) throws ExceptionZZZ{
 		super(objKernel, frameParent);
-        this.setKernelConfigObject(objKernelChoosen);
-		
-        //### Dieses Panel ist als Modul konkfiguriert
+        //this.setKernelConfigObject(objKernelChoosen);
+		PanelDebugButtonGroup_();
+	}
+
+	
+//	public IKernelZZZ getKernelConfigObject(){
+//		return this.objKernelChoosen;
+//	}
+//	public void setKernelConfigObject(IKernelZZZ objKernelConfig){
+//		this.objKernelChoosen = objKernelConfig;
+//	}
+	
+	private boolean PanelDebugButtonGroup_() throws ExceptionZZZ {
+		boolean bReturn = false;
+		main:{
+		//### Dieses Panel ist als Modul konkfiguriert
         String stemp; boolean btemp;       
         stemp = IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name();
 		btemp = this.setFlagZ(stemp, true);	
@@ -55,15 +73,10 @@ public class PanelDebugButtonGroupZZZ extends KernelJPanelCascadedZZZ implements
 //		this.add(objPanelCenter, BorderLayout.CENTER); //Frontend hinzuf�gen
 //		this.setPanelSub("CENTER", objPanelCenter);       //Backend Hashtable hinzuf�gen
 //		
-	
-	}
-
-	
-	public IKernelZZZ getKernelConfigObject(){
-		return this.objKernelChoosen;
-	}
-	public void setKernelConfigObject(IKernelZZZ objKernelConfig){
-		this.objKernelChoosen = objKernelConfig;
+		
+			bReturn = true;
+		}//end main:
+		return bReturn;
 	}
 	
 	//################################################

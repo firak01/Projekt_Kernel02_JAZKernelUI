@@ -312,7 +312,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			//20130625 Hinzugef�gt, um das Suchen des NAchbarpanels schon erm�glichen, bevor das launch() von KernelJFrameCascaded abgeschlossen ist.
 			//Wird normalerweise im KErnelJFrameCascaded.lauchchDoing() gemacht, aber bei der Konfiguration der PAnels muss schon auf ein Nachbarpanel zugegriffen werden.
 			frameParent.setPanelContent(this); //this: Ist das oberste Panel, wichtig wenn man aus einem Panel nach den Nachbarpanels sucht.
-			frameParent.getContentPane().add(this);	
+			//frameParent.getContentPane().add(this);	
 		}
 		
 		//Ggfs. die DebugUI-Angaben hinzufügen, das kann z.B. nur das Label mit dem Klassennamen sein.

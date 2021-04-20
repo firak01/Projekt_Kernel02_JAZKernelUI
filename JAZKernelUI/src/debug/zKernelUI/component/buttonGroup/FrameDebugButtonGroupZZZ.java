@@ -2,6 +2,7 @@ package debug.zKernelUI.component.buttonGroup;
 import javax.swing.JComponent;
 
 import basic.zKernel.KernelZZZ;
+import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zKernelUI.component.KernelJFrameCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
@@ -54,7 +55,7 @@ public boolean launchCustom(){
 }
  
 public KernelJPanelCascadedZZZ getPaneContent() throws ExceptionZZZ {
-	PanelDebugButtonGroupZZZ objPanel = new PanelDebugButtonGroupZZZ(this.getKernelObject(), this);
+	PanelDebugButtonGroupZZZ objPanel = new PanelDebugButtonGroupZZZ(this.getKernelObject(), this);	
 	this.setPanelContent(objPanel);
 	return objPanel;
 }
@@ -67,7 +68,6 @@ public void setKernelConfigObject(KernelZZZ objKernelConfig){
 	this.objKernelChoosen = objKernelConfig;
 }
 public JComponent getPaneContent(String sAlias) throws ExceptionZZZ {
-	// TODO Auto-generated method stub
 	//Hier wird nix in einen anderen Pane als den ContentPane gestellt.
 	return null;
 }

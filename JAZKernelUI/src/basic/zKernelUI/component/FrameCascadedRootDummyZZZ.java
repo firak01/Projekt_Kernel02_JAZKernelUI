@@ -19,6 +19,7 @@ public class FrameCascadedRootDummyZZZ extends KernelJFrameCascadedZZZ{
 	
 	public FrameCascadedRootDummyZZZ(IKernelZZZ objKernel, JFrame frame) {
 		super(objKernel, frame);
+
 	}
 
 	public boolean launchCustom() throws ExceptionZZZ {		
@@ -26,7 +27,6 @@ public class FrameCascadedRootDummyZZZ extends KernelJFrameCascadedZZZ{
 	}
 
 	public JComponent getPaneContent(String sAlias) throws ExceptionZZZ {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

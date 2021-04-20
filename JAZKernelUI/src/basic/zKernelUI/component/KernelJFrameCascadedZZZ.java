@@ -602,13 +602,14 @@ private HashMap<String, Boolean>hmFlagPassed = new HashMap<String, Boolean>();
 	
 	
 	/* (non-Javadoc)
-	 * @see basic.zKernelUI.component.IFrameLaunchableZZZ#getPanelContent()
+	 * @see basic.zKernelUI.component.IFrameLaunchableZZZ#getPaneContent()
 	 */
 	public KernelJPanelCascadedZZZ getPaneContent() throws ExceptionZZZ{
 		return (KernelJPanelCascadedZZZ) this.objHtPanelSub.get(KernelJFrameCascadedZZZ.getAliasPanelContent());
 	}
 	public void setPanelContent(KernelJPanelCascadedZZZ objPanelRoot){
 		this.objHtPanelSub.put(KernelJFrameCascadedZZZ.getAliasPanelContent(), objPanelRoot);
+		this.setContentPane(objPanelRoot);
 	}
 
 	public JComponent getComponent(String sAlias) {
@@ -738,7 +739,9 @@ private HashMap<String, Boolean>hmFlagPassed = new HashMap<String, Boolean>();
 				//	... das wird nun �ber das ContentPane der Frames gemacht. !!! Damit diese Grundfl�che "draggable" ist, muss zumindest der ContentPane �bergeben werden.
 				KernelJPanelCascadedZZZ objPanel = frmCascaded.getPaneContent();  //default ist der ContentPane-Alias
 				if(objPanel !=null){
-					if(!frmCascaded.getContentPane().equals(objPanel))frmCascaded.getContentPane().add(objPanel);
+					if(!frmCascaded.getContentPane().equals(objPanel)) {
+						frmCascaded.getContentPane().add(objPanel);
+					}
 					frmCascaded.setPanelSub(KernelJFrameCascadedZZZ.getAliasPanelContent(), objPanel);
 				}
 				
