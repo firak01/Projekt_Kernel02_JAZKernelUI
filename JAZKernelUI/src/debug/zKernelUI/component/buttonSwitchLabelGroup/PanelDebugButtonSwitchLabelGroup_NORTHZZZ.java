@@ -23,6 +23,7 @@ import javax.swing.border.Border;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
 import custom.zKernel.LogZZZ;
+import custom.zKernelUI.component.labelGroup.JLabel4GroupZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IObjectZZZ;
 import basic.zBasic.ReflectCodeZZZ;
@@ -98,21 +99,25 @@ public class PanelDebugButtonSwitchLabelGroup_NORTHZZZ extends KernelJPanelCasca
 			//++++ Die Buttons
 			JButton buttonSwitch = new JButton("SWITCH");			
 			ActionSwitch actionSwitch = new ActionSwitch(objKernel, this);
-			buttonSwitch.addActionListener(actionSwitch);		
+			buttonSwitch.addActionListener(actionSwitch);
 			this.setComponent(PanelDebugButtonSwitchLabelGroup_NORTHZZZ.sBUTTON_SWITCH, buttonSwitch);
 			this.add(buttonSwitch);
 			
 						
+			
+			
 			//+++++++++++
-			String sLabel02 = ".";
-			JLabel label02 = new JLabel(sLabel02, SwingConstants.LEFT);
+			String sLabel02 = "Label A";
+			JLabel4GroupZZZ label02 = new JLabel4GroupZZZ(this.getKernelObject(), sLabel02, SwingConstants.LEFT);
 			this.add(label02);
+			
 									
 			//++++++++++++
-			String sLabel04 = ".";
-			JLabel label04 = new JLabel(sLabel04, SwingConstants.LEFT);
+			String sLabel04 = "Label B";
+			JLabel4GroupZZZ label04 = new JLabel4GroupZZZ(this.getKernelObject(), sLabel04, SwingConstants.LEFT);
 			this.add(label04);
 
+			
 			
 			//+++ Das Layout validieren, mit dem Ziel die Komponenten passend anzuordnen.
 			this.validate();
@@ -171,6 +176,11 @@ class SwingWorker4ProgramSWITCH extends KernelSwingWorkerZZZ{
 			KernelJPanelCascadedZZZ objPanelParent = this.panel; //.getPanelParent();
 			updatePanel(objPanelParent);						
 		
+			TODOGOON; ///20210424: Hier das Umschalten machen, indem man einen Event - Wirft, 
+			                      //Alle am Event "registrierten" Labels/Componentent sollen dann reagieren.
+			
+			
+			
 //		}catch(ExceptionZZZ ez){
 //			System.out.println(ez.getDetailAllLast());
 //			ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());					
