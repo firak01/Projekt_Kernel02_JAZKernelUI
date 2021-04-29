@@ -176,7 +176,7 @@ class SwingWorker4ProgramSWITCH extends KernelSwingWorkerZZZ{
 			KernelJPanelCascadedZZZ objPanelParent = this.panel; //.getPanelParent();
 			updatePanel(objPanelParent);						
 		
-			TODOGOON; ///20210424: Hier das Umschalten machen, indem man einen Event - Wirft, 
+			//TODOGOON; ///20210424: Hier das Umschalten machen, indem man einen Event - Wirft, 
 			                      //Alle am Event "registrierten" Labels/Componentent sollen dann reagieren.
 			
 			
