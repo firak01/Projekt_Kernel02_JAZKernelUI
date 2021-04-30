@@ -238,13 +238,12 @@ class SwingWorker4ProgramSWITCH extends KernelSwingWorkerZZZ{
 
 }
 
-@Override
-public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {
-	// TODO Auto-generated method stub
-	
-} //End Class MySwingWorker
+	@Override
+	public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {
+		// TODO Auto-generated method stub		
+	} //End Class SwingWorker: SwingWorker4ProgramSWITCH
 
-}//End class ...KErnelActionCascaded....
+}//End class ...KernelActionCascaded....
 //##############################################
 
 
