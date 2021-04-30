@@ -9,7 +9,7 @@ import javax.swing.event.TreeSelectionListener;
 
 public final class EventComponentGroupSwitchZZZ extends EventObject{
 	private int iId;
-	private boolean bVisible;
+	private boolean bActive;
 	
 	
 	/** In dem Konstruktor wird neben der ID dieses Events auch der zu setztende Status (visable true/false) uebergeben
@@ -18,16 +18,16 @@ public final class EventComponentGroupSwitchZZZ extends EventObject{
 	 * @param iID
 	 * @param bVisable,  
 	 */
-	public EventComponentGroupSwitchZZZ(Object source, int iID, boolean bVisible) {
+	public EventComponentGroupSwitchZZZ(Object source, int iID, boolean bActive) {
 		super(source);
 		this.iId = iID;
-		this.bVisible = bVisible;
+		this.bActive = bActive;
 	}
 	
 	public int getID(){
 		return this.iId;
 	}
-	public boolean getVisableToSet(){
-		return this.bVisible;
+	public boolean getActiveToSet(){
+		return this.bActive;
 	}
 }

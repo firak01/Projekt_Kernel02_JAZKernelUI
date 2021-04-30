@@ -23,7 +23,6 @@ import javax.swing.border.Border;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
 import custom.zKernel.LogZZZ;
-import custom.zKernelUI.component.labelGroup.JLabel4GroupZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IObjectZZZ;
 import basic.zBasic.ReflectCodeZZZ;
@@ -35,6 +34,7 @@ import basic.zKernelUI.KernelUIZZZ;
 import basic.zKernelUI.component.KernelActionCascadedZZZ;
 import basic.zKernelUI.component.KernelButtonGroupZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
+import basic.zKernelUI.component.labelGroup.JComponentGroupZZZ;
 import basic.zKernelUI.thread.KernelSwingWorkerZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
@@ -103,19 +103,25 @@ public class PanelDebugButtonSwitchLabelGroup_NORTHZZZ extends KernelJPanelCasca
 			this.setComponent(PanelDebugButtonSwitchLabelGroup_NORTHZZZ.sBUTTON_SWITCH, buttonSwitch);
 			this.add(buttonSwitch);
 			
-						
-			
-			
-			//+++++++++++
-			String sLabel02 = "Label A";
-			JLabel4GroupZZZ label02 = new JLabel4GroupZZZ(this.getKernelObject(), sLabel02, SwingConstants.LEFT);
+					
+			//+++++++++++ GRUPPE 1 ++++++++++++++++++
+			String sLabel02 = "Label 1A";
+			JLabel label02 = new JLabel(sLabel02, SwingConstants.LEFT);
 			this.add(label02);
 			
 									
 			//++++++++++++
-			String sLabel04 = "Label B";
-			JLabel4GroupZZZ label04 = new JLabel4GroupZZZ(this.getKernelObject(), sLabel04, SwingConstants.LEFT);
+			String sLabel04 = "Label 1B";
+			JLabel label04 = new JLabel(sLabel04, SwingConstants.LEFT);
 			this.add(label04);
+			
+			//+++++++++++++
+			JComponentGroupZZZ group1 = new JComponentGroupZZZ(objKernel, "EINS");
+			group1.addComponent(label02);
+			group1.addComponent(label04);
+			
+			
+			
 
 			
 			
@@ -138,7 +144,7 @@ public ActionSwitch(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent) t
 }
 
 public boolean actionPerformCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ {
-	ReportLogZZZ.write(ReportLogZZZ.DEBUG, "Performing action: 'PLUS'");
+	ReportLogZZZ.write(ReportLogZZZ.DEBUG, "Performing action: 'SWITCH'");
 										
 	String[] saFlag = null;			
 	KernelJPanelCascadedZZZ panelParent = (KernelJPanelCascadedZZZ) this.getPanelParent();
@@ -176,7 +182,7 @@ class SwingWorker4ProgramSWITCH extends KernelSwingWorkerZZZ{
 			KernelJPanelCascadedZZZ objPanelParent = this.panel; //.getPanelParent();
 			updatePanel(objPanelParent);						
 		
-			//TODOGOON; ///20210424: Hier das Umschalten machen, indem man einen Event - Wirft, 
+			TODOGOON; ///20210424: Hier das Umschalten machen, indem man einen Event - Wirft, 
 			                      //Alle am Event "registrierten" Labels/Componentent sollen dann reagieren.
 			
 			

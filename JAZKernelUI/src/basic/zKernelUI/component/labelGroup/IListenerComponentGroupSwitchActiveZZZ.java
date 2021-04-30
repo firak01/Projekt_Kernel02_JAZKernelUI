@@ -11,7 +11,7 @@ import basic.zKernelUI.component.model.EventComponentSelectionResetZZZ;
  * @author lindhaueradmin
  *
  */
-public interface IListenerComponentGroupSwitchZZZ extends EventListener{
+public interface IListenerComponentGroupSwitchActiveZZZ extends EventListener{
 	public enum FLAGZ{
 		useEventSwitchDefault; 
 	}
