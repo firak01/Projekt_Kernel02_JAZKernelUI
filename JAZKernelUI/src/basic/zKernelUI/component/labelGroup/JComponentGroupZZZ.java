@@ -7,8 +7,9 @@ import javax.swing.JComponent;
 import basic.zBasic.ExceptionZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
+import debug.zKernelUI.component.buttonSwitchLabelGroup.EventComponentGroupSwitchZZZ;
 
-public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerComponentGroupSwitchActiveZZZ{
+public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerComponentGroupSwitchZZZ { //,IEventBrokerSwitchComponentUserZZZ { //, IEventBrokerSwitchComponentUserZZZ{
 	private ArrayList<JComponent>listaComponent=null;
 	private String sAlias=null;
 	private EventComponentGroupSwitchZZZ eventPrevious=null;
@@ -24,17 +25,17 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 	private boolean JComponentGroupNew_(String sAlias) {
 		boolean bReturn = false;
 		main:{
-			this.setAlias(sAlias);
+			this.setGroupAlias(sAlias);
 			
 			bReturn = true;
 		}//end main:
 		return bReturn;
 	}
 	
-	public String getAlias() {
+	public String getGroupAlias() {
 		return this.sAlias;
 	}
-	public void setAlias(String sAlias) {
+	public void setGroupAlias(String sAlias) {
 		this.sAlias = sAlias;
 	}
 	
@@ -60,7 +61,8 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 	}
 	
 	
-	
+	//########## INTERFACES
+	//+++ IListenerComponentGroupSwitchZZZ
 	@Override
 	public void doSwitch(EventComponentGroupSwitchZZZ eventComponentGroupSwitchNew) {
 		//TODOGOON; //20210430 hole aus  dem Event die aktiv zu schaltende Gruppe.		
@@ -69,18 +71,24 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 		//schalte aktiv
 		//ansonsten
 		//schalte inaktiv
+					
+		System.out.println("XXXXXXXXXXX doSwitch der ComponentGroup '" + this.getGroupAlias() + "'");
 		
+		IListenerComponentGroupSwitchZZZ group4activeState = eventComponentGroupSwitchNew.getGroup();
+		boolean bActiveState = eventComponentGroupSwitchNew.getComponentActiveState();
+		String sGroupAlias = group4activeState.getGroupAlias();
+		System.out.println("für Gruppe '" + sGroupAlias + "' gilt...");
+		System.out.println("... der activeState= '" + bActiveState + "'");
+		for(JComponent component : listaComponent) {
+			component.setVisible(bActiveState);
+		}				
+		this.setEventPrevious(eventComponentGroupSwitchNew);
 	}
 	
 	
 	
 	
-	//### Interface IListener
-	@Override
-	public void doSwitchCustom(EventComponentGroupSwitchZZZ eventComponentGroupSwitchNew) {
-		// TODO Auto-generated method stub
-		
-	}
+	//### Interface IListener	
 	@Override
 	public EventComponentGroupSwitchZZZ getEventPrevious() {
 		return this.eventPrevious;
@@ -89,5 +97,19 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 	public void setEventPrevious(EventComponentGroupSwitchZZZ eventComponentGroupSwitchNew) {
 		this.eventPrevious = eventComponentGroupSwitchNew;
 	}
+	@Override
+	public void doSwitchCustom(EventComponentGroupSwitchZZZ eventComponentGroupSwitchNew) {
+		// TODO Auto-generated method stub		
+	}
 	
+	//### Interface IEventBrokerSwitchComponentUserZZZ
+//	@Override
+//	public KernelSenderComponentSwitchZZZ getSenderUsed() {
+//		return this.sender;
+//	}
+//	@Override
+//	public void setSenderUsed(KernelSenderComponentSwitchZZZ objEventSender) {
+//		this.sender = objEventSender;
+//	}
+			
 }

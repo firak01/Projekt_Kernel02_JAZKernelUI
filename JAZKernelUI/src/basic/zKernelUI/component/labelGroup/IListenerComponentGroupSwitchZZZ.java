@@ -2,8 +2,7 @@ package basic.zKernelUI.component.labelGroup;
 
 import java.util.EventListener;
 
-import basic.zKernelUI.component.model.EventComponentSelectionResetZZZ;
-
+import debug.zKernelUI.component.buttonSwitchLabelGroup.EventComponentGroupSwitchZZZ;
 
 /** Komponenten, sollen sich an andere Komponenten (, die als Sender auftreten, s. ISenderSelectionResetZZZ) anmelden k�nnen.
  *   Falls dann die Sender-Komponente einen event "abfeuert", dann wird doReset(...) durchgef�hrt.
@@ -11,7 +10,7 @@ import basic.zKernelUI.component.model.EventComponentSelectionResetZZZ;
  * @author lindhaueradmin
  *
  */
-public interface IListenerComponentGroupSwitchActiveZZZ extends EventListener{
+public interface IListenerComponentGroupSwitchZZZ extends EventListener{
 	public enum FLAGZ{
 		useEventSwitchDefault; 
 	}
@@ -26,7 +25,7 @@ public interface IListenerComponentGroupSwitchActiveZZZ extends EventListener{
 	* 
 	* lindhaueradmin; 08.02.2007 10:13:27
 	 */
-	public abstract void doSwitch(EventComponentGroupSwitchZZZ eventComponentGroupSwitchNew);
+	public abstract void doSwitch(EventComponentGroupSwitchZZZ event);
 	
 	/** die Methode, welche von den Komponenten �berschrieben werden muss.
 	* @param eventSelectionResetNew
@@ -41,4 +40,7 @@ public interface IListenerComponentGroupSwitchActiveZZZ extends EventListener{
 	 */
 	public abstract EventComponentGroupSwitchZZZ getEventPrevious();    
 	public abstract void setEventPrevious(EventComponentGroupSwitchZZZ eventComponentGroupSwitchNew);
+	
+	public abstract String getGroupAlias();
+	public abstract void setGroupAlias(String sAlias);
 }
