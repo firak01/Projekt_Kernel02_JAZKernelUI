@@ -60,12 +60,19 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 		}
 	}
 	
+	// Methoden über die Gruppe auf die Componenten durchzugreifen
+	public void setVisible(boolean bVisible) {
+		ArrayList<JComponent>listaComponent = this.getComponents();
+		for(JComponent component : listaComponent) {
+			component.setVisible(bVisible);
+		}
+	}
 	
 	//########## INTERFACES
 	//+++ IListenerComponentGroupSwitchZZZ
 	@Override
 	public void doSwitch(EventComponentGroupSwitchZZZ eventComponentGroupSwitchNew) {
-		//TODOGOON; //20210430 hole aus  dem Event die aktiv zu schaltende Gruppe.		
+		//20210430 hole aus  dem Event die aktiv zu schaltende Gruppe.		
 		//Für alle Komponenten der ArrayList:
 		//Wenn der Gruppenalias dem hier verwendeten entspricht
 		//schalte aktiv
@@ -78,10 +85,18 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 		boolean bActiveState = eventComponentGroupSwitchNew.getComponentActiveState();
 		String sGroupAlias = group4activeState.getGroupAlias();
 		System.out.println("für Gruppe '" + sGroupAlias + "' gilt...");
-		System.out.println("... der activeState= '" + bActiveState + "'");
-		for(JComponent component : listaComponent) {
-			component.setVisible(bActiveState);
-		}				
+		System.out.println("... setze den activeState auf '" + bActiveState + "'");
+		
+		boolean bActiveStateUsed;
+		String sGroupAliasUsed = this.getGroupAlias();
+		if(sGroupAlias.equals(sGroupAliasUsed)) {
+			bActiveStateUsed = bActiveState;
+		}else {
+			bActiveStateUsed = !bActiveState;
+			System.out.println("ABER für Gruppe '" + sGroupAliasUsed + "' gilt...");
+			System.out.println("... setze den activeState auf '" + bActiveStateUsed + "'");			
+		}		
+		this.setVisible(bActiveStateUsed);			
 		this.setEventPrevious(eventComponentGroupSwitchNew);
 	}
 	
