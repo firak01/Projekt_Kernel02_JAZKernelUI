@@ -49,6 +49,7 @@ import custom.zKernel.LogZZZ;
 import debug.zKernelUI.component.buttonSwitchLabelGroup.EventComponentGroupSwitchZZZ;
 import debug.zKernelUI.component.buttonSwitchLabelGroup.ISenderComponentGroupSwitchZZZ;
 import debug.zKernelUI.component.buttonSwitchLabelGroup.KernelSenderComponentGroupSwitchZZZ;
+import debug.zKernelUI.component.buttonSwitchLabelGroup.PanelDebugHelperZZZ;
 
 /** Klasse bietet als Erweiterung zu JPanel die Verschachtelung von Panels an.
  * Merke: Ohne ein JFrame als Parent funktioniert es nicht, das Panel per Drag mit der Maus zu bewegen.
@@ -316,7 +317,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		
 		//Ggfs. die DebugUI-Angaben hinzufügen, das kann z.B. nur das Label mit dem Klassennamen sein.
 		//Gesteuert werde soll das durch Flags, die auch über die Kommandozeile übergeben werden können.
-		boolean bDebugUI = createDebugUi();
+		boolean bDebugUI = createDebugUi("Cascaded");
 		
 		//Einen Mouse Listener hinzufuegen, der es erlaubt Fenster zu ziehen (auch im Panel und nicht nur in der Titelleiste)
 		//if(this.getFlag("isdraggable")){
@@ -992,136 +993,65 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	
 	//#### IComponentCascadedUserZZZ
 	@Override
-	public boolean createDebugUi() throws ExceptionZZZ {
+	public boolean createDebugUi(String sTitle) throws ExceptionZZZ {
 		boolean bReturn = false;
 		main:{
 			String stemp;
 					
 			if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())) {
 				//Labels hinzufuegen, in dem der Panel-Klassennamen steht (zu Debug- und Analysezwecken)
+				ArrayList<JLabel>listaLabel = new ArrayList<JLabel>();
 								
 				//20210419 Bei vielen Zeilen im Label "verwischt" dann das UI
 				//Idee: Führe eine "Label-Gruppe" ein und einen Button, der diese Labels dann der Reihe nach durchschalten kann.
 
-				TODOGOON; //Die Anzahl der Texteinträge bestimmt die Anzahl der JLabel Objekte, bestimmt die Anzahl der Gruppen.
-				          //Ein Button zum Umschalten ist auch erst im Panel notwendig, wenn es mehr als 1 Gruppenobjekt gibt.
+				//TODOGOON; //Die Anzahl der Texteinträge bestimmt die Anzahl der JLabel Objekte, bestimmt die Anzahl der Gruppen.
+				//TODOGOON; //Ein Button zum Umschalten ist auch erst im Panel notwendig, wenn es mehr als 1 Gruppenobjekt gibt.
 				
-				TODOGOON; //Die Action als eigene Klasse ausgliedern und alle beteiligten Klassen in ein passendes Package verschieben.
+				//TODOGOON; //Die Action als eigene Klasse ausgliedern und alle beteiligten Klassen in ein passendes Package verschieben.
 				          //Den Debug/Testpanel für die Gruppenumschaltung soll dann auch diese nutzen.
 				
-				//+++ 1. Klassenname des Panels
-				int iIndex=0;
-				
-				//das ist zu lang und nicht aussagekräftig genug String sParent = this.getClass().getSuperclass().getSimpleName();
-				stemp = this.getClass().getSimpleName();
-							
-				ArrayList<String> listaText = new ArrayList<String>();
-				listaText.add("Cascaded");
-				listaText.add(stemp);	
-				
-				String[]saParent=ArrayListZZZ.toStringArray(listaText);				
-				String sHtml = StringArrayZZZ.asHtml(saParent);
-												
-				JLabel labelDebug0 = new JLabel(sHtml);						
-				this.setComponent("LabelDebug"+iIndex, labelDebug0);
-				
-
-				//+++ 2. Module, das zur Verfügung steht
-				String sModule = this.getModuleName();
-				sModule = StringZZZ.abbreviateDynamic(sModule, 10);//TODOGOON: StringZZZ Methode, um von rechts ausgehende abzukürzen.
-				//!!! Wenn sich die Textlänge ständig ändert, dann verschieben sich ggfs. Nachbarpanels nach rechts aus dem Frame/der Dialogbox heraus.
-				//    Daher müsste eigentlich auch der Frame/die Dialogbox neu "gepackt" werden (frame.pack() ).
-				
-				listaText.clear();
-				listaText.add("Cascaded");
-				listaText.add("Module:" + sModule);
-								
-				saParent=ArrayListZZZ.toStringArray(listaText);				
-				sHtml = StringArrayZZZ.asHtml(saParent);
-								
-				iIndex++;
-				JLabel labelDebug1 = new JLabel(sHtml);										
-				this.setComponent("LabelDebug"+iIndex, labelDebug1);
-				
-			    //+++ 3. Program, das zur Verfügung steht 
-				String sProgram = this.getProgramName();
-				sProgram = StringZZZ.abbreviateDynamic(sProgram, 10);
-				
-				listaText.clear();
-				listaText.add("Cascaded");
-				listaText.add("Program: " + sProgram);
-				
-				saParent=ArrayListZZZ.toStringArray(listaText);				
-				sHtml = StringArrayZZZ.asHtml(saParent);
-								
-				iIndex++;
-				JLabel labelDebug2 = new JLabel(sHtml);										
-				this.setComponent("LabelDebug"+iIndex, labelDebug2);
-				
-				//+++ 4. ProgramAlias, der zur Verfügung steht
-				JLabel labelDebug3 = null;
-				if(!StringZZZ.isEmpty(sProgram)) {
-					String sProgramAlias = this.getProgramAlias();
-					if(sProgram.equals(sProgramAlias)) {
-						sProgramAlias="dito";
-					}else {
-						sProgramAlias = StringZZZ.abbreviateDynamic(sProgramAlias, 10);
-					}
+				listaLabel = PanelDebugHelperZZZ.createLabelArrayList(sTitle, this);
 					
-					listaText.clear();
-					listaText.add("Cascaded");
-					listaText.add("ProgramAlias: " + sProgramAlias);
-					
-					saParent=ArrayListZZZ.toStringArray(listaText);				
-					sHtml = StringArrayZZZ.asHtml(saParent);
-									
-					iIndex++;
-					labelDebug3 = new JLabel(sHtml);										
-					this.setComponent("LabelDebug"+iIndex, labelDebug3);
-				}
-																
+											
 				//+++ Die Labels auf die Gruppen verteilen
-				JComponentGroupZZZ group0 = new JComponentGroupZZZ(objKernel, "NULL");
-				group0.addComponent(labelDebug0);
-				//group1.addComponent(label04);
-				group0.setVisible(true);
+				ArrayList<JComponentGroupZZZ>listaGroup = new ArrayList<JComponentGroupZZZ>();
 				
-				JComponentGroupZZZ group1 = new JComponentGroupZZZ(objKernel, "EINS");
-				group1.addComponent(labelDebug1);
-				//group2.addComponent(label05);
-				group1.setVisible(false);
+				int iIndex=-1;
+				for(JLabel labeltemp : listaLabel) {
+					if(labeltemp!=null) {
+						iIndex=iIndex+1;						
+						String sIndex = Integer.toString(iIndex);
 				
-				JComponentGroupZZZ group2 = new JComponentGroupZZZ(objKernel, "ZWEI");
-				group2.addComponent(labelDebug2);
-				//group2.addComponent(label05);
-				group2.setVisible(false);
-				
-				
-				JComponentGroupZZZ group3 = null;
-				if(labelDebug3!=null) {
-					group3 = new JComponentGroupZZZ(objKernel, "DREI");				
-					group3.addComponent(labelDebug3);
-					//group2.addComponent(label05);
-					group3.setVisible(false);
+						JComponentGroupZZZ grouptemp = new JComponentGroupZZZ(objKernel, sIndex);
+						grouptemp.addComponent(labeltemp);
+						//TODOGOON //so einfach geht es nur bei einer 1:1 Beziehung, was aber tun wenn mehrere Labels einer Gruppe zugeordnet werden? 
+						//z.B. group1.addComponent(label04);
+						//Dann müssten die Labels in einer indizierten HashMap zurückgegeben werden.
+						
+						if(iIndex==0) {
+							grouptemp.setVisible(true);						
+						}else {
+							grouptemp.setVisible(false);
+						}
+						listaGroup.add(grouptemp);
+					}
 				}
-				
+					
 				//Den EventBroker DER GRUPPE hinzufügen, damit darueber der Event abgefeuert werden kann
 				//Merke: Dem EventBroker ist eine Reihefolge (über den Index) egal
 				KernelSenderComponentGroupSwitchZZZ objEventBroker = new KernelSenderComponentGroupSwitchZZZ(objKernel);
-				objEventBroker.addListenerComponentGroupSwitch(group0);
-				objEventBroker.addListenerComponentGroupSwitch(group1);
-				objEventBroker.addListenerComponentGroupSwitch(group2);
-				if(group3!=null) objEventBroker.addListenerComponentGroupSwitch(group3);
-				
+								
 				//++++++++++ Ggfs. mehrerer Gruppen zu der HashMap zusammenfassen.
 				//Merke: Der Button steuert über den Index die Reihenfolge
 				HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmIndexed = new HashMapIndexedZZZ<Integer,JComponentGroupZZZ>();
-				hmIndexed.put(group0);
-				hmIndexed.put(group1);
-				hmIndexed.put(group2);
-				if(group3!=null) hmIndexed.put(group3);
-				
-				
+				for(JComponentGroupZZZ grouptemp : listaGroup) {
+					if(grouptemp!=null) {
+						objEventBroker.addListenerComponentGroupSwitch(grouptemp);
+						hmIndexed.put(grouptemp);
+					}
+				}
+						
 				//######## Das UI gestalten. Die Reihenfolge der Componenten ist wichtig für die Reihenfolge im UI #################
 				//++++ Der Umschaltebutton
 				String sLabelButton = ">";//this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButton").getValue();
@@ -1132,12 +1062,15 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				this.setComponent(KernelJPanelCascadedZZZ.sBUTTON_SWITCH, buttonSwitch);				
 				this.add(buttonSwitch);
 				
-				//TODOGOON: Die Labels in einer Arraylist abarbeiten und hinzufügen
-				this.add(labelDebug0);
-				this.add(labelDebug1);
-				this.add(labelDebug2);
-				if(labelDebug3!=null) this.add(labelDebug3);
-				//this.add(labelDebug4);												
+				//Die Labels der Arraylist abarbeiten und dem panel hinzufügen
+				iIndex=-1;
+				for(JLabel labeltemp : listaLabel) {
+					if(labeltemp!=null) {
+						iIndex=iIndex+1;
+						this.add(labeltemp);
+						this.setComponent("LabelDebug"+iIndex, labeltemp);
+					}
+				}											
 			}		
 		}//end main:
 		return bReturn;		
