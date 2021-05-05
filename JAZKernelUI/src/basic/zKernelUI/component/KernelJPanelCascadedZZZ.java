@@ -999,44 +999,52 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			String stemp;
 					
 			if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())) {
-				//Labels hinzufuegen, in dem der Panel-Klassennamen steht (zu Debug- und Analysezwecken)
-				ArrayList<JLabel>listaLabel = new ArrayList<JLabel>();
+				
 								
 				//20210419 Bei vielen Zeilen im Label "verwischt" dann das UI
 				//Idee: Führe eine "Label-Gruppe" ein und einen Button, der diese Labels dann der Reihe nach durchschalten kann.
 
-				//TODOGOON; //Die Anzahl der Texteinträge bestimmt die Anzahl der JLabel Objekte, bestimmt die Anzahl der Gruppen.
+				//Die Anzahl der Texteinträge bestimmt die Anzahl der JLabel Objekte, bestimmt die Anzahl der Gruppen.
+				//Mit einer einfachen ArrayList kann aber immer nur 1 Label pro Button definiert werden. Es muss eine Indizierte HashMap sein.
+				
+				//TODOGOON: //Teste mit mehreren Labels pro Gruppe
+				//TODOGOON; //Die Action als eigene Klasse ausgliedern und alle beteiligten Klassen in ein passendes Package verschieben.
+		                    //Den Debug/Testpanel für die Gruppenumschaltung soll dann auch diese nutzen.
 				//TODOGOON; //Ein Button zum Umschalten ist auch erst im Panel notwendig, wenn es mehr als 1 Gruppenobjekt gibt.
 				
-				//TODOGOON; //Die Action als eigene Klasse ausgliedern und alle beteiligten Klassen in ein passendes Package verschieben.
-				          //Den Debug/Testpanel für die Gruppenumschaltung soll dann auch diese nutzen.
 				
-				listaLabel = PanelDebugHelperZZZ.createLabelArrayList(sTitle, this);
-					
+								
+				HashMapIndexedZZZ<Integer,ArrayList<JLabel>>hmLabel;
+				hmLabel = PanelDebugHelperZZZ.createLabelHashMap(sTitle, this);
 											
 				//+++ Die Labels auf die Gruppen verteilen
-				ArrayList<JComponentGroupZZZ>listaGroup = new ArrayList<JComponentGroupZZZ>();
-				
+				ArrayList<JComponentGroupZZZ>listaGroup = new ArrayList<JComponentGroupZZZ>();				
 				int iIndex=-1;
-				for(JLabel labeltemp : listaLabel) {
-					if(labeltemp!=null) {
-						iIndex=iIndex+1;						
-						String sIndex = Integer.toString(iIndex);
 				
-						JComponentGroupZZZ grouptemp = new JComponentGroupZZZ(objKernel, sIndex);
-						grouptemp.addComponent(labeltemp);
-						//TODOGOON //so einfach geht es nur bei einer 1:1 Beziehung, was aber tun wenn mehrere Labels einer Gruppe zugeordnet werden? 
-						//z.B. group1.addComponent(label04);
-						//Dann müssten die Labels in einer indizierten HashMap zurückgegeben werden.
-						
-						if(iIndex==0) {
-							grouptemp.setVisible(true);						
-						}else {
-							grouptemp.setVisible(false);
+				Iterator itListaLabel = hmLabel.iterator();
+				while(itListaLabel.hasNext()) {
+					ArrayList<JLabel>listaLabeltemp = (ArrayList<JLabel>) itListaLabel.next();
+					for(JLabel labeltemp : listaLabeltemp) {
+						if(labeltemp!=null) {
+							iIndex=iIndex+1;						
+							String sIndex = Integer.toString(iIndex);
+					
+							JComponentGroupZZZ grouptemp = new JComponentGroupZZZ(objKernel, sIndex);
+							grouptemp.addComponent(labeltemp);
+							//TODOGOON //so einfach geht es nur bei einer 1:1 Beziehung, was aber tun wenn mehrere Labels einer Gruppe zugeordnet werden? 
+							//z.B. group1.addComponent(label04);
+							//Dann müssten die Labels in einer indizierten HashMap zurückgegeben werden.
+							
+							if(iIndex==0) {
+								grouptemp.setVisible(true);						
+							}else {
+								grouptemp.setVisible(false);
+							}
+							listaGroup.add(grouptemp);
 						}
-						listaGroup.add(grouptemp);
 					}
 				}
+				
 					
 				//Den EventBroker DER GRUPPE hinzufügen, damit darueber der Event abgefeuert werden kann
 				//Merke: Dem EventBroker ist eine Reihefolge (über den Index) egal
@@ -1062,15 +1070,22 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				this.setComponent(KernelJPanelCascadedZZZ.sBUTTON_SWITCH, buttonSwitch);				
 				this.add(buttonSwitch);
 				
-				//Die Labels der Arraylist abarbeiten und dem panel hinzufügen
-				iIndex=-1;
-				for(JLabel labeltemp : listaLabel) {
-					if(labeltemp!=null) {
-						iIndex=iIndex+1;
-						this.add(labeltemp);
-						this.setComponent("LabelDebug"+iIndex, labeltemp);
+				int iIndexOuterMax = hmLabel.size() -1;
+				for(int iIndexOuter=0; iIndexOuter <= iIndexOuterMax; iIndexOuter++) {
+					ArrayList<JLabel>listaLabeltemp = (ArrayList<JLabel>) hmLabel.getValue(iIndexOuter);
+					if(listaLabeltemp!=null) {
+						
+						//Die Labels der Arraylist abarbeiten und dem panel hinzufügen
+						int iIndexInner=-1;				
+						for(JLabel labeltemp : listaLabeltemp) {
+							if(labeltemp!=null) {
+								iIndexInner=iIndexInner+1;
+								this.add(labeltemp);
+								this.setComponent("LabelDebug"+iIndexOuter+"_"+iIndexInner, labeltemp);
+							}
+						}		
 					}
-				}											
+				}																
 			}		
 		}//end main:
 		return bReturn;		
