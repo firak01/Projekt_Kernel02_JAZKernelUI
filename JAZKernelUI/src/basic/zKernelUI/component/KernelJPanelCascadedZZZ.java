@@ -1012,9 +1012,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				TODOGOON; //Die Action als eigene Klasse ausgliedern und alle beteiligten Klassen in ein passendes Package verschieben.
 		                    //Den Debug/Testpanel für die Gruppenumschaltung soll dann auch diese nutzen.
 				//TODOGOON; //Ein Button zum Umschalten ist auch erst im Panel notwendig, wenn es mehr als 1 Gruppenobjekt gibt.
-				
-				
-								
+																
 				HashMapIndexedZZZ<Integer,ArrayList<JLabel>>hmLabel;
 				hmLabel = PanelDebugHelperZZZ.createLabelHashMap(sTitle, this);
 											
