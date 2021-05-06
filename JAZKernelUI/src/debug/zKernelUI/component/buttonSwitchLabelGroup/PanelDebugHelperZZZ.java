@@ -21,18 +21,18 @@ public class PanelDebugHelperZZZ {
 			ArrayList<JLabel>listaLabel;
 			int iIndex=0;			
 			listaLabel = PanelDebugHelperZZZ.createLabelArrayList(sTitle, panel, iIndex);
-			if(listaLabel!=null) {
+			if(listaLabel!=null) {				
 				Integer intIndex = new Integer(iIndex);
 				hmReturn.put(intIndex, listaLabel);
-				
+			
 				while(listaLabel!=null) {
 					iIndex++;
-					
 					listaLabel = PanelDebugHelperZZZ.createLabelArrayList(sTitle, panel, iIndex);
 					if(listaLabel!=null) {
 						intIndex = new Integer(iIndex);
 						hmReturn.put(intIndex, listaLabel);
 					}
+					
 				}
 			}							
 		}//end main
@@ -67,7 +67,16 @@ public class PanelDebugHelperZZZ {
 					
 					listaText.add("Module:" + sModule);
 					labelDebug = PanelDebugHelperZZZ.createLabel(listaText);						
-					if(labelDebug!=null) listaReturn.add(labelDebug);					
+					if(labelDebug!=null) listaReturn.add(labelDebug);	
+					
+					
+					//TESTE WEITERES LABEL
+					listaText.clear();
+					listaText.add("TEST");
+					listaText.add("Ein Testwert");
+					labelDebug = PanelDebugHelperZZZ.createLabel(listaText);						
+					if(labelDebug!=null) listaReturn.add(labelDebug);	
+					
 				}
 				break;
 			case 2:

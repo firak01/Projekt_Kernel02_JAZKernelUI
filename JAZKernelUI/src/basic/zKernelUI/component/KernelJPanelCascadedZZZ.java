@@ -41,6 +41,7 @@ import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.flag.FlagZHelperZZZ;
 import basic.zKernel.flag.IFlagUserZZZ;
 import basic.zKernelUI.KernelUIZZZ;
+import basic.zKernelUI.component.labelGroup.JComponentGroupHelperZZZ;
 import basic.zKernelUI.component.labelGroup.JComponentGroupZZZ;
 import basic.zKernelUI.thread.KernelSwingWorkerZZZ;
 import custom.zKernel.LogZZZ;
@@ -1006,9 +1007,9 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 
 				//Die Anzahl der Texteinträge bestimmt die Anzahl der JLabel Objekte, bestimmt die Anzahl der Gruppen.
 				//Mit einer einfachen ArrayList kann aber immer nur 1 Label pro Button definiert werden. Es muss eine Indizierte HashMap sein.
+				//Teste mit mehreren Labels pro Gruppe.
 				
-				//TODOGOON: //Teste mit mehreren Labels pro Gruppe
-				//TODOGOON; //Die Action als eigene Klasse ausgliedern und alle beteiligten Klassen in ein passendes Package verschieben.
+				TODOGOON; //Die Action als eigene Klasse ausgliedern und alle beteiligten Klassen in ein passendes Package verschieben.
 		                    //Den Debug/Testpanel für die Gruppenumschaltung soll dann auch diese nutzen.
 				//TODOGOON; //Ein Button zum Umschalten ist auch erst im Panel notwendig, wenn es mehr als 1 Gruppenobjekt gibt.
 				
@@ -1024,27 +1025,25 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				Iterator itListaLabel = hmLabel.iterator();
 				while(itListaLabel.hasNext()) {
 					ArrayList<JLabel>listaLabeltemp = (ArrayList<JLabel>) itListaLabel.next();
-					for(JLabel labeltemp : listaLabeltemp) {
-						if(labeltemp!=null) {
-							iIndex=iIndex+1;						
-							String sIndex = Integer.toString(iIndex);
 					
-							JComponentGroupZZZ grouptemp = new JComponentGroupZZZ(objKernel, sIndex);
+					iIndex=iIndex+1;						
+					String sIndex = Integer.toString(iIndex);					
+					JComponentGroupZZZ grouptemp = new JComponentGroupZZZ(objKernel, sIndex);
+					
+					boolean bAnyLabelAdded=false;
+					for(JLabel labeltemp : listaLabeltemp) {
+						if(labeltemp!=null) {												
 							grouptemp.addComponent(labeltemp);
-							//TODOGOON //so einfach geht es nur bei einer 1:1 Beziehung, was aber tun wenn mehrere Labels einer Gruppe zugeordnet werden? 
-							//z.B. group1.addComponent(label04);
-							//Dann müssten die Labels in einer indizierten HashMap zurückgegeben werden.
-							
-							if(iIndex==0) {
-								grouptemp.setVisible(true);						
-							}else {
-								grouptemp.setVisible(false);
-							}
-							listaGroup.add(grouptemp);
+							bAnyLabelAdded=true;
 						}
+					}
+					if(bAnyLabelAdded) {
+						listaGroup.add(grouptemp);
 					}
 				}
 				
+				//Initiales Setzen der Sichtbarkeit
+				JComponentGroupHelperZZZ.setVisible(listaGroup, 0);
 					
 				//Den EventBroker DER GRUPPE hinzufügen, damit darueber der Event abgefeuert werden kann
 				//Merke: Dem EventBroker ist eine Reihefolge (über den Index) egal
