@@ -3,6 +3,7 @@ package basic.zKernelUI.component.labelGroup;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zKernel.IKernelZZZ;
@@ -12,20 +13,33 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 	private ArrayList<JComponent>listaComponent=null;
 	private String sAlias=null;
 	private EventComponentGroupSwitchZZZ eventPrevious=null;
+	private boolean bAnyComponentAdded=false;
 	
 	public JComponentGroupZZZ(IKernelZZZ objKernel) throws ExceptionZZZ {
 		super(objKernel);		
 	}
 	public JComponentGroupZZZ(IKernelZZZ objKernel,String sAlias) throws ExceptionZZZ {
 		super(objKernel);
-		JComponentGroupNew_(sAlias);
+		JComponentGroupNew_(sAlias, null);
+	}
+	public JComponentGroupZZZ(IKernelZZZ objKernel, String sAlias, ArrayList<JComponent>listaComponent) throws ExceptionZZZ {
+		super(objKernel);
+		JComponentGroupNew_(sAlias, listaComponent);
 	}
 	
-	private boolean JComponentGroupNew_(String sAlias) {
+	private boolean JComponentGroupNew_(String sAlias, ArrayList<JComponent>listaComponent) {
 		boolean bReturn = false;
 		main:{
 			this.setGroupAlias(sAlias);
 			
+			if(listaComponent!=null) {							
+				for(JComponent componenttemp : listaComponent) {
+					if(componenttemp!=null) {												
+						this.addComponent(componenttemp);						
+					}
+				}	
+				
+			}			
 			bReturn = true;
 		}//end main:
 		return bReturn;
@@ -52,11 +66,19 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 		ArrayList<JComponent>listaComponent = this.getComponents();
 		if(listaComponent!=null) {
 			if(listaComponent.contains(component)) {
-				//mach nix;
+				//mach nix, nur 1x hinzufügen;
 			}else {
 				listaComponent.add(component);
+				this.hasAnyComponentAdded(true);
 			}
 		}
+	}
+	
+	public boolean hasAnyComponentAdded() {
+		return this.bAnyComponentAdded;
+	}
+	private void hasAnyComponentAdded(boolean bValue) {
+		this.bAnyComponentAdded=bValue;
 	}
 	
 	// Methoden über die Gruppe auf die Componenten durchzugreifen

@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -14,6 +15,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
@@ -105,6 +107,13 @@ public class PanelDebugButtonSwitchLabelGroup_NORTHZZZ extends KernelJPanelCasca
 			String sLabel03 = "Label 2A";
 			JLabel label03 = new JLabel(sLabel03, SwingConstants.LEFT);	
 			
+			ArrayList<JComponent>listaComponent = new ArrayList<JComponent>();
+			listaComponent.add(label02);
+			listaComponent.add(label03);
+			
+			JComponentGroupZZZ group1 = new JComponentGroupZZZ(objKernel, "EINS", listaComponent);
+			group1.setVisible(true);
+			
 			//++++++++++++
 			String sLabel04 = "Label 1B";
 			JLabel label04 = new JLabel(sLabel04, SwingConstants.LEFT);
@@ -112,17 +121,14 @@ public class PanelDebugButtonSwitchLabelGroup_NORTHZZZ extends KernelJPanelCasca
 			String sLabel05 = "Label 2B";
 			JLabel label05 = new JLabel(sLabel05, SwingConstants.LEFT);
 			
-			//+++++++++++++
-			JComponentGroupZZZ group1 = new JComponentGroupZZZ(objKernel, "EINS");
-			group1.addComponent(label02);
-			group1.addComponent(label04);
-			group1.setVisible(true);
+			listaComponent.clear();
+			listaComponent.add(label04);
+			listaComponent.add(label05);
 			
-			JComponentGroupZZZ group2 = new JComponentGroupZZZ(objKernel, "ZWEI");
-			group2.addComponent(label03);
-			group2.addComponent(label05);
-			group2.setVisible(false);
-				
+			JComponentGroupZZZ group2 = new JComponentGroupZZZ(objKernel, "ZWEI", listaComponent);
+			group1.setVisible(false);
+			
+							
 			//Den EventBroker DER GRUPPE hinzufügen, damit darueber der Event abgefeuert werden kann
 			//Merke: Dem EventBroker ist eine Reihefolge (über den Index) egal
 			KernelSenderComponentGroupSwitchZZZ objEventBroker = new KernelSenderComponentGroupSwitchZZZ(objKernel);

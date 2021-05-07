@@ -984,35 +984,30 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				//Die Action als eigene Klasse ausgliedern und alle beteiligten Klassen in ein passendes Package verschieben.
 		        //Den Debug/Testpanel für die Gruppenumschaltung soll dann auch diese nutzen.
 				
-				TODOGOON 20210507; //Vereinheitliche die Definition der ComponentGroup im Debug-Test-Fall und im KernelJPanelCascadedZZZ.createDebugUI();
+				//TODOGOON 20210507; //Vereinheitliche die Definition der ComponentGroup im Debug-Test-Fall und im KernelJPanelCascadedZZZ.createDebugUI();
+
+				//TODOGOON; //Die Verwaltung der HashMap für die Componenten einer ComponentGroupCollection übertragen.	
+				            //Darin auch den Eventhandler/Eventbroker, etc. hinzufügen.
 				
 				//TODOGOON; //Ein Button zum Umschalten ist auch erst im Panel notwendig, wenn es mehr als 1 Gruppenobjekt gibt.
 																
-				HashMapIndexedZZZ<Integer,ArrayList<JLabel>>hmLabel;
-				hmLabel = PanelDebugHelperZZZ.createLabelHashMap(sTitle, this);
+				HashMapIndexedZZZ<Integer,ArrayList<JComponent>>hmComponent;
+				hmComponent = PanelDebugHelperZZZ.createComponentHashMap(sTitle, this);
 											
 				//+++ Die Labels auf die Gruppen verteilen
 				ArrayList<JComponentGroupZZZ>listaGroup = new ArrayList<JComponentGroupZZZ>();				
 				int iIndex=-1;
 				
-				Iterator itListaLabel = hmLabel.iterator();
-				while(itListaLabel.hasNext()) {
-					ArrayList<JLabel>listaLabeltemp = (ArrayList<JLabel>) itListaLabel.next();
+				Iterator itListaComponent = hmComponent.iterator();
+				while(itListaComponent.hasNext()) {
+					ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) itListaComponent.next();
 					
 					iIndex=iIndex+1;						
 					String sIndex = Integer.toString(iIndex);					
-					JComponentGroupZZZ grouptemp = new JComponentGroupZZZ(objKernel, sIndex);
-					
-					boolean bAnyLabelAdded=false;
-					for(JLabel labeltemp : listaLabeltemp) {
-						if(labeltemp!=null) {												
-							grouptemp.addComponent(labeltemp);
-							bAnyLabelAdded=true;
-						}
-					}
-					if(bAnyLabelAdded) {
+					JComponentGroupZZZ grouptemp = new JComponentGroupZZZ(objKernel, sIndex, listaComponenttemp);
+					if(grouptemp.hasAnyComponentAdded()) {
 						listaGroup.add(grouptemp);
-					}
+					}								
 				}
 				
 				//Initiales Setzen der Sichtbarkeit
@@ -1042,18 +1037,18 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				this.setComponent(KernelJPanelCascadedZZZ.sBUTTON_SWITCH, buttonSwitch);				
 				this.add(buttonSwitch);
 				
-				int iIndexOuterMax = hmLabel.size() -1;
+				int iIndexOuterMax = hmComponent.size() -1;
 				for(int iIndexOuter=0; iIndexOuter <= iIndexOuterMax; iIndexOuter++) {
-					ArrayList<JLabel>listaLabeltemp = (ArrayList<JLabel>) hmLabel.getValue(iIndexOuter);
-					if(listaLabeltemp!=null) {
+					ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) hmComponent.getValue(iIndexOuter);
+					if(listaComponenttemp!=null) {
 						
 						//Die Labels der Arraylist abarbeiten und dem panel hinzufügen
 						int iIndexInner=-1;				
-						for(JLabel labeltemp : listaLabeltemp) {
-							if(labeltemp!=null) {
+						for(JComponent componenttemp : listaComponenttemp) {
+							if(componenttemp!=null) {
 								iIndexInner=iIndexInner+1;
-								this.add(labeltemp);
-								this.setComponent("LabelDebug"+iIndexOuter+"_"+iIndexInner, labeltemp);
+								this.add(componenttemp);
+								this.setComponent("ComponentDebug"+iIndexOuter+"_"+iIndexInner, componenttemp);
 							}
 						}		
 					}

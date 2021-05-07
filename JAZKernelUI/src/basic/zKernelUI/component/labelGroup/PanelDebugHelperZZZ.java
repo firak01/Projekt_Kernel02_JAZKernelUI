@@ -2,6 +2,7 @@ package basic.zKernelUI.component.labelGroup;
 
 import java.util.ArrayList;
 
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 
 import basic.zBasic.ExceptionZZZ;
@@ -12,8 +13,8 @@ import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 
 public class PanelDebugHelperZZZ {
-	public static HashMapIndexedZZZ<Integer,ArrayList<JLabel>>createLabelHashMap(String sTitle, KernelJPanelCascadedZZZ panel) throws ExceptionZZZ {
-		HashMapIndexedZZZ<Integer,ArrayList<JLabel>> hmReturn = new HashMapIndexedZZZ<Integer,ArrayList<JLabel>>();
+	public static HashMapIndexedZZZ<Integer,ArrayList<JComponent>>createComponentHashMap(String sTitle, KernelJPanelCascadedZZZ panel) throws ExceptionZZZ {
+		HashMapIndexedZZZ<Integer,ArrayList<JComponent>> hmReturn = new HashMapIndexedZZZ<Integer,ArrayList<JComponent>>();
 		
 		String stemp;
 		main:{			
