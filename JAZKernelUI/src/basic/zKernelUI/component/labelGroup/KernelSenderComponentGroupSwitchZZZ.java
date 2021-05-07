@@ -1,4 +1,4 @@
-package debug.zKernelUI.component.buttonSwitchLabelGroup;
+package basic.zKernelUI.component.labelGroup;
 
 import java.util.ArrayList;
 
@@ -6,7 +6,6 @@ import basic.zKernel.IKernelZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
-import basic.zKernelUI.component.labelGroup.IListenerComponentGroupSwitchZZZ;
 
 /** Diese Klasse implementiert alles, was ben�tigt wird, damit die eigenen Events "Auswahl hat sich ge�ndert" abgefeuert werden kann
  *   und auch von den Componenten, die hier registriert sind empfangen wird. Damit fungieren Objekte dieser Klasse als "EventBroker".

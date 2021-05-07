@@ -1,8 +1,6 @@
-package debug.zKernelUI.component.buttonSwitchLabelGroup;
+package basic.zKernelUI.component.labelGroup;
 
 import java.util.ArrayList;
-
-import basic.zKernelUI.component.labelGroup.IListenerComponentGroupSwitchZZZ;
 
 
 /**Dieses Interface enth�lt Methoden, die von den Klassen implementiert werden m�ssen, die den Kernel eigenen Event verwalten sollen.

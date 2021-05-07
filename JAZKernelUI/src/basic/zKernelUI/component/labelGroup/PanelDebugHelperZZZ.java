@@ -1,4 +1,4 @@
-package debug.zKernelUI.component.buttonSwitchLabelGroup;
+package basic.zKernelUI.component.labelGroup;
 
 import java.util.ArrayList;
 
@@ -88,6 +88,10 @@ public class PanelDebugHelperZZZ {
 					listaText.add("Program: " + sProgram);
 					labelDebug = PanelDebugHelperZZZ.createLabel(listaText);						
 					if(labelDebug!=null) listaReturn.add(labelDebug);					
+				}else {
+					listaText.add("Program: Not configured");
+					labelDebug = PanelDebugHelperZZZ.createLabel(listaText);						
+					if(labelDebug!=null) listaReturn.add(labelDebug);
 				}
 				break;
 			case 3:

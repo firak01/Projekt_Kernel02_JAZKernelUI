@@ -7,7 +7,6 @@ import javax.swing.JComponent;
 import basic.zBasic.ExceptionZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
-import debug.zKernelUI.component.buttonSwitchLabelGroup.EventComponentGroupSwitchZZZ;
 
 public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerComponentGroupSwitchZZZ { //,IEventBrokerSwitchComponentUserZZZ { //, IEventBrokerSwitchComponentUserZZZ{
 	private ArrayList<JComponent>listaComponent=null;

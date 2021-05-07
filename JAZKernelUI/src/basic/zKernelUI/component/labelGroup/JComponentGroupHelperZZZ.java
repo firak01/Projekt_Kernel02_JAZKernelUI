@@ -7,7 +7,6 @@ import javax.swing.JLabel;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
-import debug.zKernelUI.component.buttonSwitchLabelGroup.PanelDebugHelperZZZ;
 
 public class JComponentGroupHelperZZZ {
 

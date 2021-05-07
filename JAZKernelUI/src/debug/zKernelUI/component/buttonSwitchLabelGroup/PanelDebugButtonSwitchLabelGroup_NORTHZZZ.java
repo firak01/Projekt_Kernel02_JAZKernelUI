@@ -36,8 +36,12 @@ import basic.zKernelUI.KernelUIZZZ;
 import basic.zKernelUI.component.KernelActionCascadedZZZ;
 import basic.zKernelUI.component.KernelButtonGroupZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
+import basic.zKernelUI.component.labelGroup.ActionSwitchZZZ;
+import basic.zKernelUI.component.labelGroup.EventComponentGroupSwitchZZZ;
 import basic.zKernelUI.component.labelGroup.IListenerComponentGroupSwitchZZZ;
+import basic.zKernelUI.component.labelGroup.ISenderComponentGroupSwitchZZZ;
 import basic.zKernelUI.component.labelGroup.JComponentGroupZZZ;
+import basic.zKernelUI.component.labelGroup.KernelSenderComponentGroupSwitchZZZ;
 import basic.zKernelUI.thread.KernelSwingWorkerZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
@@ -137,7 +141,7 @@ public class PanelDebugButtonSwitchLabelGroup_NORTHZZZ extends KernelJPanelCasca
 			//++++ Die Buttons
 			String sLabelButton = this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButton").getValue();
 			JButton buttonSwitch = new JButton(sLabelButton);			
-			ActionSwitch actionSwitch = new ActionSwitch(objKernel, this, hmIndexed);
+			ActionSwitchZZZ actionSwitch = new ActionSwitchZZZ(objKernel, this, hmIndexed);
 			actionSwitch.setSenderUsed(objEventBroker);
 			buttonSwitch.addActionListener(actionSwitch);
 			
@@ -160,176 +164,5 @@ public class PanelDebugButtonSwitchLabelGroup_NORTHZZZ extends KernelJPanelCasca
 				this.getLogObject().WriteLineDate(sError);
 			}
 		}//END main:
-	}
-	
-	//VARIANTE MIT SWING WORKER
-	//######################################
-	//SWITCH BUTTON GUI - Innere Klassen, welche eine Action behandelt	
-	class ActionSwitch extends  KernelActionCascadedZZZ{ //KernelUseObjectZZZ implements ActionListener{
-		private int iIndexCurrent = 0;
-		private HashMapIndexedZZZ<Integer,JComponentGroupZZZ>hmIndexed;
-		ISenderComponentGroupSwitchZZZ objEventBroker;
-		
-		public ActionSwitch(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent, HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmIndexed) throws ExceptionZZZ{
-			super(objKernel, panelParent);
-			ActionSwitchNew_(hmIndexed);
-		}
-		private boolean ActionSwitchNew_(HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmIndexed) throws ExceptionZZZ {
-			boolean bReturn = false;
-			main:{
-				if(hmIndexed==null) {
-					ExceptionZZZ ez = new ExceptionZZZ( "HashMapIndexedZZZ-Object missing.", iERROR_PARAMETER_MISSING, this, ReflectCodeZZZ.getMethodCurrentName()); 
-					throw ez;
-				}
-				
-				this.hmIndexed = hmIndexed;
-				
-				bReturn = true;
-			}//end main:
-			return bReturn;
-		}
-		
-		public boolean actionPerformCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ {
-			ReportLogZZZ.write(ReportLogZZZ.DEBUG, "Performing action: 'SWITCH'");
-												
-			String[] saFlag = null;			
-			KernelJPanelCascadedZZZ panelParent = (KernelJPanelCascadedZZZ) this.getPanelParent();
-				
-			//Wenn die Gruppen einmal durchgeschaltet sind, wieder am Anfang beginnen.
-			int iIndexCurrent = this.getIndexCurrent();		
-			int iIndexNext = iIndexCurrent+1;
-			if(this.hmIndexed.size() < iIndexNext+1) {//+1 wg. Index mit Grüße vergleichen und Index beginnt immer bei 0
-				iIndexNext=0;		
-			}
-			this.setIndexCurrent(iIndexNext);
-			
-			boolean bActiveState = true;
-			SwingWorker4ProgramSWITCH worker = new SwingWorker4ProgramSWITCH(objKernel, panelParent, this.hmIndexed, iIndexNext, bActiveState, saFlag);
-			worker.start();  //Merke: Das Setzen des Label Felds geschieht durch einen extra Thread, der mit SwingUtitlities.invokeLater(runnable) gestartet wird.
-		
-			return true;
-		}
-		
-		public boolean actionPerformQueryCustom(ActionEvent ae) throws ExceptionZZZ {
-			return true;
-		}
-		
-		public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ {
-		}			
-		
-		//### Methoden, die über den reinen Button-Click hinausgehen
-		public int getIndexCurrent() {
-			return this.iIndexCurrent;
-		}
-		public void setIndexCurrent(int iIndex) {
-			this.iIndexCurrent = iIndex;
-		}
-		
-		//### Interface IEventBrokerUser
-		public ISenderComponentGroupSwitchZZZ getSenderUsed() {
-			return this.objEventBroker;
-		}
-	
-		public void setSenderUsed(ISenderComponentGroupSwitchZZZ objEventSender) {
-			this.objEventBroker = objEventSender;			
-		}
-		
-		@Override
-		public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {
-			// TODO Auto-generated method stub		
-		}
-		
-		//#### Innere Klassen
-		//##############################################################
-		class SwingWorker4ProgramSWITCH extends KernelSwingWorkerZZZ{
-			private KernelJPanelCascadedZZZ panel;
-			private String[] saFlag4Program;	
-			private String sText2Update;    //Der Wert, der ins Label geschreiben werden soll. Jier als Variable, damit die intene Runner-Klasse darauf zugreifen kann.
-														// Auch: Dieser Wert wird aus dem Web ausgelesen und danach in das Label des Panels geschrieben.
-							
-			private HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmIndexed;
-			private int iIndexUsed;
-			private boolean bActiveState;
-			
-			public SwingWorker4ProgramSWITCH(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panel, HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmIndexed, int iIndexCurrent, boolean bActiveState, String[] saFlag4Program){
-				super(objKernel);
-				this.panel = panel;
-				this.saFlag4Program = saFlag4Program;	
-				
-				this.hmIndexed = hmIndexed;
-				this.iIndexUsed = iIndexCurrent;
-				this.bActiveState = bActiveState;
-			}
-			
-			//#### abstracte - Method aus SwingWorker
-			public Object construct() {
-				try{										
-					Integer intIndex = new Integer(this.iIndexUsed);							
-					//TODOGOON; ///20210424: Hier das Umschalten machen, indem man einen Event - Wirft, 
-					                      //Alle am Event "registrierten" Labels/Componentent sollen dann reagieren.
-					//Wird eine Gruppe aktiv geschaltet, gehören alle anderen Gruppen passiv geschaltet.
-					
-					//### Den Event starten,
-					System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#EVENTEVENT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-					HashMapIndexedZZZ<Integer, JComponentGroupZZZ> hmIndexed = this.hmIndexed;
-					JComponentGroupZZZ group = (JComponentGroupZZZ) hmIndexed.getValue(this.iIndexUsed);
-					EventComponentGroupSwitchZZZ eventNew= new EventComponentGroupSwitchZZZ(panel, 10002, group, true);				
-					objEventBroker.fireEvent(eventNew);	
-					
-					System.out.println("#Updating Panel ...");
-					KernelJPanelCascadedZZZ objPanelParent = this.panel; //.getPanelParent();
-					updatePanel(objPanelParent);						
-				
-				}catch(ExceptionZZZ ez){
-					System.out.println(ez.getDetailAllLast());
-					ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());					
-				}
-				return "all done";
-			}
-		
-	
-			/**Aus dem Worker-Thread heraus wird ein Thread gestartet (der sich in die EventQueue von Swing einreiht.)
-			 *  
-			* @param stext
-			* 					
-			 */
-			public void updatePanel(KernelJPanelCascadedZZZ panel2updateStart){
-				this.panel = panel2updateStart;
-				
-		//		Das Schreiben des Ergebnisses wieder an den EventDispatcher thread übergeben
-				Runnable runnerUpdatePanel= new Runnable(){
-		
-					public void run(){
-		//				try {							
-							
-							System.out.println("SWITCH GECLICKT");
-							logLineDate("SWITCH GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ					
-													
-							panel.revalidate();//.validate()
-							panel.repaint();
-													 							
-		//				} catch (ExceptionZZZ e) {
-		//					e.printStackTrace();
-		//				}
-					}
-				};
-				
-				SwingUtilities.invokeLater(runnerUpdatePanel);		
-				//Ggfs. nach dem Swing Worker eine Statuszeile etc. aktualisieren....
-		
-			}
-				
-			/**Overwritten and using an object of jakarta.commons.lang
-			 * to create this string using reflection. 
-			 * Remark: this is not yet formated. A style class is available in jakarta.commons.lang. 
-			 */
-			public String toString(){
-				String sReturn = "";
-				sReturn = ReflectionToStringBuilder.toString(this);
-				return sReturn;
-			}
-		
-		} //End Class SwingWorker: SwingWorker4ProgramSWITCH	
-	}//End class ...KernelActionCascaded....
-	//##############################################
+	}		
 }

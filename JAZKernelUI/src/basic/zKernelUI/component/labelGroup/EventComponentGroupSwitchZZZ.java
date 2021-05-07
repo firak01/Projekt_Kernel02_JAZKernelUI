@@ -1,8 +1,6 @@
-package debug.zKernelUI.component.buttonSwitchLabelGroup;
+package basic.zKernelUI.component.labelGroup;
 
 import java.util.EventObject;
-
-import basic.zKernelUI.component.labelGroup.IListenerComponentGroupSwitchZZZ;
 
 
 public final class EventComponentGroupSwitchZZZ extends EventObject{	
