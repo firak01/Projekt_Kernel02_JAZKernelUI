@@ -42,6 +42,7 @@ import basic.zKernelUI.component.labelGroup.ActionSwitchZZZ;
 import basic.zKernelUI.component.labelGroup.EventComponentGroupSwitchZZZ;
 import basic.zKernelUI.component.labelGroup.IListenerComponentGroupSwitchZZZ;
 import basic.zKernelUI.component.labelGroup.ISenderComponentGroupSwitchZZZ;
+import basic.zKernelUI.component.labelGroup.JComponentGroupCollectionZZZ;
 import basic.zKernelUI.component.labelGroup.JComponentGroupZZZ;
 import basic.zKernelUI.component.labelGroup.KernelSenderComponentGroupSwitchZZZ;
 import basic.zKernelUI.thread.KernelSwingWorkerZZZ;
@@ -102,53 +103,38 @@ public class PanelDebugButtonSwitchLabelGroup_NORTHZZZ extends KernelJPanelCasca
 			//++++ Die LabelGroupZZZ				
 			//+++++++++++ GRUPPE 1 ++++++++++++++++++
 			String sLabel02 = "Label 1A";
-			JLabel label02 = new JLabel(sLabel02, SwingConstants.LEFT);
-			
+			JLabel label02 = new JLabel(sLabel02, SwingConstants.LEFT);			
 			String sLabel03 = "Label 2A";
 			JLabel label03 = new JLabel(sLabel03, SwingConstants.LEFT);	
 			
 			ArrayList<JComponent>listaComponent = new ArrayList<JComponent>();
 			listaComponent.add(label02);
-			listaComponent.add(label03);
-			
+			listaComponent.add(label03);			
 			JComponentGroupZZZ group1 = new JComponentGroupZZZ(objKernel, "EINS", listaComponent);
-			group1.setVisible(true);
 			
 			//++++++++++++
 			String sLabel04 = "Label 1B";
-			JLabel label04 = new JLabel(sLabel04, SwingConstants.LEFT);
-			
+			JLabel label04 = new JLabel(sLabel04, SwingConstants.LEFT);			
 			String sLabel05 = "Label 2B";
 			JLabel label05 = new JLabel(sLabel05, SwingConstants.LEFT);
 			
 			listaComponent.clear();
 			listaComponent.add(label04);
-			listaComponent.add(label05);
-			
+			listaComponent.add(label05);			
 			JComponentGroupZZZ group2 = new JComponentGroupZZZ(objKernel, "ZWEI", listaComponent);
-			group1.setVisible(false);
-			
-							
-			//Den EventBroker DER GRUPPE hinzufügen, damit darueber der Event abgefeuert werden kann
-			//Merke: Dem EventBroker ist eine Reihefolge (über den Index) egal
-			KernelSenderComponentGroupSwitchZZZ objEventBroker = new KernelSenderComponentGroupSwitchZZZ(objKernel);
-			objEventBroker.addListenerComponentGroupSwitch(group1);
-			objEventBroker.addListenerComponentGroupSwitch(group2);
-			
-			
-			//++++++++++ Ggfs. mehrerer Gruppen zu der HashMap zusammenfassen.
-			//Merke: Der Button steuert über den Index die Reihenfolge
-			HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmIndexed = new HashMapIndexedZZZ<Integer,JComponentGroupZZZ>();
-			hmIndexed.put(group1);
-			hmIndexed.put(group2);
+																
+			//### Die Gruppen in einer Collection zusammenfassen
+			JComponentGroupCollectionZZZ groupc = new JComponentGroupCollectionZZZ(objKernel);
+			groupc.add(group1);
+			groupc.add(group2);
+			groupc.setVisible("EINS");
 			
 			
 			//######## Das UI gestalten. Die Reihenfolge der Componenten ist wichtig für die Reihenfolge im UI #################
 			//++++ Die Buttons
 			String sLabelButton = this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButton").getValue();
 			JButton buttonSwitch = new JButton(sLabelButton);			
-			ActionSwitchZZZ actionSwitch = new ActionSwitchZZZ(objKernel, this, hmIndexed);
-			actionSwitch.setSenderUsed(objEventBroker);
+			ActionSwitchZZZ actionSwitch = new ActionSwitchZZZ(objKernel, this, groupc);			
 			buttonSwitch.addActionListener(actionSwitch);
 			
 			this.setComponent(PanelDebugButtonSwitchLabelGroup_NORTHZZZ.sBUTTON_SWITCH, buttonSwitch);

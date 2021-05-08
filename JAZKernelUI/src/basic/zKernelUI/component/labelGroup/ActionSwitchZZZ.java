@@ -17,23 +17,32 @@ import basic.zKernelUI.thread.KernelSwingWorkerZZZ;
 
 public class ActionSwitchZZZ extends  KernelActionCascadedZZZ implements IEventBrokerSwitchComponentUserZZZ { //KernelUseObjectZZZ implements ActionListener{
 	private int iIndexCurrent = 0;
-	private HashMapIndexedZZZ<Integer,JComponentGroupZZZ>hmIndexed;
+	private JComponentGroupCollectionZZZ groupc;//zur Verwaltung von HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmIndexed
 	ISenderComponentGroupSwitchZZZ objEventBroker;
 	
-	public ActionSwitchZZZ(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent, HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmIndexed) throws ExceptionZZZ{
+	public ActionSwitchZZZ(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent, JComponentGroupCollectionZZZ groupc) throws ExceptionZZZ{
 		super(objKernel, panelParent);
-		ActionSwitchNew_(hmIndexed);
+		ActionSwitchNew_(groupc);
 	}
-	private boolean ActionSwitchNew_(HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmIndexed) throws ExceptionZZZ {
+	private boolean ActionSwitchNew_(JComponentGroupCollectionZZZ groupc) throws ExceptionZZZ {
 		boolean bReturn = false;
 		main:{
-			if(hmIndexed==null) {
-				ExceptionZZZ ez = new ExceptionZZZ( "HashMapIndexedZZZ-Object missing.", iERROR_PARAMETER_MISSING, this, ReflectCodeZZZ.getMethodCurrentName()); 
+			if(groupc==null) {
+				ExceptionZZZ ez = new ExceptionZZZ( "GroupCollection-Object missing.", iERROR_PARAMETER_MISSING, this, ReflectCodeZZZ.getMethodCurrentName()); 
 				throw ez;
 			}
-			
-			this.hmIndexed = hmIndexed;
-			
+				
+				
+			HashMapIndexedZZZ<Integer,JComponentGroupZZZ>hmIndexed = groupc.getHashMapIndexed();	
+			if(hmIndexed==null) {
+				ExceptionZZZ ez = new ExceptionZZZ( "HashMapIndexedZZZ-Object in GroupCollection missing. Fill GroupCollection first.", iERROR_PARAMETER_MISSING, this, ReflectCodeZZZ.getMethodCurrentName()); 
+				throw ez;
+			}
+				
+			//+++ der EventBroker wird verwendet um alle Komponenten der GroupCollection über den Buttonclick zu informieren
+			ISenderComponentGroupSwitchZZZ objEventBroker = groupc.getEventBroker();
+			this.setSenderUsed(objEventBroker);
+									
 			bReturn = true;
 		}//end main:
 		return bReturn;
@@ -48,13 +57,15 @@ public class ActionSwitchZZZ extends  KernelActionCascadedZZZ implements IEventB
 		//Wenn die Gruppen einmal durchgeschaltet sind, wieder am Anfang beginnen.
 		int iIndexCurrent = this.getIndexCurrent();		
 		int iIndexNext = iIndexCurrent+1;
-		if(this.hmIndexed.size() < iIndexNext+1) {//+1 wg. Index mit Grüße vergleichen und Index beginnt immer bei 0
+		
+		HashMapIndexedZZZ<Integer,JComponentGroupZZZ>hmIndexed = this.groupc.getHashMapIndexed();
+		if(hmIndexed.size() < iIndexNext+1) {//+1 wg. Index mit Grüße vergleichen und Index beginnt immer bei 0
 			iIndexNext=0;		
 		}
 		this.setIndexCurrent(iIndexNext);
 		
 		boolean bActiveState = true;
-		SwingWorker4ProgramSWITCH worker = new SwingWorker4ProgramSWITCH(objKernel, panelParent, this.hmIndexed, iIndexNext, bActiveState, saFlag);
+		SwingWorker4ProgramSWITCH worker = new SwingWorker4ProgramSWITCH(objKernel, panelParent, hmIndexed, iIndexNext, bActiveState, saFlag);
 		worker.start();  //Merke: Das Setzen des Label Felds geschieht durch einen extra Thread, der mit SwingUtitlities.invokeLater(runnable) gestartet wird.
 	
 		return true;

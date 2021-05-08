@@ -37,6 +37,7 @@ import basic.zKernel.flag.FlagZHelperZZZ;
 import basic.zKernel.flag.IFlagUserZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import basic.zKernelUI.component.labelGroup.ActionSwitchZZZ;
+import basic.zKernelUI.component.labelGroup.JComponentGroupCollectionZZZ;
 import basic.zKernelUI.component.labelGroup.JComponentGroupHelperZZZ;
 import basic.zKernelUI.component.labelGroup.JComponentGroupZZZ;
 import basic.zKernelUI.component.labelGroup.KernelSenderComponentGroupSwitchZZZ;
@@ -1011,28 +1012,32 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				}
 				
 				//Initiales Setzen der Sichtbarkeit
-				JComponentGroupHelperZZZ.setVisible(listaGroup, 0);
+//				JComponentGroupHelperZZZ.setVisible(listaGroup, 0);
 					
-				//Den EventBroker DER GRUPPE hinzufügen, damit darueber der Event abgefeuert werden kann
-				//Merke: Dem EventBroker ist eine Reihefolge (über den Index) egal
-				KernelSenderComponentGroupSwitchZZZ objEventBroker = new KernelSenderComponentGroupSwitchZZZ(objKernel);
-								
-				//++++++++++ Ggfs. mehrerer Gruppen zu der HashMap zusammenfassen.
-				//Merke: Der Button steuert über den Index die Reihenfolge
-				HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmIndexed = new HashMapIndexedZZZ<Integer,JComponentGroupZZZ>();
-				for(JComponentGroupZZZ grouptemp : listaGroup) {
-					if(grouptemp!=null) {
-						objEventBroker.addListenerComponentGroupSwitch(grouptemp);
-						hmIndexed.put(grouptemp);
-					}
-				}
+//				//Den EventBroker DER GRUPPE hinzufügen, damit darueber der Event abgefeuert werden kann
+//				//Merke: Dem EventBroker ist eine Reihefolge (über den Index) egal
+//				KernelSenderComponentGroupSwitchZZZ objEventBroker = new KernelSenderComponentGroupSwitchZZZ(objKernel);
+//								
+//				//++++++++++ Ggfs. mehrerer Gruppen zu der HashMap zusammenfassen.
+//				//Merke: Der Button steuert über den Index die Reihenfolge
+//				HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmIndexed = new HashMapIndexedZZZ<Integer,JComponentGroupZZZ>();
+//				for(JComponentGroupZZZ grouptemp : listaGroup) {
+//					if(grouptemp!=null) {
+//						objEventBroker.addListenerComponentGroupSwitch(grouptemp);
+//						hmIndexed.put(grouptemp);
+//					}
+//				}
+				
+				//++++ Die GroupCollection
+				JComponentGroupCollectionZZZ groupc = new JComponentGroupCollectionZZZ(objKernel, listaGroup);
+				groupc.setVisible(0); //Initiales Setzen der Sichtbarkeit
+				
 						
 				//######## Das UI gestalten. Die Reihenfolge der Componenten ist wichtig für die Reihenfolge im UI #################
 				//++++ Der Umschaltebutton
 				String sLabelButton = ">";//this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButton").getValue();
 				JButton buttonSwitch = new JButton(sLabelButton);			
-				ActionSwitchZZZ actionSwitch = new ActionSwitchZZZ(objKernel, this, hmIndexed);
-				actionSwitch.setSenderUsed(objEventBroker);
+				ActionSwitchZZZ actionSwitch = new ActionSwitchZZZ(objKernel, this, groupc);
 				buttonSwitch.addActionListener(actionSwitch);								
 				this.setComponent(KernelJPanelCascadedZZZ.sBUTTON_SWITCH, buttonSwitch);				
 				this.add(buttonSwitch);
