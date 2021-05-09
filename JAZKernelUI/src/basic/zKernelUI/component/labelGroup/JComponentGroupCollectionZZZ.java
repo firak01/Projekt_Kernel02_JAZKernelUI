@@ -12,7 +12,7 @@ import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
 
-public class JComponentGroupCollectionZZZ<T>  extends KernelUseObjectZZZ  implements Iterable<T> {
+public class JComponentGroupCollectionZZZ<T>  extends KernelUseObjectZZZ  implements Iterable<T>,IEventBrokerSwitchComponentUserZZZ {
 	
 	//++++++++++ Mehrerer Gruppen zu der HashMap zusammenfassen.
 	//Merke: Der Button steuert über den Index die Reihenfolge
@@ -20,7 +20,8 @@ public class JComponentGroupCollectionZZZ<T>  extends KernelUseObjectZZZ  implem
 	
 	//+++ Den EventBroker DER GRUPPE hinzufügen, damit darueber der Event abgefeuert werden kann
 	//Merke: Dem EventBroker ist eine Reihefolge (über den Index) egal
-	KernelSenderComponentGroupSwitchZZZ objEventBroker = null;
+	//KernelSenderComponentGroupSwitchZZZ objEventBroker = null;
+	ISenderComponentGroupSwitchZZZ objEventBroker = null;
 
 	
 	public JComponentGroupCollectionZZZ(IKernelZZZ objKernel) throws ExceptionZZZ {
@@ -29,6 +30,7 @@ public class JComponentGroupCollectionZZZ<T>  extends KernelUseObjectZZZ  implem
 	}
 	public JComponentGroupCollectionZZZ(IKernelZZZ objKernel, ArrayList<JComponentGroupZZZ>listaGroup) throws ExceptionZZZ {
 		super(objKernel);
+		JComponentGroupCollectionNew_(listaGroup);
 		
 	}
 	
@@ -62,19 +64,7 @@ public class JComponentGroupCollectionZZZ<T>  extends KernelUseObjectZZZ  implem
 	}
 	private HashMap<Integer,Object> getHashMap() throws ExceptionZZZ{		
 		return this.getHashMapIndexed().getHashMap();		
-	}
-	
-	public KernelSenderComponentGroupSwitchZZZ getEventBroker() throws ExceptionZZZ{
-		if(this.objEventBroker==null) {
-			IKernelZZZ objKernel = this.getKernelObject();
-			KernelSenderComponentGroupSwitchZZZ objEventBroker = new KernelSenderComponentGroupSwitchZZZ(objKernel);
-			this.setEventBroker(objEventBroker);
-		}
-		return this.objEventBroker;
-	}
-	private void setEventBroker(KernelSenderComponentGroupSwitchZZZ objEventBroker) {
-		this.objEventBroker = objEventBroker;
-	}
+	}		
 	
 	public boolean add(JComponentGroupZZZ group) throws ExceptionZZZ{
 		boolean bReturn = false;
@@ -82,7 +72,8 @@ public class JComponentGroupCollectionZZZ<T>  extends KernelUseObjectZZZ  implem
 			if(group==null) break main;
 			
 			//+++ Die Gruppe dem EventBroker hinzufügen, der alle registrierten Gruppen über einen Button Click informiert.
-			KernelSenderComponentGroupSwitchZZZ objEventBroker = this.getEventBroker();
+			//KernelSenderComponentGroupSwitchZZZ objEventBroker = (KernelSenderComponentGroupSwitchZZZ) this.getSenderUsed();
+			ISenderComponentGroupSwitchZZZ objEventBroker = this.getSenderUsed();
 			objEventBroker.addListenerComponentGroupSwitch(group);
 			
 			//+++ Letztendlich die Gruppe der HashMap hinzufügen
@@ -94,33 +85,105 @@ public class JComponentGroupCollectionZZZ<T>  extends KernelUseObjectZZZ  implem
 		return bReturn;
 	}
 	
-	public boolean setVisible(int iIndex) {
+	public boolean setVisible(int iIndexToFind) throws ExceptionZZZ {
 		boolean bReturn = false;
 		main:{
-					TODOGOON;
+			if(iIndexToFind<0) break main;
+
+//			//+++ Hole aus der HashMap die Gruppe mit dem Index, setzte sie sichtbar.			
+			HashMapIndexedZZZ<Integer,JComponentGroupZZZ>hmIndexed = this.getHashMapIndexed();		
+			JComponentGroupZZZ groupToFind = (JComponentGroupZZZ) hmIndexed.getValue(iIndexToFind);
+			if(groupToFind==null) break main;			
+			groupToFind.setVisible(true);
+						
+			//+++ Hole aus der HashMap die anderen Gruppen und setze diese unsichtbar
+			Iterator it = hmIndexed.iterator();
+			while(it.hasNext()) {
+				JComponentGroupZZZ group = (JComponentGroupZZZ) it.next();
+				if(group!=null) {
+					if(group.equals(groupToFind)) {
+						//Mache nix
+					}else {
+						group.setVisible(false);
+					}
+				}
+			}												
 			bReturn = true;
 		}//end main
 		return bReturn;
 	}
 	
-	public boolean setVisible(String sGroupAlias) {
+	public boolean setVisible(String sGroupAlias) throws ExceptionZZZ {
 		boolean bReturn = false;
 		main:{
 			if(StringZZZ.isEmpty(sGroupAlias)) break main;
-					
-			
-				TODOGOON;
-			//+++ Hole aus der HashMap die Gruppe mit dem Alias, setzte sie sichtbar.
-			JComponentGroupZZZ group = this.getHashMapIndexed().getValueByKey(sGroupAlias);
-			
-			
-			//+++ Gehe alle Gruppen durch, um die anderen Gruppen unsichtbar zu setzen.
-			
+
+//			//+++ Hole aus der HashMap die Gruppe mit dem Alias, setzte sie sichtbar.
+			HashMapIndexedZZZ<Integer,JComponentGroupZZZ>hmIndexed = this.getHashMapIndexed();
+			if(hmIndexed!=null) {
+				Iterator it = hmIndexed.iterator();
+				while(it.hasNext()) {
+					JComponentGroupZZZ group = (JComponentGroupZZZ) it.next();
+					if(group!=null) {
+						if(group.getGroupAlias().equals(sGroupAlias)) {
+							group.setVisible(true);
+						}else {
+							group.setVisible(false);
+						}
+					}
+				}
+				//TODOGOON:
+				JComponentGroupZZZ group = (JComponentGroupZZZ) this.getGroupByAlias(sGroupAlias);	
+				String stemp = group.toString();
+				System.out.println("STRING: " + stemp);
+			}					
 			bReturn = true;
 		}//end main
 		return bReturn;		
 	}
+	
+	/** Gehe alle Gruppen durch und suche nach dem passenden Alias
+	 * @param sGroupAlias
+	 * @return
+	 * @author Fritz Lindhauer, 09.05.2021, 10:20:52
+	 */
+	public JComponentGroupZZZ getGroupByAlias(String sGroupAlias) {
+		JComponentGroupZZZ objReturn = null;
+		main:{
+			if(StringZZZ.isEmpty(sGroupAlias)) break main;
+			
+			Iterator it = hmIndexed.iterator();
+			while(it.hasNext()) {
+				JComponentGroupZZZ group = (JComponentGroupZZZ) it.next();
+				if(group!=null) {
+					if(group.getGroupAlias().equals(sGroupAlias)) {
+						objReturn = group;
+						break main;
+					}
+				}
+			}
+		}//end main:
+		return objReturn;
+	}
 
+	//######## INTERFACES
+	//+++ aus IEventBrokerSwitchComponentUserZZZ.java
+		@Override
+		public ISenderComponentGroupSwitchZZZ getSenderUsed() throws ExceptionZZZ {
+			if(this.objEventBroker==null) {
+				IKernelZZZ objKernel = this.getKernelObject();
+				KernelSenderComponentGroupSwitchZZZ objEventBroker = new KernelSenderComponentGroupSwitchZZZ(objKernel);
+				this.setSenderUsed(objEventBroker);
+			}
+			return this.objEventBroker;
+		}
+		
+		@Override
+		public void setSenderUsed(ISenderComponentGroupSwitchZZZ objEventBroker) {
+			this.objEventBroker = objEventBroker;
+		}
+	
+	//+++ aus Iterable
 	@Override
 	public Iterator<T> iterator() {
 		Iterator<T> it = new Iterator<T>() {

@@ -15,7 +15,7 @@ import basic.zKernelUI.component.KernelActionCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.thread.KernelSwingWorkerZZZ;
 
-public class ActionSwitchZZZ extends  KernelActionCascadedZZZ implements IEventBrokerSwitchComponentUserZZZ { //KernelUseObjectZZZ implements ActionListener{
+public class ActionSwitchZZZ extends  KernelActionCascadedZZZ implements IEventBrokerSwitchComponentUserZZZ, IComponentGroupCollectionUserZZZ { //KernelUseObjectZZZ implements ActionListener{
 	private int iIndexCurrent = 0;
 	private JComponentGroupCollectionZZZ groupc;//zur Verwaltung von HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmIndexed
 	ISenderComponentGroupSwitchZZZ objEventBroker;
@@ -31,16 +31,16 @@ public class ActionSwitchZZZ extends  KernelActionCascadedZZZ implements IEventB
 				ExceptionZZZ ez = new ExceptionZZZ( "GroupCollection-Object missing.", iERROR_PARAMETER_MISSING, this, ReflectCodeZZZ.getMethodCurrentName()); 
 				throw ez;
 			}
-				
-				
+								
 			HashMapIndexedZZZ<Integer,JComponentGroupZZZ>hmIndexed = groupc.getHashMapIndexed();	
 			if(hmIndexed==null) {
 				ExceptionZZZ ez = new ExceptionZZZ( "HashMapIndexedZZZ-Object in GroupCollection missing. Fill GroupCollection first.", iERROR_PARAMETER_MISSING, this, ReflectCodeZZZ.getMethodCurrentName()); 
 				throw ez;
 			}
+			this.setComponentGroupCollection(groupc);
 				
 			//+++ der EventBroker wird verwendet um alle Komponenten der GroupCollection über den Buttonclick zu informieren
-			ISenderComponentGroupSwitchZZZ objEventBroker = groupc.getEventBroker();
+			ISenderComponentGroupSwitchZZZ objEventBroker = groupc.getSenderUsed();
 			this.setSenderUsed(objEventBroker);
 									
 			bReturn = true;
@@ -86,13 +86,23 @@ public class ActionSwitchZZZ extends  KernelActionCascadedZZZ implements IEventB
 		this.iIndexCurrent = iIndex;
 	}
 	
+	
+	//######## Getter/Setter
+	public void setComponentGroupCollection(JComponentGroupCollectionZZZ groupc) {
+		this.groupc = groupc;
+	}
+	public JComponentGroupCollectionZZZ getComponentGroupCollection() {
+		return this.groupc;
+	}
+	
+	
 	//### Interface IEventBrokerUser
 	public ISenderComponentGroupSwitchZZZ getSenderUsed() {
 		return this.objEventBroker;
 	}
 
-	public void setSenderUsed(ISenderComponentGroupSwitchZZZ objEventSender) {
-		this.objEventBroker = objEventSender;			
+	public void setSenderUsed(ISenderComponentGroupSwitchZZZ objEventBroker) {
+		this.objEventBroker = objEventBroker;			
 	}
 	
 	@Override
