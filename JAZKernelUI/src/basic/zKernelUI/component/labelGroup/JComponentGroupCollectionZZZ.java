@@ -118,24 +118,24 @@ public class JComponentGroupCollectionZZZ<T>  extends KernelUseObjectZZZ  implem
 		main:{
 			if(StringZZZ.isEmpty(sGroupAlias)) break main;
 
-//			//+++ Hole aus der HashMap die Gruppe mit dem Alias, setzte sie sichtbar.
+			//+++ Hole die Gruppe mit dem Alias, setzte sie sichtbar
+			JComponentGroupZZZ group = (JComponentGroupZZZ) this.getGroupByAlias(sGroupAlias);	
+			if(group==null)break main;
+			
+			//+++ Hole aus der HashMap die anderen Gruppen, ohne dem Alias, setzte sie unsichtbar.
 			HashMapIndexedZZZ<Integer,JComponentGroupZZZ>hmIndexed = this.getHashMapIndexed();
 			if(hmIndexed!=null) {
 				Iterator it = hmIndexed.iterator();
 				while(it.hasNext()) {
-					JComponentGroupZZZ group = (JComponentGroupZZZ) it.next();
-					if(group!=null) {
-						if(group.getGroupAlias().equals(sGroupAlias)) {
-							group.setVisible(true);
+					JComponentGroupZZZ grouptemp = (JComponentGroupZZZ) it.next();
+					if(grouptemp!=null) {
+						if(grouptemp.equals(group)){
+							//mache nix, schon vorher gemacht
 						}else {
-							group.setVisible(false);
+							grouptemp.setVisible(false);
 						}
 					}
 				}
-				//TODOGOON:
-				JComponentGroupZZZ group = (JComponentGroupZZZ) this.getGroupByAlias(sGroupAlias);	
-				String stemp = group.toString();
-				System.out.println("STRING: " + stemp);
 			}					
 			bReturn = true;
 		}//end main

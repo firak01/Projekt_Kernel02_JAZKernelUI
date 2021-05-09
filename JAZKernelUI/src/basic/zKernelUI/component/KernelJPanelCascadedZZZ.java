@@ -177,17 +177,15 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	}
 	
 	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialog) throws ExceptionZZZ{
-		//Das Panel f�gt sich dem Dialog selbst hinzu
+		//Das Panel fuegt sich dem Dialog selbst hinzu
 		//Container objContainer = dialog.getContentPane();
 		//NEIN objContainer.add(this);
-		
-		//TODOGOON 20210404 Das KernelJPanelCascadedNew_ packen, soweit möglich....
+
 		//Damit auf die Hashtable der Dialogbox zugegriffen werden kann, um andere Panels zu erreichen
 		this.setDialogParent(dialog);
 		
-		//Damit dieses Panel zur Verf�gung steht um "mit der Maus bewegt" zu werden.
+		//Damit dieses Panel zur Verfuegung steht um "mit der Maus bewegt" zu werden.
 		Container objContainer = dialog.getContentPane();
-		//JFrame frameParent = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, (JComponent)objContainer);
 		KernelJFrameCascadedZZZ frameParent = (KernelJFrameCascadedZZZ) SwingUtilities.getAncestorOfClass(KernelJFrameCascadedZZZ.class, (JComponent) objContainer);
 		
 		//NEIN, sonst wird der ganze frameParent beim Ziehen des DialogboxPanels mit bewegt KernelJPanelCascadedNew_(objKernel, frameParent);
@@ -984,11 +982,12 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				
 				//Die Action als eigene Klasse ausgliedern und alle beteiligten Klassen in ein passendes Package verschieben.
 		        //Den Debug/Testpanel für die Gruppenumschaltung soll dann auch diese nutzen.
-				
-				//TODOGOON 20210507; //Vereinheitliche die Definition der ComponentGroup im Debug-Test-Fall und im KernelJPanelCascadedZZZ.createDebugUI();
 
-				//TODOGOON; //Die Verwaltung der HashMap für die Componenten einer ComponentGroupCollection übertragen.	
-				            //Darin auch den Eventhandler/Eventbroker, etc. hinzufügen.
+				//Die Verwaltung der HashMap für die Componenten einer ComponentGroupCollection übertragen.	
+				//Darin auch den Eventhandler/Eventbroker, etc. hinzufügen.
+				
+				//20210507; //Vereinheitlichung die Definition der ComponentGroup im Debug-Test-Fall und im KernelJPanelCascadedZZZ.createDebugUI();
+
 				
 				//TODOGOON; //Ein Button zum Umschalten ist auch erst im Panel notwendig, wenn es mehr als 1 Gruppenobjekt gibt.
 																
@@ -1010,23 +1009,6 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 						listaGroup.add(grouptemp);
 					}								
 				}
-				
-				//Initiales Setzen der Sichtbarkeit
-//				JComponentGroupHelperZZZ.setVisible(listaGroup, 0);
-					
-//				//Den EventBroker DER GRUPPE hinzufügen, damit darueber der Event abgefeuert werden kann
-//				//Merke: Dem EventBroker ist eine Reihefolge (über den Index) egal
-//				KernelSenderComponentGroupSwitchZZZ objEventBroker = new KernelSenderComponentGroupSwitchZZZ(objKernel);
-//								
-//				//++++++++++ Ggfs. mehrerer Gruppen zu der HashMap zusammenfassen.
-//				//Merke: Der Button steuert über den Index die Reihenfolge
-//				HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmIndexed = new HashMapIndexedZZZ<Integer,JComponentGroupZZZ>();
-//				for(JComponentGroupZZZ grouptemp : listaGroup) {
-//					if(grouptemp!=null) {
-//						objEventBroker.addListenerComponentGroupSwitch(grouptemp);
-//						hmIndexed.put(grouptemp);
-//					}
-//				}
 				
 				//++++ Die GroupCollection
 				JComponentGroupCollectionZZZ groupc = new JComponentGroupCollectionZZZ(objKernel, listaGroup);

@@ -136,12 +136,12 @@ public class ActionSwitchZZZ extends  KernelActionCascadedZZZ implements IEventB
 		public Object construct() {
 			try{										
 				Integer intIndex = new Integer(this.iIndexUsed);							
-				//TODOGOON; ///20210424: Hier das Umschalten machen, indem man einen Event - Wirft, 
-				                      //Alle am Event "registrierten" Labels/Componentent sollen dann reagieren.
 				//Wird eine Gruppe aktiv geschaltet, gehören alle anderen Gruppen passiv geschaltet.
+				//Hier das Umschalten macht man, indem man einen Event - Wirft, 
+                //Alle am Event "registrierten" Labels/Componentent sollen dann reagieren.
 				
 				//### Den Event starten,
-				System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#EVENTEVENT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+				System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#EVENTEVENT !!!!!!!!");
 				HashMapIndexedZZZ<Integer, JComponentGroupZZZ> hmIndexed = this.hmIndexed;
 				JComponentGroupZZZ group = (JComponentGroupZZZ) hmIndexed.getValue(this.iIndexUsed);
 				EventComponentGroupSwitchZZZ eventNew= new EventComponentGroupSwitchZZZ(panel, 10002, group, true);				
@@ -173,8 +173,8 @@ public class ActionSwitchZZZ extends  KernelActionCascadedZZZ implements IEventB
 				public void run(){
 	//				try {							
 						
-						System.out.println("SWITCH GECLICKT");
-						logLineDate("SWITCH GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ					
+						System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#SWITCH GECLICKT");
+						logLineDate("SWITCH GECLICKT");					
 												
 						panel.revalidate();//.validate()
 						panel.repaint();
