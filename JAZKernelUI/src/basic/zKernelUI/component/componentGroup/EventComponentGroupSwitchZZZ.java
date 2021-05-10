@@ -1,4 +1,4 @@
-package basic.zKernelUI.component.labelGroup;
+package basic.zKernelUI.component.componentGroup;
 
 import java.util.EventObject;
 

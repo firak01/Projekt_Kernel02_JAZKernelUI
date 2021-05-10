@@ -36,12 +36,12 @@ import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.flag.FlagZHelperZZZ;
 import basic.zKernel.flag.IFlagUserZZZ;
 import basic.zKernelUI.KernelUIZZZ;
-import basic.zKernelUI.component.labelGroup.ActionSwitchZZZ;
-import basic.zKernelUI.component.labelGroup.JComponentGroupCollectionZZZ;
-import basic.zKernelUI.component.labelGroup.JComponentGroupHelperZZZ;
-import basic.zKernelUI.component.labelGroup.JComponentGroupZZZ;
-import basic.zKernelUI.component.labelGroup.KernelSenderComponentGroupSwitchZZZ;
-import basic.zKernelUI.component.labelGroup.PanelDebugHelperZZZ;
+import basic.zKernelUI.component.componentGroup.ActionSwitchZZZ;
+import basic.zKernelUI.component.componentGroup.JComponentGroupCollectionZZZ;
+import basic.zKernelUI.component.componentGroup.JComponentGroupHelperZZZ;
+import basic.zKernelUI.component.componentGroup.JComponentGroupZZZ;
+import basic.zKernelUI.component.componentGroup.KernelSenderComponentGroupSwitchZZZ;
+import basic.zKernelUI.component.componentGroup.PanelDebugHelperZZZ;
 import custom.zKernel.LogZZZ;
 
 /** Klasse bietet als Erweiterung zu JPanel die Verschachtelung von Panels an.

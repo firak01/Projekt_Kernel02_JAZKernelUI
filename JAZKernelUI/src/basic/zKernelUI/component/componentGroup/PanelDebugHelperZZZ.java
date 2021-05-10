@@ -1,4 +1,4 @@
-package basic.zKernelUI.component.labelGroup;
+package basic.zKernelUI.component.componentGroup;
 
 import java.util.ArrayList;
 
@@ -48,6 +48,7 @@ public class PanelDebugHelperZZZ {
 			ArrayList<String> listaText = new ArrayList<String>();
 			listaText.add(sTitle);
 			
+			int iLengthDefault=20;
 			switch(iIndex) {			
 			case 0:
 				//+++ 1. Klassenname des Panels			
@@ -61,8 +62,9 @@ public class PanelDebugHelperZZZ {
 				//+++ 2. Module, das zur Verfügung steht
 				String sModule = panel.getModuleName();	
 				if(!StringZZZ.isEmpty(sModule)) {								
-					sModule = StringZZZ.abbreviateDynamic(sModule, 10);//TODOGOON: StringZZZ Methode, um von rechts ausgehende abzukürzen.
-					//!!! Wenn sich die Textlänge ständig ändert, dann verschieben sich ggfs. Nachbarpanels nach rechts aus dem Frame/der Dialogbox heraus.
+					sModule = StringZZZ.abbreviateDynamicFromRight(sModule, iLengthDefault);
+					
+					//!!! TODOGOON Wenn sich die Textlänge ständig ändert, dann verschieben sich ggfs. Nachbarpanels nach rechts aus dem Frame/der Dialogbox heraus.
 					//    Daher müsste eigentlich auch der Frame/die Dialogbox neu "gepackt" werden (frame.pack() ).
 										
 					
@@ -84,7 +86,7 @@ public class PanelDebugHelperZZZ {
 				 //+++ 3. Program, das zur Verfügung steht 
 				String sProgram = panel.getProgramName();
 				if(!StringZZZ.isEmpty(sProgram)) {
-					sProgram = StringZZZ.abbreviateDynamic(sProgram, 10);//TODOGOON: von rechts abkürzen
+					sProgram = StringZZZ.abbreviateDynamicFromRight(sProgram, iLengthDefault);
 
 					listaText.add("Program: " + sProgram);
 					labelDebug = PanelDebugHelperZZZ.createLabel(listaText);						
@@ -104,7 +106,7 @@ public class PanelDebugHelperZZZ {
 					if(sProgram4alias.equals(sProgramAlias)) {
 						sProgramAlias="dito";
 					}else {
-						sProgramAlias = StringZZZ.abbreviateDynamic(sProgramAlias, 10);//TODOGOON: von rechts abkürzen
+						sProgramAlias = StringZZZ.abbreviateDynamicFromRight(sProgramAlias, iLengthDefault);
 					}
 					
 					listaText.add("ProgramAlias: " + sProgramAlias);
