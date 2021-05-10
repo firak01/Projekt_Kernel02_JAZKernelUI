@@ -48,70 +48,92 @@ public class PanelDebugHelperZZZ {
 			ArrayList<String> listaText = new ArrayList<String>();
 			listaText.add(sTitle);
 			
-			int iLengthDefault=20;
+			int iLengthDefault=25;
+			int iLengthDefaultRightOffset=2;
 			switch(iIndex) {			
 			case 0:
-				//+++ 1. Klassenname des Panels			
-				stemp = panel.getClass().getSimpleName(); //das ist zu lang und nicht aussagekräftig genug String sParent = this.getClass().getSuperclass().getSimpleName();
-
-				listaText.add(stemp);	
-				labelDebug = PanelDebugHelperZZZ.createLabel(listaText);							
-				if(labelDebug!=null) listaReturn.add(labelDebug);	
+				//+++ 1. Klassenname des Panels	
+				{
+					stemp = panel.getClass().getSimpleName(); //das ist zu lang und nicht aussagekräftig genug String sParent = this.getClass().getSuperclass().getSimpleName();
+	
+					listaText.add(stemp);	
+					labelDebug = PanelDebugHelperZZZ.createLabel(listaText);							
+					if(labelDebug!=null) listaReturn.add(labelDebug);
+				}
 				break;
 			case 1:
 				//+++ 2. Module, das zur Verfügung steht
-				String sModule = panel.getModuleName();	
-				if(!StringZZZ.isEmpty(sModule)) {								
-					sModule = StringZZZ.abbreviateDynamicFromRight(sModule, iLengthDefault);
-					
-					//!!! TODOGOON Wenn sich die Textlänge ständig ändert, dann verschieben sich ggfs. Nachbarpanels nach rechts aus dem Frame/der Dialogbox heraus.
-					//    Daher müsste eigentlich auch der Frame/die Dialogbox neu "gepackt" werden (frame.pack() ).
-										
-					
-					listaText.add("Module:" + sModule);
-					labelDebug = PanelDebugHelperZZZ.createLabel(listaText);						
-					if(labelDebug!=null) listaReturn.add(labelDebug);	
-					
-					
-					//TESTE WEITERES LABEL
-					listaText.clear();
-					listaText.add("TEST");
-					listaText.add("Ein Testwert");
-					labelDebug = PanelDebugHelperZZZ.createLabel(listaText);						
-					if(labelDebug!=null) listaReturn.add(labelDebug);	
-					
+				{
+					String sModule = panel.getModuleName();	
+					if(!StringZZZ.isEmpty(sModule)) {								
+						sModule = StringZZZ.abbreviateDynamicLeft(sModule, iLengthDefault+iLengthDefaultRightOffset);
+						sModule = StringZZZ.abbreviateDynamic(sModule, iLengthDefault);
+						
+						
+						//!!! TODOGOON Wenn sich die Textlänge ständig ändert, dann verschieben sich ggfs. Nachbarpanels nach rechts aus dem Frame/der Dialogbox heraus.
+						//    Daher müsste eigentlich auch der Frame/die Dialogbox neu "gepackt" werden (frame.pack() ).
+											
+						
+						listaText.add("Module:" + sModule);
+						labelDebug = PanelDebugHelperZZZ.createLabel(listaText);						
+						if(labelDebug!=null) listaReturn.add(labelDebug);	
+						
+						
+						//TESTE WEITERES LABEL
+						listaText.clear();
+						listaText.add("TEST");
+						listaText.add("Ein Testwert");
+						labelDebug = PanelDebugHelperZZZ.createLabel(listaText);						
+						if(labelDebug!=null) listaReturn.add(labelDebug);	
+						
+					}
 				}
 				break;
 			case 2:
 				 //+++ 3. Program, das zur Verfügung steht 
-				String sProgram = panel.getProgramName();
-				if(!StringZZZ.isEmpty(sProgram)) {
-					sProgram = StringZZZ.abbreviateDynamicFromRight(sProgram, iLengthDefault);
-
-					listaText.add("Program: " + sProgram);
-					labelDebug = PanelDebugHelperZZZ.createLabel(listaText);						
-					if(labelDebug!=null) listaReturn.add(labelDebug);					
-				}else {
-					listaText.add("Program: Not configured");
-					labelDebug = PanelDebugHelperZZZ.createLabel(listaText);						
-					if(labelDebug!=null) listaReturn.add(labelDebug);
+				{
+					String sProgram = panel.getProgramName();
+					if(!StringZZZ.isEmpty(sProgram)) {
+						sProgram = StringZZZ.abbreviateDynamicLeft(sProgram, iLengthDefault+iLengthDefaultRightOffset);
+						sProgram = StringZZZ.abbreviateDynamic(sProgram, iLengthDefault);
+						
+						listaText.add("Program: " + sProgram);
+						labelDebug = PanelDebugHelperZZZ.createLabel(listaText);						
+						if(labelDebug!=null) listaReturn.add(labelDebug);					
+					}else {
+						listaText.add("Program: Not configured");
+						labelDebug = PanelDebugHelperZZZ.createLabel(listaText);						
+						if(labelDebug!=null) listaReturn.add(labelDebug);
+					}
 				}
 				break;
 			case 3:
 				//+++ 4. ProgramAlias, der ggfs. zur Verfügung steht
-				JLabel labelDebug3 = null;
-				String sProgram4alias = panel.getProgramName();
-				if(!StringZZZ.isEmpty(sProgram4alias)) {
-					String sProgramAlias = panel.getProgramAlias();
-					if(sProgram4alias.equals(sProgramAlias)) {
-						sProgramAlias="dito";
-					}else {
-						sProgramAlias = StringZZZ.abbreviateDynamicFromRight(sProgramAlias, iLengthDefault);
+				{
+					String sProgram = panel.getProgramName();
+					if(!StringZZZ.isEmpty(sProgram)) {
+					if(sProgram.equals("use.openvpn.serverui.component.IPExternalUpload.PanelDlgIPExternalContentOVPN")) {
+						System.out.println("DEBUGSTELLE");
+						System.out.println("...TODOGOON...");
+						//TODOGOON; //20210510hole den Alias für den Wert "use.openvpn.serverui.component.IPExternalUpload.PanelDlgIPExternalContentOVPN"
+					}
 					}
 					
-					listaText.add("ProgramAlias: " + sProgramAlias);
-					labelDebug = PanelDebugHelperZZZ.createLabel(listaText);						
-					if(labelDebug!=null) listaReturn.add(labelDebug);					
+					JLabel labelDebug3 = null;
+					String sProgram4alias = panel.getProgramAlias();				
+					if(!StringZZZ.isEmpty(sProgram4alias)) {						
+						String sProgramAlias = panel.getProgramAlias();
+						if(sProgram4alias.equals(sProgram)) {
+							sProgramAlias="dito";
+						}else {
+							sProgramAlias = StringZZZ.abbreviateDynamicLeft(sProgramAlias, iLengthDefault+iLengthDefaultRightOffset);
+							sProgramAlias = StringZZZ.abbreviateDynamic(sProgramAlias, iLengthDefault);
+						}
+						
+						listaText.add("ProgramAlias: " + sProgramAlias);
+						labelDebug = PanelDebugHelperZZZ.createLabel(listaText);						
+						if(labelDebug!=null) listaReturn.add(labelDebug);					
+					}
 				}
 				break;
 			default: 

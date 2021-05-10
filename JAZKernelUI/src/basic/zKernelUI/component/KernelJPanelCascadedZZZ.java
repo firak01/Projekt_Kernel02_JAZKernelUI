@@ -538,7 +538,8 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			String sReturn = null;
 			main:{
 				if(StringZZZ.isEmpty(this.sProgramAlias)){
-					this.sProgramAlias = KernelUIZZZ.readProgramAlias(this);
+					String sProgramAlias = KernelUIZZZ.readProgramAlias(this); 
+					this.sProgramAlias = sProgramAlias; 
 					
 					//FGL 20180402: Es scheint mir sinnvoll, wenn der Alias nicht definiert ist, denn Programmnamen selbst zurückzugeben...
 					if(StringZZZ.isEmpty(this.sProgramAlias)){
