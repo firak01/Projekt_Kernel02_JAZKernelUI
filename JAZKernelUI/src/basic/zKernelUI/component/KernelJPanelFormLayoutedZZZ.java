@@ -28,13 +28,17 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 	
 	public KernelJPanelFormLayoutedZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended) throws ExceptionZZZ{
 		super(objKernel, dialogExtended);
-		KernelJPanelFormLayoutedNew_();
+		KernelJPanelFormLayoutedNew_(this);
 	}
 	
-	private boolean KernelJPanelFormLayoutedNew_() throws ExceptionZZZ{
+	public KernelJPanelFormLayoutedZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended, KernelJPanelCascadedZZZ panelRoot) throws ExceptionZZZ{
+		super(objKernel, dialogExtended);
+		KernelJPanelFormLayoutedNew_(panelRoot);
+	}
+	
+	private boolean KernelJPanelFormLayoutedNew_(KernelJPanelCascadedZZZ panelRoot) throws ExceptionZZZ{
 		boolean bReturn = false;
 		main:{
-			
 			//##################################################################
 			//### Definition des Masken UIs
 			//###

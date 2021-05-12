@@ -103,9 +103,8 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	}
 	
 	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel) throws ExceptionZZZ{
-		super(); //Das initialisiert JPanel;
-		KernelJFrameCascadedZZZ frameParent = (KernelJFrameCascadedZZZ) SwingUtilities.getAncestorOfClass(KernelJFrameCascadedZZZ.class, (JComponent)this); 
-		KernelJPanelCascadedNew_(objKernel, frameParent, null);		
+		super(); //Das initialisiert JPanel;		
+		KernelJPanelCascadedNew_(objKernel, null, null, null, null);		
 	}
 	
 	/** constructor used for creating a ROOT-Panel
@@ -116,20 +115,12 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	 */
 	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, KernelJFrameCascadedZZZ frameParent) throws ExceptionZZZ{
 		super(); //Das initialisiert JPanel;		
-		KernelJPanelCascadedNew_(objKernel, frameParent, null);
+		KernelJPanelCascadedNew_(objKernel, frameParent, null, null, null);
 	}
 	
-	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, JFrame frameBasic) throws ExceptionZZZ{
-		frameBasic.getContentPane().add(this);
-	     
-		FrameCascadedRootDummyZZZ frameParent = new FrameCascadedRootDummyZZZ(objKernel, frameBasic);
-		
-		//20130625 Hinzugef�gt, um das Suchen des NAchbarpanels schon erm�glichen, bevor das launch() von KernelJFrameCascaded abgeschlossen ist.
-		//Wird normalerweise im KErnelJFrameCascaded.lauchchDoing() gemacht, aber bei der Konfiguration der PAnels muss schon auf ein Nachbarpanel zugegriffen werden.
-		frameParent.setPanelContent(this); //this: Ist das oberste Panel, wichtig wenn man aus einem Panel nach den Nachbarpanels sucht.
-		//NEIN, nur DUMMY frameParent.getContentPane().add(this);		
-			
-		KernelJPanelCascadedNew_(objKernel, frameParent, null);
+	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, JFrame frameBasic) throws ExceptionZZZ{		
+		FrameCascadedRootDummyZZZ frameParent = new FrameCascadedRootDummyZZZ(objKernel, frameBasic);				
+		KernelJPanelCascadedNew_(objKernel, frameParent, null, null, null);
 	}
 	
 	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, Container contentPane) throws ExceptionZZZ{
@@ -148,7 +139,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				frame.getContentPane().add(this);
 			     
 				FrameCascadedRootDummyZZZ frameParent = new FrameCascadedRootDummyZZZ(objKernel, frame);
-				KernelJPanelCascadedNew_(objKernel, frameParent, null);
+				KernelJPanelCascadedNew_(objKernel, frameParent, null, null, null);
 				break main;
 			}
 			
@@ -156,7 +147,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			if(bIsCascadedFrame){				
 				KernelJFrameCascadedZZZ frameParent =  (KernelJFrameCascadedZZZ) contentPane;   //SwingUtilities.getAncestorOfClass(KernelJFrameCascadedZZZ.class, (JComponent)contentPane);
 				frameParent.getContentPane().add(this);
-				KernelJPanelCascadedNew_(objKernel, frameParent, null);
+				KernelJPanelCascadedNew_(objKernel, frameParent, null, null, null);
 				break main;
 			}
 			
@@ -171,30 +162,17 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			}
 			
 			KernelJFrameCascadedZZZ frameParent = (KernelJFrameCascadedZZZ) SwingUtilities.getAncestorOfClass(KernelJFrameCascadedZZZ.class, (JComponent)contentPane);		
-			KernelJPanelCascadedNew_(objKernel, frameParent, null);
+			KernelJPanelCascadedNew_(objKernel, frameParent, null, null, null);
 		}//end main:
 		
 	}
 	
 	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialog) throws ExceptionZZZ{
-		//Das Panel fuegt sich dem Dialog selbst hinzu
-		//Container objContainer = dialog.getContentPane();
-		//NEIN objContainer.add(this);
-
-		//Damit auf die Hashtable der Dialogbox zugegriffen werden kann, um andere Panels zu erreichen
-		this.setDialogParent(dialog);
-		
-		//Damit dieses Panel zur Verfuegung steht um "mit der Maus bewegt" zu werden.
-		Container objContainer = dialog.getContentPane();
-		KernelJFrameCascadedZZZ frameParent = (KernelJFrameCascadedZZZ) SwingUtilities.getAncestorOfClass(KernelJFrameCascadedZZZ.class, (JComponent) objContainer);
-		
-		//NEIN, sonst wird der ganze frameParent beim Ziehen des DialogboxPanels mit bewegt KernelJPanelCascadedNew_(objKernel, frameParent);
-//		if(objKernel!= null){
-//			this.setKernelObject(objKernel);
-//			this.setLogObject(objKernel.getLogObject());
-//		}		
-//		this.setFrameParent(frameParent);	
-		KernelJPanelCascadedNew_(objKernel, frameParent, null);
+		KernelJPanelCascadedNew_(objKernel, null, dialog, null, null);
+	}
+	
+	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialog, KernelJPanelCascadedZZZ panelRoot) throws ExceptionZZZ{
+		KernelJPanelCascadedNew_(objKernel, null, dialog, panelRoot, null);
 	}
 	
 	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialog,  HashMap<String, Boolean>hmFlag) throws ExceptionZZZ{
@@ -221,29 +199,15 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	 * @param panelParent
 	 * @throws ExceptionZZZ 
 	 */
-	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent) throws ExceptionZZZ{
-				
-		this.setPanelParent(panelParent);
-		//Das liefert aber beim Ersstellen zjmindest nur NULL JFrame frameParent = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, (JComponent)this);
-		//Dann eher folgendes:
-		KernelJPanelCascadedZZZ panelRoot = this.searchPanelRoot();
-		KernelJFrameCascadedZZZ frameParent = panelRoot.getFrameParent();
-		
-		KernelJPanelCascadedNew_(objKernel, frameParent, null);
+	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent) throws ExceptionZZZ{		
+		KernelJPanelCascadedNew_(objKernel, null, null, panelParent, null);
 	}
 	
-	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent, HashMap<String, Boolean> hmFlag) throws ExceptionZZZ{
-		
-		this.setPanelParent(panelParent);
-		//Das liefert aber beim Ersstellen zjmindest nur NULL JFrame frameParent = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, (JComponent)this);
-		//Dann eher folgendes:
-		KernelJPanelCascadedZZZ panelRoot = this.searchPanelRoot();
-		KernelJFrameCascadedZZZ frameParent = panelRoot.getFrameParent();
-		
-		KernelJPanelCascadedNew_(objKernel, frameParent, hmFlag);
+	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent, HashMap<String, Boolean> hmFlag) throws ExceptionZZZ{	
+		KernelJPanelCascadedNew_(objKernel, null, null, panelParent, hmFlag);
 	}
 	
-	private boolean KernelJPanelCascadedNew_(IKernelZZZ objKernel, KernelJFrameCascadedZZZ frameParent, HashMap<String, Boolean> hmFlag ) throws ExceptionZZZ{
+	private boolean KernelJPanelCascadedNew_(IKernelZZZ objKernel, KernelJFrameCascadedZZZ frameParent, KernelJDialogExtendedZZZ dialog, KernelJPanelCascadedZZZ panelParent, HashMap<String, Boolean> hmFlag ) throws ExceptionZZZ{
 		boolean bReturn = false;
 		main:{
 		String stemp; boolean btemp; String sLog;
@@ -298,13 +262,24 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		}		
 		//+++++++++++++++++++++++++++++++
 		
-		this.setFrameParent(frameParent);
-		if(this.getFrameParent()!=null) {
-			//20130625 Hinzugef�gt, um das Suchen des NAchbarpanels schon erm�glichen, bevor das launch() von KernelJFrameCascaded abgeschlossen ist.
-			//Wird normalerweise im KErnelJFrameCascaded.lauchchDoing() gemacht, aber bei der Konfiguration der PAnels muss schon auf ein Nachbarpanel zugegriffen werden.
-			frameParent.setPanelContent(this); //this: Ist das oberste Panel, wichtig wenn man aus einem Panel nach den Nachbarpanels sucht.
-			//frameParent.getContentPane().add(this);	
+		this.setDialogParent(dialog);	
+		if(this.getDialogParent()==null) {
+			KernelJDialogExtendedZZZ dialogSearched = (KernelJDialogExtendedZZZ) SwingUtilities.getAncestorOfClass(KernelJDialogExtendedZZZ.class, (JComponent) this);
+			this.setDialogParent(dialogSearched);
 		}
+		
+		this.setFrameParent(frameParent);
+		if(this.getFrameParent()==null) {
+			KernelJFrameCascadedZZZ frameParentSearched = (KernelJFrameCascadedZZZ) SwingUtilities.getAncestorOfClass(KernelJFrameCascadedZZZ.class, (JComponent)this);
+			this.setFrameParent(frameParentSearched);
+		}
+				
+		this.setPanelParent(panelParent);
+		if(this.getPanelParent()==null) {
+			KernelJPanelCascadedZZZ panelParentSearched = (KernelJPanelCascadedZZZ) SwingUtilities.getAncestorOfClass(KernelJPanelCascadedZZZ.class, (JComponent)this);
+			this.setPanelParent(panelParentSearched);
+		}
+		
 		
 		//Ggfs. die DebugUI-Angaben hinzufügen, das kann z.B. nur das Label mit dem Klassennamen sein.
 		//Gesteuert werde soll das durch Flags, die auch über die Kommandozeile übergeben werden können.
@@ -372,12 +347,28 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	/** JPanel, searches all other parent panels untill no more parent panel is available. The last found panel seems to be the root panel for all cascaded panels. 
 	* Lindhauer; 15.05.2006 09:00:08
 	 * @return
+	 * @throws ExceptionZZZ 
 	 */
-	public KernelJPanelCascadedZZZ searchPanelRoot(){
+	public KernelJPanelCascadedZZZ searchPanelRoot() throws ExceptionZZZ{
 		KernelJPanelCascadedZZZ panelReturn = null;
 		main:{
 			if(this.getPanelParent()==null){
-				panelReturn = this;
+				if(this.getFlagZ(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())) {
+					panelReturn = this;
+				}else {
+					KernelJFrameCascadedZZZ frameParent = this.getFrameParent();
+					if(frameParent!=null) {
+						panelReturn = frameParent.getPaneContent();
+						break main;
+					}				
+					
+					KernelJDialogExtendedZZZ dialogParent = this.getDialogParent();
+					if(dialogParent!=null) {
+						panelReturn = dialogParent.getPanelContent();
+						break main;
+					}
+				}
+				
 			}else{
 				//!!! Rekursiver aufruf
 				KernelJPanelCascadedZZZ panelParent = (KernelJPanelCascadedZZZ) this.getPanelParent();
@@ -989,6 +980,10 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				
 				//20210507; //Vereinheitlichung die Definition der ComponentGroup im Debug-Test-Fall und im KernelJPanelCascadedZZZ.createDebugUI();
 
+				TODOGOON; //Wg. Problematik der Reihenfolge der Panels hinzuzufügen 
+				          //und daraufhin Probleme beim korrekten/gleichen ermitteln des Programnamens
+						  //==> Bei jedem Umschalten die Werte der Componenten/Labels neu errechnen
+				          //    und neu füllen.
 				
 				//TODOGOON; //Ein Button zum Umschalten ist auch erst im Panel notwendig, wenn es mehr als 1 Gruppenobjekt gibt.
 																

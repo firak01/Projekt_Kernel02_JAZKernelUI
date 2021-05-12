@@ -112,6 +112,10 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 		String sGroupAliasUsed = this.getGroupAlias();
 		if(sGroupAlias.equals(sGroupAliasUsed)) {
 			bActiveStateUsed = bActiveState;
+			
+			TODOGOON; //20210513: Hier nicht nur die Sichtbarkeit steuern, sondern auch die Werte für die Komponenten der Gruppe aktualisieren.
+            
+			
 		}else {
 			bActiveStateUsed = !bActiveState;
 			System.out.println("ABER für Gruppe '" + sGroupAliasUsed + "' gilt...");

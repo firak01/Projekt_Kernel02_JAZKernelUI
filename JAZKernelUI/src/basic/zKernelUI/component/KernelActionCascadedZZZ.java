@@ -52,24 +52,6 @@ public abstract class KernelActionCascadedZZZ extends KernelUseObjectZZZ  implem
 	public void setPanelParent(KernelJPanelCascadedZZZ objPanel) {
 		this.panelParent = objPanel;
 	}
-
-	/** JPanel, searches STARTING FROM THE PARENT PANEL all parent panels untill no more parent panel is available. The last found panel seems to be the root panel for all cascaded panels. 
-	* Lindhauer; 15.05.2006 09:00:08
-	 * @return
-	 */
-	public JPanel searchPanelRoot(){
-		JPanel panelReturn = null;
-		main:{
-			if(this.panelParent==null){
-				break main;
-			}else{
-				//!!! Rekursiver aufruf
-				KernelJPanelCascadedZZZ panelParent = (KernelJPanelCascadedZZZ) this.panelParent;
-				panelReturn = panelParent.searchPanelRoot();
-			}
-		}
-		return panelReturn;
-	}
 	
 	/* Das ist eine Action innerhalb eines Panels. Also ist der Modulname ggfs. die Klasse des Panels.
 	 * (non-Javadoc)

@@ -31,8 +31,6 @@ import basic.zKernel.flag.IFlagUserZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import basic.zUtil.io.KernelFileZZZ.FLAGZ;
 import custom.zKernel.LogZZZ;
-
-
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IConstantZZZ;
 import basic.zBasic.IObjectZZZ;
@@ -55,6 +53,10 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	protected LogZZZ objLog;
 	protected ExceptionZZZ objException;
 	protected IKernelModuleZZZ objModule=null; //Das Modul, z.B. für die Dialogbox
+	
+	KernelJPanelCascadedZZZ panelContent = null;
+	KernelJPanelCascadedZZZ panelButton = null;	
+	KernelJPanelCascadedZZZ panelNavigator = null;	
 	
 	private boolean bPanelCenterAdded=false;
 	private boolean bPanelButtonAdded=false;
@@ -331,32 +333,29 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 				throw ez;
 			}
 			
-			/* das darf in JDialog auch null sein
-			if(objParentComponent == null){
-				ExceptionZZZ ez = new ExceptionZZZ ("ParentComponent", iERROR_PARAMETER_MISSING, this, ReflectionZZZ.getMethodCurrentName());
-				throw ez;
-			}
-			*/
-			
-			/*
-			//Falls noch keine Button-Zeile hinzugefuegt worden ist, dies hier nachholen
-			if(this.bPanelButtonAdded==false){
-				this.addPanelButton(null); //null soll bewirken, dass das default ButtonPanel hinzugef�gt wird.
-			}  //Merke: Normlerweise werden die Panels im Konstruktor der Dialogbox hinzugef�gt, der von KernelJDialogboxExtended erbt. 
-			*/
-
 			//Hier nun die Panels hinzufuegen, aber nur, wenn sie nicht schon hinzugefuegt worden sind
 			//Merke: Die Panels sollten noch nicht im Konstruktor der Klasse hinzugefuegt werden, weil man sonst schwerer eigenschaften wie "Button-Text" aendern kann.
 			//          So kann man erst das Objekt erzeugen und dann mit "setText4ButtonOk" den Button-Text aendern, der dann mit showDialog() angezeigt wird.
-			if(this.bPanelButtonAdded==false){
-				KernelJPanelCascadedZZZ panelButton = this.getPanelButton();				
-				this.addPanelButton(panelButton); //null soll bewirken, dass das default ButtonPanel hinzugef�gt wird.
-			}  
 			
+			
+			//20210512: Problem... Die Reihenfolge
+			//          Beim Erstellen der Debug-Einträge-Gruppe createDebugUI() im Panel
+			//          wird auch nach den "Nachbarpanels" gesucht, um ein Program/eine Programalias 
+			//          zu finden. Dieser wird ausgegeben.
+			//          ABER: Wenn das Program im CENTER Panel definiert ist, dann wird es noch nicht gefunden,
+			//                falls das CENTER Panel noch nicht hinzugefügt worden ist.
+			//ZUM NAchstellen: Einfach mal die Reihenfolge der Panels ändern.
+			TODOGOON; //Lösungsansatz: Bei jedem Click auf den Switch-Button die Werte holen.
+			          //               statt diese Werte zu Anfang fest zu definieren.
 			if(this.bPanelCenterAdded==false){
 				KernelJPanelCascadedZZZ panelContent = this.getPanelContent();
 				this.addPanelCenter(panelContent);
 			}
+			
+			if(this.bPanelButtonAdded==false){
+				KernelJPanelCascadedZZZ panelButton = this.getPanelButton();				
+				this.addPanelButton(panelButton); //null soll bewirken, dass das default ButtonPanel hinzugef�gt wird.
+			}  
 			
 			if(this.bPanelNavigatorAdded==false) {
 				KernelJPanelCascadedZZZ panelNavigator = this.getPanelNavigator();
@@ -456,7 +455,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	}
 	
 	public abstract KernelJPanelCascadedZZZ getPanelButton() throws ExceptionZZZ;
-	public abstract KernelJPanelCascadedZZZ getPanelContent() throws ExceptionZZZ;
+	public abstract KernelJPanelCascadedZZZ getPanelContent() throws ExceptionZZZ;	
 	public abstract KernelJPanelCascadedZZZ getPanelNavigator() throws ExceptionZZZ; 
 	
 	/** Kann von einer Dialogbox ueberschrieben werden, wenn ein anderes Panel als das "Default" Panel verwendet werden soll.
@@ -477,12 +476,25 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		KernelJPanelDialogContentEmptyZZZ panel = new KernelJPanelDialogContentEmptyZZZ(this.getKernelObject(), this);
 		return panel;
 	}
+	
+	
+	
 		
 	public String getText4ContentDefault(){
 		return this.sText4ContentDefault;
 	}
 	public void setText4ContentDefault(String sText){
 		this.sText4ContentDefault = sText;
+	}
+	
+	public void setPanelContent(KernelJPanelCascadedZZZ panelContent) {
+		this.panelContent = panelContent;
+	}
+	public void setPanelNavigator(KernelJPanelCascadedZZZ panelNavigator) {
+		this.panelNavigator = panelNavigator;
+	}
+	public void setPanelButton(KernelJPanelCascadedZZZ panelButton) {
+		this.panelButton = panelButton;
 	}
 		
 
@@ -864,5 +876,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		@Override
 		public void setModule(IKernelModuleZZZ objModule) {
 			this.objModule = objModule;		
-		}
+		}	
+		
+		
 }
