@@ -110,7 +110,7 @@ public class PanelDebugButtonSwitchLabelGroup_NORTHZZZ extends KernelJPanelCasca
 			ArrayList<JComponent>listaComponent = new ArrayList<JComponent>();
 			listaComponent.add(label02);
 			listaComponent.add(label03);			
-			JComponentGroupZZZ group1 = new JComponentGroupZZZ(objKernel, "EINS", listaComponent);
+			JComponentGroupZZZ group1 = new JComponentGroupZZZ(objKernel, "EINS", "Title: DebugGroup1", this, listaComponent);
 			
 			//++++++++++++
 			String sLabel04 = "Label 1B";
@@ -121,7 +121,7 @@ public class PanelDebugButtonSwitchLabelGroup_NORTHZZZ extends KernelJPanelCasca
 			listaComponent.clear();
 			listaComponent.add(label04);
 			listaComponent.add(label05);			
-			JComponentGroupZZZ group2 = new JComponentGroupZZZ(objKernel, "ZWEI", listaComponent);
+			JComponentGroupZZZ group2 = new JComponentGroupZZZ(objKernel, "ZWEI", "Title: DebugGroup2", this, listaComponent);
 																
 			//### Die Gruppen in einer Collection zusammenfassen
 			JComponentGroupCollectionZZZ groupc = new JComponentGroupCollectionZZZ(objKernel);

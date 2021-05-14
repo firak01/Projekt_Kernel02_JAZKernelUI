@@ -1,6 +1,10 @@
 package basic.zKernelUI.component.componentGroup;
 
+import java.util.ArrayList;
 import java.util.EventListener;
+
+import basic.zBasic.ExceptionZZZ;
+import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 
 /** Komponenten, sollen sich an andere Komponenten (, die als Sender auftreten, s. ISenderSelectionResetZZZ) anmelden k�nnen.
  *   Falls dann die Sender-Komponente einen event "abfeuert", dann wird doReset(...) durchgef�hrt.
@@ -22,15 +26,16 @@ public interface IListenerComponentGroupSwitchZZZ extends EventListener{
 	* @param eventSelectionResetNew
 	* 
 	* lindhaueradmin; 08.02.2007 10:13:27
+	 * @throws ExceptionZZZ 
 	 */
-	public abstract void doSwitch(EventComponentGroupSwitchZZZ event);
+	public abstract void doSwitch(EventComponentGroupSwitchZZZ event) throws ExceptionZZZ;
 	
 	/** die Methode, welche von den Komponenten �berschrieben werden muss.
 	* @param eventSelectionResetNew
 	* 
 	* lindhaueradmin; 08.02.2007 10:12:54
 	 */
-	public abstract void doSwitchCustom(EventComponentGroupSwitchZZZ eventComponentGroupSwitchNew);
+	public abstract void doSwitchCustom(EventComponentGroupSwitchZZZ eventComponentGroupSwitchNew)  throws ExceptionZZZ;
 	
 	/**Ziel: Den neuen Event mit dem alten vergleichen zu koennen. Falls die Events an entscheidender Stelle gleich sind, 
 	 *        wird doSwitch nicht durchgefuehrt.
@@ -41,4 +46,10 @@ public interface IListenerComponentGroupSwitchZZZ extends EventListener{
 	
 	public abstract String getGroupAlias();
 	public abstract void setGroupAlias(String sAlias);
+	
+	public abstract String getGroupTitle();
+	public abstract void setGroupTitle(String sTitle);
+	
+	public HashMapIndexedZZZ<Integer,ArrayList<String>> getComponentValuesCustom(); 
+	public void setComponentValuesCustom(HashMapIndexedZZZ<Integer,ArrayList<String>> hmValuesCustom);
 }

@@ -46,7 +46,7 @@ public class KernelSenderComponentGroupSwitchZZZ extends KernelUseObjectZZZ impl
 	}
 
 	@Override
-	public void fireEvent(EventComponentGroupSwitchZZZ event) {
+	public void fireEvent(EventComponentGroupSwitchZZZ event) throws ExceptionZZZ {
 		if(event.getSource() instanceof ISenderComponentGroupSwitchZZZ){
 			ISenderComponentGroupSwitchZZZ sender = (ISenderComponentGroupSwitchZZZ) event.getSource();
 			for(int i = 0 ; i < sender.getListenerRegisteredAll().size(); i++){

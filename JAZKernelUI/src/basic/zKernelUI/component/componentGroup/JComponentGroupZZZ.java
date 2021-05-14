@@ -6,31 +6,40 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 
 import basic.zBasic.ExceptionZZZ;
+import basic.zBasic.util.abstractList.ArrayListZZZ;
+import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
+import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
+import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 
 public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerComponentGroupSwitchZZZ { //,IEventBrokerSwitchComponentUserZZZ { //, IEventBrokerSwitchComponentUserZZZ{
 	private ArrayList<JComponent>listaComponent=null;
+	private KernelJPanelCascadedZZZ panelParent=null;
 	private String sAlias=null;
+	private String sTitle=null;
+	private HashMapIndexedZZZ<Integer,ArrayList<String>>hmValuesCustom=null;
 	private EventComponentGroupSwitchZZZ eventPrevious=null;
 	private boolean bAnyComponentAdded=false;
 	
 	public JComponentGroupZZZ(IKernelZZZ objKernel) throws ExceptionZZZ {
 		super(objKernel);		
 	}
-	public JComponentGroupZZZ(IKernelZZZ objKernel,String sAlias) throws ExceptionZZZ {
+	public JComponentGroupZZZ(IKernelZZZ objKernel,String sAlias, KernelJPanelCascadedZZZ panelParent, String sTitle) throws ExceptionZZZ {
 		super(objKernel);
-		JComponentGroupNew_(sAlias, null);
+		JComponentGroupNew_(sAlias, sTitle, panelParent, null);
 	}
-	public JComponentGroupZZZ(IKernelZZZ objKernel, String sAlias, ArrayList<JComponent>listaComponent) throws ExceptionZZZ {
+	public JComponentGroupZZZ(IKernelZZZ objKernel, String sAlias, String sTitle, KernelJPanelCascadedZZZ panelParent, ArrayList<JComponent>listaComponent) throws ExceptionZZZ {
 		super(objKernel);
-		JComponentGroupNew_(sAlias, listaComponent);
+		JComponentGroupNew_(sAlias, sTitle, panelParent, listaComponent);
 	}
 	
-	private boolean JComponentGroupNew_(String sAlias, ArrayList<JComponent>listaComponent) {
+	private boolean JComponentGroupNew_(String sAlias, String sTitle, KernelJPanelCascadedZZZ panelParent, ArrayList<JComponent>listaComponent) {
 		boolean bReturn = false;
 		main:{
+			this.setGroupTitle(sTitle);
 			this.setGroupAlias(sAlias);
+			this.setPanelParent(panelParent);
 			
 			if(listaComponent!=null) {							
 				for(JComponent componenttemp : listaComponent) {
@@ -45,11 +54,31 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 		return bReturn;
 	}
 	
+	@Override
 	public String getGroupAlias() {
 		return this.sAlias;
 	}
+	
+	@Override
 	public void setGroupAlias(String sAlias) {
 		this.sAlias = sAlias;
+	}
+	
+	@Override
+	public String getGroupTitle() {
+		return this.sTitle;
+	}
+	
+	@Override
+	public void setGroupTitle(String sTitle) {
+		this.sTitle = sTitle;
+	}
+	
+	public KernelJPanelCascadedZZZ getPanelParent() {
+		return this.panelParent;
+	}
+	public void setPanelParent(KernelJPanelCascadedZZZ panelParent) {
+		this.panelParent = panelParent;
 	}
 	
 	public ArrayList<JComponent> getComponents(){
@@ -81,7 +110,9 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 		this.bAnyComponentAdded=bValue;
 	}
 	
-	// Methoden über die Gruppe auf die Componenten durchzugreifen
+	
+	
+	//##### Methoden über die Gruppe auf die Componenten durchzugreifen
 	public void setVisible(boolean bVisible) {
 		ArrayList<JComponent>listaComponent = this.getComponents();
 		for(JComponent component : listaComponent) {
@@ -89,10 +120,38 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 		}
 	}
 	
+	public boolean refreshValues(int iIndexUsedInCollection) throws ExceptionZZZ {
+		boolean bReturn = false;
+		main:{
+			HashMapIndexedZZZ<Integer,ArrayList<String>> hmValues = this.getComponentValuesCustom(); 
+			if(hmValues==null) break main;
+			if(hmValues.size()==0) break main;
+			
+			String sTitle = this.getGroupTitle();
+			KernelJPanelCascadedZZZ panel = this.getPanelParent();
+							
+			int iIndex=-1;
+			ArrayList<JComponent>listaComponent = this.getComponents();
+			for(JComponent component : listaComponent) {
+				iIndex++;
+				if(component instanceof JLabel) {					
+					ArrayList<String> listaText = (ArrayList<String>) hmValues.getValue(iIndex);		
+					
+					String[]saParent=ArrayListZZZ.toStringArray(listaText);				
+					String sHtml = StringArrayZZZ.asHtml(saParent);
+					
+					JLabel label = (JLabel)component;
+					label.setText(sHtml);
+				}				
+			}
+		}
+		return bReturn;
+	}
+	
 	//########## INTERFACES
 	//+++ IListenerComponentGroupSwitchZZZ
 	@Override
-	public void doSwitch(EventComponentGroupSwitchZZZ eventComponentGroupSwitchNew) {
+	public void doSwitch(EventComponentGroupSwitchZZZ eventComponentGroupSwitchNew) throws ExceptionZZZ {
 		//20210430 hole aus  dem Event die aktiv zu schaltende Gruppe.		
 		//Für alle Komponenten der ArrayList:
 		//Wenn der Gruppenalias dem hier verwendeten entspricht
@@ -113,7 +172,9 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 		if(sGroupAlias.equals(sGroupAliasUsed)) {
 			bActiveStateUsed = bActiveState;
 			
-			TODOGOON; //20210513: Hier nicht nur die Sichtbarkeit steuern, sondern auch die Werte für die Komponenten der Gruppe aktualisieren.
+			//20210513: Hier nicht nur die Sichtbarkeit steuern, sondern auch die Werte für die Komponenten der Gruppe aktualisieren.
+			//z.B. kann es sein, dass seit der initialen Erstellung der Gruppe sich an den Panels etwas geändert hat.
+			
             
 			
 		}else {
@@ -121,6 +182,9 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 			System.out.println("ABER für Gruppe '" + sGroupAliasUsed + "' gilt...");
 			System.out.println("... setze den activeState auf '" + bActiveStateUsed + "'");			
 		}		
+		
+		int iIndexUsedInCollection = eventComponentGroupSwitchNew.getIndexInCollection();			
+		this.refreshValues(iIndexUsedInCollection);
 		this.setVisible(bActiveStateUsed);			
 		this.setEventPrevious(eventComponentGroupSwitchNew);
 	}
@@ -141,6 +205,15 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 	public void doSwitchCustom(EventComponentGroupSwitchZZZ eventComponentGroupSwitchNew) {
 		// TODO Auto-generated method stub		
 	}
+	@Override
+	public HashMapIndexedZZZ<Integer, ArrayList<String>> getComponentValuesCustom() {
+		return this.hmValuesCustom;
+	}
+	@Override
+	public void setComponentValuesCustom(HashMapIndexedZZZ<Integer, ArrayList<String>> hmValuesCustom) {
+		this.hmValuesCustom = hmValuesCustom;		
+	}
+	
 	
 	//### Interface IEventBrokerSwitchComponentUserZZZ
 //	@Override

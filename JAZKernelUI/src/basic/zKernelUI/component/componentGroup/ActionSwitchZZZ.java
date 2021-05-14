@@ -144,7 +144,7 @@ public class ActionSwitchZZZ extends  KernelActionCascadedZZZ implements IEventB
 				System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#EVENTEVENT !!!!!!!!");
 				HashMapIndexedZZZ<Integer, JComponentGroupZZZ> hmIndexed = this.hmIndexed;
 				JComponentGroupZZZ group = (JComponentGroupZZZ) hmIndexed.getValue(this.iIndexUsed);
-				EventComponentGroupSwitchZZZ eventNew= new EventComponentGroupSwitchZZZ(panel, 10002, group, true);				
+				EventComponentGroupSwitchZZZ eventNew= new EventComponentGroupSwitchZZZ(panel, 10002, group, this.iIndexUsed, true);				
 				objEventBroker.fireEvent(eventNew);	
 				
 				System.out.println("#Updating Panel ...");

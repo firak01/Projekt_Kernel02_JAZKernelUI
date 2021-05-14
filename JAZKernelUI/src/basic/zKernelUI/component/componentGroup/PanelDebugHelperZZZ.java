@@ -1,6 +1,7 @@
 package basic.zKernelUI.component.componentGroup;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -39,107 +40,21 @@ public class PanelDebugHelperZZZ {
 		}//end main
 		return hmReturn;
 	}
-	public static ArrayList<JLabel>createLabelArrayList(String sTitle, KernelJPanelCascadedZZZ panel, int iIndex) throws ExceptionZZZ {
-		ArrayList<JLabel>listaReturn=new ArrayList<JLabel>();//Auch wenn eine Indexposition nix füllen sollte, leere Liste zurückgeben.
-		
-		String stemp;
+	public static ArrayList<JLabel>createLabelArrayList(String sTitle, KernelJPanelCascadedZZZ panel, int iIndexInCollection) throws ExceptionZZZ {
+		ArrayList<JLabel>listaReturn=null;//Auch wenn eine Indexposition nix füllen sollte, leere Liste zurückgeben.
 		main:{
 			JLabel labelDebug;									
-			ArrayList<String> listaText = new ArrayList<String>();
-			listaText.add(sTitle);
 			
-			int iLengthDefault=25;
-			int iLengthDefaultRightOffset=2;
-			switch(iIndex) {			
-			case 0:
-				//+++ 1. Klassenname des Panels	
-				{
-					stemp = panel.getClass().getSimpleName(); //das ist zu lang und nicht aussagekräftig genug String sParent = this.getClass().getSuperclass().getSimpleName();
-	
-					listaText.add(stemp);	
-					labelDebug = PanelDebugHelperZZZ.createLabel(listaText);							
+			HashMapIndexedZZZ<Integer,ArrayList<String>> hmValues = PanelDebugHelperZZZ.createValueText(sTitle, panel, iIndexInCollection);
+			if(hmValues!=null) {
+				listaReturn = new ArrayList<JLabel>();
+				Iterator<ArrayList<String>> itValues = hmValues.iterator();
+				while(itValues.hasNext()) {						
+					ArrayList<String> listaText = (ArrayList<String>) itValues.next();
+					labelDebug = PanelDebugHelperZZZ.createLabel(listaText);
 					if(labelDebug!=null) listaReturn.add(labelDebug);
 				}
-				break;
-			case 1:
-				//+++ 2. Module, das zur Verfügung steht
-				{
-					String sModule = panel.getModuleName();	
-					if(!StringZZZ.isEmpty(sModule)) {								
-						sModule = StringZZZ.abbreviateDynamicLeft(sModule, iLengthDefault+iLengthDefaultRightOffset);
-						sModule = StringZZZ.abbreviateDynamic(sModule, iLengthDefault);
-						
-						
-						//!!! TODOGOON Wenn sich die Textlänge ständig ändert, dann verschieben sich ggfs. Nachbarpanels nach rechts aus dem Frame/der Dialogbox heraus.
-						//    Daher müsste eigentlich auch der Frame/die Dialogbox neu "gepackt" werden (frame.pack() ).
-											
-						
-						listaText.add("Module:" + sModule);
-						labelDebug = PanelDebugHelperZZZ.createLabel(listaText);						
-						if(labelDebug!=null) listaReturn.add(labelDebug);	
-						
-						
-						//TESTE WEITERES LABEL
-						listaText.clear();
-						listaText.add("TEST");
-						listaText.add("Ein Testwert");
-						labelDebug = PanelDebugHelperZZZ.createLabel(listaText);						
-						if(labelDebug!=null) listaReturn.add(labelDebug);	
-						
-					}
-				}
-				break;
-			case 2:
-				 //+++ 3. Program, das zur Verfügung steht 
-				{
-					String sProgram = panel.getProgramName();
-					if(!StringZZZ.isEmpty(sProgram)) {
-						sProgram = StringZZZ.abbreviateDynamicLeft(sProgram, iLengthDefault+iLengthDefaultRightOffset);
-						sProgram = StringZZZ.abbreviateDynamic(sProgram, iLengthDefault);
-						
-						listaText.add("Program: " + sProgram);
-						labelDebug = PanelDebugHelperZZZ.createLabel(listaText);						
-						if(labelDebug!=null) listaReturn.add(labelDebug);					
-					}else {
-						listaText.add("Program: Not configured");
-						labelDebug = PanelDebugHelperZZZ.createLabel(listaText);						
-						if(labelDebug!=null) listaReturn.add(labelDebug);
-					}
-				}
-				break;
-			case 3:
-				//+++ 4. ProgramAlias, der ggfs. zur Verfügung steht
-				{
-					String sProgram = panel.getProgramName();
-					if(!StringZZZ.isEmpty(sProgram)) {
-					if(sProgram.equals("use.openvpn.serverui.component.IPExternalUpload.PanelDlgIPExternalContentOVPN")) {
-						System.out.println("DEBUGSTELLE");
-						System.out.println("...TODOGOON...");
-						//TODOGOON; //20210510hole den Alias für den Wert "use.openvpn.serverui.component.IPExternalUpload.PanelDlgIPExternalContentOVPN"
-					}
-					}
-					
-					JLabel labelDebug3 = null;
-					String sProgram4alias = panel.getProgramAlias();				
-					if(!StringZZZ.isEmpty(sProgram4alias)) {						
-						String sProgramAlias = panel.getProgramAlias();
-						if(sProgram4alias.equals(sProgram)) {
-							sProgramAlias="dito";
-						}else {
-							sProgramAlias = StringZZZ.abbreviateDynamicLeft(sProgramAlias, iLengthDefault+iLengthDefaultRightOffset);
-							sProgramAlias = StringZZZ.abbreviateDynamic(sProgramAlias, iLengthDefault);
-						}
-						
-						listaText.add("ProgramAlias: " + sProgramAlias);
-						labelDebug = PanelDebugHelperZZZ.createLabel(listaText);						
-						if(labelDebug!=null) listaReturn.add(labelDebug);					
-					}
-				}
-				break;
-			default: 
-				listaReturn = null; //Wenn eine Indexposition nicht existiert, null zurückgeben.
-				break;
-			}
+			}			
 		}//end main:
 		return listaReturn;
 	}
@@ -160,5 +75,103 @@ public class PanelDebugHelperZZZ {
 			
 		}//end main:
 		return objReturn;
+	}
+	
+	public static HashMapIndexedZZZ<Integer,ArrayList<String>>createValueText(String sTitle, KernelJPanelCascadedZZZ panel, int iIndexInCollection) throws ExceptionZZZ{
+		HashMapIndexedZZZ<Integer,ArrayList<String>> hmReturn = new HashMapIndexedZZZ<Integer, ArrayList<String>>(); 
+				
+		String stemp;
+		main:{	
+			ArrayList<String>listaTitle = new ArrayList<String>();
+			listaTitle.add(sTitle);
+			
+			int iLengthDefault=25;
+			int iLengthDefaultRightOffset=2;
+			switch(iIndexInCollection) {			
+			case 0:
+				{									
+					//+++ 1. Klassenname des Panels				{
+					stemp = panel.getClass().getSimpleName(); //das ist zu lang und nicht aussagekräftig genug String sParent = this.getClass().getSuperclass().getSimpleName();
+					listaTitle.add(stemp);															
+					hmReturn.put(listaTitle);
+				}
+				break;				
+			case 1:
+				{				
+				//+++ 2. Module, das zur Verfügung steht
+				
+					String sModule = panel.getModuleName();	
+					if(!StringZZZ.isEmpty(sModule)) {								
+						sModule = StringZZZ.abbreviateDynamicLeft(sModule, iLengthDefault+iLengthDefaultRightOffset);
+						sModule = StringZZZ.abbreviateDynamic(sModule, iLengthDefault);
+						
+						
+						//!!! TODOGOON Wenn sich die Textlänge ständig ändert, dann verschieben sich ggfs. Nachbarpanels nach rechts aus dem Frame/der Dialogbox heraus.
+						//    Daher müsste eigentlich auch der Frame/die Dialogbox neu "gepackt" werden (frame.pack() ).
+											
+						
+						listaTitle.add("Module:" + sModule);
+						hmReturn.put(listaTitle);
+						
+												
+						//TESTE WEITERES LABEL
+						//NEIN, Nicht löschen, damit würde auch die vorherige Liste geleert. listaReturn.clear();
+						ArrayList<String>listaTest = new ArrayList<String>();
+						listaTest.add("TEST");
+						listaTest.add("Ein Testwert");
+						hmReturn.put(listaTest);						
+					}
+				}
+				break;
+			case 2:
+				 //+++ 3. Program, das zur Verfügung steht 
+				{
+					String sProgram = panel.getProgramName();
+					if(!StringZZZ.isEmpty(sProgram)) {
+						sProgram = StringZZZ.abbreviateDynamicLeft(sProgram, iLengthDefault+iLengthDefaultRightOffset);
+						sProgram = StringZZZ.abbreviateDynamic(sProgram, iLengthDefault);
+						
+						listaTitle.add("Program: " + sProgram);
+						hmReturn.put(listaTitle);
+					}else {
+						listaTitle.add("Program: Not configured");
+						hmReturn.put(listaTitle);
+					}
+				}
+				break;
+			case 3:
+				//+++ 4. ProgramAlias, der ggfs. zur Verfügung steht
+				{
+					String sProgram = panel.getProgramName();
+					if(!StringZZZ.isEmpty(sProgram)) {
+					if(sProgram.equals("use.openvpn.serverui.component.IPExternalUpload.PanelDlgIPExternalContentOVPN")) {
+						System.out.println("DEBUGSTELLE");
+						System.out.println("...TODOGOON...");
+						//TODOGOON; //20210510hole den Alias für den Wert "use.openvpn.serverui.component.IPExternalUpload.PanelDlgIPExternalContentOVPN"
+					}
+					}
+										
+					String sProgram4alias = panel.getProgramAlias();				
+					if(!StringZZZ.isEmpty(sProgram4alias)) {						
+						String sProgramAlias = panel.getProgramAlias();
+						if(sProgram4alias.equals(sProgram)) {
+							sProgramAlias="dito";
+						}else {
+							sProgramAlias = StringZZZ.abbreviateDynamicLeft(sProgramAlias, iLengthDefault+iLengthDefaultRightOffset);
+							sProgramAlias = StringZZZ.abbreviateDynamic(sProgramAlias, iLengthDefault);
+						}
+						
+						listaTitle.add("ProgramAlias: " + sProgramAlias);
+						hmReturn.put(listaTitle);				
+					}
+				}
+				break;
+			default: 
+				hmReturn = null; //Wenn eine Indexposition nicht existiert, null zurückgeben.				
+				break;
+			}
+			
+		}//end main:
+		return hmReturn;
 	}
 }

@@ -980,7 +980,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				
 				//20210507; //Vereinheitlichung die Definition der ComponentGroup im Debug-Test-Fall und im KernelJPanelCascadedZZZ.createDebugUI();
 
-				TODOGOON; //Wg. Problematik der Reihenfolge der Panels hinzuzufügen 
+				//TODOGOON; //Wg. Problematik der Reihenfolge der Panels hinzuzufügen 
 				          //und daraufhin Probleme beim korrekten/gleichen ermitteln des Programnamens
 						  //==> Bei jedem Umschalten die Werte der Componenten/Labels neu errechnen
 				          //    und neu füllen.
@@ -1000,7 +1000,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 					
 					iIndex=iIndex+1;						
 					String sIndex = Integer.toString(iIndex);					
-					JComponentGroupZZZ grouptemp = new JComponentGroupZZZ(objKernel, sIndex, listaComponenttemp);
+					JComponentGroupZZZ grouptemp = new JComponentGroupZZZ(objKernel, sIndex,"Title: Cascaded",this, listaComponenttemp);
 					if(grouptemp.hasAnyComponentAdded()) {
 						listaGroup.add(grouptemp);
 					}								
@@ -1014,7 +1014,19 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				//######## Das UI gestalten. Die Reihenfolge der Componenten ist wichtig für die Reihenfolge im UI #################
 				//++++ Der Umschaltebutton
 				String sLabelButton = ">";//this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButton").getValue();
-				JButton buttonSwitch = new JButton(sLabelButton);			
+				JButton buttonSwitch = new JButton(sLabelButton);	
+				
+				TODOGOON; //202105 Es muss je nach Action ein anderes .customValuesRefresh() geben.
+				//                 Also ActionSwitch abstrakt machen, mit .customValuesRefres() als abstract.
+				//                 und customValuesRefresh() ggfs. überschreiben:
+				//    
+				//PanelDebugHelperZZZ.createValueText(sTitle, panel, iIndexUsedInCollection);
+				//
+				//für einfaches Umschalten OHNE Refresh
+				//ActionSwitchSimpleZZZ extends AbstractActionSwitchZZZ
+				//dito
+				//ActionSwitchDebugUIZZZ extends AbstractActionSwitchZZZ
+				
 				ActionSwitchZZZ actionSwitch = new ActionSwitchZZZ(objKernel, this, groupc);
 				buttonSwitch.addActionListener(actionSwitch);								
 				this.setComponent(KernelJPanelCascadedZZZ.sBUTTON_SWITCH, buttonSwitch);				

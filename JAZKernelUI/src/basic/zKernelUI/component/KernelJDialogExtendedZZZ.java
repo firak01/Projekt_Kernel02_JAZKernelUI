@@ -345,7 +345,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			//          ABER: Wenn das Program im CENTER Panel definiert ist, dann wird es noch nicht gefunden,
 			//                falls das CENTER Panel noch nicht hinzugefügt worden ist.
 			//ZUM NAchstellen: Einfach mal die Reihenfolge der Panels ändern.
-			TODOGOON; //Lösungsansatz: Bei jedem Click auf den Switch-Button die Werte holen.
+			//TODOGOON; //Lösungsansatz: Bei jedem Click auf den Switch-Button die Werte holen.
 			          //               statt diese Werte zu Anfang fest zu definieren.
 			if(this.bPanelCenterAdded==false){
 				KernelJPanelCascadedZZZ panelContent = this.getPanelContent();
