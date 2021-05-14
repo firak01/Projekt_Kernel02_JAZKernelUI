@@ -337,21 +337,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			//Merke: Die Panels sollten noch nicht im Konstruktor der Klasse hinzugefuegt werden, weil man sonst schwerer eigenschaften wie "Button-Text" aendern kann.
 			//          So kann man erst das Objekt erzeugen und dann mit "setText4ButtonOk" den Button-Text aendern, der dann mit showDialog() angezeigt wird.
 			
-			
-			//20210512: Problem... Die Reihenfolge
-			//          Beim Erstellen der Debug-Einträge-Gruppe createDebugUI() im Panel
-			//          wird auch nach den "Nachbarpanels" gesucht, um ein Program/eine Programalias 
-			//          zu finden. Dieser wird ausgegeben.
-			//          ABER: Wenn das Program im CENTER Panel definiert ist, dann wird es noch nicht gefunden,
-			//                falls das CENTER Panel noch nicht hinzugefügt worden ist.
-			//ZUM NAchstellen: Einfach mal die Reihenfolge der Panels ändern.
-			//TODOGOON; //Lösungsansatz: Bei jedem Click auf den Switch-Button die Werte holen.
-			          //               statt diese Werte zu Anfang fest zu definieren.
-			if(this.bPanelCenterAdded==false){
-				KernelJPanelCascadedZZZ panelContent = this.getPanelContent();
-				this.addPanelCenter(panelContent);
-			}
-			
+											
 			if(this.bPanelButtonAdded==false){
 				KernelJPanelCascadedZZZ panelButton = this.getPanelButton();				
 				this.addPanelButton(panelButton); //null soll bewirken, dass das default ButtonPanel hinzugef�gt wird.
@@ -360,6 +346,11 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			if(this.bPanelNavigatorAdded==false) {
 				KernelJPanelCascadedZZZ panelNavigator = this.getPanelNavigator();
 				this.addPanelNavigator(panelNavigator);
+			}
+			
+			if(this.bPanelCenterAdded==false){
+				KernelJPanelCascadedZZZ panelContent = this.getPanelContent();
+				this.addPanelCenter(panelContent);
 			}
 			
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++

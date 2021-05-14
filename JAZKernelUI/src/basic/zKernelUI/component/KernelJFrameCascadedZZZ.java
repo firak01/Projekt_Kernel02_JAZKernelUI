@@ -736,8 +736,7 @@ private HashMap<String, Boolean>hmFlagPassed = new HashMap<String, Boolean>();
 
 	
 	public static String getAliasPanelContent(){
-		String sReturn = new String("ContentPane");
-		return sReturn;
+		return new String("ContentPane");		
 	}
 	
 	/* (non-Javadoc)

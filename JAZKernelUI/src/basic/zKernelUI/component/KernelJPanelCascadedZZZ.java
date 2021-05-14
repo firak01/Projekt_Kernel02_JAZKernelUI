@@ -41,7 +41,7 @@ import basic.zKernelUI.component.componentGroup.JComponentGroupCollectionZZZ;
 import basic.zKernelUI.component.componentGroup.JComponentGroupHelperZZZ;
 import basic.zKernelUI.component.componentGroup.JComponentGroupZZZ;
 import basic.zKernelUI.component.componentGroup.KernelSenderComponentGroupSwitchZZZ;
-import basic.zKernelUI.component.componentGroup.PanelDebugHelperZZZ;
+import basic.zKernelUI.component.componentGroup.PanelDebugModelZZZ;
 import custom.zKernel.LogZZZ;
 
 /** Klasse bietet als Erweiterung zu JPanel die Verschachtelung von Panels an.
@@ -978,17 +978,18 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				//Die Verwaltung der HashMap für die Componenten einer ComponentGroupCollection übertragen.	
 				//Darin auch den Eventhandler/Eventbroker, etc. hinzufügen.
 				
-				//20210507; //Vereinheitlichung die Definition der ComponentGroup im Debug-Test-Fall und im KernelJPanelCascadedZZZ.createDebugUI();
+				//20210507 Vereinheitlichung die Definition der ComponentGroup im Debug-Test-Fall und im KernelJPanelCascadedZZZ.createDebugUI();
 
-				//TODOGOON; //Wg. Problematik der Reihenfolge der Panels hinzuzufügen 
+				//20210514 Modell hinzugefügt.
+				          //Wg. Problematik der Reihenfolge der Panels hinzuzufügen 
 				          //und daraufhin Probleme beim korrekten/gleichen ermitteln des Programnamens
 						  //==> Bei jedem Umschalten die Werte der Componenten/Labels neu errechnen
 				          //    und neu füllen.
-				
+						
 				//TODOGOON; //Ein Button zum Umschalten ist auch erst im Panel notwendig, wenn es mehr als 1 Gruppenobjekt gibt.
 																
 				HashMapIndexedZZZ<Integer,ArrayList<JComponent>>hmComponent;
-				hmComponent = PanelDebugHelperZZZ.createComponentHashMap(sTitle, this);
+				hmComponent = PanelDebugModelZZZ.createComponentHashMap(sTitle, this);
 											
 				//+++ Die Labels auf die Gruppen verteilen
 				ArrayList<JComponentGroupZZZ>listaGroup = new ArrayList<JComponentGroupZZZ>();				
@@ -999,8 +1000,9 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 					ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) itListaComponent.next();
 					
 					iIndex=iIndex+1;						
-					String sIndex = Integer.toString(iIndex);					
-					JComponentGroupZZZ grouptemp = new JComponentGroupZZZ(objKernel, sIndex,"Title: Cascaded",this, listaComponenttemp);
+					String sIndexAsAlias = Integer.toString(iIndex);
+					IComponentValueModelZZZ objValueProvider = new PanelDebugModelZZZ("Title: Cascaded",this, iIndex); //Diese Modell wird bei jedem "Click" in dem refresh() aufgerufen.
+					JComponentGroupZZZ grouptemp = new JComponentGroupZZZ(objKernel, sIndexAsAlias, objValueProvider,listaComponenttemp);
 					if(grouptemp.hasAnyComponentAdded()) {
 						listaGroup.add(grouptemp);
 					}								
@@ -1015,18 +1017,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				//++++ Der Umschaltebutton
 				String sLabelButton = ">";//this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButton").getValue();
 				JButton buttonSwitch = new JButton(sLabelButton);	
-				
-				TODOGOON; //202105 Es muss je nach Action ein anderes .customValuesRefresh() geben.
-				//                 Also ActionSwitch abstrakt machen, mit .customValuesRefres() als abstract.
-				//                 und customValuesRefresh() ggfs. überschreiben:
-				//    
-				//PanelDebugHelperZZZ.createValueText(sTitle, panel, iIndexUsedInCollection);
-				//
-				//für einfaches Umschalten OHNE Refresh
-				//ActionSwitchSimpleZZZ extends AbstractActionSwitchZZZ
-				//dito
-				//ActionSwitchDebugUIZZZ extends AbstractActionSwitchZZZ
-				
+							
 				ActionSwitchZZZ actionSwitch = new ActionSwitchZZZ(objKernel, this, groupc);
 				buttonSwitch.addActionListener(actionSwitch);								
 				this.setComponent(KernelJPanelCascadedZZZ.sBUTTON_SWITCH, buttonSwitch);				

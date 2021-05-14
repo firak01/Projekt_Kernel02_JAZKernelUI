@@ -11,6 +11,7 @@ import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
+import basic.zKernelUI.component.IComponentValueModelZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 
 public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerComponentGroupSwitchZZZ { //,IEventBrokerSwitchComponentUserZZZ { //, IEventBrokerSwitchComponentUserZZZ{
@@ -18,7 +19,7 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 	private KernelJPanelCascadedZZZ panelParent=null;
 	private String sAlias=null;
 	private String sTitle=null;
-	private HashMapIndexedZZZ<Integer,ArrayList<String>>hmValuesCustom=null;
+	private IComponentValueModelZZZ objValueProvider=null;
 	private EventComponentGroupSwitchZZZ eventPrevious=null;
 	private boolean bAnyComponentAdded=false;
 	
@@ -27,20 +28,27 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 	}
 	public JComponentGroupZZZ(IKernelZZZ objKernel,String sAlias, KernelJPanelCascadedZZZ panelParent, String sTitle) throws ExceptionZZZ {
 		super(objKernel);
-		JComponentGroupNew_(sAlias, sTitle, panelParent, null);
+		JComponentGroupNew_(sAlias, null, sTitle, panelParent, null);
 	}
 	public JComponentGroupZZZ(IKernelZZZ objKernel, String sAlias, String sTitle, KernelJPanelCascadedZZZ panelParent, ArrayList<JComponent>listaComponent) throws ExceptionZZZ {
 		super(objKernel);
-		JComponentGroupNew_(sAlias, sTitle, panelParent, listaComponent);
+		JComponentGroupNew_(sAlias, null, sTitle, panelParent, listaComponent);
+	}
+	public JComponentGroupZZZ(IKernelZZZ objKernel, String sAlias, IComponentValueModelZZZ objValueProvider, ArrayList<JComponent>listaComponent) throws ExceptionZZZ {
+		super(objKernel);
+		JComponentGroupNew_(sAlias, objValueProvider, null, null, listaComponent);
 	}
 	
-	private boolean JComponentGroupNew_(String sAlias, String sTitle, KernelJPanelCascadedZZZ panelParent, ArrayList<JComponent>listaComponent) {
+	private boolean JComponentGroupNew_(String sAlias, IComponentValueModelZZZ objComponentValueProvider, String sTitle, KernelJPanelCascadedZZZ panelParent, ArrayList<JComponent>listaComponent) {
 		boolean bReturn = false;
 		main:{
-			this.setGroupTitle(sTitle);
 			this.setGroupAlias(sAlias);
-			this.setPanelParent(panelParent);
-			
+			this.setComponentValueProvider(objComponentValueProvider);
+			if(this.getComponentValueProvider()==null) {
+				this.setGroupTitle(sTitle);				
+				this.setPanelParent(panelParent);
+			}
+					
 			if(listaComponent!=null) {							
 				for(JComponent componenttemp : listaComponent) {
 					if(componenttemp!=null) {												
@@ -126,10 +134,7 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 			HashMapIndexedZZZ<Integer,ArrayList<String>> hmValues = this.getComponentValuesCustom(); 
 			if(hmValues==null) break main;
 			if(hmValues.size()==0) break main;
-			
-			String sTitle = this.getGroupTitle();
-			KernelJPanelCascadedZZZ panel = this.getPanelParent();
-							
+									
 			int iIndex=-1;
 			ArrayList<JComponent>listaComponent = this.getComponents();
 			for(JComponent component : listaComponent) {
@@ -206,14 +211,24 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 		// TODO Auto-generated method stub		
 	}
 	@Override
-	public HashMapIndexedZZZ<Integer, ArrayList<String>> getComponentValuesCustom() {
-		return this.hmValuesCustom;
+	public HashMapIndexedZZZ<Integer, ArrayList<String>> getComponentValuesCustom() throws ExceptionZZZ {
+		IComponentValueModelZZZ objValueProvider = this.getComponentValueProvider();
+		if(objValueProvider!=null) {
+			HashMapIndexedZZZ<Integer, ArrayList<String>> hmValuesCustom = objValueProvider.getComponentValues();
+			return hmValuesCustom;
+		}else {
+			return null;
+		}
 	}
 	@Override
-	public void setComponentValuesCustom(HashMapIndexedZZZ<Integer, ArrayList<String>> hmValuesCustom) {
-		this.hmValuesCustom = hmValuesCustom;		
+	public IComponentValueModelZZZ getComponentValueProvider() {
+		return this.objValueProvider;
 	}
-	
+	@Override
+	public void setComponentValueProvider(IComponentValueModelZZZ objComponentValueProvider) {
+		this.objValueProvider = objComponentValueProvider;
+	}
+		
 	
 	//### Interface IEventBrokerSwitchComponentUserZZZ
 //	@Override

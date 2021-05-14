@@ -11,9 +11,30 @@ import basic.zBasic.util.abstractList.ArrayListZZZ;
 import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
+import basic.zKernelUI.component.IComponentValueModelZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 
-public class PanelDebugHelperZZZ {
+public class PanelDebugModelZZZ implements IComponentValueModelZZZ{
+	private String sTitle=null;
+	private KernelJPanelCascadedZZZ panelParent;
+	private int iIndexInCollection=-1;
+	public PanelDebugModelZZZ() {		
+	}
+	
+	public PanelDebugModelZZZ(String sTitle, KernelJPanelCascadedZZZ panelParent, int iIndexInCollection) {
+		this.sTitle = sTitle;
+		this.panelParent = panelParent;
+		this.iIndexInCollection = iIndexInCollection;
+	}
+	
+	//+++ Interface IComponentValueProviderZZZZ
+	@Override
+	public HashMapIndexedZZZ<Integer, ArrayList<String>> getComponentValues()  throws ExceptionZZZ{
+		return PanelDebugModelZZZ.createValueText(sTitle, panelParent, iIndexInCollection);
+	}
+	
+	
+	//##############################
 	public static HashMapIndexedZZZ<Integer,ArrayList<JComponent>>createComponentHashMap(String sTitle, KernelJPanelCascadedZZZ panel) throws ExceptionZZZ {
 		HashMapIndexedZZZ<Integer,ArrayList<JComponent>> hmReturn = new HashMapIndexedZZZ<Integer,ArrayList<JComponent>>();
 		
@@ -22,14 +43,14 @@ public class PanelDebugHelperZZZ {
 			//Labels hinzufuegen, in dem der Panel-Klassennamen steht (zu Debug- und Analysezwecken)
 			ArrayList<JLabel>listaLabel;
 			int iIndex=0;			
-			listaLabel = PanelDebugHelperZZZ.createLabelArrayList(sTitle, panel, iIndex);
+			listaLabel = PanelDebugModelZZZ.createLabelArrayList(sTitle, panel, iIndex);
 			if(listaLabel!=null) {				
 				Integer intIndex = new Integer(iIndex);
 				hmReturn.put(intIndex, listaLabel);
 			
 				while(listaLabel!=null) {
 					iIndex++;
-					listaLabel = PanelDebugHelperZZZ.createLabelArrayList(sTitle, panel, iIndex);
+					listaLabel = PanelDebugModelZZZ.createLabelArrayList(sTitle, panel, iIndex);
 					if(listaLabel!=null) {
 						intIndex = new Integer(iIndex);
 						hmReturn.put(intIndex, listaLabel);
@@ -45,13 +66,13 @@ public class PanelDebugHelperZZZ {
 		main:{
 			JLabel labelDebug;									
 			
-			HashMapIndexedZZZ<Integer,ArrayList<String>> hmValues = PanelDebugHelperZZZ.createValueText(sTitle, panel, iIndexInCollection);
+			HashMapIndexedZZZ<Integer,ArrayList<String>> hmValues = PanelDebugModelZZZ.createValueText(sTitle, panel, iIndexInCollection);
 			if(hmValues!=null) {
 				listaReturn = new ArrayList<JLabel>();
 				Iterator<ArrayList<String>> itValues = hmValues.iterator();
 				while(itValues.hasNext()) {						
 					ArrayList<String> listaText = (ArrayList<String>) itValues.next();
-					labelDebug = PanelDebugHelperZZZ.createLabel(listaText);
+					labelDebug = PanelDebugModelZZZ.createLabel(listaText);
 					if(labelDebug!=null) listaReturn.add(labelDebug);
 				}
 			}			
@@ -142,15 +163,7 @@ public class PanelDebugHelperZZZ {
 			case 3:
 				//+++ 4. ProgramAlias, der ggfs. zur Verfügung steht
 				{
-					String sProgram = panel.getProgramName();
-					if(!StringZZZ.isEmpty(sProgram)) {
-					if(sProgram.equals("use.openvpn.serverui.component.IPExternalUpload.PanelDlgIPExternalContentOVPN")) {
-						System.out.println("DEBUGSTELLE");
-						System.out.println("...TODOGOON...");
-						//TODOGOON; //20210510hole den Alias für den Wert "use.openvpn.serverui.component.IPExternalUpload.PanelDlgIPExternalContentOVPN"
-					}
-					}
-										
+					String sProgram = panel.getProgramName();									
 					String sProgram4alias = panel.getProgramAlias();				
 					if(!StringZZZ.isEmpty(sProgram4alias)) {						
 						String sProgramAlias = panel.getProgramAlias();
@@ -174,4 +187,5 @@ public class PanelDebugHelperZZZ {
 		}//end main:
 		return hmReturn;
 	}
+	
 }
