@@ -104,7 +104,7 @@ public class PanelDebugModelZZZ implements IComponentValueModelZZZ{
 		String stemp;
 		main:{	
 			ArrayList<String>listaTitle = new ArrayList<String>();
-			listaTitle.add(sTitle);
+			listaTitle.add("Title:" + sTitle);
 			
 			int iLengthDefault=25;
 			int iLengthDefaultRightOffset=2;

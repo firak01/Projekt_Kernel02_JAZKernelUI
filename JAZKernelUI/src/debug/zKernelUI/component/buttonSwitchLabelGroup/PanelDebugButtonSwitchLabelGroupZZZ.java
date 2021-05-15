@@ -36,7 +36,7 @@ public class PanelDebugButtonSwitchLabelGroupZZZ extends KernelJPanelCascadedZZZ
 			throw ez;		 
 		}
 		
-		//### Layout Manager
+		//### Layout Manager		 
 		this.setLayout(new BorderLayout());
 		
 		PanelDebugButtonSwitchLabelGroup_NORTHZZZ objPanelNorth = new PanelDebugButtonSwitchLabelGroup_NORTHZZZ(objKernel, this);
