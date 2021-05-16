@@ -989,8 +989,10 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				//TODOGOON; //Ein Button zum Umschalten ist auch erst im Panel notwendig, wenn es mehr als 1 Gruppenobjekt gibt.
 																
 				HashMapIndexedZZZ<Integer,ArrayList<JComponent>>hmComponent;
-				hmComponent = PanelDebugModelZZZ.createComponentHashMap(sTitle, this);
-											
+				PanelDebugModelZZZ modelDebug = new PanelDebugModelZZZ();
+				hmComponent = modelDebug.createComponentHashMap(sTitle, this);
+									
+												
 				//+++ Die Labels auf die Gruppen verteilen
 				ArrayList<JComponentGroupZZZ>listaGroup = new ArrayList<JComponentGroupZZZ>();				
 				int iIndex=-1;

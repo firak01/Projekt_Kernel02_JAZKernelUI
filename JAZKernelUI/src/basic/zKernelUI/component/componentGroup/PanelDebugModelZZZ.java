@@ -13,6 +13,7 @@ import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernelUI.component.IComponentValueModelZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
+import basic.zKernelUI.component.model.ComponentModelHelperZZZ;
 
 public class PanelDebugModelZZZ implements IComponentValueModelZZZ{
 	private String sTitle=null;
@@ -30,75 +31,30 @@ public class PanelDebugModelZZZ implements IComponentValueModelZZZ{
 	//+++ Interface IComponentValueProviderZZZZ
 	@Override
 	public HashMapIndexedZZZ<Integer, ArrayList<String>> getComponentValues()  throws ExceptionZZZ{
-		return PanelDebugModelZZZ.createValueText(sTitle, panelParent, iIndexInCollection);
+		return PanelDebugModelZZZ.createValuesText(sTitle, panelParent, iIndexInCollection);
 	}
 	
 	
-	//##############################
-	public static HashMapIndexedZZZ<Integer,ArrayList<JComponent>>createComponentHashMap(String sTitle, KernelJPanelCascadedZZZ panel) throws ExceptionZZZ {
+	//##############################			
+	public HashMapIndexedZZZ<Integer,ArrayList<JComponent>>createComponentHashMap(String sTitle, KernelJPanelCascadedZZZ panel) throws ExceptionZZZ {
 		HashMapIndexedZZZ<Integer,ArrayList<JComponent>> hmReturn = new HashMapIndexedZZZ<Integer,ArrayList<JComponent>>();
-		
-		String stemp;
-		main:{			
-			//Labels hinzufuegen, in dem der Panel-Klassennamen steht (zu Debug- und Analysezwecken)
-			ArrayList<JLabel>listaLabel;
-			int iIndex=0;			
-			listaLabel = PanelDebugModelZZZ.createLabelArrayList(sTitle, panel, iIndex);
-			if(listaLabel!=null) {				
-				Integer intIndex = new Integer(iIndex);
-				hmReturn.put(intIndex, listaLabel);
-			
-				while(listaLabel!=null) {
-					iIndex++;
-					listaLabel = PanelDebugModelZZZ.createLabelArrayList(sTitle, panel, iIndex);
-					if(listaLabel!=null) {
-						intIndex = new Integer(iIndex);
-						hmReturn.put(intIndex, listaLabel);
-					}
-					
-				}
-			}							
+		main:{
+			int iIndexInCollection=0;
+			HashMapIndexedZZZ<Integer,ArrayList<String>> hmValuesText0 = this.getValuesText(sTitle, panel, iIndexInCollection);
+			boolean bComponentsForIndexFilled = ComponentModelHelperZZZ.fillComponentHashMap(hmReturn, hmValuesText0, iIndexInCollection);
+			while(bComponentsForIndexFilled) {
+				iIndexInCollection++;
+				HashMapIndexedZZZ<Integer,ArrayList<String>> hmValuesText = this.getValuesText(sTitle, panel, iIndexInCollection);
+				bComponentsForIndexFilled = ComponentModelHelperZZZ.fillComponentHashMap(hmReturn, hmValuesText, iIndexInCollection);
+			}			
 		}//end main
 		return hmReturn;
-	}
-	public static ArrayList<JLabel>createLabelArrayList(String sTitle, KernelJPanelCascadedZZZ panel, int iIndexInCollection) throws ExceptionZZZ {
-		ArrayList<JLabel>listaReturn=null;//Auch wenn eine Indexposition nix füllen sollte, leere Liste zurückgeben.
-		main:{
-			JLabel labelDebug;									
+	}	
 			
-			HashMapIndexedZZZ<Integer,ArrayList<String>> hmValues = PanelDebugModelZZZ.createValueText(sTitle, panel, iIndexInCollection);
-			if(hmValues!=null) {
-				listaReturn = new ArrayList<JLabel>();
-				Iterator<ArrayList<String>> itValues = hmValues.iterator();
-				while(itValues.hasNext()) {						
-					ArrayList<String> listaText = (ArrayList<String>) itValues.next();
-					labelDebug = PanelDebugModelZZZ.createLabel(listaText);
-					if(labelDebug!=null) listaReturn.add(labelDebug);
-				}
-			}			
-		}//end main:
-		return listaReturn;
+	public HashMapIndexedZZZ<Integer,ArrayList<String>>getValuesText(String sTitle, KernelJPanelCascadedZZZ panel, int iIndexInCollection) throws ExceptionZZZ{
+		return PanelDebugModelZZZ.createValuesText(sTitle, panel, iIndexInCollection);
 	}
-	
-	public static JLabel createLabel(ArrayList<String>listaText) throws ExceptionZZZ {
-		JLabel objReturn = null;
-		main:{
-			if(listaText==null) break main;
-			if(listaText.isEmpty()) {
-				objReturn = new JLabel("");
-				break main;
-			}
-			
-			String[]saParent=ArrayListZZZ.toStringArray(listaText);				
-			String sHtml = StringArrayZZZ.asHtml(saParent);
-											
-			objReturn = new JLabel(sHtml);					
-			
-		}//end main:
-		return objReturn;
-	}
-	
-	public static HashMapIndexedZZZ<Integer,ArrayList<String>>createValueText(String sTitle, KernelJPanelCascadedZZZ panel, int iIndexInCollection) throws ExceptionZZZ{
+	public static HashMapIndexedZZZ<Integer,ArrayList<String>>createValuesText(String sTitle, KernelJPanelCascadedZZZ panel, int iIndexInCollection) throws ExceptionZZZ{
 		HashMapIndexedZZZ<Integer,ArrayList<String>> hmReturn = new HashMapIndexedZZZ<Integer, ArrayList<String>>(); 
 				
 		String stemp;

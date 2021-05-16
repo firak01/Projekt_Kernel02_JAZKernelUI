@@ -206,7 +206,7 @@ public class PanelDebugButtonSwitchLabelGroup_NORTHZZZ extends KernelJPanelCasca
 		JLabel labelModuleText_02 = new JLabel(sLabelButtonGroup_02, SwingConstants.LEFT);			
 		this.add(labelModuleText_02,gbc);
 		
-		TODOGOON; //20210515
+		//TODOGOON; //20210515
 		/* Beispiel für den Einsatz eines Modells
 			HashMapIndexedZZZ<Integer,ArrayList<JComponent>>hmComponent;
 				hmComponent = PanelDebugModelZZZ.createComponentHashMap(sTitle, this);
