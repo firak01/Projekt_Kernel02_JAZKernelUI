@@ -15,46 +15,17 @@ import basic.zKernelUI.component.IComponentValueModelZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.component.model.ComponentModelHelperZZZ;
 
-public class PanelDebugModelZZZ implements IComponentValueModelZZZ{
-	private String sTitle=null;
-	private KernelJPanelCascadedZZZ panelParent;
-	private int iIndexInCollection=-1;
-	public PanelDebugModelZZZ() {		
+public class PanelDebugModelZZZ extends AbstractComponentSwitchModelZZZ{	
+	public PanelDebugModelZZZ() {	
+		super();
 	}
 	
 	public PanelDebugModelZZZ(String sTitle, KernelJPanelCascadedZZZ panelParent, int iIndexInCollection) {
-		this.sTitle = sTitle;
-		this.panelParent = panelParent;
-		this.iIndexInCollection = iIndexInCollection;
+		super(sTitle,panelParent,iIndexInCollection);
 	}
-	
-	//+++ Interface IComponentValueProviderZZZZ
-	@Override
-	public HashMapIndexedZZZ<Integer, ArrayList<String>> getComponentValues()  throws ExceptionZZZ{
-		return PanelDebugModelZZZ.createValuesText(sTitle, panelParent, iIndexInCollection);
-	}
-	
-	
-	//##############################			
-	public HashMapIndexedZZZ<Integer,ArrayList<JComponent>>createComponentHashMap(String sTitle, KernelJPanelCascadedZZZ panel) throws ExceptionZZZ {
-		HashMapIndexedZZZ<Integer,ArrayList<JComponent>> hmReturn = new HashMapIndexedZZZ<Integer,ArrayList<JComponent>>();
-		main:{
-			int iIndexInCollection=0;
-			HashMapIndexedZZZ<Integer,ArrayList<String>> hmValuesText0 = this.getValuesText(sTitle, panel, iIndexInCollection);
-			boolean bComponentsForIndexFilled = ComponentModelHelperZZZ.fillComponentHashMap(hmReturn, hmValuesText0, iIndexInCollection);
-			while(bComponentsForIndexFilled) {
-				iIndexInCollection++;
-				HashMapIndexedZZZ<Integer,ArrayList<String>> hmValuesText = this.getValuesText(sTitle, panel, iIndexInCollection);
-				bComponentsForIndexFilled = ComponentModelHelperZZZ.fillComponentHashMap(hmReturn, hmValuesText, iIndexInCollection);
-			}			
-		}//end main
-		return hmReturn;
-	}	
-			
-	public HashMapIndexedZZZ<Integer,ArrayList<String>>getValuesText(String sTitle, KernelJPanelCascadedZZZ panel, int iIndexInCollection) throws ExceptionZZZ{
-		return PanelDebugModelZZZ.createValuesText(sTitle, panel, iIndexInCollection);
-	}
-	public static HashMapIndexedZZZ<Integer,ArrayList<String>>createValuesText(String sTitle, KernelJPanelCascadedZZZ panel, int iIndexInCollection) throws ExceptionZZZ{
+		
+	//##############################		
+	public HashMapIndexedZZZ<Integer,ArrayList<String>>createValuesText(String sTitle, KernelJPanelCascadedZZZ panel, int iIndexInCollection) throws ExceptionZZZ{
 		HashMapIndexedZZZ<Integer,ArrayList<String>> hmReturn = new HashMapIndexedZZZ<Integer, ArrayList<String>>(); 
 				
 		String stemp;
@@ -145,3 +116,4 @@ public class PanelDebugModelZZZ implements IComponentValueModelZZZ{
 	}
 	
 }
+
