@@ -10,7 +10,7 @@ public class DebugButtonSwitchLabelGroupZZZ {
 	public static void main(String[] args) {
 		try {
 			//1. Kernel Objekt initialisieren. Dies ist fuer das Logging grundlegend.
-			KernelZZZ objKernel = new KernelZZZ("FGL", "01", "", "ZKernelConfigConfig_default.ini",(String)null);
+			KernelZZZ objKernel = new KernelZZZ("FGL", "01", "", "ZKernelConfigConfig_default.ini","useFormula");
 			LogZZZ objLog = objKernel.getLogObject();
 			
 			
