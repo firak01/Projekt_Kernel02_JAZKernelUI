@@ -11,20 +11,32 @@ import basic.zBasic.util.abstractList.ArrayListZZZ;
 import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
+import basic.zKernel.IKernelZZZ;
 import basic.zKernelUI.component.IComponentValueModelZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.component.model.ComponentModelHelperZZZ;
+import debug.zKernelUI.component.buttonSwitchLabelGroup.Row2ModelZZZ;
 
 public class PanelDebugModelZZZ extends AbstractComponentSwitchModelZZZ{	
 	public PanelDebugModelZZZ() {	
 		super();
 	}
 	
-	public PanelDebugModelZZZ(String sTitle, KernelJPanelCascadedZZZ panelParent, int iIndexInCollection) {
-		super(sTitle,panelParent,iIndexInCollection);
+	public PanelDebugModelZZZ(IKernelZZZ objKernel, String sTitle, KernelJPanelCascadedZZZ panelParent) throws ExceptionZZZ {
+		super(objKernel, sTitle, panelParent);
+	}
+	
+	public PanelDebugModelZZZ(IKernelZZZ objKernel, String sTitle, KernelJPanelCascadedZZZ panelParent, int iIndexInCollection) throws ExceptionZZZ {
+		super(objKernel, sTitle,panelParent,iIndexInCollection);
 	}
 		
-	//##############################		
+	//##############################
+	@Override
+	public IComponentValueModelZZZ createModelForGroup(String sTitle, KernelJPanelCascadedZZZ panelParent, int iIndexInGroupCollection) throws ExceptionZZZ {
+		 return new PanelDebugModelZZZ(this.getKernelObject(),sTitle, panelParent, iIndexInGroupCollection); 
+	}
+	
+	@Override
 	public HashMapIndexedZZZ<Integer,ArrayList<String>>createValuesText(String sTitle, KernelJPanelCascadedZZZ panel, int iIndexInCollection) throws ExceptionZZZ{
 		HashMapIndexedZZZ<Integer,ArrayList<String>> hmReturn = new HashMapIndexedZZZ<Integer, ArrayList<String>>(); 
 				

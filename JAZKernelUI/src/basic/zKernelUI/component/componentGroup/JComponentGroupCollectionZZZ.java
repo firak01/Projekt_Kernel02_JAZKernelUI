@@ -11,6 +11,7 @@ import basic.zBasic.util.abstractList.VectorExtendedZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
+import basic.zKernelUI.component.IComponentValueModelZZZ;
 
 public class JComponentGroupCollectionZZZ<T>  extends KernelUseObjectZZZ  implements Iterable<T>,IEventBrokerSwitchComponentUserZZZ {
 	
@@ -22,30 +23,53 @@ public class JComponentGroupCollectionZZZ<T>  extends KernelUseObjectZZZ  implem
 	//Merke: Dem EventBroker ist eine Reihefolge (über den Index) egal
 	//KernelSenderComponentGroupSwitchZZZ objEventBroker = null;
 	ISenderComponentGroupSwitchZZZ objEventBroker = null;
-
+	public JComponentGroupCollectionZZZ() throws ExceptionZZZ {
+		super();
+		JComponentGroupCollectionNew_(null, null);
+	}
 	
 	public JComponentGroupCollectionZZZ(IKernelZZZ objKernel) throws ExceptionZZZ {
 		super(objKernel);
-		JComponentGroupCollectionNew_(null);
+		JComponentGroupCollectionNew_(null, null);
 	}
 	public JComponentGroupCollectionZZZ(IKernelZZZ objKernel, ArrayList<JComponentGroupZZZ>listaGroup) throws ExceptionZZZ {
 		super(objKernel);
-		JComponentGroupCollectionNew_(listaGroup);
+		JComponentGroupCollectionNew_(null, listaGroup);
+		
+	}
+	public JComponentGroupCollectionZZZ(IKernelZZZ objKernel, IComponentValueModelZZZ model) throws ExceptionZZZ {
+		super(objKernel);
+		JComponentGroupCollectionNew_(model, null);
 		
 	}
 	
-	private boolean JComponentGroupCollectionNew_(ArrayList<JComponentGroupZZZ>listaGroup) throws ExceptionZZZ{
-		boolean bReturn = false;
-		main:{
-			if(listaGroup!=null) {				
+	private boolean JComponentGroupCollectionNew_(IComponentValueModelZZZ model, ArrayList<JComponentGroupZZZ>listaGroup) throws ExceptionZZZ{
+		boolean bReturn = false;		
+		main:{			
+			if(listaGroup!=null) {	//Für eine GroupCollection OHNE Modell			
 				for(JComponentGroupZZZ grouptemp : listaGroup) {
 					if(grouptemp!=null) {
 						this.add(grouptemp);
 					}
+				}	
+				bReturn = true;
+				break main;
+			}
+			
+			if(model!=null) {       ///Für eine GroupCollection MIT Modell
+				ArrayList<JComponentGroupZZZ>listaGroup2 = model.createComponentGroupArrayList();
+				if(listaGroup2!=null) {				
+					for(JComponentGroupZZZ grouptemp : listaGroup2) {
+						if(grouptemp!=null) {
+							this.add(grouptemp);
+						}
+					}	
+					bReturn = true;
+					break main;
 				}				
 			}
 			
-			bReturn = true;
+			
 		}//end main
 		return bReturn;
 	}

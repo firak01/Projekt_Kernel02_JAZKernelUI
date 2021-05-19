@@ -105,6 +105,9 @@ public class PanelDebugButtonSwitchLabelGroup_NORTHZZZ extends KernelJPanelCasca
 	        
 	        gbc.gridy = 1;
 	        createRow2(this, gbc, sModule, sProgram);
+	        
+	        gbc.gridy = 2;
+	        createRow3(this, gbc, sModule, sProgram);
 	        	        			
 			
 			//###########################################################################################					
@@ -206,127 +209,14 @@ public class PanelDebugButtonSwitchLabelGroup_NORTHZZZ extends KernelJPanelCasca
 		JLabel labelModuleText_02 = new JLabel(sLabelButtonGroup_02, SwingConstants.LEFT);			
 		this.add(labelModuleText_02,gbc);
 		
-		String sTitle="row2";
-		
-		HashMapIndexedZZZ<Integer,ArrayList<JComponent>>hmComponent;
-		Row2ModelZZZ modelRow2 = new Row2ModelZZZ();
-		hmComponent = modelRow2.createComponentHashMap(sTitle, this);
-		
-		//+++ Die Labels auf die Gruppen verteilen
-		ArrayList<JComponentGroupZZZ>listaGroup = new ArrayList<JComponentGroupZZZ>();				
-		int iIndex=-1;
-		
-		Iterator itListaComponent = hmComponent.iterator();
-		while(itListaComponent.hasNext()) {
-			ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) itListaComponent.next();
-			
-			iIndex=iIndex+1;						
-			String sIndexAsAlias = Integer.toString(iIndex);
-			IComponentValueModelZZZ objValueProvider = new Row2ModelZZZ("row2",this, iIndex); //Diese Modell wird bei jedem "Click" in dem refresh() aufgerufen.
-			JComponentGroupZZZ grouptemp = new JComponentGroupZZZ(objKernel, sIndexAsAlias, objValueProvider,listaComponenttemp);
-			if(grouptemp.hasAnyComponentAdded()) {
-				listaGroup.add(grouptemp);
-			}								
-		}
+		String sTitle="row2";		
+		Row2ModelZZZ modelRow2 = new Row2ModelZZZ(this.getKernelObject(),sTitle, this);
 		
 		//++++ Die GroupCollection
-		TODOGOON; //20210517: Jetzt müsste es reichen hier die vom Modell zur Verfügung gestellte HashMap zu übergeben.
-		//                      Das Verteilen der Labels auf die Gruppe sollte dann im Konstruktor gemacht werden.
-		//                      Also: Weitere Konstruktoren, in denen dann die Liste der Gruppen generiert werden.
-		//JComponentGroupCollectionZZZ groupc = new JComponentGroupCollectionZZZ(objKernel, hmComponent);
-		//... und danach noch einfacher..einfach nur das Modell übergeben
-		//JComponentGroupCollectionZZZ groupc = new JComponentGroupCollectionZZZ(objKernel, modelRow2);
-		JComponentGroupCollectionZZZ groupc = new JComponentGroupCollectionZZZ(objKernel, listaGroup);
+		//202105178 Jetzt muss es reichen das model zu übergeben
+		JComponentGroupCollectionZZZ groupc = new JComponentGroupCollectionZZZ(this.getKernelObject(), modelRow2);
 		groupc.setVisible(0); //Initiales Setzen der Sichtbarkeit
-		
-		
-		//TODOGOON; //20210515
-		/* Beispiel für den Einsatz eines Modells
-			HashMapIndexedZZZ<Integer,ArrayList<JComponent>>hmComponent;
-				PanelDebugModelZZZ modelDebug = new PanelDebugModelZZZ();
-				hmComponent = modelDebug.createComponentHashMap(sTitle, this);
-									
-												
-				//+++ Die Labels auf die Gruppen verteilen
-				ArrayList<JComponentGroupZZZ>listaGroup = new ArrayList<JComponentGroupZZZ>();				
-				int iIndex=-1;
 				
-				Iterator itListaComponent = hmComponent.iterator();
-				while(itListaComponent.hasNext()) {
-					ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) itListaComponent.next();
-					
-					iIndex=iIndex+1;						
-					String sIndexAsAlias = Integer.toString(iIndex);
-					IComponentValueModelZZZ objValueProvider = new PanelDebugModelZZZ("Cascaded",this, iIndex); //Diese Modell wird bei jedem "Click" in dem refresh() aufgerufen.
-					JComponentGroupZZZ grouptemp = new JComponentGroupZZZ(objKernel, sIndexAsAlias, objValueProvider,listaComponenttemp);
-					if(grouptemp.hasAnyComponentAdded()) {
-						listaGroup.add(grouptemp);
-					}								
-				}
-				
-				//++++ Die GroupCollection
-				JComponentGroupCollectionZZZ groupc = new JComponentGroupCollectionZZZ(objKernel, listaGroup);
-				groupc.setVisible(0); //Initiales Setzen der Sichtbarkeit
-				
-						
-				//######## Das UI gestalten. Die Reihenfolge der Componenten ist wichtig für die Reihenfolge im UI #################
-				//++++ Der Umschaltebutton
-				String sLabelButton = ">";//this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButton").getValue();
-				JButton buttonSwitch = new JButton(sLabelButton);	
-							
-				ActionSwitchZZZ actionSwitch = new ActionSwitchZZZ(objKernel, this, groupc);
-				buttonSwitch.addActionListener(actionSwitch);								
-				this.setComponent(KernelJPanelCascadedZZZ.sBUTTON_SWITCH, buttonSwitch);				
-				this.add(buttonSwitch);
-				
-				int iIndexOuterMax = hmComponent.size() -1;
-				for(int iIndexOuter=0; iIndexOuter <= iIndexOuterMax; iIndexOuter++) {
-					ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) hmComponent.getValue(iIndexOuter);
-					if(listaComponenttemp!=null) {
-						
-						//Die Labels der Arraylist abarbeiten und dem panel hinzufügen
-						int iIndexInner=-1;				
-						for(JComponent componenttemp : listaComponenttemp) {
-							if(componenttemp!=null) {
-								iIndexInner=iIndexInner+1;
-								this.add(componenttemp);
-								this.setComponent("ComponentDebug"+iIndexOuter+"_"+iIndexInner, componenttemp);
-							}
-						}		
-					}
-				}																
-			}		
-		 */
-		
-		//++++ Die LabelGroupZZZ				
-		//+++++++++++ GRUPPE 1 ++++++++++++++++++
-//		String sLabel02_02 = "Label II 1A";
-//		JLabel label02_02 = new JLabel(sLabel02_02, SwingConstants.LEFT);			
-//		String sLabel03_02 = "Label II 2A";
-//		JLabel label03_02 = new JLabel(sLabel03_02, SwingConstants.LEFT);	
-//		
-//		ArrayList<JComponent>listaComponent_02 = new ArrayList<JComponent>();
-//		listaComponent_02.add(label02_02);
-//		listaComponent_02.add(label03_02);			
-//		JComponentGroupZZZ group1_02 = new JComponentGroupZZZ(objKernel, "EINS_02", "Title: DebugGroup1", this, listaComponent_02);
-//		
-//		//++++++++++++
-//		String sLabel04_02 = "Label II 1B";
-//		JLabel label04_02 = new JLabel(sLabel04_02, SwingConstants.LEFT);			
-//		String sLabel05_02 = "Label II 2B";
-//		JLabel label05_02 = new JLabel(sLabel05_02, SwingConstants.LEFT);
-//		
-//		listaComponent_02.clear();
-//		listaComponent_02.add(label04_02);
-//		listaComponent_02.add(label05_02);			
-//		JComponentGroupZZZ group2_02 = new JComponentGroupZZZ(objKernel, "ZWEI_02", "Title: DebugGroup2", this, listaComponent_02);
-//															
-//		//### Die Gruppen in einer Collection zusammenfassen
-//		JComponentGroupCollectionZZZ groupc_02 = new JComponentGroupCollectionZZZ(objKernel);
-//		groupc_02.add(group1_02);
-//		groupc_02.add(group2_02);
-//		groupc_02.setVisible("EINS_02");
-		
 		//######## Das UI gestalten. Die Reihenfolge der Componenten ist wichtig für die Reihenfolge im UI #################
 		//++++ Die Buttons
 		String sLabelButton_02 = this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButtonRow2").getValue();
@@ -338,8 +228,9 @@ public class PanelDebugButtonSwitchLabelGroup_NORTHZZZ extends KernelJPanelCasca
 		gbc.gridx = 1;
 		this.add(buttonSwitch_02,gbc);
 					
-		//+++ Nun erst die Label dem Panel hinzufügen	
+		//+++ Nun erst die Label dem Panel hinzufuegen	
 		//Merke: Die auszutauschenden Komponenten müssen in die gleichen Zellen hinzugefügt werden. Sonst entstehen Leerzellen
+		HashMapIndexedZZZ<Integer,ArrayList<JComponent>> hmComponent = modelRow2.getComponentHashMap();
 		int iIndexOuterMax = hmComponent.size() -1;
 		for(int iIndexOuter=0; iIndexOuter <= iIndexOuterMax; iIndexOuter++) {
 			ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) hmComponent.getValue(iIndexOuter);
@@ -357,17 +248,65 @@ public class PanelDebugButtonSwitchLabelGroup_NORTHZZZ extends KernelJPanelCasca
 				}		
 			}
 		}					
+	}
+	
+	
+	/**############################################################################################
+	   ########## DRITTE ZEILE MIT DRITTER GROUPCOLLECTION, DIE EIN ANDERES MODELL BENUTZT
 		
+	 * @param panel
+	 * @param gbc
+	 * @param sModule
+	 * @param sProgram
+	 * @throws ExceptionZZZ
+	 * @author Fritz Lindhauer, 15.05.2021, 11:46:13
+	 */
+	private void createRow3(KernelJPanelCascadedZZZ panel, GridBagConstraints gbc, String sModule, String sProgram) throws ExceptionZZZ {
+		gbc.gridx = 0;
 		
-		/*
-        gbc.gridx = 2;
-		this.add(label02_02,gbc);
-		gbc.gridx = 3;
-		this.add(label03_02,gbc);
-		gbc.gridx = 2;
-		this.add(label04_02,gbc);
-		gbc.gridx = 3;
-		this.add(label05_02,gbc);
-		*/
+		// +++ Werte aus der KernelKonfiguration auslesen und anzeigen
+		String sLabelButtonGroup = this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButtonGroupRow3").getValue();
+		JLabel labelModuleText = new JLabel(sLabelButtonGroup, SwingConstants.LEFT);			
+		this.add(labelModuleText,gbc);
+		
+		String sTitle="row3";		
+		PanelDebugModelZZZ modelRow3 = new PanelDebugModelZZZ(this.getKernelObject(),sTitle, this);
+		
+		//++++ Die GroupCollection
+		//202105178 Jetzt muss es reichen das model zu übergeben
+		JComponentGroupCollectionZZZ groupc = new JComponentGroupCollectionZZZ(this.getKernelObject(), modelRow3);
+		groupc.setVisible(0); //Initiales Setzen der Sichtbarkeit
+				
+		//######## Das UI gestalten. Die Reihenfolge der Componenten ist wichtig für die Reihenfolge im UI #################
+		//++++ Die Buttons
+		String sLabelButton = this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButtonRow3").getValue();
+		JButton buttonSwitch = new JButton(sLabelButton);			
+		ActionSwitchZZZ actionSwitch = new ActionSwitchZZZ(objKernel, this, groupc);			
+		buttonSwitch.addActionListener(actionSwitch);
+		
+		this.setComponent(PanelDebugButtonSwitchLabelGroup_NORTHZZZ.sBUTTON_SWITCH+"_03", buttonSwitch);
+		gbc.gridx = 1;
+		this.add(buttonSwitch,gbc);
+					
+		//+++ Nun erst die Label dem Panel hinzufuegen	
+		//Merke: Die auszutauschenden Komponenten müssen in die gleichen Zellen hinzugefügt werden. Sonst entstehen Leerzellen
+		HashMapIndexedZZZ<Integer,ArrayList<JComponent>> hmComponent = modelRow3.getComponentHashMap();
+		int iIndexOuterMax = hmComponent.size() -1;
+		for(int iIndexOuter=0; iIndexOuter <= iIndexOuterMax; iIndexOuter++) {
+			ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) hmComponent.getValue(iIndexOuter);
+			if(listaComponenttemp!=null) {
+				
+				//Die Labels der Arraylist abarbeiten und dem panel hinzufügen
+				int iIndexInner=-1;				
+				for(JComponent componenttemp : listaComponenttemp) {
+					if(componenttemp!=null) {
+						iIndexInner=iIndexInner+1;
+						gbc.gridx = 2+iIndexInner;
+						this.add(componenttemp,gbc);						
+						this.setComponent("ComponentDebug"+iIndexOuter+"_"+iIndexInner, componenttemp);
+					}
+				}		
+			}
+		}					
 	}
 }

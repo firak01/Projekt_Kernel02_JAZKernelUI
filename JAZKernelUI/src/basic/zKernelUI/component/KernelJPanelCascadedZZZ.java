@@ -1003,7 +1003,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 					
 					iIndex=iIndex+1;						
 					String sIndexAsAlias = Integer.toString(iIndex);
-					IComponentValueModelZZZ objValueProvider = new PanelDebugModelZZZ("Cascaded",this, iIndex); //Diese Modell wird bei jedem "Click" in dem refresh() aufgerufen.
+					IComponentValueModelZZZ objValueProvider = new PanelDebugModelZZZ(objKernel, "Cascaded", this, iIndex); //Diese Modell wird bei jedem "Click" in dem refresh() aufgerufen.
 					JComponentGroupZZZ grouptemp = new JComponentGroupZZZ(objKernel, sIndexAsAlias, objValueProvider,listaComponenttemp);
 					if(grouptemp.hasAnyComponentAdded()) {
 						listaGroup.add(grouptemp);

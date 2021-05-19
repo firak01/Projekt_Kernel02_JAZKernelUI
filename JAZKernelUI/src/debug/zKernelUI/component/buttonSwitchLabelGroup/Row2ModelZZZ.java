@@ -11,6 +11,7 @@ import basic.zBasic.util.abstractList.ArrayListZZZ;
 import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
+import basic.zKernel.IKernelZZZ;
 import basic.zKernelUI.component.IComponentValueModelZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.component.componentGroup.AbstractComponentSwitchModelZZZ;
@@ -21,11 +22,21 @@ public class Row2ModelZZZ extends AbstractComponentSwitchModelZZZ{
 		super();
 	}
 	
-	public Row2ModelZZZ(String sTitle, KernelJPanelCascadedZZZ panelParent, int iIndexInCollection) {
-		super(sTitle,panelParent,iIndexInCollection);
+	public Row2ModelZZZ(IKernelZZZ objKernel, String sTitle, KernelJPanelCascadedZZZ panelParent) throws ExceptionZZZ {
+		super(objKernel, sTitle, panelParent);
+	}
+	
+	public Row2ModelZZZ(IKernelZZZ objKernel, String sTitle, KernelJPanelCascadedZZZ panelParent, int iIndexInCollection) throws ExceptionZZZ {
+		super(objKernel, sTitle,panelParent,iIndexInCollection);
 	}
 		
-	//##############################		
+	//##############################
+	@Override
+	public IComponentValueModelZZZ createModelForGroup(String sTitle, KernelJPanelCascadedZZZ panelParent, int iIndexInGroupCollection) throws ExceptionZZZ {
+		 return new Row2ModelZZZ(this.getKernelObject(),sTitle, panelParent, iIndexInGroupCollection); 
+	}
+	
+	@Override
 	public HashMapIndexedZZZ<Integer,ArrayList<String>>createValuesText(String sTitle, KernelJPanelCascadedZZZ panel, int iIndexInCollection) throws ExceptionZZZ{
 		HashMapIndexedZZZ<Integer,ArrayList<String>> hmReturn = new HashMapIndexedZZZ<Integer, ArrayList<String>>(); 
 				
@@ -115,7 +126,6 @@ public class Row2ModelZZZ extends AbstractComponentSwitchModelZZZ{
 			
 		}//end main:
 		return hmReturn;
-	}
-	
+	}	
 }
 
