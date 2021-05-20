@@ -26,22 +26,24 @@ public class PanelDebugModelZZZ extends AbstractComponentSwitchModelZZZ{
 		super(objKernel, sTitle, panelParent);
 	}
 	
-	public PanelDebugModelZZZ(IKernelZZZ objKernel, String sTitle, KernelJPanelCascadedZZZ panelParent, int iIndexInCollection) throws ExceptionZZZ {
+	public PanelDebugModelZZZ(IKernelZZZ objKernel, String sTitle, KernelJPanelCascadedZZZ panelParent, int iIndexInCollection) throws ComponentGroupModelExceptionZZZ, ExceptionZZZ {
 		super(objKernel, sTitle,panelParent,iIndexInCollection);
 	}
 		
 	//##############################
 	@Override
-	public IComponentValueModelZZZ createModelForGroup(String sTitle, KernelJPanelCascadedZZZ panelParent, int iIndexInGroupCollection) throws ExceptionZZZ {
+	public IComponentValueModelZZZ createModelForGroup(String sTitle, KernelJPanelCascadedZZZ panelParent, int iIndexInGroupCollection) throws ComponentGroupModelExceptionZZZ, ExceptionZZZ {
 		 return new PanelDebugModelZZZ(this.getKernelObject(),sTitle, panelParent, iIndexInGroupCollection); 
 	}
 	
 	@Override
-	public HashMapIndexedZZZ<Integer,ArrayList<String>>createValuesText(String sTitle, KernelJPanelCascadedZZZ panel, int iIndexInCollection) throws ExceptionZZZ{
-		HashMapIndexedZZZ<Integer,ArrayList<String>> hmReturn = new HashMapIndexedZZZ<Integer, ArrayList<String>>(); 
+	public HashMapIndexedZZZ<Integer,ArrayList<String>>createValuesText(String sTitle, KernelJPanelCascadedZZZ panel, int iIndexInCollection) throws ComponentGroupModelExceptionZZZ{
+		HashMapIndexedZZZ<Integer,ArrayList<String>> hmReturn = null; 
 				
 		String stemp;
 		main:{	
+			try {
+			hmReturn = new HashMapIndexedZZZ<Integer, ArrayList<String>>();
 			ArrayList<String>listaTitle = new ArrayList<String>();
 			listaTitle.add("Title:" + sTitle);
 			
@@ -102,6 +104,7 @@ public class PanelDebugModelZZZ extends AbstractComponentSwitchModelZZZ{
 			case 3:
 				//+++ 4. ProgramAlias, der ggfs. zur Verfügung steht
 				{
+					try {
 					String sProgram = panel.getProgramName();									
 					String sProgram4alias = panel.getProgramAlias();				
 					if(!StringZZZ.isEmpty(sProgram4alias)) {						
@@ -116,13 +119,18 @@ public class PanelDebugModelZZZ extends AbstractComponentSwitchModelZZZ{
 						listaTitle.add("ProgramAlias: " + sProgramAlias);
 						hmReturn.put(listaTitle);				
 					}
+					}catch(ExceptionZZZ ez) {						
+					}
 				}
 				break;
 			default: 
 				hmReturn = null; //Wenn eine Indexposition nicht existiert, null zurückgeben.				
 				break;
 			}
-			
+			}catch(ExceptionZZZ ez) {
+				ComponentGroupModelExceptionZZZ cme = new ComponentGroupModelExceptionZZZ(ez);
+				throw cme;
+			}
 		}//end main:
 		return hmReturn;
 	}
