@@ -128,9 +128,9 @@ public abstract class AbstractComponentSwitchModelZZZ extends KernelUseObjectZZZ
 				ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) itListaComponent.next();						
 				String sIndexAsAlias = Integer.toString(iIndexInGroupCollection);
 				
-				//TODOGOON; //20210518 DIES dynamisch machen
+				//20210518 Das Objekt der verwendeten Modelklasse hier nun jeweils passend erzeugen.
 				//IComponentValueModelZZZ objValueProvider = new Row2ModelZZZ(this.getKernelObject(),"row2",this.getPanelParent(), iIndex); //Diese Modell wird bei jedem "Click" in dem refresh() aufgerufen.
-				IComponentValueModelZZZ objValueProvider = this.createModelForGroup("row2", this.getPanelParent(), iIndexInGroupCollection);
+				IComponentValueModelZZZ objValueProvider = this.createModelForGroup(this.getTitle(), this.getPanelParent(), iIndexInGroupCollection);
 				JComponentGroupZZZ grouptemp = new JComponentGroupZZZ(this.getKernelObject(), sIndexAsAlias, objValueProvider,listaComponenttemp);
 				if(grouptemp.hasAnyComponentAdded()) {				
 					listaReturn.add(grouptemp);
