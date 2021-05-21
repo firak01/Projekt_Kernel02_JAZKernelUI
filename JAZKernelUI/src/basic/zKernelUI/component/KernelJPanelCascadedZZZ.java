@@ -37,6 +37,7 @@ import basic.zKernel.flag.FlagZHelperZZZ;
 import basic.zKernel.flag.IFlagUserZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import basic.zKernelUI.component.componentGroup.ActionSwitchZZZ;
+import basic.zKernelUI.component.componentGroup.IComponentGroupValueModelZZZ;
 import basic.zKernelUI.component.componentGroup.JComponentGroupCollectionZZZ;
 import basic.zKernelUI.component.componentGroup.JComponentGroupHelperZZZ;
 import basic.zKernelUI.component.componentGroup.JComponentGroupZZZ;
@@ -1003,7 +1004,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 					
 					iIndex=iIndex+1;						
 					String sIndexAsAlias = Integer.toString(iIndex);
-					IComponentValueModelZZZ objValueProvider = new PanelDebugModelZZZ(objKernel, "Cascaded", this, iIndex); //Diese Modell wird bei jedem "Click" in dem refresh() aufgerufen.
+					IComponentGroupValueModelZZZ objValueProvider = new PanelDebugModelZZZ(objKernel, "Cascaded", this, iIndex); //Diese Modell wird bei jedem "Click" in dem refresh() aufgerufen.
 					JComponentGroupZZZ grouptemp = new JComponentGroupZZZ(objKernel, sIndexAsAlias, objValueProvider,listaComponenttemp);
 					if(grouptemp.hasAnyComponentAdded()) {
 						listaGroup.add(grouptemp);

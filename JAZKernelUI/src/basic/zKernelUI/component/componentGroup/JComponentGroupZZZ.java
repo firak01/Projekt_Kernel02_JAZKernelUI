@@ -11,7 +11,6 @@ import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
-import basic.zKernelUI.component.IComponentValueModelZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 
 public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerComponentGroupSwitchZZZ { //,IEventBrokerSwitchComponentUserZZZ { //, IEventBrokerSwitchComponentUserZZZ{
@@ -19,7 +18,7 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 	private KernelJPanelCascadedZZZ panelParent=null;
 	private String sAlias=null;
 	private String sTitle=null;
-	private IComponentValueModelZZZ objValueProvider=null;
+	private IComponentGroupValueModelZZZ objValueProvider=null;
 	private EventComponentGroupSwitchZZZ eventPrevious=null;
 	private boolean bAnyComponentAdded=false;
 	
@@ -34,12 +33,12 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 		super(objKernel);
 		JComponentGroupNew_(sAlias, null, sTitle, panelParent, listaComponent);
 	}
-	public JComponentGroupZZZ(IKernelZZZ objKernel, String sAlias, IComponentValueModelZZZ objValueProvider, ArrayList<JComponent>listaComponent) throws ExceptionZZZ {
+	public JComponentGroupZZZ(IKernelZZZ objKernel, String sAlias, IComponentGroupValueModelZZZ objValueProvider, ArrayList<JComponent>listaComponent) throws ExceptionZZZ {
 		super(objKernel);
 		JComponentGroupNew_(sAlias, objValueProvider, null, null, listaComponent);
 	}
 	
-	private boolean JComponentGroupNew_(String sAlias, IComponentValueModelZZZ objComponentValueProvider, String sTitle, KernelJPanelCascadedZZZ panelParent, ArrayList<JComponent>listaComponent) {
+	private boolean JComponentGroupNew_(String sAlias, IComponentGroupValueModelZZZ objComponentValueProvider, String sTitle, KernelJPanelCascadedZZZ panelParent, ArrayList<JComponent>listaComponent) {
 		boolean bReturn = false;
 		main:{
 			this.setGroupAlias(sAlias);
@@ -212,7 +211,7 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 	}
 	@Override
 	public HashMapIndexedZZZ<Integer, ArrayList<String>> getComponentValuesCustom() throws ExceptionZZZ {
-		IComponentValueModelZZZ objValueProvider = this.getComponentValueProvider();
+		IComponentGroupValueModelZZZ objValueProvider = this.getComponentValueProvider();
 		if(objValueProvider!=null) {
 			HashMapIndexedZZZ<Integer, ArrayList<String>> hmValuesCustom = objValueProvider.getComponentValues();
 			return hmValuesCustom;
@@ -221,11 +220,11 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 		}
 	}
 	@Override
-	public IComponentValueModelZZZ getComponentValueProvider() {
+	public IComponentGroupValueModelZZZ getComponentValueProvider() {
 		return this.objValueProvider;
 	}
 	@Override
-	public void setComponentValueProvider(IComponentValueModelZZZ objComponentValueProvider) {
+	public void setComponentValueProvider(IComponentGroupValueModelZZZ objComponentValueProvider) {
 		this.objValueProvider = objComponentValueProvider;
 	}
 		

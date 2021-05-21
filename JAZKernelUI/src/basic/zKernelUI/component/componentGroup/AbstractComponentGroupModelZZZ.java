@@ -13,18 +13,17 @@ import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
-import basic.zKernelUI.component.IComponentValueModelZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.component.model.ComponentModelHelperZZZ;
 import debug.zKernelUI.component.buttonSwitchLabelGroup.Row2ModelZZZ;
 
-public abstract class AbstractComponentSwitchModelZZZ extends KernelUseObjectZZZ  implements IComponentValueModelZZZ{
+public abstract class AbstractComponentGroupModelZZZ extends KernelUseObjectZZZ  implements IComponentGroupValueModelZZZ{
 	private String sTitle=null;
 	private KernelJPanelCascadedZZZ panelParent;
 	private int iIndexInCollection=-1;	
 	HashMapIndexedZZZ<Integer,ArrayList<JComponent>>hmComponent=null; //Die HashMap mit dem Index für die Gruppe und der ArrayList der Komponenten der Gruppe
 		
-	public AbstractComponentSwitchModelZZZ() {		
+	public AbstractComponentGroupModelZZZ() {		
 		super();
 		AbstractComponentSwitchModelNew_(null, null, -1);
 	}
@@ -41,7 +40,7 @@ public abstract class AbstractComponentSwitchModelZZZ extends KernelUseObjectZZZ
 	 * @throws ExceptionZZZ
 	 * 19.05.2021, 08:52:40, Fritz Lindhauer
 	 */
-	public AbstractComponentSwitchModelZZZ(IKernelZZZ objKernel) throws ComponentGroupModelExceptionZZZ, ExceptionZZZ {		
+	public AbstractComponentGroupModelZZZ(IKernelZZZ objKernel) throws ComponentGroupModelExceptionZZZ, ExceptionZZZ {		
 		super(objKernel);
 		AbstractComponentSwitchModelNew_(null, null, -1);
 	}
@@ -54,7 +53,7 @@ public abstract class AbstractComponentSwitchModelZZZ extends KernelUseObjectZZZ
 	 * @throws ExceptionZZZ
 	 * 19.05.2021, 08:49:03, Fritz Lindhauer
 	 */
-	public AbstractComponentSwitchModelZZZ(IKernelZZZ objKernel, String sTitle, KernelJPanelCascadedZZZ panelParent) throws ExceptionZZZ, ComponentGroupModelExceptionZZZ {
+	public AbstractComponentGroupModelZZZ(IKernelZZZ objKernel, String sTitle, KernelJPanelCascadedZZZ panelParent) throws ExceptionZZZ, ComponentGroupModelExceptionZZZ {
 		super(objKernel);
 		AbstractComponentSwitchModelNew_(sTitle, panelParent, -1);
 	}
@@ -66,7 +65,7 @@ public abstract class AbstractComponentSwitchModelZZZ extends KernelUseObjectZZZ
 	 * @throws ExceptionZZZ
 	 * 19.05.2021, 08:49:03, Fritz Lindhauer
 	 */
-	public AbstractComponentSwitchModelZZZ(IKernelZZZ objKernel, String sTitle, KernelJPanelCascadedZZZ panelParent, int iIndexInCollection) throws ExceptionZZZ, ComponentGroupModelExceptionZZZ {
+	public AbstractComponentGroupModelZZZ(IKernelZZZ objKernel, String sTitle, KernelJPanelCascadedZZZ panelParent, int iIndexInCollection) throws ExceptionZZZ, ComponentGroupModelExceptionZZZ {
 		super(objKernel);
 		AbstractComponentSwitchModelNew_(sTitle, panelParent, iIndexInCollection);
 	}
@@ -130,7 +129,7 @@ public abstract class AbstractComponentSwitchModelZZZ extends KernelUseObjectZZZ
 				
 				//20210518 Das Objekt der verwendeten Modelklasse hier nun jeweils passend erzeugen.
 				//IComponentValueModelZZZ objValueProvider = new Row2ModelZZZ(this.getKernelObject(),"row2",this.getPanelParent(), iIndex); //Diese Modell wird bei jedem "Click" in dem refresh() aufgerufen.
-				IComponentValueModelZZZ objValueProvider = this.createModelForGroup(this.getTitle(), this.getPanelParent(), iIndexInGroupCollection);
+				IComponentGroupValueModelZZZ objValueProvider = this.createModelForGroup(this.getTitle(), this.getPanelParent(), iIndexInGroupCollection);
 				JComponentGroupZZZ grouptemp = new JComponentGroupZZZ(this.getKernelObject(), sIndexAsAlias, objValueProvider,listaComponenttemp);
 				if(grouptemp.hasAnyComponentAdded()) {				
 					listaReturn.add(grouptemp);
@@ -160,5 +159,5 @@ public abstract class AbstractComponentSwitchModelZZZ extends KernelUseObjectZZZ
 	public abstract HashMapIndexedZZZ<Integer,ArrayList<String>>createValuesText(String sTitle, KernelJPanelCascadedZZZ panel, int iIndexInCollection) throws ComponentGroupModelExceptionZZZ;			
 	
 	//Diese Modell wird bei jedem "Click" in dem refresh() aufgerufen.
-	public abstract IComponentValueModelZZZ createModelForGroup(String sTitle, KernelJPanelCascadedZZZ panelParent, int iIndexInGroupCollection) throws ComponentGroupModelExceptionZZZ, ExceptionZZZ; 
+	public abstract IComponentGroupValueModelZZZ createModelForGroup(String sTitle, KernelJPanelCascadedZZZ panelParent, int iIndexInGroupCollection) throws ComponentGroupModelExceptionZZZ, ExceptionZZZ; 
 }

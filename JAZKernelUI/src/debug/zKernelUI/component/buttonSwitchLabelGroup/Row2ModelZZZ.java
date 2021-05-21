@@ -12,13 +12,13 @@ import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelZZZ;
-import basic.zKernelUI.component.IComponentValueModelZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
-import basic.zKernelUI.component.componentGroup.AbstractComponentSwitchModelZZZ;
+import basic.zKernelUI.component.componentGroup.AbstractComponentGroupModelZZZ;
 import basic.zKernelUI.component.componentGroup.ComponentGroupModelExceptionZZZ;
+import basic.zKernelUI.component.componentGroup.IComponentGroupValueModelZZZ;
 import basic.zKernelUI.component.model.ComponentModelHelperZZZ;
 
-public class Row2ModelZZZ extends AbstractComponentSwitchModelZZZ{	
+public class Row2ModelZZZ extends AbstractComponentGroupModelZZZ{	
 	public Row2ModelZZZ() {	
 		super();
 	}
@@ -33,7 +33,7 @@ public class Row2ModelZZZ extends AbstractComponentSwitchModelZZZ{
 		
 	//##############################
 	@Override
-	public IComponentValueModelZZZ createModelForGroup(String sTitle, KernelJPanelCascadedZZZ panelParent, int iIndexInGroupCollection) throws ExceptionZZZ, ComponentGroupModelExceptionZZZ {
+	public IComponentGroupValueModelZZZ createModelForGroup(String sTitle, KernelJPanelCascadedZZZ panelParent, int iIndexInGroupCollection) throws ExceptionZZZ, ComponentGroupModelExceptionZZZ {
 		 return new Row2ModelZZZ(this.getKernelObject(),sTitle, panelParent, iIndexInGroupCollection); 
 	}
 	
@@ -62,9 +62,7 @@ public class Row2ModelZZZ extends AbstractComponentSwitchModelZZZ{
 				break;				
 			case 1:
 				{				
-				//+++ 2. Module, das zur Verfügung steht
-				
-					String sModule = panel.getModuleName();	
+					String sModule = panel.getModuleName();										
 					if(!StringZZZ.isEmpty(sModule)) {								
 						sModule = StringZZZ.abbreviateDynamicLeft(sModule, iLengthDefault+iLengthDefaultRightOffset);
 						sModule = StringZZZ.abbreviateDynamic(sModule, iLengthDefault);
@@ -88,41 +86,139 @@ public class Row2ModelZZZ extends AbstractComponentSwitchModelZZZ{
 				}
 				break;
 			case 2:
-				 //+++ 3. Program, das zur Verfügung steht 
+				//+++ 3. Werte aus der Konfigurationsdatei auslesen, das zur Verfügung steht								
 				{
+					String sModule = panel.getModuleName();	
 					String sProgram = panel.getProgramName();
-					if(!StringZZZ.isEmpty(sProgram)) {
-						sProgram = StringZZZ.abbreviateDynamicLeft(sProgram, iLengthDefault+iLengthDefaultRightOffset);
-						sProgram = StringZZZ.abbreviateDynamic(sProgram, iLengthDefault);
-						
-						listaTitle.add("Program: " + sProgram);
-						hmReturn.put(listaTitle);
-					}else {
-						listaTitle.add("Program: Not configured");
-						hmReturn.put(listaTitle);
+					String sValue = null;
+					try {
+						sValue = this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "labelValue01a").getValue();
+					}catch(ExceptionZZZ ez) {
+						sValue = null;
 					}
+					
+					if(!StringZZZ.isEmpty(sValue)) {
+						sValue = StringZZZ.abbreviateDynamicLeft(sValue, iLengthDefault+iLengthDefaultRightOffset);
+						sValue = StringZZZ.abbreviateDynamic(sValue, iLengthDefault);						
+						listaTitle.add("Wert01a " + sValue);						
+					}else {
+						listaTitle.add("Wert01a: Not configured");						
+					}
+					//+++++++++++++++++++++++++++++
+					hmReturn.put(listaTitle);	
+					
+					//+++++++					
+					ArrayList<String>listaTest01 = new ArrayList<String>();
+					try {
+						sValue = this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "labelValue01b").getValue();
+					}catch(ExceptionZZZ ez) {
+						sValue = null;
+					}
+					
+					if(!StringZZZ.isEmpty(sValue)) {
+						sValue = StringZZZ.abbreviateDynamicLeft(sValue, iLengthDefault+iLengthDefaultRightOffset);
+						sValue = StringZZZ.abbreviateDynamic(sValue, iLengthDefault);						
+						listaTest01.add("Wert01b " + sValue);						
+					}else {
+						listaTest01.add("Wert01b: Not configured");
+					}
+					//+++++++++++++++++++++++++++++
+					hmReturn.put(listaTest01);	
+
+					//++++++++
+					ArrayList<String>listaTest02 = new ArrayList<String>();
+					try {
+						sValue = this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "labelValue01c").getValue();
+					}catch(ExceptionZZZ ez) {
+						sValue = null;
+					}
+					
+					if(!StringZZZ.isEmpty(sValue)) {
+						sValue = StringZZZ.abbreviateDynamicLeft(sValue, iLengthDefault+iLengthDefaultRightOffset);
+						sValue = StringZZZ.abbreviateDynamic(sValue, iLengthDefault);						
+						listaTest02.add("Wert01c " + sValue);						
+					}else {
+						listaTest02.add("Wert01c: Not configured");
+					}
+					
+					//+++++++++++++++++++++++++++++
+					hmReturn.put(listaTest02);					
 				}
 				break;
-//			case 3:
-				//TODOGOON: 20210517 DAS FUNKTIONIERT NICHT UND LIEFERT EINEN FEHLER 
-//				//+++ 4. ProgramAlias, der ggfs. zur Verfügung steht
-//				{
-//					String sProgram = panel.getProgramName();									
-//					String sProgram4alias = panel.getProgramAlias();				
-//					if(!StringZZZ.isEmpty(sProgram4alias)) {						
-//						String sProgramAlias = panel.getProgramAlias();
-//						if(sProgram4alias.equals(sProgram)) {
-//							sProgramAlias="dito";
-//						}else {
-//							sProgramAlias = StringZZZ.abbreviateDynamicLeft(sProgramAlias, iLengthDefault+iLengthDefaultRightOffset);
-//							sProgramAlias = StringZZZ.abbreviateDynamic(sProgramAlias, iLengthDefault);
-//						}
-//						
-//						listaTitle.add("ProgramAlias: " + sProgramAlias);
-//						hmReturn.put(listaTitle);				
-//					}
-//				}
-//				break;
+			case 3:		
+				//+++ 4. Werte aus der Konfigurationsdatei auslesen, das zur Verfügung steht
+				{
+					String sModule = panel.getModuleName();	
+					String sProgram = panel.getProgramName();
+					String sValue = null;
+					try {
+						sValue = this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "labelValue02a").getValue();
+					}catch(ExceptionZZZ ez) {
+						sValue = null;
+					}
+					
+					if(!StringZZZ.isEmpty(sValue)) {
+						sValue = StringZZZ.abbreviateDynamicLeft(sValue, iLengthDefault+iLengthDefaultRightOffset);
+						sValue = StringZZZ.abbreviateDynamic(sValue, iLengthDefault);
+						
+						listaTitle.add("Wert02a " + sValue);						
+					}else {
+						listaTitle.add("Wert02a: Not configured");						
+					}
+					
+					//+++++++++++++++++++++++++++++++++++++++++
+					hmReturn.put(listaTitle);
+				}
+				break;
+			case 4:		
+				//+++ 5. Werte aus der Konfigurationsdatei auslesen, das zur Verfügung steht
+				{
+					String sModule = panel.getModuleName();	
+					String sProgram = panel.getProgramName();
+					String sValue = null;
+					try {
+						sValue = this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "labelValue03a").getValue();
+					}catch(ExceptionZZZ ez) {
+						sValue = null;
+					}
+					
+					if(!StringZZZ.isEmpty(sValue)) {
+						sValue = StringZZZ.abbreviateDynamicLeft(sValue, iLengthDefault+iLengthDefaultRightOffset);
+						sValue = StringZZZ.abbreviateDynamic(sValue, iLengthDefault);						
+						listaTitle.add("Wert03a " + sValue);						
+					}else {
+						listaTitle.add("Wert03a: Not configured");						
+					}
+					
+					//+++++++++++++++++++++++++++++++++++++++++++++
+					hmReturn.put(listaTitle);
+				}
+				break;
+			case 5:		
+				//+++ 5. Werte aus der Konfigurationsdatei auslesen, das zur Verfügung steht
+				{
+					String sModule = panel.getModuleName();	
+					String sProgram = panel.getProgramName();
+					String sValue = null;
+					try {
+						sValue = this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "NICHTDA-FALL").getValue();
+					}catch(ExceptionZZZ ez) {
+						sValue = null;
+					}
+					
+					if(!StringZZZ.isEmpty(sValue)) {
+						sValue = StringZZZ.abbreviateDynamicLeft(sValue, iLengthDefault+iLengthDefaultRightOffset);
+						sValue = StringZZZ.abbreviateDynamic(sValue, iLengthDefault);						
+						listaTitle.add("WertNICHTDA " + sValue);						
+					}else {
+						listaTitle.add("WertNICHTDA: Not configured");						
+					}
+					
+					
+					//+++++++++++++++++++++++++++++++++++++++++++++++
+					hmReturn.put(listaTitle);
+				}				
+				break;
 			default: 
 				hmReturn = null; //Wenn eine Indexposition nicht existiert, null zurückgeben.				
 				break;

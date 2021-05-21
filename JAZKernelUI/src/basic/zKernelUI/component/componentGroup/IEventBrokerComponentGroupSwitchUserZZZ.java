@@ -8,7 +8,7 @@ import basic.zBasic.ExceptionZZZ;
  * @author lindhaueradmin
  *
  */
-public interface IEventBrokerSwitchComponentUserZZZ {
+public interface IEventBrokerComponentGroupSwitchUserZZZ {
 	public abstract ISenderComponentGroupSwitchZZZ getSenderUsed() throws ExceptionZZZ;
 	public abstract void setSenderUsed(ISenderComponentGroupSwitchZZZ objEventSender);
 }

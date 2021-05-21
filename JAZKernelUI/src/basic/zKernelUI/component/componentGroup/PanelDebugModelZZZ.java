@@ -12,12 +12,11 @@ import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelZZZ;
-import basic.zKernelUI.component.IComponentValueModelZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.component.model.ComponentModelHelperZZZ;
 import debug.zKernelUI.component.buttonSwitchLabelGroup.Row2ModelZZZ;
 
-public class PanelDebugModelZZZ extends AbstractComponentSwitchModelZZZ{	
+public class PanelDebugModelZZZ extends AbstractComponentGroupModelZZZ{	
 	public PanelDebugModelZZZ() {	
 		super();
 	}
@@ -32,7 +31,7 @@ public class PanelDebugModelZZZ extends AbstractComponentSwitchModelZZZ{
 		
 	//##############################
 	@Override
-	public IComponentValueModelZZZ createModelForGroup(String sTitle, KernelJPanelCascadedZZZ panelParent, int iIndexInGroupCollection) throws ComponentGroupModelExceptionZZZ, ExceptionZZZ {
+	public IComponentGroupValueModelZZZ createModelForGroup(String sTitle, KernelJPanelCascadedZZZ panelParent, int iIndexInGroupCollection) throws ComponentGroupModelExceptionZZZ, ExceptionZZZ {
 		 return new PanelDebugModelZZZ(this.getKernelObject(),sTitle, panelParent, iIndexInGroupCollection); 
 	}
 	

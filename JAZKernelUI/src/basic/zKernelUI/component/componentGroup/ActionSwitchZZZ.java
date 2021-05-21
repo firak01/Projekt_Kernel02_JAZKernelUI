@@ -15,7 +15,7 @@ import basic.zKernelUI.component.KernelActionCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.thread.KernelSwingWorkerZZZ;
 
-public class ActionSwitchZZZ extends  KernelActionCascadedZZZ implements IEventBrokerSwitchComponentUserZZZ, IComponentGroupCollectionUserZZZ { //KernelUseObjectZZZ implements ActionListener{
+public class ActionSwitchZZZ extends  KernelActionCascadedZZZ implements IEventBrokerComponentGroupSwitchUserZZZ, IComponentGroupCollectionUserZZZ { //KernelUseObjectZZZ implements ActionListener{
 	private int iIndexCurrent = 0;
 	private JComponentGroupCollectionZZZ groupc;//zur Verwaltung von HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmIndexed
 	ISenderComponentGroupSwitchZZZ objEventBroker;

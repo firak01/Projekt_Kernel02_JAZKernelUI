@@ -11,9 +11,8 @@ import basic.zBasic.util.abstractList.VectorExtendedZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
-import basic.zKernelUI.component.IComponentValueModelZZZ;
 
-public class JComponentGroupCollectionZZZ<T>  extends KernelUseObjectZZZ  implements Iterable<T>,IEventBrokerSwitchComponentUserZZZ {
+public class JComponentGroupCollectionZZZ<T>  extends KernelUseObjectZZZ  implements Iterable<T>,IEventBrokerComponentGroupSwitchUserZZZ {
 	
 	//++++++++++ Mehrerer Gruppen zu der HashMap zusammenfassen.
 	//Merke: Der Button steuert über den Index die Reihenfolge
@@ -37,13 +36,13 @@ public class JComponentGroupCollectionZZZ<T>  extends KernelUseObjectZZZ  implem
 		JComponentGroupCollectionNew_(null, listaGroup);
 		
 	}
-	public JComponentGroupCollectionZZZ(IKernelZZZ objKernel, IComponentValueModelZZZ model) throws ExceptionZZZ {
+	public JComponentGroupCollectionZZZ(IKernelZZZ objKernel, IComponentGroupValueModelZZZ model) throws ExceptionZZZ {
 		super(objKernel);
 		JComponentGroupCollectionNew_(model, null);
 		
 	}
 	
-	private boolean JComponentGroupCollectionNew_(IComponentValueModelZZZ model, ArrayList<JComponentGroupZZZ>listaGroup) throws ExceptionZZZ{
+	private boolean JComponentGroupCollectionNew_(IComponentGroupValueModelZZZ model, ArrayList<JComponentGroupZZZ>listaGroup) throws ExceptionZZZ{
 		boolean bReturn = false;		
 		main:{			
 			if(listaGroup!=null) {	//Für eine GroupCollection OHNE Modell			
@@ -191,7 +190,7 @@ public class JComponentGroupCollectionZZZ<T>  extends KernelUseObjectZZZ  implem
 	}
 
 	//######## INTERFACES
-	//+++ aus IEventBrokerSwitchComponentUserZZZ.java
+	//+++ aus IEventBrokerComponentGroupSwitchUserZZZ.java
 		@Override
 		public ISenderComponentGroupSwitchZZZ getSenderUsed() throws ExceptionZZZ {
 			if(this.objEventBroker==null) {
