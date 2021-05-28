@@ -18,7 +18,7 @@ import basic.zKernel.IKernelZZZ;
 
 public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZZ implements IFormLayoutZZZ, IFormLayoutUserZZZ{
 	
-	FormLayout formLayoutUsed = null;
+	protected FormLayout formLayoutUsed = null;
 	ArrayList<ColumnSpec> listFormLayoutColumnSpec = null;
 	ArrayList<RowSpec> listFormLayoutRowSpec = null;
 	

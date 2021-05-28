@@ -1041,8 +1041,9 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 							}
 						}		
 					}
-				}																
-			}		
+				}
+				bReturn = true;
+			}//end if ... flag gesetzt? DEBUGUI_PANELLABEL_ON
 		}//end main:
 		return bReturn;		
 	}		

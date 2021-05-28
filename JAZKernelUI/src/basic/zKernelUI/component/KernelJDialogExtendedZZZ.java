@@ -54,9 +54,9 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	protected ExceptionZZZ objException;
 	protected IKernelModuleZZZ objModule=null; //Das Modul, z.B. für die Dialogbox
 	
-	KernelJPanelCascadedZZZ panelContent = null;
-	KernelJPanelCascadedZZZ panelButton = null;	
-	KernelJPanelCascadedZZZ panelNavigator = null;	
+	protected KernelJPanelCascadedZZZ panelContent = null;
+	protected KernelJPanelCascadedZZZ panelButton = null;	
+	protected KernelJPanelCascadedZZZ panelNavigator = null;	
 	
 	private boolean bPanelCenterAdded=false;
 	private boolean bPanelButtonAdded=false;
@@ -337,7 +337,11 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			//Merke: Die Panels sollten noch nicht im Konstruktor der Klasse hinzugefuegt werden, weil man sonst schwerer eigenschaften wie "Button-Text" aendern kann.
 			//          So kann man erst das Objekt erzeugen und dann mit "setText4ButtonOk" den Button-Text aendern, der dann mit showDialog() angezeigt wird.
 			
-											
+			if(this.bPanelCenterAdded==false){
+				KernelJPanelCascadedZZZ panelContent = this.getPanelContent();
+				this.addPanelCenter(panelContent);
+			}
+			
 			if(this.bPanelButtonAdded==false){
 				KernelJPanelCascadedZZZ panelButton = this.getPanelButton();				
 				this.addPanelButton(panelButton); //null soll bewirken, dass das default ButtonPanel hinzugef�gt wird.
@@ -348,10 +352,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 				this.addPanelNavigator(panelNavigator);
 			}
 			
-			if(this.bPanelCenterAdded==false){
-				KernelJPanelCascadedZZZ panelContent = this.getPanelContent();
-				this.addPanelCenter(panelContent);
-			}
+			
 			
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++
 			Frame owner = null;
@@ -445,9 +446,23 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		this.sText4ButtonCancel = sText;
 	}
 	
-	public abstract KernelJPanelCascadedZZZ getPanelButton() throws ExceptionZZZ;
-	public abstract KernelJPanelCascadedZZZ getPanelContent() throws ExceptionZZZ;	
-	public abstract KernelJPanelCascadedZZZ getPanelNavigator() throws ExceptionZZZ; 
+	public KernelJPanelCascadedZZZ getPanelButton() throws ExceptionZZZ{
+				return this.
+	}
+	
+	public KernelJPanelCascadedZZZ getPanelContent() throws ExceptionZZZ{
+		
+	}
+	
+	public KernelJPanelCascadedZZZ getPanelNavigator() throws ExceptionZZZ{
+		
+		
+	}
+	
+	
+	public abstract KernelJPanelCascadedZZZ initPanelButton() throws ExceptionZZZ;
+	public abstract KernelJPanelCascadedZZZ initPanelContent() throws ExceptionZZZ;	
+	public abstract KernelJPanelCascadedZZZ initPanelNavigator() throws ExceptionZZZ; 
 	
 	/** Kann von einer Dialogbox ueberschrieben werden, wenn ein anderes Panel als das "Default" Panel verwendet werden soll.
 	* @return
