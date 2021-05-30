@@ -35,7 +35,7 @@ public interface IFrameLaunchableZZZ {
 	* 
 	* lindhaueradmin; 15.03.2007 10:07:46
 	 */
-	public abstract KernelJPanelCascadedZZZ getPaneContent() throws ExceptionZZZ;
+	public abstract IPanelCascadedZZZ getPaneContent() throws ExceptionZZZ;
 	
 	/** Hier wird ein anderes Panel des JFrame festgelegt, das auf einer anderen Eben liegen kann. Es wird automatisch im .launch() herangezogen.
 	* @param sAlias, - LayeredPane  -ContentPane

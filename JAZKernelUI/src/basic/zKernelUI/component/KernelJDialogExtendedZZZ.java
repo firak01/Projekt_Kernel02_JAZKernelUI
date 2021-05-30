@@ -54,9 +54,9 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	protected ExceptionZZZ objException;
 	protected IKernelModuleZZZ objModule=null; //Das Modul, z.B. für die Dialogbox
 	
-	protected KernelJPanelCascadedZZZ panelContent = null;
-	protected KernelJPanelCascadedZZZ panelButton = null;	
-	protected KernelJPanelCascadedZZZ panelNavigator = null;	
+	protected IPanelCascadedZZZ panelContent = null;
+	protected IPanelCascadedZZZ panelButton = null;	
+	protected IPanelCascadedZZZ panelNavigator = null;	
 	
 	private boolean bPanelCenterAdded=false;
 	private boolean bPanelButtonAdded=false;
@@ -178,7 +178,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		main:{
 		if(panelNavigator == null){
 			//Nun das Standard NavigatorPanel hinzufuegen						
-			KernelJPanelCascadedZZZ panel2add = this.getPanelNavigator();
+			KernelJPanelCascadedZZZ panel2add = (KernelJPanelCascadedZZZ) this.getPanelNavigator();
 			if(panel2add==null){
 				panel2add = new KernelJPanelDialogContentEmptyZZZ(this.getKernelObject(), this);
 			}
@@ -214,7 +214,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			if(panelCenter == null){
 				//Nun das Standard Content Panel hinzuf�gen
 				String sText = this.getText4ContentDefault();
-				KernelJPanelCascadedZZZ panel2add = this.getPanelContent();
+				KernelJPanelCascadedZZZ panel2add = (KernelJPanelCascadedZZZ) this.getPanelContent();
 				if(panel2add==null){
 					//FGL 20070305 check: KernelJPanelDialogContentDefaultZZZ panelContent2add = new KernelJPanelDialogContentDefaultZZZ(this.getKernelObject(), this, sText);
 					panel2add = new KernelJPanelDialogContentDefaultZZZ(this.getKernelObject(), this, sText);
@@ -249,7 +249,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	public void addPanelButton(KernelJPanelCascadedZZZ panelButton) throws ExceptionZZZ{
 		//Nun den standard Button Panel hinzuf�gen
 		if(panelButton == null){ 
-			KernelJPanelCascadedZZZ panel2add = this.getPanelButton();
+			KernelJPanelCascadedZZZ panel2add = (KernelJPanelCascadedZZZ) this.getPanelButton();
 			if(panel2add==null){
 				//FGL 20070305 check: KernelJPanelDialogButtonDefaultZZZ panel2add = new KernelJPanelDialogButtonDefaultZZZ(this.getKernelObject(), this, this.isButtonOkAvailable(), this.isButtonCancelAvailable());				
 				//20190219: Die Dialogbox hinzuzufügen hat das Problem, dass Sie nicht als das Program-Definiert ist, welches für das Lesen/Schreiben der Werte in der Ini-Datei vorgesehen ist.
@@ -338,17 +338,20 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			//          So kann man erst das Objekt erzeugen und dann mit "setText4ButtonOk" den Button-Text aendern, der dann mit showDialog() angezeigt wird.
 			
 			if(this.bPanelCenterAdded==false){
-				KernelJPanelCascadedZZZ panelContent = this.getPanelContent();
+				KernelJPanelCascadedZZZ panelContent = (KernelJPanelCascadedZZZ) this.createPanelContent();
+				this.setPanelContent(panelContent);
 				this.addPanelCenter(panelContent);
 			}
 			
 			if(this.bPanelButtonAdded==false){
-				KernelJPanelCascadedZZZ panelButton = this.getPanelButton();				
+				KernelJPanelCascadedZZZ panelButton = (KernelJPanelCascadedZZZ) this.createPanelButton();
+				this.setPanelButton(panelButton);
 				this.addPanelButton(panelButton); //null soll bewirken, dass das default ButtonPanel hinzugef�gt wird.
 			}  
 			
 			if(this.bPanelNavigatorAdded==false) {
-				KernelJPanelCascadedZZZ panelNavigator = this.getPanelNavigator();
+				KernelJPanelCascadedZZZ panelNavigator = (KernelJPanelCascadedZZZ) this.createPanelNavigator();
+				this.setPanelNavigator(panelNavigator);
 				this.addPanelNavigator(panelNavigator);
 			}
 			
@@ -446,23 +449,31 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		this.sText4ButtonCancel = sText;
 	}
 	
-	public KernelJPanelCascadedZZZ getPanelButton() throws ExceptionZZZ{
-				return this.
+	public IPanelCascadedZZZ getPanelButton(){
+		return this.panelButton;
+	}
+	public void setPanelButton(IPanelCascadedZZZ panelButton) {
+		this.panelButton = panelButton;
 	}
 	
-	public KernelJPanelCascadedZZZ getPanelContent() throws ExceptionZZZ{
-		
+	public IPanelCascadedZZZ getPanelContent() {
+		return this.panelContent;
+	}
+	public void setPanelContent(IPanelCascadedZZZ panelContent) {
+		this.panelContent = panelContent;
 	}
 	
-	public KernelJPanelCascadedZZZ getPanelNavigator() throws ExceptionZZZ{
-		
-		
+	public IPanelCascadedZZZ getPanelNavigator() {
+		return this.panelNavigator;		
+	}
+	public void setPanelNavigator(IPanelCascadedZZZ panelNavigator) {
+		this.panelNavigator = panelNavigator;
 	}
 	
 	
-	public abstract KernelJPanelCascadedZZZ initPanelButton() throws ExceptionZZZ;
-	public abstract KernelJPanelCascadedZZZ initPanelContent() throws ExceptionZZZ;	
-	public abstract KernelJPanelCascadedZZZ initPanelNavigator() throws ExceptionZZZ; 
+	public abstract IPanelCascadedZZZ createPanelButton() throws ExceptionZZZ;
+	public abstract IPanelCascadedZZZ createPanelContent() throws ExceptionZZZ;	
+	public abstract IPanelCascadedZZZ createPanelNavigator() throws ExceptionZZZ; 
 	
 	/** Kann von einer Dialogbox ueberschrieben werden, wenn ein anderes Panel als das "Default" Panel verwendet werden soll.
 	* @return

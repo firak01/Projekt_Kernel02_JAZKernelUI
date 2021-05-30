@@ -156,18 +156,24 @@ public class KernelJPanelDialogButtonDefaultZZZ extends KernelJPanelCascadedZZZ 
 		* 
 		* lindhaueradmin; 09.01.2007 09:03:32
 		 */
+		@Override
 		public boolean actionPerformQueryCustom(ActionEvent ae){
 			return true;
 		}
+		
+		@Override
 		public boolean actionPerformCustom(ActionEvent ae, boolean bQueryResult){				
 			return true;
 		}
+		
+		@Override
 		public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult){		
 			this.getPanelParent().getDialogParent().setDisposed();
 		}
 
+		@Override
 		public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {
-			// TODO Auto-generated method stub
+			
 		}
 		
 		
@@ -184,7 +190,6 @@ public class KernelJPanelDialogButtonDefaultZZZ extends KernelJPanelCascadedZZZ 
 		public ActionListenerButtonCloseDefaultZZZ(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent) throws ExceptionZZZ {
 			super(objKernel, panelParent);
 		}
-
 		
 		/**Durch Ueberschreiben dieser Methoden koennen erbende Klassen noch anderen Code ausfuehren
 		* @param ActionEvent
@@ -192,18 +197,23 @@ public class KernelJPanelDialogButtonDefaultZZZ extends KernelJPanelCascadedZZZ 
 		* 
 		* lindhaueradmin; 09.01.2007 09:03:32
 		 */
+		@Override
 		public boolean actionPerformQueryCustom(ActionEvent ae){
 			return true;
 		}
+		
+		@Override
 		public boolean actionPerformCustom(ActionEvent ae, boolean bQueryResult){				
 			return true;
 		}
+		
+		@Override
 		public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult){
 			this.getPanelParent().getDialogParent().setHidden();
 		}
 
+		@Override
 		public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {
-			// TODO Auto-generated method stub
 			
 		}
 		
@@ -222,15 +232,17 @@ public class KernelJPanelDialogButtonDefaultZZZ extends KernelJPanelCascadedZZZ 
 			super(objKernel, panelParent);
 		}
 		
-		/**Durch �berschreiben dieser Methoden k�nnen erbende Klassen noch anderen Code ausf�hren
+		/**Durch Ueberschreiben dieser Methoden koennen erbende Klassen noch anderen Code ausfuehren
 		* @param ActionEvent
-		* @return true ==> es wird der weitere Code ausgef�hrt
+		* @return true ==> es wird der weitere Code ausgefuehrt
 		* 
 		* lindhaueradmin; 09.01.2007 09:03:32
 		 */
 		public boolean actionPerformQueryCustom(ActionEvent ae)throws ExceptionZZZ{
 			return true;
 		}
+		
+		@Override
 		public boolean actionPerformCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ{
 			/* BEISPIEL, normalerweise wird eine andere Klasse verwendet, wenn zusaetzlich zur Default Aktion noch hier etwas gemacht werden soll
 			// BEISPIEL: Den Inhalt des Labels in einem anderen Panel hier ausgeben.
@@ -245,12 +257,14 @@ public class KernelJPanelDialogButtonDefaultZZZ extends KernelJPanelCascadedZZZ 
 			this.getPanelParent().getDialogParent().setDisposed();
 			return true;
 		}
+		
+		@Override
 		public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ{
 			
 		}
 
+		@Override
 		public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {
-			// TODO Auto-generated method stub
 			
 		}
 	}//END class actionListenerButtonCancelDefault

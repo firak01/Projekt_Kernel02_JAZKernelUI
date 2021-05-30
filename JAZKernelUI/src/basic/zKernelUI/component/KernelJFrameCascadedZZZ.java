@@ -1,5 +1,6 @@
 package basic.zKernelUI.component;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
@@ -49,7 +50,7 @@ public abstract class KernelJFrameCascadedZZZ extends JFrame  implements IObject
 	private KernelJFrameCascadedZZZ frameParent=null;
 	private JFrame frameBasic = null;  //Falls diese Klasse aus einem normalen JFrame erstellt werden soll.
 	private Hashtable objHtFrameSub=new Hashtable();   //Damit kann man auf Frames zugreifen, die von diesem Frame aus gestartet wurden.
-	private Hashtable objHtPanelSub=new Hashtable();     //Eigentlich enth�lt das hier nur ein Panel
+	private Hashtable<String,IPanelCascadedZZZ> objHtPanelSub=new Hashtable();     //Eigentlich enth�lt das hier nur ein Panel
 	private Hashtable objHtComponent = new Hashtable(); //Soll Komponenenten, wie z.B. ein Textfield per "Alias" greifbar machen.
 	 
 	private ExceptionZZZ objException;
@@ -535,10 +536,10 @@ private HashMap<String, Boolean>hmFlagPassed = new HashMap<String, Boolean>();
 		this.objLog = objLog;
 	}
 
-	public KernelJPanelCascadedZZZ getPanelSub(String sAlias) {		
-		return (KernelJPanelCascadedZZZ) this.objHtPanelSub.get(sAlias);
+	public IPanelCascadedZZZ getPanelSub(String sAlias) {		
+		return this.objHtPanelSub.get(sAlias);
 	}
-	public void setPanelSub(String sAlias, KernelJPanelCascadedZZZ objPanel) {
+	public void setPanelSub(String sAlias, IPanelCascadedZZZ objPanel) {
 		this.objHtPanelSub.put(sAlias, objPanel);
 	}
 	public Hashtable getPanelSubAll(){
@@ -549,12 +550,12 @@ private HashMap<String, Boolean>hmFlagPassed = new HashMap<String, Boolean>();
 	/* (non-Javadoc)
 	 * @see basic.zKernelUI.component.IFrameLaunchableZZZ#getPaneContent()
 	 */
-	public KernelJPanelCascadedZZZ getPaneContent() throws ExceptionZZZ{
-		return (KernelJPanelCascadedZZZ) this.objHtPanelSub.get(KernelJFrameCascadedZZZ.getAliasPanelContent());
+	public IPanelCascadedZZZ getPaneContent() throws ExceptionZZZ{
+		return this.objHtPanelSub.get(KernelJFrameCascadedZZZ.getAliasPanelContent());
 	}
-	public void setPanelContent(KernelJPanelCascadedZZZ objPanelRoot){
+	public void setPanelContent(IPanelCascadedZZZ objPanelRoot){
 		this.objHtPanelSub.put(KernelJFrameCascadedZZZ.getAliasPanelContent(), objPanelRoot);
-		this.setContentPane(objPanelRoot);
+		this.setContentPane((Container) objPanelRoot);
 	}
 
 	public JComponent getComponent(String sAlias) {
@@ -682,23 +683,23 @@ private HashMap<String, Boolean>hmFlagPassed = new HashMap<String, Boolean>();
 				
 				//Grundfläche(n) in den Rahmen hinzufügen...
 				//	... das wird nun �ber das ContentPane der Frames gemacht. !!! Damit diese Grundfl�che "draggable" ist, muss zumindest der ContentPane �bergeben werden.
-				KernelJPanelCascadedZZZ objPanel = frmCascaded.getPaneContent();  //default ist der ContentPane-Alias
+				IPanelCascadedZZZ objPanel = frmCascaded.getPaneContent();  //default ist der ContentPane-Alias
 				if(objPanel !=null){
 					if(!frmCascaded.getContentPane().equals(objPanel)) {
-						frmCascaded.getContentPane().add(objPanel);
+						frmCascaded.getContentPane().add((Component) objPanel);
 					}
 					frmCascaded.setPanelSub(KernelJFrameCascadedZZZ.getAliasPanelContent(), objPanel);
 				}
 				
 				//FGL 20080912: Ggf. ein weiteres Panel hinzufügen
-				KernelJPanelCascadedZZZ objPanelContent = (KernelJPanelCascadedZZZ) frmCascaded.getPaneContent(KernelJFrameCascadedZZZ.getAliasPanelContent() + "Sub");
+				IPanelCascadedZZZ objPanelContent = (IPanelCascadedZZZ) frmCascaded.getPaneContent(KernelJFrameCascadedZZZ.getAliasPanelContent() + "Sub");
 				if(objPanelContent != null){
 					if (objPanel != null){
-						objPanel.setOpaque(false);
-						if(!objPanel.equals(objPanelContent))objPanel.add(objPanelContent);
+						((JComponent) objPanel).setOpaque(false);
+						//if(!objPanel.equals(objPanelContent))objPanel.add(objPanelContent);
 						objPanel.setPanelSub(KernelJFrameCascadedZZZ.getAliasPanelContent()+"Sub", objPanelContent);
 					}else{
-						if(!frmCascaded.getContentPane().equals(objPanelContent))frmCascaded.getContentPane().add(objPanelContent);
+						if(!frmCascaded.getContentPane().equals(objPanelContent))frmCascaded.getContentPane().add((JComponent)objPanelContent);
 						frmCascaded.setPanelSub(KernelJFrameCascadedZZZ.getAliasPanelContent()+"Sub", objPanelContent);
 					}
 				}
@@ -710,12 +711,12 @@ private HashMap<String, Boolean>hmFlagPassed = new HashMap<String, Boolean>();
 				JLayeredPane objPaneLayered = (JLayeredPane) frmCascaded.getPaneContent("LayeredPane");
 				if(objPaneLayered != null){
 					if (objPanel != null){
-						objPanel.setOpaque(true);
-						objPanel.add(objPaneLayered);
+						((JComponent) objPanel).setOpaque(true);
+						((JComponent) objPanel).add(objPaneLayered);
 					}else{
 						if(objPanelContent != null){
-							objPanelContent.setOpaque(true);
-							objPanelContent.add(objPaneLayered);							
+							((JComponent) objPanelContent).setOpaque(true);
+							((JComponent) objPanelContent).add(objPaneLayered);							
 						}else{
 							//Den konfigurierten Layered Pane direkt in die JForm bringen
 							frmCascaded.setLayeredPane(objPaneLayered);

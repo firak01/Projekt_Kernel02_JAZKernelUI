@@ -102,17 +102,15 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 		public boolean initFormLayoutContent() throws ExceptionZZZ {
 			boolean bReturn = false;
 			main:{					
-				FormLayout layout = this.getFormLayoutUsed();
-				if(layout!=null) {
-					this.setLayout(layout);              //!!! wichtig: Das layout muss dem Panel zugewiesen werden BEVOR mit constraints die Componenten positioniert werden.
-					CellConstraints cc = new CellConstraints();
-					//Das wird in der Elternklasse schon gemacht:     this.fillRowDebug(cc);
+				this.formLayoutUsed = this.buildFormLayoutUsed();								
+				
+				CellConstraints cc = new CellConstraints();
+				//Das wird in der Elternklasse schon gemacht:     this.fillRowDebug(cc);
 					
-					//PROBLEM: Problem, wenn auf Daten über einen Programmnamen zugegriffen werden soll, der erst später über das FlagSetzen definiert wird., der aber erst später als FlagGesetzt wird.
-					//         Also hier nie den Content füllen. Sondern das immer der konkreten PanelKlasse überlassen.
-					this.fillRowContent(cc, 1);					
-					bReturn = true;
-				}
+				//PROBLEM: Problem, wenn auf Daten über einen Programmnamen zugegriffen werden soll, der erst später über das FlagSetzen definiert wird., der aber erst später als FlagGesetzt wird.
+				//         Also hier nie den Content füllen. Sondern das immer der konkreten PanelKlasse überlassen.
+				this.fillRowContent(cc, 1);					
+				bReturn = true;
 			}//end main:
 			return bReturn;
 		}
@@ -187,8 +185,10 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 				ArrayList<ColumnSpec>listCs=this.getColumnSpecs();
 				if(listCs==null)break main;
 				
-				int iColumns = listCs.size(); 
+				int iColumns = listCs.size();//die DebugZeile geht über alle Spalten hinweg 
 
+				//TODOGOON;//20210529 Hier die GroupComponent mit Modell einbauen, und den Button, um durch mehrere Debug-Einträge zu schalten
+				
 				String stemp = this.getClass().getSimpleName();
 				//das ist zu lange und nicht aussagekräftig genug String sParent = this.getClass().getSuperclass().getSimpleName();
 				ArrayList<String> listaParent = new ArrayList<String>();
@@ -200,8 +200,7 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 				
 				JLabel labelDebug = new JLabel(sHtml);
 				labelDebug.setHorizontalAlignment(JTextField.LEFT);
-				//this.add(labelDebug, cc.xyw(iStartingColumn,iStartingRow, iColumns));
-				this.add(labelDebug, cc.xy(iStartingColumn,0)); 
+				this.add(labelDebug, cc.xyw(iStartingColumn,iStartingRow, iColumns));
 				
 				bReturn = true;
 			}//end main;
@@ -221,7 +220,7 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 				String stemp;
 						
 				if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())) {
-					//this.initFormLayoutDebug();
+					this.initFormLayoutDebug();
 					
 		/*			
 									

@@ -1,6 +1,7 @@
 package basic.zKernelUI.component;
 
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -12,15 +13,17 @@ import basic.zKernel.flag.IFlagUserZZZ;
  * @author Lindhauer
  */
 public interface IPanelCascadedZZZ extends IComponentCascadedUserZZZ, IFlagUserZZZ{
-	public abstract KernelJPanelCascadedZZZ getPanelParent();
-	public abstract void setPanelParent(KernelJPanelCascadedZZZ objPanel);
+	public abstract IPanelCascadedZZZ getPanelParent();
+	public abstract void setPanelParent(IPanelCascadedZZZ objPanel);
 	
-	public abstract KernelJPanelCascadedZZZ searchPanelRoot() throws ExceptionZZZ;
+	public abstract IPanelCascadedZZZ searchPanelRoot() throws ExceptionZZZ;
 	
-	public abstract KernelJPanelCascadedZZZ getPanelSub(String sAlias);
-	public abstract void setPanelSub(String sAlias, KernelJPanelCascadedZZZ objJPanel);
+	public abstract IPanelCascadedZZZ getPanelSub(String sAlias);
+	public abstract void setPanelSub(String sAlias, IPanelCascadedZZZ objJPanel);
 	
 	
 	public abstract KernelJFrameCascadedZZZ getFrameParent();
 	public abstract KernelJDialogExtendedZZZ getDialogParent();
+	
+	public abstract JComponent searchComponent(String sKeyComponent);
 }

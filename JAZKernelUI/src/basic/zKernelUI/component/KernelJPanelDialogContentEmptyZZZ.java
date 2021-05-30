@@ -40,14 +40,12 @@ public class KernelJPanelDialogContentEmptyZZZ extends KernelJPanelCascadedZZZ{
 		}
 		return bReturn;
 	}
-	
-	
+
 	//#### Getter / Setter ##########################
 
 
 	//#### Interfaces ##############################
-		
-	
+			
 	//### Action Klassen
 	//	 	   Standard listeners *************************************************************
 

@@ -16,8 +16,8 @@ public interface IFrameCascadedZZZ extends IFlagUserZZZ{
 
 	public abstract void setFrameSub(String sAlias, JFrame objFrame);
 	
-	public abstract KernelJPanelCascadedZZZ getPanelSub(String sAlias);
-	public abstract void setPanelSub(String sAlias, KernelJPanelCascadedZZZ objJPanel);
+	public abstract IPanelCascadedZZZ getPanelSub(String sAlias);
+	public abstract void setPanelSub(String sAlias, IPanelCascadedZZZ objJPanel);
 	
 	public abstract Hashtable getPanelSubAll(); 
 }
