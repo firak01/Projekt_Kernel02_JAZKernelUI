@@ -109,7 +109,14 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 					
 				//PROBLEM: Problem, wenn auf Daten über einen Programmnamen zugegriffen werden soll, der erst später über das FlagSetzen definiert wird., der aber erst später als FlagGesetzt wird.
 				//         Also hier nie den Content füllen. Sondern das immer der konkreten PanelKlasse überlassen.
-				this.fillRowContent(cc, 1);					
+				
+				//Solange wie eine Zeile gefüllt wird, weitere Zeile füllen
+				int iRow = 0;
+				boolean bGoon = true;				
+				while (bGoon) {
+					iRow++;
+					bGoon = this.fillRowContent(cc, iRow);
+				}
 				bReturn = true;
 			}//end main:
 			return bReturn;
@@ -178,16 +185,16 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 		@Override
 		public boolean fillRowDebug(CellConstraints cc) throws ExceptionZZZ{
 			boolean bReturn = false;
-			main:{			
-				int iStartingRow = 1; //Die Debugzeile ist immer oben
-				int iStartingColumn = 1; //Beginne immer in Spalte 1. Die Gesamtanzahl der Spalten wird dann als "Breite" genommen.
+			main:{
 				
 				ArrayList<ColumnSpec>listCs=this.getColumnSpecs();
 				if(listCs==null)break main;
 				
+				int iStartingRow = 1; //Die Debugzeile ist immer oben
+				int iStartingColumn = 1; //Beginne immer in Spalte 1. Die Gesamtanzahl der Spalten wird dann als "Breite" genommen.											
 				int iColumns = listCs.size();//die DebugZeile geht über alle Spalten hinweg 
 
-				//TODOGOON;//20210529 Hier die GroupComponent mit Modell einbauen, und den Button, um durch mehrere Debug-Einträge zu schalten
+				TODOGOON;//20210530 Hier die GroupComponent mit Modell einbauen, und den Button, um durch mehrere Debug-Einträge zu schalten
 				
 				String stemp = this.getClass().getSimpleName();
 				//das ist zu lange und nicht aussagekräftig genug String sParent = this.getClass().getSuperclass().getSimpleName();

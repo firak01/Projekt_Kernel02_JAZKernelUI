@@ -284,7 +284,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		
 		//Ggfs. die DebugUI-Angaben hinzufügen, das kann z.B. nur das Label mit dem Klassennamen sein.
 		//Gesteuert werde soll das durch Flags, die auch über die Kommandozeile übergeben werden können.
-		boolean bDebugUI = createDebugUi("Cascaded");
+		boolean bDebugUI = this.createDebugUi("Cascaded");
 		
 		//Einen Mouse Listener hinzufuegen, der es erlaubt Fenster zu ziehen (auch im Panel und nicht nur in der Titelleiste)
 		//if(this.getFlag("isdraggable")){
@@ -345,7 +345,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		return objReturn;
 	}
 
-	/** JPanel, searches all other parent panels untill no more parent panel is available. The last found panel seems to be the root panel for all cascaded panels. 
+	/** JPanel, searches all other parent panels until no more parent panel is available. The last found panel seems to be the root panel for all cascaded panels. 
 	* Lindhauer; 15.05.2006 09:00:08
 	 * @return
 	 * @throws ExceptionZZZ 
