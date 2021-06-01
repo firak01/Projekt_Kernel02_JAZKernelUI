@@ -195,6 +195,86 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 				int iColumns = listCs.size();//die DebugZeile geht über alle Spalten hinweg 
 
 				TODOGOON;//20210530 Hier die GroupComponent mit Modell einbauen, und den Button, um durch mehrere Debug-Einträge zu schalten
+				/*			
+				
+				//20210419 Bei vielen Zeilen im Label "verwischt" dann das UI
+				//Idee: Führe eine "Label-Gruppe" ein und einen Button, der diese Labels dann der Reihe nach durchschalten kann.
+
+				//Die Anzahl der Texteinträge bestimmt die Anzahl der JLabel Objekte, bestimmt die Anzahl der Gruppen.
+				//Mit einer einfachen ArrayList kann aber immer nur 1 Label pro Button definiert werden. Es muss eine Indizierte HashMap sein.
+				//Teste mit mehreren Labels pro Gruppe.
+				
+				//Die Action als eigene Klasse ausgliedern und alle beteiligten Klassen in ein passendes Package verschieben.
+		        //Den Debug/Testpanel für die Gruppenumschaltung soll dann auch diese nutzen.
+
+				//Die Verwaltung der HashMap für die Componenten einer ComponentGroupCollection übertragen.	
+				//Darin auch den Eventhandler/Eventbroker, etc. hinzufügen.
+				
+				//20210507 Vereinheitlichung die Definition der ComponentGroup im Debug-Test-Fall und im KernelJPanelCascadedZZZ.createDebugUI();
+
+				//20210514 Modell hinzugefügt.
+				          //Wg. Problematik der Reihenfolge der Panels hinzuzufügen 
+				          //und daraufhin Probleme beim korrekten/gleichen ermitteln des Programnamens
+						  //==> Bei jedem Umschalten die Werte der Componenten/Labels neu errechnen
+				          //    und neu füllen.
+						
+				//TODOGOON; //Ein Button zum Umschalten ist auch erst im Panel notwendig, wenn es mehr als 1 Gruppenobjekt gibt.
+																
+				HashMapIndexedZZZ<Integer,ArrayList<JComponent>>hmComponent;
+				PanelDebugModelZZZ modelDebug = new PanelDebugModelZZZ();
+				hmComponent = modelDebug.createComponentHashMap(sTitle, this);
+									
+												
+				//+++ Die Labels auf die Gruppen verteilen
+				ArrayList<JComponentGroupZZZ>listaGroup = new ArrayList<JComponentGroupZZZ>();				
+				int iIndex=-1;
+				
+				Iterator itListaComponent = hmComponent.iterator();
+				while(itListaComponent.hasNext()) {
+					ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) itListaComponent.next();
+					
+					iIndex=iIndex+1;						
+					String sIndexAsAlias = Integer.toString(iIndex);
+					IComponentGroupValueModelZZZ objValueProvider = new PanelDebugModelZZZ(objKernel, "Cascaded", this, iIndex); //Diese Modell wird bei jedem "Click" in dem refresh() aufgerufen.
+					JComponentGroupZZZ grouptemp = new JComponentGroupZZZ(objKernel, sIndexAsAlias, objValueProvider,listaComponenttemp);
+					if(grouptemp.hasAnyComponentAdded()) {
+						listaGroup.add(grouptemp);
+					}								
+				}
+				
+				//++++ Die GroupCollection
+				JComponentGroupCollectionZZZ groupc = new JComponentGroupCollectionZZZ(objKernel, listaGroup);
+				groupc.setVisible(0); //Initiales Setzen der Sichtbarkeit
+				
+						
+				//######## Das UI gestalten. Die Reihenfolge der Componenten ist wichtig für die Reihenfolge im UI #################
+				//++++ Der Umschaltebutton
+				String sLabelButton = ">";//this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButton").getValue();
+				JButton buttonSwitch = new JButton(sLabelButton);	
+							
+				ActionSwitchZZZ actionSwitch = new ActionSwitchZZZ(objKernel, this, groupc);
+				buttonSwitch.addActionListener(actionSwitch);								
+				this.setComponent(KernelJPanelCascadedZZZ.sBUTTON_SWITCH, buttonSwitch);				
+				this.add(buttonSwitch);
+				
+				int iIndexOuterMax = hmComponent.size() -1;
+				for(int iIndexOuter=0; iIndexOuter <= iIndexOuterMax; iIndexOuter++) {
+					ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) hmComponent.getValue(iIndexOuter);
+					if(listaComponenttemp!=null) {
+						
+						//Die Labels der Arraylist abarbeiten und dem panel hinzufügen
+						int iIndexInner=-1;				
+						for(JComponent componenttemp : listaComponenttemp) {
+							if(componenttemp!=null) {
+								iIndexInner=iIndexInner+1;
+								this.add(componenttemp);
+								this.setComponent("ComponentDebug"+iIndexOuter+"_"+iIndexInner, componenttemp);
+							}
+						}		
+					}
+				}	
+				*/		
+				
 				
 				String stemp = this.getClass().getSimpleName();
 				//das ist zu lange und nicht aussagekräftig genug String sParent = this.getClass().getSuperclass().getSimpleName();
@@ -223,91 +303,9 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 		@Override
 		public boolean createDebugUi(String sTitle) throws ExceptionZZZ {
 			boolean bReturn = false;
-			main:{
-				String stemp;
-						
+			main:{					
 				if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())) {
-					this.initFormLayoutDebug();
-					
-		/*			
-									
-					//20210419 Bei vielen Zeilen im Label "verwischt" dann das UI
-					//Idee: Führe eine "Label-Gruppe" ein und einen Button, der diese Labels dann der Reihe nach durchschalten kann.
-
-					//Die Anzahl der Texteinträge bestimmt die Anzahl der JLabel Objekte, bestimmt die Anzahl der Gruppen.
-					//Mit einer einfachen ArrayList kann aber immer nur 1 Label pro Button definiert werden. Es muss eine Indizierte HashMap sein.
-					//Teste mit mehreren Labels pro Gruppe.
-					
-					//Die Action als eigene Klasse ausgliedern und alle beteiligten Klassen in ein passendes Package verschieben.
-			        //Den Debug/Testpanel für die Gruppenumschaltung soll dann auch diese nutzen.
-
-					//Die Verwaltung der HashMap für die Componenten einer ComponentGroupCollection übertragen.	
-					//Darin auch den Eventhandler/Eventbroker, etc. hinzufügen.
-					
-					//20210507 Vereinheitlichung die Definition der ComponentGroup im Debug-Test-Fall und im KernelJPanelCascadedZZZ.createDebugUI();
-
-					//20210514 Modell hinzugefügt.
-					          //Wg. Problematik der Reihenfolge der Panels hinzuzufügen 
-					          //und daraufhin Probleme beim korrekten/gleichen ermitteln des Programnamens
-							  //==> Bei jedem Umschalten die Werte der Componenten/Labels neu errechnen
-					          //    und neu füllen.
-							
-					//TODOGOON; //Ein Button zum Umschalten ist auch erst im Panel notwendig, wenn es mehr als 1 Gruppenobjekt gibt.
-																	
-					HashMapIndexedZZZ<Integer,ArrayList<JComponent>>hmComponent;
-					PanelDebugModelZZZ modelDebug = new PanelDebugModelZZZ();
-					hmComponent = modelDebug.createComponentHashMap(sTitle, this);
-										
-													
-					//+++ Die Labels auf die Gruppen verteilen
-					ArrayList<JComponentGroupZZZ>listaGroup = new ArrayList<JComponentGroupZZZ>();				
-					int iIndex=-1;
-					
-					Iterator itListaComponent = hmComponent.iterator();
-					while(itListaComponent.hasNext()) {
-						ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) itListaComponent.next();
-						
-						iIndex=iIndex+1;						
-						String sIndexAsAlias = Integer.toString(iIndex);
-						IComponentGroupValueModelZZZ objValueProvider = new PanelDebugModelZZZ(objKernel, "Cascaded", this, iIndex); //Diese Modell wird bei jedem "Click" in dem refresh() aufgerufen.
-						JComponentGroupZZZ grouptemp = new JComponentGroupZZZ(objKernel, sIndexAsAlias, objValueProvider,listaComponenttemp);
-						if(grouptemp.hasAnyComponentAdded()) {
-							listaGroup.add(grouptemp);
-						}								
-					}
-					
-					//++++ Die GroupCollection
-					JComponentGroupCollectionZZZ groupc = new JComponentGroupCollectionZZZ(objKernel, listaGroup);
-					groupc.setVisible(0); //Initiales Setzen der Sichtbarkeit
-					
-							
-					//######## Das UI gestalten. Die Reihenfolge der Componenten ist wichtig für die Reihenfolge im UI #################
-					//++++ Der Umschaltebutton
-					String sLabelButton = ">";//this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButton").getValue();
-					JButton buttonSwitch = new JButton(sLabelButton);	
-								
-					ActionSwitchZZZ actionSwitch = new ActionSwitchZZZ(objKernel, this, groupc);
-					buttonSwitch.addActionListener(actionSwitch);								
-					this.setComponent(KernelJPanelCascadedZZZ.sBUTTON_SWITCH, buttonSwitch);				
-					this.add(buttonSwitch);
-					
-					int iIndexOuterMax = hmComponent.size() -1;
-					for(int iIndexOuter=0; iIndexOuter <= iIndexOuterMax; iIndexOuter++) {
-						ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) hmComponent.getValue(iIndexOuter);
-						if(listaComponenttemp!=null) {
-							
-							//Die Labels der Arraylist abarbeiten und dem panel hinzufügen
-							int iIndexInner=-1;				
-							for(JComponent componenttemp : listaComponenttemp) {
-								if(componenttemp!=null) {
-									iIndexInner=iIndexInner+1;
-									this.add(componenttemp);
-									this.setComponent("ComponentDebug"+iIndexOuter+"_"+iIndexInner, componenttemp);
-								}
-							}		
-						}
-					}	
-					*/															
+					this.initFormLayoutDebug();																			
 				}						
 			}//end main:
 			return bReturn;		
