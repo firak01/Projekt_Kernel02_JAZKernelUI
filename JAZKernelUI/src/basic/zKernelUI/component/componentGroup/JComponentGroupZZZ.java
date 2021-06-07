@@ -11,42 +11,41 @@ import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
+import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 
 public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerComponentGroupSwitchZZZ { //,IEventBrokerSwitchComponentUserZZZ { //, IEventBrokerSwitchComponentUserZZZ{
 	private ArrayList<JComponent>listaComponent=null;
-	private KernelJPanelCascadedZZZ panelParent=null;
+	private IPanelCascadedZZZ panelParent=null;
 	private String sAlias=null;
 	private String sTitle=null;
-	private IComponentGroupValueModelZZZ objValueProvider=null;
+	private IModelComponentGroupValueZZZ objValueProvider=null;
 	private EventComponentGroupSwitchZZZ eventPrevious=null;
 	private boolean bAnyComponentAdded=false;
 	
 	public JComponentGroupZZZ(IKernelZZZ objKernel) throws ExceptionZZZ {
 		super(objKernel);		
 	}
-	public JComponentGroupZZZ(IKernelZZZ objKernel,String sAlias, KernelJPanelCascadedZZZ panelParent, String sTitle) throws ExceptionZZZ {
+	public JComponentGroupZZZ(IKernelZZZ objKernel,String sAlias, IPanelCascadedZZZ panelParent, String sTitle) throws ExceptionZZZ {
 		super(objKernel);
 		JComponentGroupNew_(sAlias, null, sTitle, panelParent, null);
 	}
-	public JComponentGroupZZZ(IKernelZZZ objKernel, String sAlias, String sTitle, KernelJPanelCascadedZZZ panelParent, ArrayList<JComponent>listaComponent) throws ExceptionZZZ {
+	public JComponentGroupZZZ(IKernelZZZ objKernel, String sAlias, String sTitle, IPanelCascadedZZZ panelParent, ArrayList<JComponent>listaComponent) throws ExceptionZZZ {
 		super(objKernel);
 		JComponentGroupNew_(sAlias, null, sTitle, panelParent, listaComponent);
 	}
-	public JComponentGroupZZZ(IKernelZZZ objKernel, String sAlias, IComponentGroupValueModelZZZ objValueProvider, ArrayList<JComponent>listaComponent) throws ExceptionZZZ {
+	public JComponentGroupZZZ(IKernelZZZ objKernel, String sAlias, IModelComponentGroupValueZZZ objValueProvider, ArrayList<JComponent>listaComponent) throws ExceptionZZZ {
 		super(objKernel);
 		JComponentGroupNew_(sAlias, objValueProvider, null, null, listaComponent);
 	}
 	
-	private boolean JComponentGroupNew_(String sAlias, IComponentGroupValueModelZZZ objComponentValueProvider, String sTitle, KernelJPanelCascadedZZZ panelParent, ArrayList<JComponent>listaComponent) {
+	private boolean JComponentGroupNew_(String sAlias, IModelComponentGroupValueZZZ objComponentValueProvider, String sTitle, IPanelCascadedZZZ panelParent, ArrayList<JComponent>listaComponent) {
 		boolean bReturn = false;
 		main:{
 			this.setGroupAlias(sAlias);
 			this.setComponentValueProvider(objComponentValueProvider);
-			if(this.getComponentValueProvider()==null) {
-				this.setGroupTitle(sTitle);				
-				this.setPanelParent(panelParent);
-			}
+			this.setGroupTitle(sTitle);				
+			this.setPanelParent(panelParent);
 					
 			if(listaComponent!=null) {							
 				for(JComponent componenttemp : listaComponent) {
@@ -81,10 +80,10 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 		this.sTitle = sTitle;
 	}
 	
-	public KernelJPanelCascadedZZZ getPanelParent() {
+	public IPanelCascadedZZZ getPanelParent() {
 		return this.panelParent;
 	}
-	public void setPanelParent(KernelJPanelCascadedZZZ panelParent) {
+	public void setPanelParent(IPanelCascadedZZZ panelParent) {
 		this.panelParent = panelParent;
 	}
 	
@@ -174,20 +173,18 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 		boolean bActiveStateUsed;
 		String sGroupAliasUsed = this.getGroupAlias();
 		if(sGroupAlias.equals(sGroupAliasUsed)) {
-			bActiveStateUsed = bActiveState;
-			
-			//20210513: Hier nicht nur die Sichtbarkeit steuern, sondern auch die Werte für die Komponenten der Gruppe aktualisieren.
-			//z.B. kann es sein, dass seit der initialen Erstellung der Gruppe sich an den Panels etwas geändert hat.
-			
-            
-			
+			bActiveStateUsed = bActiveState;			
+			System.out.println("Das ist die aktuelle Gruppe.");				
 		}else {
 			bActiveStateUsed = !bActiveState;
-			System.out.println("ABER für Gruppe '" + sGroupAliasUsed + "' gilt...");
+			System.out.println("ABER für die aktuelle Gruppe '" + sGroupAliasUsed + "' gilt...");
 			System.out.println("... setze den activeState auf '" + bActiveStateUsed + "'");			
 		}		
 		
-		int iIndexUsedInCollection = eventComponentGroupSwitchNew.getIndexInCollection();			
+		int iIndexUsedInCollection = eventComponentGroupSwitchNew.getIndexInCollection();	
+		
+		//20210513: Hier nicht nur die Sichtbarkeit steuern, sondern auch die Werte für die Komponenten der Gruppe aktualisieren.
+		//z.B. kann es sein, dass seit der initialen Erstellung der Gruppe sich an den Panels etwas geändert hat.		        		
 		this.refreshValues(iIndexUsedInCollection);
 		this.setVisible(bActiveStateUsed);			
 		this.setEventPrevious(eventComponentGroupSwitchNew);
@@ -211,7 +208,7 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 	}
 	@Override
 	public HashMapIndexedZZZ<Integer, ArrayList<String>> getComponentValuesCustom() throws ExceptionZZZ {
-		IComponentGroupValueModelZZZ objValueProvider = this.getComponentValueProvider();
+		IModelComponentGroupValueZZZ objValueProvider = this.getComponentValueProvider();
 		if(objValueProvider!=null) {
 			HashMapIndexedZZZ<Integer, ArrayList<String>> hmValuesCustom = objValueProvider.getComponentValues();
 			return hmValuesCustom;
@@ -220,11 +217,11 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 		}
 	}
 	@Override
-	public IComponentGroupValueModelZZZ getComponentValueProvider() {
+	public IModelComponentGroupValueZZZ getComponentValueProvider() {
 		return this.objValueProvider;
 	}
 	@Override
-	public void setComponentValueProvider(IComponentGroupValueModelZZZ objComponentValueProvider) {
+	public void setComponentValueProvider(IModelComponentGroupValueZZZ objComponentValueProvider) {
 		this.objValueProvider = objComponentValueProvider;
 	}
 		

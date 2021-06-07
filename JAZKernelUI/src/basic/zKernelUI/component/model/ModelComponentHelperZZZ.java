@@ -11,9 +11,9 @@ import basic.zBasic.util.abstractList.ArrayListZZZ;
 import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
-import basic.zKernelUI.component.componentGroup.PanelDebugModelZZZ;
+import basic.zKernelUI.component.componentGroup.ModelPanelDebugZZZ;
 
-public class ComponentModelHelperZZZ {
+public class ModelComponentHelperZZZ {
 	public static JLabel createLabel(ArrayList<String>listaText) throws ExceptionZZZ {
 		JLabel objReturn = null;
 		main:{
@@ -43,7 +43,7 @@ public class ComponentModelHelperZZZ {
 				Iterator<ArrayList<String>> itValues = hmTextValues.iterator();
 				while(itValues.hasNext()) {						
 					ArrayList<String> listaText = (ArrayList<String>) itValues.next();
-					labelDebug = ComponentModelHelperZZZ.createLabel(listaText);
+					labelDebug = ModelComponentHelperZZZ.createLabel(listaText);
 					if(labelDebug!=null) listaReturn.add(labelDebug);
 				}
 			}			
@@ -57,7 +57,7 @@ public class ComponentModelHelperZZZ {
 			if(hmComponentsIndexed==null) break main;
 			if(hmValuesText==null)break main;
 			
-			ArrayList<JLabel>listaLabel = ComponentModelHelperZZZ.createLabelArrayList(hmValuesText);
+			ArrayList<JLabel>listaLabel = ModelComponentHelperZZZ.createLabelArrayList(hmValuesText);
 			if(listaLabel!=null) {				
 				Integer intIndexInCollection = new Integer(iIndexInCollection);
 				hmComponentsIndexed.put(intIndexInCollection, listaLabel);

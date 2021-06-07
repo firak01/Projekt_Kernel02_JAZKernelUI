@@ -12,31 +12,32 @@ import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelZZZ;
+import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
-import basic.zKernelUI.component.model.ComponentModelHelperZZZ;
-import debug.zKernelUI.component.buttonSwitchLabelGroup.Row2ModelZZZ;
+import basic.zKernelUI.component.model.ModelComponentHelperZZZ;
+import debug.zKernelUI.component.buttonSwitchLabelGroup.ModelRow2ZZZ;
 
-public class PanelDebugModelZZZ extends AbstractComponentGroupModelZZZ{	
-	public PanelDebugModelZZZ() {	
+public class ModelPanelDebugZZZ extends AbstractModelComponentGroupZZZ{	
+	public ModelPanelDebugZZZ() {	
 		super();
 	}
 	
-	public PanelDebugModelZZZ(IKernelZZZ objKernel, String sTitle, KernelJPanelCascadedZZZ panelParent) throws ExceptionZZZ {
+	public ModelPanelDebugZZZ(IKernelZZZ objKernel, String sTitle, IPanelCascadedZZZ panelParent) throws ExceptionZZZ {
 		super(objKernel, sTitle, panelParent);
 	}
 	
-	public PanelDebugModelZZZ(IKernelZZZ objKernel, String sTitle, KernelJPanelCascadedZZZ panelParent, int iIndexInCollection) throws ComponentGroupModelExceptionZZZ, ExceptionZZZ {
+	public ModelPanelDebugZZZ(IKernelZZZ objKernel, String sTitle, IPanelCascadedZZZ panelParent, int iIndexInCollection) throws ModelComponentGroupExceptionZZZ, ExceptionZZZ {
 		super(objKernel, sTitle,panelParent,iIndexInCollection);
 	}
 		
 	//##############################
 	@Override
-	public IComponentGroupValueModelZZZ createModelForGroup(String sTitle, KernelJPanelCascadedZZZ panelParent, int iIndexInGroupCollection) throws ComponentGroupModelExceptionZZZ, ExceptionZZZ {
-		 return new PanelDebugModelZZZ(this.getKernelObject(),sTitle, panelParent, iIndexInGroupCollection); 
+	public IModelComponentGroupValueZZZ createModelForGroup(String sTitle, IPanelCascadedZZZ panelParent, int iIndexInGroupCollection) throws ModelComponentGroupExceptionZZZ, ExceptionZZZ {
+		 return new ModelPanelDebugZZZ(this.getKernelObject(),sTitle, panelParent, iIndexInGroupCollection); 
 	}
 	
 	@Override
-	public HashMapIndexedZZZ<Integer,ArrayList<String>>createValuesText(String sTitle, KernelJPanelCascadedZZZ panel, int iIndexInCollection) throws ComponentGroupModelExceptionZZZ{
+	public HashMapIndexedZZZ<Integer,ArrayList<String>>createValuesText(String sTitle, IPanelCascadedZZZ panel, int iIndexInCollection) throws ModelComponentGroupExceptionZZZ{
 		HashMapIndexedZZZ<Integer,ArrayList<String>> hmReturn = null; 
 				
 		String stemp;
@@ -59,8 +60,7 @@ public class PanelDebugModelZZZ extends AbstractComponentGroupModelZZZ{
 				break;				
 			case 1:
 				{				
-				//+++ 2. Module, das zur Verfügung steht
-				
+					//+++ 2. Module, das zur Verfügung steht				
 					String sModule = panel.getModuleName();	
 					if(!StringZZZ.isEmpty(sModule)) {								
 						sModule = StringZZZ.abbreviateDynamicLeft(sModule, iLengthDefault+iLengthDefaultRightOffset);
@@ -124,10 +124,10 @@ public class PanelDebugModelZZZ extends AbstractComponentGroupModelZZZ{
 				break;
 			default: 
 				hmReturn = null; //Wenn eine Indexposition nicht existiert, null zurückgeben.				
-				break;
+				break main;
 			}
 			}catch(ExceptionZZZ ez) {
-				ComponentGroupModelExceptionZZZ cme = new ComponentGroupModelExceptionZZZ(ez);
+				ModelComponentGroupExceptionZZZ cme = new ModelComponentGroupExceptionZZZ(ez);
 				throw cme;
 			}
 		}//end main:

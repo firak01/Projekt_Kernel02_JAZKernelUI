@@ -5,12 +5,17 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
 
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 import basic.zBasic.util.abstractList.VectorExtendedZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
+import basic.zKernelUI.component.IPanelCascadedZZZ;
+import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 
 public class JComponentGroupCollectionZZZ<T>  extends KernelUseObjectZZZ  implements Iterable<T>,IEventBrokerComponentGroupSwitchUserZZZ {
 	
@@ -22,6 +27,11 @@ public class JComponentGroupCollectionZZZ<T>  extends KernelUseObjectZZZ  implem
 	//Merke: Dem EventBroker ist eine Reihefolge (über den Index) egal
 	//KernelSenderComponentGroupSwitchZZZ objEventBroker = null;
 	ISenderComponentGroupSwitchZZZ objEventBroker = null;
+	
+	
+	//+++ Das Model, hierin ist u.a. auch das Elternpanel enthalten
+	IModelComponentGroupValueZZZ model = null;
+	
 	public JComponentGroupCollectionZZZ() throws ExceptionZZZ {
 		super();
 		JComponentGroupCollectionNew_(null, null);
@@ -36,16 +46,16 @@ public class JComponentGroupCollectionZZZ<T>  extends KernelUseObjectZZZ  implem
 		JComponentGroupCollectionNew_(null, listaGroup);
 		
 	}
-	public JComponentGroupCollectionZZZ(IKernelZZZ objKernel, IComponentGroupValueModelZZZ model) throws ExceptionZZZ {
+	public JComponentGroupCollectionZZZ(IKernelZZZ objKernel, IModelComponentGroupValueZZZ model) throws ExceptionZZZ {
 		super(objKernel);
 		JComponentGroupCollectionNew_(model, null);
 		
 	}
 	
-	private boolean JComponentGroupCollectionNew_(IComponentGroupValueModelZZZ model, ArrayList<JComponentGroupZZZ>listaGroup) throws ExceptionZZZ{
+	private boolean JComponentGroupCollectionNew_(IModelComponentGroupValueZZZ model, ArrayList<JComponentGroupZZZ>listaGroup) throws ExceptionZZZ{
 		boolean bReturn = false;		
 		main:{			
-			if(listaGroup!=null) {	//Für eine GroupCollection OHNE Modell			
+			if(listaGroup!=null) {	//Für eine GroupCollection OHNE Modell, einfach die Liste der GroupComponents hinzufügen	
 				for(JComponentGroupZZZ grouptemp : listaGroup) {
 					if(grouptemp!=null) {
 						this.add(grouptemp);
@@ -55,29 +65,54 @@ public class JComponentGroupCollectionZZZ<T>  extends KernelUseObjectZZZ  implem
 				break main;
 			}
 			
+			this.setModel(model);
 			if(model!=null) {       ///Für eine GroupCollection MIT Modell
-				ArrayList<JComponentGroupZZZ>listaGroup2 = model.createComponentGroupArrayList();
-				if(listaGroup2!=null) {				
-					for(JComponentGroupZZZ grouptemp : listaGroup2) {
-						if(grouptemp!=null) {
-							this.add(grouptemp);
-						}
-					}	
-					bReturn = true;
-					break main;
-				}				
-			}
-			
-			
+				HashMapIndexedZZZ<Integer,ArrayList<JComponent>>hmComponent = model.createComponentHashMap();
+				
+				//+++ Die Labels auf die Gruppen verteilen
+				ArrayList<JComponentGroupZZZ>listaGroup2 = new ArrayList<JComponentGroupZZZ>();				
+				int iIndex=-1;
+				
+				String sTitle = model.getTitle();
+				IPanelCascadedZZZ panelParent = model.getPanelParent();
+				Iterator itListaComponent = hmComponent.iterator();
+				while(itListaComponent.hasNext()) {			
+					ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) itListaComponent.next();
+					
+					iIndex=iIndex+1;						
+					String sIndexAsAlias = Integer.toString(iIndex);
+					//IModelComponentGroupValueZZZ objValueProvider = new ModelPanelDebugZZZ(objKernel, sTitle, panelParent, iIndex); //Diese Modell wird bei jedem "Click" in dem refresh() aufgerufen.
+					JComponentGroupZZZ grouptemp = new JComponentGroupZZZ(objKernel, sIndexAsAlias, sTitle, panelParent, listaComponenttemp);
+					if(grouptemp.hasAnyComponentAdded()) {
+						listaGroup2.add(grouptemp);
+					}								
+				}	
+				
+				
+				//Die Liste der ComponentsGroup-Elemente, erstellt aus dem Modell der Collection hinzufügen
+				for(JComponentGroupZZZ grouptemp : listaGroup2) {
+					if(grouptemp!=null) {
+						this.add(grouptemp);
+					}
+				}	
+				bReturn = true;
+			}					
 		}//end main
 		return bReturn;
+	}
+	
+	public IModelComponentGroupValueZZZ getModel() {
+		return this.model;
+	}
+	public void setModel(IModelComponentGroupValueZZZ model) {
+		this.model = model;
 	}
 	
 	public HashMapIndexedZZZ<Integer,JComponentGroupZZZ>getHashMapIndexed() throws ExceptionZZZ{
 		if(this.hmIndexed==null) {
 			this.hmIndexed = new HashMapIndexedZZZ<Integer,JComponentGroupZZZ>();
 		}
-		return this.hmIndexed;
+		return this.hmIndexed;		
 	}
 	private void setHashMapIndexed(HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmIndexed) {
 		this.hmIndexed = hmIndexed;
@@ -130,7 +165,16 @@ public class JComponentGroupCollectionZZZ<T>  extends KernelUseObjectZZZ  implem
 						group.setVisible(false);
 					}
 				}
-			}												
+			}			
+			
+			//Elternpanel aktualisieren
+			if(this.getModel()!=null) {
+				if(this.getModel().getPanelParent()!=null) {
+					JPanel panel = (JPanel) this.getModel().getPanelParent();
+					panel.revalidate();
+					panel.repaint();
+				}
+			}
 			bReturn = true;
 		}//end main
 		return bReturn;
@@ -159,7 +203,16 @@ public class JComponentGroupCollectionZZZ<T>  extends KernelUseObjectZZZ  implem
 						}
 					}
 				}
-			}					
+			}				
+			
+			//Elternpanel aktualisieren
+			if(this.getModel()!=null) {
+				if(this.getModel().getPanelParent()!=null) {
+					JPanel panel = (JPanel) this.getModel().getPanelParent();
+					panel.revalidate();
+					panel.repaint();
+				}
+			}
 			bReturn = true;
 		}//end main
 		return bReturn;		

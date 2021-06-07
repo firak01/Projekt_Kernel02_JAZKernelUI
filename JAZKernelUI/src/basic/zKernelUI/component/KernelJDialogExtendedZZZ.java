@@ -343,17 +343,18 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 				this.addPanelCenter(panelContent);
 			}
 			
-			if(this.bPanelButtonAdded==false){
-				KernelJPanelCascadedZZZ panelButton = (KernelJPanelCascadedZZZ) this.createPanelButton();
-				this.setPanelButton(panelButton);
-				this.addPanelButton(panelButton); //null soll bewirken, dass das default ButtonPanel hinzugef�gt wird.
-			}  
-			
-			if(this.bPanelNavigatorAdded==false) {
-				KernelJPanelCascadedZZZ panelNavigator = (KernelJPanelCascadedZZZ) this.createPanelNavigator();
-				this.setPanelNavigator(panelNavigator);
-				this.addPanelNavigator(panelNavigator);
-			}
+			//TODOGOON; Kurzfristig rausnehmen und dann wieder rein
+//			if(this.bPanelButtonAdded==false){
+//				KernelJPanelCascadedZZZ panelButton = (KernelJPanelCascadedZZZ) this.createPanelButton();
+//				this.setPanelButton(panelButton);
+//				this.addPanelButton(panelButton); //null soll bewirken, dass das default ButtonPanel hinzugef�gt wird.
+//			}  
+//			
+//			if(this.bPanelNavigatorAdded==false) {
+//				KernelJPanelCascadedZZZ panelNavigator = (KernelJPanelCascadedZZZ) this.createPanelNavigator();
+//				this.setPanelNavigator(panelNavigator);
+//				this.addPanelNavigator(panelNavigator);
+//			}
 			
 			
 			

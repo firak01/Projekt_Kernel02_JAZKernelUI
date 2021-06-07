@@ -43,13 +43,13 @@ import basic.zKernelUI.component.KernelButtonGroupZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.component.componentGroup.ActionSwitchZZZ;
 import basic.zKernelUI.component.componentGroup.EventComponentGroupSwitchZZZ;
-import basic.zKernelUI.component.componentGroup.IComponentGroupValueModelZZZ;
+import basic.zKernelUI.component.componentGroup.IModelComponentGroupValueZZZ;
 import basic.zKernelUI.component.componentGroup.IListenerComponentGroupSwitchZZZ;
 import basic.zKernelUI.component.componentGroup.ISenderComponentGroupSwitchZZZ;
 import basic.zKernelUI.component.componentGroup.JComponentGroupCollectionZZZ;
 import basic.zKernelUI.component.componentGroup.JComponentGroupZZZ;
 import basic.zKernelUI.component.componentGroup.KernelSenderComponentGroupSwitchZZZ;
-import basic.zKernelUI.component.componentGroup.PanelDebugModelZZZ;
+import basic.zKernelUI.component.componentGroup.ModelPanelDebugZZZ;
 import basic.zKernelUI.thread.KernelSwingWorkerZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
@@ -113,6 +113,7 @@ public class PanelDebugButtonSwitchLabelGroup_NORTHZZZ extends KernelJPanelCasca
 			//###########################################################################################					
 			//+++ Das Layout validieren, mit dem Ziel die Komponenten passend anzuordnen.
 			this.validate();
+			this.repaint();
 			} catch (ExceptionZZZ ez) {
 				String sError = ReflectCodeZZZ.getMethodCurrentName() + ": " + ez.getDetailAllLast();
 				System.out.println(sError);
@@ -210,13 +211,13 @@ public class PanelDebugButtonSwitchLabelGroup_NORTHZZZ extends KernelJPanelCasca
 		this.add(labelModuleText_02,gbc);
 		
 		String sTitle="row2";		
-		Row2ModelZZZ modelRow2 = new Row2ModelZZZ(this.getKernelObject(),sTitle, this);
+		ModelRow2ZZZ modelRow2 = new ModelRow2ZZZ(this.getKernelObject(),sTitle, this);
 		
 		//++++ Die GroupCollection
 		//202105178 Jetzt muss es reichen das model zu übergeben
 		JComponentGroupCollectionZZZ groupc = new JComponentGroupCollectionZZZ(this.getKernelObject(), modelRow2);
-		groupc.setVisible(0); //Initiales Setzen der Sichtbarkeit
-				
+		groupc.setVisible(0); 
+		
 		//######## Das UI gestalten. Die Reihenfolge der Componenten ist wichtig für die Reihenfolge im UI #################
 		//++++ Die Buttons
 		String sLabelButton_02 = this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButtonRow2").getValue();
@@ -230,24 +231,32 @@ public class PanelDebugButtonSwitchLabelGroup_NORTHZZZ extends KernelJPanelCasca
 					
 		//+++ Nun erst die Label dem Panel hinzufuegen	
 		//Merke: Die auszutauschenden Komponenten müssen in die gleichen Zellen hinzugefügt werden. Sonst entstehen Leerzellen
-		HashMapIndexedZZZ<Integer,ArrayList<JComponent>> hmComponent = modelRow2.getComponentHashMap();
-		int iIndexOuterMax = hmComponent.size() -1;
-		for(int iIndexOuter=0; iIndexOuter <= iIndexOuterMax; iIndexOuter++) {
-			ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) hmComponent.getValue(iIndexOuter);
-			if(listaComponenttemp!=null) {
-				
-				//Die Labels der Arraylist abarbeiten und dem panel hinzufügen
-				int iIndexInner=-1;				
-				for(JComponent componenttemp : listaComponenttemp) {
-					if(componenttemp!=null) {
-						iIndexInner=iIndexInner+1;
-						gbc.gridx = 2+iIndexInner;
-						this.add(componenttemp,gbc);						
-						this.setComponent("ComponentDebug"+iIndexOuter+"_"+iIndexInner, componenttemp);
-					}
-				}		
-			}
-		}					
+		HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmComponent = groupc.getHashMapIndexed();
+		Iterator it = hmComponent.iterator();
+		int iIndexOuter=-1;
+		while(it.hasNext()) {
+			JComponentGroupZZZ group = (JComponentGroupZZZ) it.next();
+			if(group!=null) {
+				iIndexOuter=iIndexOuter+1;
+				ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) group.getComponents();
+				if(listaComponenttemp!=null) {
+					
+					//Die Labels der Arraylist abarbeiten und dem panel hinzufügen
+					int iIndexInner=-1;				
+					for(JComponent componenttemp : listaComponenttemp) {
+						if(componenttemp!=null) {
+							System.out.println(ReflectCodeZZZ.getPositionCurrent() + ": Component.isVisible()='" + componenttemp.isVisible() + "'");
+							
+							iIndexInner=iIndexInner+1;
+							gbc.gridx = 2+iIndexInner;
+							this.add(componenttemp,gbc);						
+							this.setComponent("ComponentDebug"+iIndexOuter+"_"+iIndexInner, componenttemp);	
+													
+						}
+					}		
+				}
+			}	
+		}				
 	}
 	
 	
@@ -270,7 +279,7 @@ public class PanelDebugButtonSwitchLabelGroup_NORTHZZZ extends KernelJPanelCasca
 		this.add(labelModuleText,gbc);
 		
 		String sTitle="row3";		
-		PanelDebugModelZZZ modelRow3 = new PanelDebugModelZZZ(this.getKernelObject(),sTitle, this);
+		ModelPanelDebugZZZ modelRow3 = new ModelPanelDebugZZZ(this.getKernelObject(),sTitle, this);
 		
 		//++++ Die GroupCollection
 		//202105178 Jetzt muss es reichen das model zu übergeben
@@ -290,23 +299,31 @@ public class PanelDebugButtonSwitchLabelGroup_NORTHZZZ extends KernelJPanelCasca
 					
 		//+++ Nun erst die Label dem Panel hinzufuegen	
 		//Merke: Die auszutauschenden Komponenten müssen in die gleichen Zellen hinzugefügt werden. Sonst entstehen Leerzellen
-		HashMapIndexedZZZ<Integer,ArrayList<JComponent>> hmComponent = modelRow3.getComponentHashMap();
-		int iIndexOuterMax = hmComponent.size() -1;
-		for(int iIndexOuter=0; iIndexOuter <= iIndexOuterMax; iIndexOuter++) {
-			ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) hmComponent.getValue(iIndexOuter);
-			if(listaComponenttemp!=null) {
-				
-				//Die Labels der Arraylist abarbeiten und dem panel hinzufügen
-				int iIndexInner=-1;				
-				for(JComponent componenttemp : listaComponenttemp) {
-					if(componenttemp!=null) {
-						iIndexInner=iIndexInner+1;
-						gbc.gridx = 2+iIndexInner;
-						this.add(componenttemp,gbc);						
-						this.setComponent("ComponentDebug"+iIndexOuter+"_"+iIndexInner, componenttemp);
-					}
-				}		
-			}
-		}					
+		HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmComponent = groupc.getHashMapIndexed();
+		Iterator it = hmComponent.iterator();
+		int iIndexOuter=-1;
+		while(it.hasNext()) {
+			JComponentGroupZZZ group = (JComponentGroupZZZ) it.next();
+			if(group!=null) {
+				iIndexOuter=iIndexOuter+1;
+				ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) group.getComponents();
+				if(listaComponenttemp!=null) {
+					
+					//Die Labels der Arraylist abarbeiten und dem panel hinzufügen
+					int iIndexInner=-1;				
+					for(JComponent componenttemp : listaComponenttemp) {
+						if(componenttemp!=null) {
+							System.out.println(ReflectCodeZZZ.getPositionCurrent() + ": Component.isVisible()='" + componenttemp.isVisible() + "'");
+							
+							iIndexInner=iIndexInner+1;
+							gbc.gridx = 2+iIndexInner;
+							this.add(componenttemp,gbc);						
+							this.setComponent("ComponentDebug"+iIndexOuter+"_"+iIndexInner, componenttemp);	
+													
+						}
+					}		
+				}
+			}	
+		}
 	}
 }

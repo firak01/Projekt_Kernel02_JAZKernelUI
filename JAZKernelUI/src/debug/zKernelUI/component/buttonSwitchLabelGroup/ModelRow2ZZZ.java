@@ -12,33 +12,34 @@ import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelZZZ;
+import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
-import basic.zKernelUI.component.componentGroup.AbstractComponentGroupModelZZZ;
-import basic.zKernelUI.component.componentGroup.ComponentGroupModelExceptionZZZ;
-import basic.zKernelUI.component.componentGroup.IComponentGroupValueModelZZZ;
-import basic.zKernelUI.component.model.ComponentModelHelperZZZ;
+import basic.zKernelUI.component.componentGroup.AbstractModelComponentGroupZZZ;
+import basic.zKernelUI.component.componentGroup.ModelComponentGroupExceptionZZZ;
+import basic.zKernelUI.component.componentGroup.IModelComponentGroupValueZZZ;
+import basic.zKernelUI.component.model.ModelComponentHelperZZZ;
 
-public class Row2ModelZZZ extends AbstractComponentGroupModelZZZ{	
-	public Row2ModelZZZ() {	
+public class ModelRow2ZZZ extends AbstractModelComponentGroupZZZ{	
+	public ModelRow2ZZZ() {	
 		super();
 	}
 	
-	public Row2ModelZZZ(IKernelZZZ objKernel, String sTitle, KernelJPanelCascadedZZZ panelParent) throws ExceptionZZZ {
+	public ModelRow2ZZZ(IKernelZZZ objKernel, String sTitle, IPanelCascadedZZZ panelParent) throws ExceptionZZZ {
 		super(objKernel, sTitle, panelParent);
 	}
 	
-	public Row2ModelZZZ(IKernelZZZ objKernel, String sTitle, KernelJPanelCascadedZZZ panelParent, int iIndexInCollection) throws ExceptionZZZ {
+	public ModelRow2ZZZ(IKernelZZZ objKernel, String sTitle, IPanelCascadedZZZ panelParent, int iIndexInCollection) throws ExceptionZZZ {
 		super(objKernel, sTitle,panelParent,iIndexInCollection);
 	}
 		
 	//##############################
 	@Override
-	public IComponentGroupValueModelZZZ createModelForGroup(String sTitle, KernelJPanelCascadedZZZ panelParent, int iIndexInGroupCollection) throws ExceptionZZZ, ComponentGroupModelExceptionZZZ {
-		 return new Row2ModelZZZ(this.getKernelObject(),sTitle, panelParent, iIndexInGroupCollection); 
+	public IModelComponentGroupValueZZZ createModelForGroup(String sTitle, IPanelCascadedZZZ panelParent, int iIndexInGroupCollection) throws ExceptionZZZ, ModelComponentGroupExceptionZZZ {
+		 return new ModelRow2ZZZ(this.getKernelObject(),sTitle, panelParent, iIndexInGroupCollection); 
 	}
 	
 	@Override
-	public HashMapIndexedZZZ<Integer,ArrayList<String>>createValuesText(String sTitle, KernelJPanelCascadedZZZ panel, int iIndexInCollection) throws ComponentGroupModelExceptionZZZ{
+	public HashMapIndexedZZZ<Integer,ArrayList<String>>createValuesText(String sTitle, IPanelCascadedZZZ panel, int iIndexInCollection) throws ModelComponentGroupExceptionZZZ{
 		HashMapIndexedZZZ<Integer,ArrayList<String>> hmReturn = null; 
 				
 		String stemp;
@@ -224,7 +225,7 @@ public class Row2ModelZZZ extends AbstractComponentGroupModelZZZ{
 				break;
 			}
 			}catch(ExceptionZZZ ez) {
-				ComponentGroupModelExceptionZZZ cme = new ComponentGroupModelExceptionZZZ(ez);
+				ModelComponentGroupExceptionZZZ cme = new ModelComponentGroupExceptionZZZ(ez);
 				throw cme;
 			}
 		}//end main:

@@ -37,12 +37,12 @@ import basic.zKernel.flag.FlagZHelperZZZ;
 import basic.zKernel.flag.IFlagUserZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import basic.zKernelUI.component.componentGroup.ActionSwitchZZZ;
-import basic.zKernelUI.component.componentGroup.IComponentGroupValueModelZZZ;
+import basic.zKernelUI.component.componentGroup.IModelComponentGroupValueZZZ;
 import basic.zKernelUI.component.componentGroup.JComponentGroupCollectionZZZ;
 import basic.zKernelUI.component.componentGroup.JComponentGroupHelperZZZ;
 import basic.zKernelUI.component.componentGroup.JComponentGroupZZZ;
 import basic.zKernelUI.component.componentGroup.KernelSenderComponentGroupSwitchZZZ;
-import basic.zKernelUI.component.componentGroup.PanelDebugModelZZZ;
+import basic.zKernelUI.component.componentGroup.ModelPanelDebugZZZ;
 import custom.zKernel.LogZZZ;
 
 /** Klasse bietet als Erweiterung zu JPanel die Verschachtelung von Panels an.
@@ -66,9 +66,9 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	private KernelJFrameCascadedZZZ frameParent;
 	private KernelJDialogExtendedZZZ dialogParent;
 	
-	private Hashtable<String,IPanelCascadedZZZ> htPanelSub=new Hashtable<String,IPanelCascadedZZZ>();
-	private Hashtable<String,JComponent> htComponent = new Hashtable<String,JComponent>();
-	private Hashtable <String, KernelButtonGroupZZZ<String, AbstractButton>> htButtonGroup = new Hashtable<String, KernelButtonGroupZZZ<String, AbstractButton>>();
+	protected Hashtable<String,IPanelCascadedZZZ> htPanelSub=new Hashtable<String,IPanelCascadedZZZ>();
+	protected Hashtable<String,JComponent> htComponent = new Hashtable<String,JComponent>();
+	protected Hashtable <String, KernelButtonGroupZZZ<String, AbstractButton>> htButtonGroup = new Hashtable<String, KernelButtonGroupZZZ<String, AbstractButton>>();
 	
 	private ListenerMouseMove4DragableWindowZZZ listenerDraggableWindow = null; 
 
@@ -284,7 +284,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		
 		//Ggfs. die DebugUI-Angaben hinzufügen, das kann z.B. nur das Label mit dem Klassennamen sein.
 		//Gesteuert werde soll das durch Flags, die auch über die Kommandozeile übergeben werden können.
-		boolean bDebugUI = this.createDebugUi("Cascaded");
+		boolean bDebugUI = this.createDebugUi();
 		
 		//Einen Mouse Listener hinzufuegen, der es erlaubt Fenster zu ziehen (auch im Panel und nicht nur in der Titelleiste)
 		//if(this.getFlag("isdraggable")){
@@ -958,13 +958,13 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	
 	//#### IComponentCascadedUserZZZ
 	@Override
-	public boolean createDebugUi(String sTitle) throws ExceptionZZZ {
+	public boolean createDebugUi() throws ExceptionZZZ {
 		boolean bReturn = false;
 		main:{
 			String stemp;
 					
 			if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())) {
-				
+				String sTitle = "Cascaded";
 								
 				//20210419 Bei vielen Zeilen im Label "verwischt" dann das UI
 				//Idee: Führe eine "Label-Gruppe" ein und einen Button, der diese Labels dann der Reihe nach durchschalten kann.
@@ -989,9 +989,9 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 						
 				//TODOGOON; //Ein Button zum Umschalten ist auch erst im Panel notwendig, wenn es mehr als 1 Gruppenobjekt gibt.
 																
-				HashMapIndexedZZZ<Integer,ArrayList<JComponent>>hmComponent;
-				PanelDebugModelZZZ modelDebug = new PanelDebugModelZZZ();
-				hmComponent = modelDebug.createComponentHashMap(sTitle, this);
+				
+				ModelPanelDebugZZZ modelDebug = new ModelPanelDebugZZZ();
+				HashMapIndexedZZZ<Integer,ArrayList<JComponent>>hmComponent = modelDebug.createComponentHashMap(sTitle, this);
 									
 												
 				//+++ Die Labels auf die Gruppen verteilen
@@ -1004,7 +1004,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 					
 					iIndex=iIndex+1;						
 					String sIndexAsAlias = Integer.toString(iIndex);
-					IComponentGroupValueModelZZZ objValueProvider = new PanelDebugModelZZZ(objKernel, "Cascaded", this, iIndex); //Diese Modell wird bei jedem "Click" in dem refresh() aufgerufen.
+					IModelComponentGroupValueZZZ objValueProvider = new ModelPanelDebugZZZ(objKernel, "Cascaded", this, iIndex); //Diese Modell wird bei jedem "Click" in dem refresh() aufgerufen.
 					JComponentGroupZZZ grouptemp = new JComponentGroupZZZ(objKernel, sIndexAsAlias, objValueProvider,listaComponenttemp);
 					if(grouptemp.hasAnyComponentAdded()) {
 						listaGroup.add(grouptemp);

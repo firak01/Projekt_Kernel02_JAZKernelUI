@@ -7,7 +7,7 @@ import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
 
-/** Diese Klasse implementiert alles, was ben�tigt wird, damit die eigenen Events "Auswahl hat sich ge�ndert" abgefeuert werden kann
+/** Diese Klasse implementiert alles, was ben�tigt wird, damit die eigenen Events "Auswahl hat sich geaendert" abgefeuert werden kann
  *   und auch von den Componenten, die hier registriert sind empfangen wird. Damit fungieren Objekte dieser Klasse als "EventBroker".
  *   
  *   Wichtig: Diese Klasse darf nicht final sein, damit sie von anderen Klassen geerbt werden kann.
@@ -56,8 +56,7 @@ public class KernelSenderComponentGroupSwitchZZZ extends KernelUseObjectZZZ impl
 			}
 		}else{
 			for(int i = 0 ; i < this.getListenerRegisteredAll().size(); i++){
-				IListenerComponentGroupSwitchZZZ l = (IListenerComponentGroupSwitchZZZ) this.getListenerRegisteredAll().get(i);	
-				
+				IListenerComponentGroupSwitchZZZ l = (IListenerComponentGroupSwitchZZZ) this.getListenerRegisteredAll().get(i);					
 				System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# EventComponentSwitchZZZ by " + this.getClass().getName() + " - object (d.h. this - object) fired: " + i);
 				l.doSwitch(event);			
 			}

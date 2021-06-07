@@ -50,8 +50,8 @@ public interface IListenerComponentGroupSwitchZZZ extends EventListener{
 	public abstract String getGroupTitle();
 	public abstract void setGroupTitle(String sTitle);
 	
-	public IComponentGroupValueModelZZZ getComponentValueProvider();
-	public void setComponentValueProvider(IComponentGroupValueModelZZZ objComponentValueProvider);
+	public IModelComponentGroupValueZZZ getComponentValueProvider();
+	public void setComponentValueProvider(IModelComponentGroupValueZZZ objComponentValueProvider);
 	public HashMapIndexedZZZ<Integer,ArrayList<String>> getComponentValuesCustom() throws ExceptionZZZ; 
 	
 }

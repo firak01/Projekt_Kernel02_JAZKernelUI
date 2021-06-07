@@ -1,9 +1,13 @@
 package basic.zKernelUI.component;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
+import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -13,8 +17,14 @@ import com.jgoodies.forms.layout.Sizes;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.util.abstractList.ArrayListZZZ;
+import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zKernel.IKernelZZZ;
+import basic.zKernelUI.component.componentGroup.ActionSwitchZZZ;
+import basic.zKernelUI.component.componentGroup.IModelComponentGroupValueZZZ;
+import basic.zKernelUI.component.componentGroup.JComponentGroupCollectionZZZ;
+import basic.zKernelUI.component.componentGroup.JComponentGroupZZZ;
+import basic.zKernelUI.component.componentGroup.ModelPanelDebugZZZ;
 
 public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZZ implements IFormLayoutZZZ, IFormLayoutUserZZZ{
 	
@@ -81,19 +91,22 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 		@Override 
 		public boolean initFormLayoutDebug() throws ExceptionZZZ {
 			boolean bReturn = false;
-			main:{					
+			main:{		
+				
+				//Problem: Die Debugangaben sind dynamisch, darum würden die Components überlappen
 				FormLayout layout = this.getFormLayoutUsed();
 				if(layout!=null) {
 					this.setLayout(layout);              //!!! wichtig: Das layout muss dem Panel zugewiesen werden BEVOR mit constraints die Componenten positioniert werden.
 					CellConstraints cc = new CellConstraints();
 					this.fillRowDebug(cc);
 					
-					//PROBLEM: Problem, wenn auf Daten über einen Programmnamen zugegriffen werden soll, der erst später über das FlagSetzen definiert wird., der aber erst später als FlagGesetzt wird.
-					//         Also hier nie den Content füllen. Sondern das immer der konkreten PanelKlasse überlassen.
-					//this.fillRowContent(cc, 1);
-					
 					bReturn = true;
 				}
+				
+				
+				//Problem: Dann erscheint alles nur in einer Zeile
+				//this.fillRowDebugDynamical();
+				
 			}//end main:
 			return bReturn;
 		}
@@ -101,14 +114,14 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 		@Override
 		public boolean initFormLayoutContent() throws ExceptionZZZ {
 			boolean bReturn = false;
-			main:{					
-				this.formLayoutUsed = this.buildFormLayoutUsed();								
+			main:{											
+				this.formLayoutUsed = this.getFormLayoutUsed();
 				
 				CellConstraints cc = new CellConstraints();
-				//Das wird in der Elternklasse schon gemacht:     this.fillRowDebug(cc);
 					
 				//PROBLEM: Problem, wenn auf Daten über einen Programmnamen zugegriffen werden soll, der erst später über das FlagSetzen definiert wird., der aber erst später als FlagGesetzt wird.
 				//         Also hier nie den Content füllen. Sondern das immer der konkreten PanelKlasse überlassen.
+				//         Darum ist fillRowContent eine abstrakte Methode.
 				
 				//Solange wie eine Zeile gefüllt wird, weitere Zeile füllen
 				int iRow = 0;
@@ -191,11 +204,13 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 				if(listCs==null)break main;
 				
 				int iStartingRow = 1; //Die Debugzeile ist immer oben
-				int iStartingColumn = 1; //Beginne immer in Spalte 1. Die Gesamtanzahl der Spalten wird dann als "Breite" genommen.											
+				int iStartingColumn = 2; //Beginne mit dieser Spalte. Die Gesamtanzahl der Spalten wird dann als "Breite" genommen.											
 				int iColumns = listCs.size();//die DebugZeile geht über alle Spalten hinweg 
-
-				TODOGOON;//20210530 Hier die GroupComponent mit Modell einbauen, und den Button, um durch mehrere Debug-Einträge zu schalten
-				/*			
+				int iColumnsMaxVisible = 1;
+				String sTitle = "FormLayouted";
+				
+				//############################################
+				//TODOGOON;//20210530 Hier die GroupComponent mit Modell einbauen, und den Button, um durch mehrere Debug-Einträge zu schalten
 				
 				//20210419 Bei vielen Zeilen im Label "verwischt" dann das UI
 				//Idee: Führe eine "Label-Gruppe" ein und einen Button, der diese Labels dann der Reihe nach durchschalten kann.
@@ -219,81 +234,54 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 				          //    und neu füllen.
 						
 				//TODOGOON; //Ein Button zum Umschalten ist auch erst im Panel notwendig, wenn es mehr als 1 Gruppenobjekt gibt.
-																
-				HashMapIndexedZZZ<Integer,ArrayList<JComponent>>hmComponent;
-				PanelDebugModelZZZ modelDebug = new PanelDebugModelZZZ();
-				hmComponent = modelDebug.createComponentHashMap(sTitle, this);
-									
-												
-				//+++ Die Labels auf die Gruppen verteilen
-				ArrayList<JComponentGroupZZZ>listaGroup = new ArrayList<JComponentGroupZZZ>();				
-				int iIndex=-1;
-				
-				Iterator itListaComponent = hmComponent.iterator();
-				while(itListaComponent.hasNext()) {
-					ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) itListaComponent.next();
-					
-					iIndex=iIndex+1;						
-					String sIndexAsAlias = Integer.toString(iIndex);
-					IComponentGroupValueModelZZZ objValueProvider = new PanelDebugModelZZZ(objKernel, "Cascaded", this, iIndex); //Diese Modell wird bei jedem "Click" in dem refresh() aufgerufen.
-					JComponentGroupZZZ grouptemp = new JComponentGroupZZZ(objKernel, sIndexAsAlias, objValueProvider,listaComponenttemp);
-					if(grouptemp.hasAnyComponentAdded()) {
-						listaGroup.add(grouptemp);
-					}								
-				}
-				
-				//++++ Die GroupCollection
-				JComponentGroupCollectionZZZ groupc = new JComponentGroupCollectionZZZ(objKernel, listaGroup);
-				groupc.setVisible(0); //Initiales Setzen der Sichtbarkeit
-				
-						
+																		
+				//++++ Die GroupCollection, basierend auf dem Modell
+				ModelPanelDebugZZZ modelDebug = new ModelPanelDebugZZZ(objKernel,sTitle, this);			
+				JComponentGroupCollectionZZZ groupc = new JComponentGroupCollectionZZZ(objKernel, modelDebug);																
+										
 				//######## Das UI gestalten. Die Reihenfolge der Componenten ist wichtig für die Reihenfolge im UI #################
+				//Merke: Da dies FormLayout ist, unterscheidet sich das Hinzufügen vom normalen Layout darin,
+				//       dass hier Constraints beim Hinzufügen der Komponente übergeben werden müssen.
 				//++++ Der Umschaltebutton
 				String sLabelButton = ">";//this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButton").getValue();
 				JButton buttonSwitch = new JButton(sLabelButton);	
 							
 				ActionSwitchZZZ actionSwitch = new ActionSwitchZZZ(objKernel, this, groupc);
 				buttonSwitch.addActionListener(actionSwitch);								
-				this.setComponent(KernelJPanelCascadedZZZ.sBUTTON_SWITCH, buttonSwitch);				
-				this.add(buttonSwitch);
+				this.setComponent(KernelJPanelCascadedZZZ.sBUTTON_SWITCH, buttonSwitch);									
+				this.add(buttonSwitch, cc.xyw(iStartingColumn,iStartingRow,1));
 				
+				//### Die Componenten aus dem Modell im UI "Verteilen"
+				HashMapIndexedZZZ<Integer,ArrayList<JComponent>> hmComponent = modelDebug.getComponentHashMap();
 				int iIndexOuterMax = hmComponent.size() -1;
 				for(int iIndexOuter=0; iIndexOuter <= iIndexOuterMax; iIndexOuter++) {
 					ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) hmComponent.getValue(iIndexOuter);
 					if(listaComponenttemp!=null) {
-						
-						//Die Labels der Arraylist abarbeiten und dem panel hinzufügen
-						int iIndexInner=-1;				
-						for(JComponent componenttemp : listaComponenttemp) {
-							if(componenttemp!=null) {
-								iIndexInner=iIndexInner+1;
-								this.add(componenttemp);
-								this.setComponent("ComponentDebug"+iIndexOuter+"_"+iIndexInner, componenttemp);
-							}
-						}		
+						if((iIndexOuter+1)>iColumnsMaxVisible) {
+							break;
+						}else {						
+							//Die Labels der Arraylist abarbeiten und dem panel hinzufügen
+							int iIndexInner=-1;
+							int iVerteiler=-2;
+							for(JComponent componenttemp : listaComponenttemp) {
+								if(componenttemp!=null) {
+									iIndexInner=iIndexInner+1;
+									iVerteiler=iVerteiler+2;							
+									this.add(componenttemp, cc.xyw(iStartingColumn+1+iVerteiler,iStartingRow,iColumns-iStartingColumn-iVerteiler));
+									this.setComponent("ComponentDebug"+iIndexOuter+"_"+iIndexInner, componenttemp);
+								}
+							}		
+						}
 					}
 				}	
-				*/		
 				
-				
-				String stemp = this.getClass().getSimpleName();
-				//das ist zu lange und nicht aussagekräftig genug String sParent = this.getClass().getSuperclass().getSimpleName();
-				ArrayList<String> listaParent = new ArrayList<String>();
-				listaParent.add("FormLayouted");
-				listaParent.add(stemp);
-				
-				String[]saParent=ArrayListZZZ.toStringArray(listaParent);				
-				String sHtml = StringArrayZZZ.asHtml(saParent);	
-				
-				JLabel labelDebug = new JLabel(sHtml);
-				labelDebug.setHorizontalAlignment(JTextField.LEFT);
-				this.add(labelDebug, cc.xyw(iStartingColumn,iStartingRow, iColumns));
-				
+				groupc.setVisible(0); //Initiales Setzen der Sichtbarkeit				
+				//#########################################################					
 				bReturn = true;
 			}//end main;
 			return bReturn;
 		}
-		
+	
 		public RowSpec buildRowSpecDebug() {
 			RowSpec rs = new RowSpec(Sizes.dluX(14));
 			return rs;
@@ -301,7 +289,7 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 		
 		//+++ Von KernelJPanelCascadedZZZ überschrieben. Jetzt müssen die Debug-Komponenten auf ein Startzeile verteilt werden.
 		@Override
-		public boolean createDebugUi(String sTitle) throws ExceptionZZZ {
+		public boolean createDebugUi() throws ExceptionZZZ {
 			boolean bReturn = false;
 			main:{					
 				if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())) {
