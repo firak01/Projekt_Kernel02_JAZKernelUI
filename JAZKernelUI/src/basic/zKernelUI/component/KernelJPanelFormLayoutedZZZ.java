@@ -238,7 +238,8 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 				//++++ Die GroupCollection, basierend auf dem Modell
 				ModelPanelDebugZZZ modelDebug = new ModelPanelDebugZZZ(objKernel,sTitle, this);			
 				JComponentGroupCollectionZZZ groupc = new JComponentGroupCollectionZZZ(objKernel, modelDebug);																
-										
+				groupc.setVisible(0); //Initiales Setzen der Sichtbarkeit
+				
 				//######## Das UI gestalten. Die Reihenfolge der Componenten ist wichtig für die Reihenfolge im UI #################
 				//Merke: Da dies FormLayout ist, unterscheidet sich das Hinzufügen vom normalen Layout darin,
 				//       dass hier Constraints beim Hinzufügen der Komponente übergeben werden müssen.
@@ -252,30 +253,33 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 				this.add(buttonSwitch, cc.xyw(iStartingColumn,iStartingRow,1));
 				
 				//### Die Componenten aus dem Modell im UI "Verteilen"
-				HashMapIndexedZZZ<Integer,ArrayList<JComponent>> hmComponent = modelDebug.getComponentHashMap();
-				int iIndexOuterMax = hmComponent.size() -1;
-				for(int iIndexOuter=0; iIndexOuter <= iIndexOuterMax; iIndexOuter++) {
-					ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) hmComponent.getValue(iIndexOuter);
-					if(listaComponenttemp!=null) {
-						if((iIndexOuter+1)>iColumnsMaxVisible) {
-							break;
-						}else {						
-							//Die Labels der Arraylist abarbeiten und dem panel hinzufügen
-							int iIndexInner=-1;
-							int iVerteiler=-2;
-							for(JComponent componenttemp : listaComponenttemp) {
-								if(componenttemp!=null) {
-									iIndexInner=iIndexInner+1;
-									iVerteiler=iVerteiler+2;							
-									this.add(componenttemp, cc.xyw(iStartingColumn+1+iVerteiler,iStartingRow,iColumns-iStartingColumn-iVerteiler));
-									this.setComponent("ComponentDebug"+iIndexOuter+"_"+iIndexInner, componenttemp);
-								}
-							}		
-						}
-					}
-				}	
-				
-				groupc.setVisible(0); //Initiales Setzen der Sichtbarkeit				
+				//Merke: Die auszutauschenden Komponenten müssen in die gleichen Zellen hinzugefügt werden. Sonst entstehen Leerzellen
+				HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmComponent = groupc.getHashMapIndexed();
+				Iterator it = hmComponent.iterator();
+				int iIndexOuter=-1;
+				while(it.hasNext()) {
+					JComponentGroupZZZ group = (JComponentGroupZZZ) it.next();
+					if(group!=null) {
+						iIndexOuter=iIndexOuter+1;
+						ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) group.getComponents();
+						if(listaComponenttemp!=null) {
+							if(!listaComponenttemp.isEmpty()) {	
+								//Die Labels der Arraylist abarbeiten und dem panel hinzufügen
+								int iIndexInner=-1;	
+								int iVerteiler=-2;
+								for(JComponent componenttemp : listaComponenttemp) {
+									if(componenttemp!=null) {
+										iIndexInner=iIndexInner+1;
+										iIndexInner=iIndexInner+1;
+										iVerteiler=iVerteiler+2;							
+										this.add(componenttemp, cc.xyw(iStartingColumn+1+iVerteiler,iStartingRow,iColumns-iStartingColumn-iVerteiler));
+										this.setComponent("ComponentDebug"+iIndexOuter+"_"+iIndexInner, componenttemp);
+									}
+								}																		
+							}							
+						}						
+					}					
+				}														
 				//#########################################################					
 				bReturn = true;
 			}//end main;

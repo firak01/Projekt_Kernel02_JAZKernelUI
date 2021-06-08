@@ -78,14 +78,17 @@ public class JComponentGroupCollectionZZZ<T>  extends KernelUseObjectZZZ  implem
 				Iterator itListaComponent = hmComponent.iterator();
 				while(itListaComponent.hasNext()) {			
 					ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) itListaComponent.next();
-					
-					iIndex=iIndex+1;						
-					String sIndexAsAlias = Integer.toString(iIndex);
-					//IModelComponentGroupValueZZZ objValueProvider = new ModelPanelDebugZZZ(objKernel, sTitle, panelParent, iIndex); //Diese Modell wird bei jedem "Click" in dem refresh() aufgerufen.
-					JComponentGroupZZZ grouptemp = new JComponentGroupZZZ(objKernel, sIndexAsAlias, sTitle, panelParent, listaComponenttemp);
-					if(grouptemp.hasAnyComponentAdded()) {
-						listaGroup2.add(grouptemp);
-					}								
+					if(listaComponenttemp!=null) {
+					if(!listaComponenttemp.isEmpty()) {
+						iIndex=iIndex+1;
+						String sIndexAsAlias = Integer.toString(iIndex);
+						//IModelComponentGroupValueZZZ objValueProvider = new ModelPanelDebugZZZ(objKernel, sTitle, panelParent, iIndex); //Diese Modell wird bei jedem "Click" in dem refresh() aufgerufen.
+						JComponentGroupZZZ grouptemp = new JComponentGroupZZZ(objKernel, sIndexAsAlias, sTitle, panelParent, listaComponenttemp);
+						if(grouptemp.hasAnyComponentAdded()) {
+							listaGroup2.add(grouptemp);
+						}	
+					}
+					}
 				}	
 				
 				

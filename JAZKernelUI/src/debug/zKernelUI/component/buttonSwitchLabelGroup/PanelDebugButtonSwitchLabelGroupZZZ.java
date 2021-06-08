@@ -40,22 +40,8 @@ public class PanelDebugButtonSwitchLabelGroupZZZ extends KernelJPanelCascadedZZZ
 		this.setLayout(new BorderLayout());
 		
 		PanelDebugButtonSwitchLabelGroup_NORTHZZZ objPanelNorth = new PanelDebugButtonSwitchLabelGroup_NORTHZZZ(objKernel, this);
-		this.add(objPanelNorth, BorderLayout.NORTH); //Frontend hinzuf�gen
-		this.setPanelSub("NORTH", objPanelNorth);       //Backend Hashtable hinzuf�gen
-	
-		
-		
-		//### PANEL SOUTH
-//		PanelConfig_SOUTHZZZ objPanelSouth = new PanelConfig_SOUTHZZZ(objKernel, this, objKernelChoosen);
-//		this.add(objPanelSouth, BorderLayout.SOUTH); //Frontend hinzuf�gen
-//		this.setPanelSub("SOUTH", objPanelSouth);    //Backend Hashtable hinzuf�gen
-//		
-		//### PANEL CENTER
-//		PanelConfig_CENTERZZZ objPanelCenter = new PanelConfig_CENTERZZZ(objKernel, this, objKernelChoosen);
-//		this.add(objPanelCenter, BorderLayout.CENTER); //Frontend hinzuf�gen
-//		this.setPanelSub("CENTER", objPanelCenter);       //Backend Hashtable hinzuf�gen
-//		
-	
+		this.add(objPanelNorth, BorderLayout.NORTH); //Frontend hinzufuegen
+		this.setPanelSub("NORTH", objPanelNorth);       //Backend Hashtable hinzufuegen
 	}
 
 	

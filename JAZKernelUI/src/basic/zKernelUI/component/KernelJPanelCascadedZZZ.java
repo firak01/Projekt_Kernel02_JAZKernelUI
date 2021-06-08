@@ -989,33 +989,12 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 						
 				//TODOGOON; //Ein Button zum Umschalten ist auch erst im Panel notwendig, wenn es mehr als 1 Gruppenobjekt gibt.
 																
-				
-				ModelPanelDebugZZZ modelDebug = new ModelPanelDebugZZZ();
-				HashMapIndexedZZZ<Integer,ArrayList<JComponent>>hmComponent = modelDebug.createComponentHashMap(sTitle, this);
-									
-												
-				//+++ Die Labels auf die Gruppen verteilen
-				ArrayList<JComponentGroupZZZ>listaGroup = new ArrayList<JComponentGroupZZZ>();				
-				int iIndex=-1;
-				
-				Iterator itListaComponent = hmComponent.iterator();
-				while(itListaComponent.hasNext()) {
-					ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) itListaComponent.next();
-					
-					iIndex=iIndex+1;						
-					String sIndexAsAlias = Integer.toString(iIndex);
-					IModelComponentGroupValueZZZ objValueProvider = new ModelPanelDebugZZZ(objKernel, "Cascaded", this, iIndex); //Diese Modell wird bei jedem "Click" in dem refresh() aufgerufen.
-					JComponentGroupZZZ grouptemp = new JComponentGroupZZZ(objKernel, sIndexAsAlias, objValueProvider,listaComponenttemp);
-					if(grouptemp.hasAnyComponentAdded()) {
-						listaGroup.add(grouptemp);
-					}								
-				}
-				
-				//++++ Die GroupCollection
-				JComponentGroupCollectionZZZ groupc = new JComponentGroupCollectionZZZ(objKernel, listaGroup);
+											
+				//++++ Die GroupCollection, basierend auf dem Modell
+				ModelPanelDebugZZZ modelDebug = new ModelPanelDebugZZZ(this.getKernelObject(),sTitle, this);
+				JComponentGroupCollectionZZZ groupc = new JComponentGroupCollectionZZZ(objKernel, modelDebug);
 				groupc.setVisible(0); //Initiales Setzen der Sichtbarkeit
-				
-						
+										
 				//######## Das UI gestalten. Die Reihenfolge der Componenten ist wichtig für die Reihenfolge im UI #################
 				//++++ Der Umschaltebutton
 				String sLabelButton = ">";//this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButton").getValue();
@@ -1026,10 +1005,18 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				this.setComponent(KernelJPanelCascadedZZZ.sBUTTON_SWITCH, buttonSwitch);				
 				this.add(buttonSwitch);
 				
+				//+++ Nun erst die Label dem Panel hinzufuegen	
+				//Merke: Die auszutauschenden Komponenten müssen in die gleichen Zellen hinzugefügt werden. Sonst entstehen Leerzellen
+				HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmComponent = groupc.getHashMapIndexed();
+				Iterator it = hmComponent.iterator();				
 				int iIndexOuterMax = hmComponent.size() -1;
 				for(int iIndexOuter=0; iIndexOuter <= iIndexOuterMax; iIndexOuter++) {
-					ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) hmComponent.getValue(iIndexOuter);
+					JComponentGroupZZZ group = (JComponentGroupZZZ) hmComponent.getValue(iIndexOuter);
+					if(group!=null) {
+											
+					ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) group.getComponents();
 					if(listaComponenttemp!=null) {
+					if(!listaComponenttemp.isEmpty()) {
 						
 						//Die Labels der Arraylist abarbeiten und dem panel hinzufügen
 						int iIndexInner=-1;				
@@ -1040,6 +1027,8 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 								this.setComponent("ComponentDebug"+iIndexOuter+"_"+iIndexInner, componenttemp);
 							}
 						}		
+					}
+					}
 					}
 				}
 				bReturn = true;

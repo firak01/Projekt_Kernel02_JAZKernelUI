@@ -176,7 +176,7 @@ public class ActionSwitchZZZ extends  KernelActionCascadedZZZ implements IEventB
 						System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#SWITCH GECLICKT");
 						logLineDate("SWITCH GECLICKT");					
 												
-						panel.revalidate();//.validate()
+						panel.revalidate();
 						panel.repaint();
 												 							
 	//				} catch (ExceptionZZZ e) {
