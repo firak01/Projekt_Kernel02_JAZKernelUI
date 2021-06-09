@@ -101,12 +101,7 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 					this.fillRowDebug(cc);
 					
 					bReturn = true;
-				}
-				
-				
-				//Problem: Dann erscheint alles nur in einer Zeile
-				//this.fillRowDebugDynamical();
-				
+				}				
 			}//end main:
 			return bReturn;
 		}
@@ -164,9 +159,11 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 					}
 				}
 				
-				RowSpec rowDebug = this.buildRowSpecDebug();
-				if(rowDebug!=null && listRow!=null) {				
-					objReturn.insertRow(1, rowDebug);//RowIndex beginnt mit 1
+				if(this.getFlag(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())) {					
+					RowSpec rowDebug = this.buildRowSpecDebug();
+					if(rowDebug!=null && listRow!=null) {				
+						objReturn.insertRow(1, rowDebug);//RowIndex beginnt mit 1
+					}
 				}
 				
 				ArrayList<ColumnSpec>listColumn = this.getColumnSpecs();
