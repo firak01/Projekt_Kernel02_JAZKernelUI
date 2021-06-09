@@ -81,6 +81,9 @@ public abstract class AbstractModelComponentGroupZZZ extends KernelUseObjectZZZ 
 	public int getIndexInCollection() {
 		return this.iIndexInCollection;
 	}
+	public void setIndexInCollection(int iIndex) {
+		this.iIndexInCollection = iIndex;
+	}
 	
 	//+++ Interface IComponentValueProviderZZZZ
 	

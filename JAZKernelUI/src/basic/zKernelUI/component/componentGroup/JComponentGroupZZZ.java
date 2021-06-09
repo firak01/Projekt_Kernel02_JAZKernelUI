@@ -38,7 +38,7 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 		super(objKernel);
 		JComponentGroupNew_(sAlias, objValueProvider, null, null, listaComponent);
 	}
-	
+		
 	private boolean JComponentGroupNew_(String sAlias, IModelComponentGroupValueZZZ objComponentValueProvider, String sTitle, IPanelCascadedZZZ panelParent, ArrayList<JComponent>listaComponent) {
 		boolean bReturn = false;
 		main:{
@@ -46,7 +46,6 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 			this.setComponentValueProvider(objComponentValueProvider);
 			this.setGroupTitle(sTitle);				
 			this.setPanelParent(panelParent);
-					
 			if(listaComponent!=null) {							
 				for(JComponent componenttemp : listaComponent) {
 					if(componenttemp!=null) {												

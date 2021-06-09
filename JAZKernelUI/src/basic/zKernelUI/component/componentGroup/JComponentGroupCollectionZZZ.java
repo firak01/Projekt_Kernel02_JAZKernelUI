@@ -82,8 +82,12 @@ public class JComponentGroupCollectionZZZ<T>  extends KernelUseObjectZZZ  implem
 					if(!listaComponenttemp.isEmpty()) {
 						iIndex=iIndex+1;
 						String sIndexAsAlias = Integer.toString(iIndex);
-						//IModelComponentGroupValueZZZ objValueProvider = new ModelPanelDebugZZZ(objKernel, sTitle, panelParent, iIndex); //Diese Modell wird bei jedem "Click" in dem refresh() aufgerufen.
+						
+						//Für jede Gruppe ihr eigenes Model erstellen, das auch den Index in der Collection enthält, zwecks Generierung des passenden Wertes.
+						//Diese Modell wird bei jedem "Click" in dem refresh() aufgerufen.
+						IModelComponentGroupValueZZZ objValueProvider = new ModelPanelDebugZZZ(objKernel, sTitle, panelParent, iIndex); 
 						JComponentGroupZZZ grouptemp = new JComponentGroupZZZ(objKernel, sIndexAsAlias, sTitle, panelParent, listaComponenttemp);
+						grouptemp.setComponentValueProvider(objValueProvider);
 						if(grouptemp.hasAnyComponentAdded()) {
 							listaGroup2.add(grouptemp);
 						}	

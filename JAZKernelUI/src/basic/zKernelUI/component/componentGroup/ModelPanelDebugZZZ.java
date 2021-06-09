@@ -63,7 +63,12 @@ public class ModelPanelDebugZZZ extends AbstractModelComponentGroupZZZ{
 					//+++ 2. Module, das zur Verfügung steht				
 					String sModule = panel.getModuleName();	
 					if(!StringZZZ.isEmpty(sModule)) {								
-						sModule = StringZZZ.abbreviateDynamicLeft(sModule, iLengthDefault+iLengthDefaultRightOffset);
+						//sModule = StringZZZ.abbreviateDynamicLeft(sModule, iLengthDefault+iLengthDefaultRightOffset);
+						//Kürzen, wg. Platzmangel
+						if(StringZZZ.contains(sModule, ".")) {
+							sModule = StringZZZ.right(sModule, "."); //Weil ggfs. der Packagename auch im Programnamen enthalten ist.
+							sModule = "... ."+ sModule;
+						}
 						sModule = StringZZZ.abbreviateDynamic(sModule, iLengthDefault);
 						
 						
@@ -89,7 +94,12 @@ public class ModelPanelDebugZZZ extends AbstractModelComponentGroupZZZ{
 				{
 					String sProgram = panel.getProgramName();
 					if(!StringZZZ.isEmpty(sProgram)) {
-						sProgram = StringZZZ.abbreviateDynamicLeft(sProgram, iLengthDefault+iLengthDefaultRightOffset);
+						//Kürzen, wg. Platzmangel
+						//sProgram = StringZZZ.abbreviateDynamicLeft(sProgram, iLengthDefault+iLengthDefaultRightOffset);
+						if(StringZZZ.contains(sProgram, ".")) {
+							sProgram = StringZZZ.right(sProgram, "."); //Weil ggfs. der Packagename auch im Programnamen enthalten ist.
+							sProgram = "... ."+ sProgram;
+						}
 						sProgram = StringZZZ.abbreviateDynamic(sProgram, iLengthDefault);
 						
 						listaTitle.add("Program: " + sProgram);
