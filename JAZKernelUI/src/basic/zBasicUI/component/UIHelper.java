@@ -44,6 +44,13 @@ public final class UIHelper
         button.setContentAreaFilled(true);
         return button;
     }
+    
+    public static JButton createButton(String text, Font font)
+    {
+        JButton button = UIHelper.createButton(text);
+        button.setFont(font);
+        return button;
+    }
 
     public static JButton createButton(String text, String icon)
     {

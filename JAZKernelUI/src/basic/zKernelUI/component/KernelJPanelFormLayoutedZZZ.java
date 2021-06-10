@@ -1,8 +1,12 @@
 package basic.zKernelUI.component;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -19,6 +23,7 @@ import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.util.abstractList.ArrayListZZZ;
 import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
+import basic.zBasicUI.component.UIHelper;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernelUI.component.componentGroup.ActionSwitchZZZ;
 import basic.zKernelUI.component.componentGroup.IModelComponentGroupValueZZZ;
@@ -151,7 +156,16 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 		@Override
 		public FormLayout buildFormLayoutUsed() {
 			FormLayout objReturn = new FormLayout();
-			main:{		
+			main:{
+				//+++ Spalten
+				ArrayList<ColumnSpec>listColumn = this.getColumnSpecs();
+				if(listColumn!=null) {
+					for(ColumnSpec column:listColumn) {
+						objReturn.appendColumn(column);
+					}
+				}
+				
+				//+++ Zeilen
 				ArrayList<RowSpec> listRow = this.getRowSpecs();
 				if(listRow!=null) {
 					for(RowSpec row:listRow) {
@@ -160,18 +174,11 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 				}
 				
 				if(this.getFlag(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())) {					
-					RowSpec rowDebug = this.buildRowSpecDebug();
-					if(rowDebug!=null && listRow!=null) {				
-						objReturn.insertRow(1, rowDebug);//RowIndex beginnt mit 1
+					RowSpec rowSpecDebug = this.buildRowSpecDebug();
+					if(rowSpecDebug!=null && listRow!=null) {				
+						objReturn.insertRow(1, rowSpecDebug);//RowIndex beginnt mit 1
 					}
-				}
-				
-				ArrayList<ColumnSpec>listColumn = this.getColumnSpecs();
-				if(listColumn!=null) {
-					for(ColumnSpec column:listColumn) {
-						objReturn.appendColumn(column);
-					}
-				}
+				}							
 			}//end main;
 			return objReturn;
 		}
@@ -201,7 +208,7 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 				if(listCs==null)break main;
 				
 				int iStartingRow = 1; //Die Debugzeile ist immer oben
-				int iStartingColumn = 2; //Beginne mit dieser Spalte. Die Gesamtanzahl der Spalten wird dann als "Breite" genommen.											
+				int iStartingColumn = 2; //Beginne mit dieser Spalte für den Button. Die Gesamtanzahl der Spalten wird dann als "Breite" genommen.											
 				int iColumns = listCs.size();//die DebugZeile geht über alle Spalten hinweg 
 				int iColumnsMaxVisible = 1;
 				String sTitle = "FormLayouted";
@@ -242,8 +249,15 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 				//       dass hier Constraints beim Hinzufügen der Komponente übergeben werden müssen.
 				//++++ Der Umschaltebutton
 				String sLabelButton = ">";//this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButton").getValue();
-				JButton buttonSwitch = new JButton(sLabelButton);	
-							
+				
+				Font font = new Font("TAHOMA",Font.BOLD,9);				
+				JButton buttonSwitch = UIHelper.createButton(sLabelButton, font);
+				buttonSwitch.setPreferredSize(new Dimension(20, 20));
+				buttonSwitch.setBackground(Color.GREEN);
+				buttonSwitch.setBorder(BorderFactory.createCompoundBorder(
+				               BorderFactory.createLineBorder(Color.CYAN, 1),
+				               BorderFactory.createLineBorder(Color.BLACK, 1)));
+				
 				ActionSwitchZZZ actionSwitch = new ActionSwitchZZZ(objKernel, this, groupc);
 				buttonSwitch.addActionListener(actionSwitch);								
 				this.setComponent(KernelJPanelCascadedZZZ.sBUTTON_SWITCH, buttonSwitch);									
@@ -253,7 +267,9 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 				//Merke: Die auszutauschenden Komponenten müssen in die gleichen Zellen hinzugefügt werden. Sonst entstehen Leerzellen
 				HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmComponent = groupc.getHashMapIndexed();
 				Iterator it = hmComponent.iterator();
-				int iIndexOuter=-1;
+				int iIndexOuter=-1;//Dient nicht zur Bestimmung einer Spaltenposition, sondern lediglich zur Benennung einer Componente.
+				                   //Merke: Pro Gruppe werden die Components beginnend mit der gleichen Spalten hinzugefügt.
+				                   //       Gibt es in der Gruppe mehrere Components, ist dann der iIndexInner für die Verteilung auf weitere Spalten zuständig (, die es natürlich auch geben muss, sonst Fehler!) 
 				while(it.hasNext()) {
 					JComponentGroupZZZ group = (JComponentGroupZZZ) it.next();
 					if(group!=null) {
@@ -262,15 +278,17 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 						if(listaComponenttemp!=null) {
 							if(!listaComponenttemp.isEmpty()) {	
 								//Die Labels der Arraylist abarbeiten und dem panel hinzufügen
-								int iIndexInner=-1;	
-								int iVerteiler=-2;
+								int iIndexInner=-1;									
 								for(JComponent componenttemp : listaComponenttemp) {
 									if(componenttemp!=null) {
 										iIndexInner=iIndexInner+1;
-										iIndexInner=iIndexInner+1;
-										iVerteiler=iVerteiler+2;							
-										this.add(componenttemp, cc.xyw(iStartingColumn+1+iVerteiler,iStartingRow,iColumns-iStartingColumn-iVerteiler));
-										this.setComponent("ComponentDebug"+iIndexOuter+"_"+iIndexInner, componenttemp);
+										
+										// *2 wg. der "GAP" Spalte zwischen den Spalten
+										int iStartingColumnCurrent=iStartingColumn+2+(iIndexInner*2);
+										int iWidthRemainingCurrent=iColumns-iStartingColumn-2-(iIndexInner*2);
+										
+										this.add(componenttemp, cc.xyw(iStartingColumnCurrent,iStartingRow,iWidthRemainingCurrent));
+										this.setComponent("ComponentDebug_"+iIndexOuter+"_"+iIndexInner, componenttemp);
 									}
 								}																		
 							}							
