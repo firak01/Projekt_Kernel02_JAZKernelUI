@@ -147,7 +147,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 		
 			KernelJFrameCascadedZZZ frameParent = actionCurrent.getFrameParent(); //panelParent.getFrameParent();
 			if(frameParent==null){
-				KernelJPanelCascadedZZZ panelParent = actionCurrent.getPanelParent();
+				IPanelCascadedZZZ panelParent = actionCurrent.getPanelParent();
 				if(panelParent==null) {
 					sReturn = actionCurrent.getKernelObject().getApplicationKey();
 					break main;
@@ -519,7 +519,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 	 * @throws ExceptionZZZ
 	 * @author Fritz Lindhauer, 03.02.2021, 09:16:18
 	 */
-	public static String searchModuleClassname(KernelJPanelCascadedZZZ panelCascaded) throws ExceptionZZZ{
+	public static String searchModuleClassname(IPanelCascadedZZZ panelCascaded) throws ExceptionZZZ{
 		String sReturn = null;
 		main:{
 			IKernelModuleZZZ objModule = KernelUIZZZ.searchModule(panelCascaded);
@@ -570,7 +570,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 		main:{
 			KernelJFrameCascadedZZZ frameParent = actionCascaded.getFrameParent(); //panelParent.getFrameParent();
 			if(frameParent==null){
-				KernelJPanelCascadedZZZ panelParent = actionCascaded.getPanelParent();
+				IPanelCascadedZZZ panelParent = actionCascaded.getPanelParent();
 				if(panelParent==null) {
 					sReturn = actionCascaded.getKernelObject().getApplicationKey();
 					break main;

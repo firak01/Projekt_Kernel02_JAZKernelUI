@@ -28,6 +28,7 @@ import basic.zKernel.IKernelZZZ;
 import basic.zKernelUI.component.componentGroup.ActionSwitchZZZ;
 import basic.zKernelUI.component.componentGroup.IModelComponentGroupValueZZZ;
 import basic.zKernelUI.component.componentGroup.JComponentGroupCollectionZZZ;
+import basic.zKernelUI.component.componentGroup.JComponentGroupHelperZZZ;
 import basic.zKernelUI.component.componentGroup.JComponentGroupZZZ;
 import basic.zKernelUI.component.componentGroup.ModelPanelDebugZZZ;
 
@@ -248,18 +249,7 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 				//Merke: Da dies FormLayout ist, unterscheidet sich das Hinzufügen vom normalen Layout darin,
 				//       dass hier Constraints beim Hinzufügen der Komponente übergeben werden müssen.
 				//++++ Der Umschaltebutton
-				String sLabelButton = ">";//this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButton").getValue();
-				
-				Font font = new Font("TAHOMA",Font.BOLD,9);				
-				JButton buttonSwitch = UIHelper.createButton(sLabelButton, font);
-				buttonSwitch.setPreferredSize(new Dimension(20, 20));
-				buttonSwitch.setBackground(Color.GREEN);
-				buttonSwitch.setBorder(BorderFactory.createCompoundBorder(
-				               BorderFactory.createLineBorder(Color.CYAN, 1),
-				               BorderFactory.createLineBorder(Color.BLACK, 1)));
-				
-				ActionSwitchZZZ actionSwitch = new ActionSwitchZZZ(objKernel, this, groupc);
-				buttonSwitch.addActionListener(actionSwitch);								
+				JButton buttonSwitch = JComponentGroupHelperZZZ.createButtonSwitch(objKernel, this, groupc);								
 				this.setComponent(KernelJPanelCascadedZZZ.sBUTTON_SWITCH, buttonSwitch);									
 				this.add(buttonSwitch, cc.xyw(iStartingColumn,iStartingRow,1));
 				

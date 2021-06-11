@@ -997,11 +997,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 										
 				//######## Das UI gestalten. Die Reihenfolge der Componenten ist wichtig für die Reihenfolge im UI #################
 				//++++ Der Umschaltebutton
-				String sLabelButton = ">";//this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButton").getValue();
-				JButton buttonSwitch = new JButton(sLabelButton);	
-							
-				ActionSwitchZZZ actionSwitch = new ActionSwitchZZZ(objKernel, this, groupc);
-				buttonSwitch.addActionListener(actionSwitch);								
+				JButton buttonSwitch = JComponentGroupHelperZZZ.createButtonSwitch(objKernel, this, groupc);						
 				this.setComponent(KernelJPanelCascadedZZZ.sBUTTON_SWITCH, buttonSwitch);				
 				this.add(buttonSwitch);
 				

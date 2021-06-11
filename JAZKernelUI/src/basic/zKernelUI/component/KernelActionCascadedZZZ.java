@@ -16,10 +16,10 @@ import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
 
 public abstract class KernelActionCascadedZZZ extends KernelUseObjectZZZ  implements ActionListener, IButtonEventZZZ, IActionCascadedZZZ {
-	private KernelJPanelCascadedZZZ panelParent;
+	private IPanelCascadedZZZ panelParent;
 	
 	
-	public KernelActionCascadedZZZ(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent) throws ExceptionZZZ{
+	public KernelActionCascadedZZZ(IKernelZZZ objKernel, IPanelCascadedZZZ panelParent) throws ExceptionZZZ{
 		super(objKernel);
 		this.panelParent = panelParent;	
 	}
@@ -45,11 +45,11 @@ public abstract class KernelActionCascadedZZZ extends KernelUseObjectZZZ  implem
 		}
 	}
 
-	public KernelJPanelCascadedZZZ getPanelParent() {
+	public IPanelCascadedZZZ getPanelParent() {
 		return this.panelParent;
 	}
 
-	public void setPanelParent(KernelJPanelCascadedZZZ objPanel) {
+	public void setPanelParent(IPanelCascadedZZZ objPanel) {
 		this.panelParent = objPanel;
 	}
 	

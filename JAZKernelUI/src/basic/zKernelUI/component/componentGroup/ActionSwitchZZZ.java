@@ -11,6 +11,7 @@ import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zKernel.IKernelZZZ;
+import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelActionCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.thread.KernelSwingWorkerZZZ;
@@ -20,7 +21,7 @@ public class ActionSwitchZZZ extends  KernelActionCascadedZZZ implements IEventB
 	private JComponentGroupCollectionZZZ groupc;//zur Verwaltung von HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmIndexed
 	ISenderComponentGroupSwitchZZZ objEventBroker;
 	
-	public ActionSwitchZZZ(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent, JComponentGroupCollectionZZZ groupc) throws ExceptionZZZ{
+	public ActionSwitchZZZ(IKernelZZZ objKernel, IPanelCascadedZZZ panelParent, JComponentGroupCollectionZZZ groupc) throws ExceptionZZZ{
 		super(objKernel, panelParent);
 		ActionSwitchNew_(groupc);
 	}
