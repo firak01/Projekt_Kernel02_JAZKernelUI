@@ -47,6 +47,7 @@ import basic.zKernelUI.component.componentGroup.IModelComponentGroupValueZZZ;
 import basic.zKernelUI.component.componentGroup.IListenerComponentGroupSwitchZZZ;
 import basic.zKernelUI.component.componentGroup.ISenderComponentGroupSwitchZZZ;
 import basic.zKernelUI.component.componentGroup.JComponentGroupCollectionZZZ;
+import basic.zKernelUI.component.componentGroup.JComponentGroupHelperZZZ;
 import basic.zKernelUI.component.componentGroup.JComponentGroupZZZ;
 import basic.zKernelUI.component.componentGroup.KernelSenderComponentGroupSwitchZZZ;
 import basic.zKernelUI.component.componentGroup.ModelPanelDebugZZZ;
@@ -289,10 +290,7 @@ public class PanelDebugButtonSwitchLabelGroup_NORTHZZZ extends KernelJPanelCasca
 		//######## Das UI gestalten. Die Reihenfolge der Componenten ist wichtig für die Reihenfolge im UI #################
 		//++++ Die Buttons
 		String sLabelButton = this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButtonRow3").getValue();
-		JButton buttonSwitch = new JButton(sLabelButton);			
-		ActionSwitchZZZ actionSwitch = new ActionSwitchZZZ(objKernel, this, groupc);			
-		buttonSwitch.addActionListener(actionSwitch);
-		
+		JButton buttonSwitch = JComponentGroupHelperZZZ.createButtonSwitch(objKernel, panel, groupc, sLabelButton);
 		this.setComponent(PanelDebugButtonSwitchLabelGroup_NORTHZZZ.sBUTTON_SWITCH+"_03", buttonSwitch);
 		gbc.gridx = 1;
 		this.add(buttonSwitch,gbc);

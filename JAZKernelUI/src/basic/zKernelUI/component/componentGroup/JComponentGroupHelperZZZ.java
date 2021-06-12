@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
+import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasicUI.component.UIHelper;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;
@@ -22,7 +23,20 @@ public class JComponentGroupHelperZZZ {
 		JButton objReturn = null;
 		main:{
 			String sLabelButton = ">";//this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButton").getValue();
-			
+			objReturn = JComponentGroupHelperZZZ.createButtonSwitch(objKernel, panel, groupc, sLabelButton);	
+		}				
+		return objReturn;		
+	}
+	
+	public static JButton createButtonSwitch(IKernelZZZ objKernel, IPanelCascadedZZZ panel, JComponentGroupCollectionZZZ groupc, String sLabelButtonIn) throws ExceptionZZZ {
+		JButton objReturn = null;
+		main:{
+			String sLabelButton;
+			if(StringZZZ.isEmpty(sLabelButtonIn)) {
+				sLabelButton = ">";//this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButton").getValue();
+			}else {
+				sLabelButton=sLabelButtonIn;
+			}
 			Font font = new Font("TAHOMA",Font.BOLD,9);				
 			objReturn = UIHelper.createButton(sLabelButton, font);
 			objReturn.setPreferredSize(new Dimension(20, 20));
@@ -36,6 +50,9 @@ public class JComponentGroupHelperZZZ {
 		}				
 		return objReturn;		
 	}
+	
+	
+	
 //	public static boolean setVisible(ArrayList<JComponentGroupZZZ>listaGroup, int iIndexInitial) throws ExceptionZZZ {
 //		boolean bReturn = false;
 //		
