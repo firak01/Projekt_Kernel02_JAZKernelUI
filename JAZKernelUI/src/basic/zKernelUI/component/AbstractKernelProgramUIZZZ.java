@@ -121,7 +121,12 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 				if(textField!=null) {
 					textField.setText(sText2Update);
 					
-					JTextFieldHelperZZZ.markAndFocus(textField);//Merke: Jetzt den Cursor noch verändern macht dies wieder rückgängig.										
+					JTextFieldHelperZZZ.markAndFocus(textField);//Merke: Jetzt den Cursor noch verändern macht dies wieder rückgängig.
+					
+					getPanelParent().revalidate();
+					getPanelParent().repaint();
+				}else {
+					ReportLogZZZ.write(ReportLogZZZ.DEBUG, "JTextField '" + sTextfield4Update + "' NOT FOUND!!!");
 				}
 			}
 		};
