@@ -100,7 +100,7 @@ public class ModelPanelDebugZZZ extends AbstractModelComponentGroupZZZ{
 							sProgram = StringZZZ.right(sProgram, "."); //Weil ggfs. der Packagename auch im Programnamen enthalten ist.
 							sProgram = "... ."+ sProgram;
 						}
-						sProgram = StringZZZ.abbreviateDynamic(sProgram, iLengthDefault);
+						//sProgram = StringZZZ.abbreviateDynamic(sProgram, iLengthDefault);
 						
 						listaTitle.add("Program: " + sProgram);
 						hmReturn.put(listaTitle);
