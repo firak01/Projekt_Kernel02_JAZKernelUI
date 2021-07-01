@@ -335,18 +335,20 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			
 			//Hier nun die Panels hinzufuegen, aber nur, wenn sie nicht schon hinzugefuegt worden sind
 			//Merke: Die Panels sollten noch nicht im Konstruktor der Klasse hinzugefuegt werden, weil man sonst schwerer eigenschaften wie "Button-Text" aendern kann.
-			//          So kann man erst das Objekt erzeugen und dann mit "setText4ButtonOk" den Button-Text aendern, der dann mit showDialog() angezeigt wird.			
-			if(this.bPanelCenterAdded==false){
-				KernelJPanelCascadedZZZ panelContent = (KernelJPanelCascadedZZZ) this.createPanelContent();
-				this.setPanelContent(panelContent);
-				this.addPanelCenter(panelContent);
-			}
+			//          So kann man erst das Objekt erzeugen und dann mit "setText4ButtonOk" den Button-Text aendern, der dann mit showDialog() angezeigt wird.
 			
-			if(this.bPanelButtonAdded==false){
-				KernelJPanelCascadedZZZ panelButton = (KernelJPanelCascadedZZZ) this.createPanelButton();
-				this.setPanelButton(panelButton);
-				this.addPanelButton(panelButton); //null soll bewirken, dass das default ButtonPanel hinzugef�gt wird.
-			}  
+//TODOGOON 20210701: Zum Vereinfachten Debuggen die anderen Panels rausgenommen			
+//			if(this.bPanelCenterAdded==false){
+//				KernelJPanelCascadedZZZ panelContent = (KernelJPanelCascadedZZZ) this.createPanelContent();
+//				this.setPanelContent(panelContent);
+//				this.addPanelCenter(panelContent);
+//			}
+//			
+//			if(this.bPanelButtonAdded==false){
+//				KernelJPanelCascadedZZZ panelButton = (KernelJPanelCascadedZZZ) this.createPanelButton();
+//				this.setPanelButton(panelButton);
+//				this.addPanelButton(panelButton); //null soll bewirken, dass das default ButtonPanel hinzugef�gt wird.
+//			}  
 			
 			if(this.bPanelNavigatorAdded==false) {
 				KernelJPanelCascadedZZZ panelNavigator = (KernelJPanelCascadedZZZ) this.createPanelNavigator();
