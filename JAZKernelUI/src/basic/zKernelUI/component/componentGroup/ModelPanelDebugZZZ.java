@@ -38,8 +38,23 @@ public class ModelPanelDebugZZZ extends AbstractModelComponentGroupZZZ{
 	
 	@Override
 	public HashMapIndexedZZZ<Integer,ArrayList<String>>createValuesText(String sTitle, IPanelCascadedZZZ panel, int iIndexInCollection) throws ModelComponentGroupExceptionZZZ{
+		/* 20210702 WICHTIG, MERKE:
+		 * Hier unbeding einen Eintrag in der Liste erzeugen, auch für die "nicht gefunden" Fälle.
+		 *  
+		 * Grund: Auch ein Dummy-Eintrag in der Liste erzeugt immer die Komponente, bzw. die ComponentGroup.
+		 *        Falls nun das Modell später doch einen "echten Wert" findet, dann ist die Komponnente/ComponentGroup schon da
+		 *        und kann mit dem korrekten Wert gefüllt werden.
+		 * Beispiel: 
+		 * Beim Erstellen eines Panels wird ja erst das Flag ISKERNELPROGRAM im Konstruktor erst erstellt.
+		 * D.h. bis dahin wird kein Program / Programalias gefunden.
+		 * Die ComponentGroup wird aber ggfs. danach erstellt, es würde also ggfs. keine erstellt, wenn nicht ein Dummy-Eintrag als Platzhalter eingefügt wird.
+		 * 
+		 * Beim Clicken auf den "Weiterschaltbutton" wird dann  jeweils das Modell für die ComponentGroups neu errechnet.
+		 * Hier ist dann ggfs. das Flag ISKERNELPROGRAM schon gesetzt. 
+		 * Damit würde der korrekte Programname/Alias verwendet und der zuvor gesetzte Dummy-Eintrag aktualisiert.
+		 */
 		HashMapIndexedZZZ<Integer,ArrayList<String>> hmReturn = null; 
-				
+			
 		String stemp;
 		main:{	
 			try {
@@ -86,6 +101,9 @@ public class ModelPanelDebugZZZ extends AbstractModelComponentGroupZZZ{
 						listaTest.add("TEST");
 						listaTest.add("Ein Testwert");
 						hmReturn.put(listaTest);						
+					}else {
+						listaTitle.add("Module: Not configured");
+						hmReturn.put(listaTitle);
 					}
 				}
 				break;
@@ -127,6 +145,9 @@ public class ModelPanelDebugZZZ extends AbstractModelComponentGroupZZZ{
 						
 						listaTitle.add("ProgramAlias: " + sProgramAlias);
 						hmReturn.put(listaTitle);				
+					}else {
+						listaTitle.add("ProgramAlias: Not configured");
+						hmReturn.put(listaTitle);
 					}
 					}catch(ExceptionZZZ ez) {						
 					}

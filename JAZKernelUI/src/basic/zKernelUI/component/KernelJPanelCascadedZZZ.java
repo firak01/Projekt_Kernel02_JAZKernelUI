@@ -72,8 +72,8 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	
 	private ListenerMouseMove4DragableWindowZZZ listenerDraggableWindow = null; 
 
-	private String sProgramName  = null; //ggf. der Name des Elternprogramms, s. KernelKonfiguration
-	private String sProgramAlias = null; //ggf. der Alias des Elternprogramms, s. KernelKonfiguration
+	protected String sProgramName  = null; //ggf. der Name des Elternprogramms, s. KernelKonfiguration
+	protected String sProgramAlias = null; //ggf. der Alias des Elternprogramms, s. KernelKonfiguration
 	
 	/**20130721: Umgestellt auf HashMap und die Enum-Flags, Compiler auf 1.7 geaendert
 	 * 
