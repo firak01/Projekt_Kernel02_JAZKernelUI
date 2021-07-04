@@ -522,7 +522,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			}//end main:
 			return sReturn;
 		}
-
+				
 		/* (non-Javadoc)
 		 * @see basic.zKernel.IKernelModuleUserZZZ#getProgramAlias()
 		 */
@@ -542,6 +542,15 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			}//end main:
 			return sReturn;
 		}
+		
+		/* (non-Javadoc)
+		 * @see basic.zKernel.component.IKernelProgramZZZ#resetProgramUsed()
+		 */
+		public void resetProgramUsed() {
+			this.sProgramName = null;
+			this.sProgramAlias = null;
+		}
+
 
 
 	//#################### Interface IObjectZZZ
@@ -954,6 +963,13 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			}								
 		}//end main:		
 		return sReturn;
+	}
+	
+	/* (non-Javadoc)
+	 * @see basic.zKernel.component.IKernelModuleZZZ#resetModuleUsed()
+	 */
+	public void resetModuleUsed() {
+		this.sModuleName = null;
 	}
 	
 	//#### IComponentCascadedUserZZZ

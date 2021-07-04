@@ -513,6 +513,14 @@ private HashMap<String, Boolean>hmFlagPassed = new HashMap<String, Boolean>();
 		return KernelUIZZZ.getModuleUsedName((IFrameCascadedZZZ)this);
 	}
     
+    /* (non-Javadoc)
+     * @see basic.zKernel.component.IKernelModuleZZZ#resetModuleUsed()
+     */
+    @Override
+    public void resetModuleUsed() {
+    	//Da kein Module - Objekt oder Modulname gespeichert wird, ist hier nix zu tun.
+	   }
+    
 	//#######################################
 	//### Getter / Setter
 	public boolean isLaunched(){

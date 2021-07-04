@@ -337,7 +337,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			//Merke: Die Panels sollten noch nicht im Konstruktor der Klasse hinzugefuegt werden, weil man sonst schwerer eigenschaften wie "Button-Text" aendern kann.
 			//          So kann man erst das Objekt erzeugen und dann mit "setText4ButtonOk" den Button-Text aendern, der dann mit showDialog() angezeigt wird.
 			
-TODOGOON;// 20210701: Zum Vereinfachten Debuggen die anderen Panels rausgenommen
+		  //TODOGOON;// 20210701: Zum Vereinfachten Debuggen die anderen Panels rausgenommen
          //bzw. Fehler tritt auf wenn anderes Panel eingebunden ist.
 			if(this.bPanelCenterAdded==false){
 				KernelJPanelCascadedZZZ panelContent = (KernelJPanelCascadedZZZ) this.createPanelContent();
@@ -880,20 +880,27 @@ TODOGOON;// 20210701: Zum Vereinfachten Debuggen die anderen Panels rausgenommen
 		public String getModuleName() throws ExceptionZZZ {
 			return KernelUIZZZ.getModuleUsedName(this);
 		}
+	    
+	/* (non-Javadoc)
+	* @see basic.zKernel.component.IKernelModuleZZZ#resetModuleUsed()
+	*/
+	@Override
+	public void resetModuleUsed() {	
+		this.objModule = null; //Da der Modulename nicht gespeichert wird, sondern nur das Modulobjekt
+	}
+	    
 		
-		//### AUS IKernelModuleUserZZZ
-		@Override
-		public IKernelModuleZZZ getModule() throws ExceptionZZZ {
-			if(this.objModule==null && this.getFlagZ(IKernelModuleUserZZZ.FLAGZ.ISKERNELMODULEUSER.name())) {
-				this.objModule = KernelUIZZZ.searchModule(this);
-			}
-			return this.objModule;
+	//### AUS IKernelModuleUserZZZ
+	@Override
+	public IKernelModuleZZZ getModule() throws ExceptionZZZ {
+		if(this.objModule==null && this.getFlagZ(IKernelModuleUserZZZ.FLAGZ.ISKERNELMODULEUSER.name())) {
+			this.objModule = KernelUIZZZ.searchModule(this);
 		}
+		return this.objModule;
+	}
 
-		@Override
-		public void setModule(IKernelModuleZZZ objModule) {
-			this.objModule = objModule;		
-		}	
-		
-		
+	@Override
+	public void setModule(IKernelModuleZZZ objModule) {
+		this.objModule = objModule;		
+	}					
 }
