@@ -111,13 +111,16 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 		this.sTextfield4Update = sComponentName;
 		this.sText2Update = stext;
 		
-//		Das Schreiben des Ergebnisses wieder an den EventDispatcher thread �bergeben
+//		Das Schreiben des Ergebnisses wieder an den EventDispatcher thread uebergeben
 		Runnable runnerUpdateLabel= new Runnable(){
 
 			public void run(){
 //				In das Textfeld den gefundenen Wert eintragen, der Wert ist ganz oben als private Variable deklariert			
 				ReportLogZZZ.write(ReportLogZZZ.DEBUG, "Writing '" + sText2Update + "' to the JTextField '" + sTextfield4Update + "'");				
-				JTextField textField = (JTextField) getPanelParent().getComponent(sTextfield4Update);
+				//JTextField textField = (JTextField) getPanelParent().getComponent(sTextfield4Update);
+				
+				TODOGOON; //20210707: Hier auch in den Nachbarpanels nach dem Feld suchen!!!
+				JTextField textField = (JTextField) getPanelParent().searchComponent(sTextfield4Update);
 				if(textField!=null) {
 					textField.setText(sText2Update);
 					
@@ -126,7 +129,7 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 					getPanelParent().revalidate();
 					getPanelParent().repaint();
 				}else {
-					ReportLogZZZ.write(ReportLogZZZ.DEBUG, "JTextField '" + sTextfield4Update + "' NOT FOUND!!!");
+					ReportLogZZZ.write(ReportLogZZZ.DEBUG, "JTextField '" + sTextfield4Update + "' NOT FOUND in panel '" + getPanelParent().getName() + "' !!!");										
 				}
 			}
 		};
