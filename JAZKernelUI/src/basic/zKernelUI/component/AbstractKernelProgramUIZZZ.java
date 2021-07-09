@@ -119,7 +119,7 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 				ReportLogZZZ.write(ReportLogZZZ.DEBUG, "Writing '" + sText2Update + "' to the JTextField '" + sTextfield4Update + "'");				
 				//JTextField textField = (JTextField) getPanelParent().getComponent(sTextfield4Update);
 				
-				TODOGOON; //20210707: Hier auch in den Nachbarpanels nach dem Feld suchen!!!
+				//20210707: Hier ggfs. auch in den Nachbarpanels nach dem Feld suchen!!!
 				JTextField textField = (JTextField) getPanelParent().searchComponent(sTextfield4Update);
 				if(textField!=null) {
 					textField.setText(sText2Update);

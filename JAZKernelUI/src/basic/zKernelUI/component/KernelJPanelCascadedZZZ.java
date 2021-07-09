@@ -328,21 +328,90 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	public JComponent searchComponent(String sKeyComponent){
 		JComponent objReturn = null;
 		main:{
-			Hashtable<String,JComponent> htComponent = this.getHashtableComponent();
-			objReturn = htComponent.get(sKeyComponent);
-			if(objReturn!=null) break main;
+			objReturn = searchComponent(sKeyComponent, false);
+			if(objReturn!=null)break main;
 			
-			Hashtable<String,IPanelCascadedZZZ> htPanel = this.getHashtablePanel();
-			Set<String> setKey = htPanel.keySet();
-			for(String sKeyPanel : setKey){
-				IPanelCascadedZZZ objPanel = htPanel.get(sKeyPanel);
-				if(objPanel!=null){
-					objReturn = objPanel.searchComponent(sKeyComponent);
-					if(objReturn!=null) break main;
-				}
-			}			
+			objReturn = searchComponent(sKeyComponent, true);			
 		}//end main
 		return objReturn;
+	}
+			
+	public JComponent searchComponent(String sKeyComponent, boolean bInNeighbours){
+		JComponent objReturn = null;
+		main:{
+			if(StringZZZ.isEmpty(sKeyComponent)) break main;
+			
+			if(bInNeighbours) {
+				ArrayList<IPanelCascadedZZZ> listaPanelNeighbour = this.getPanelNeighbours();
+				for(IPanelCascadedZZZ panelNeighbour : listaPanelNeighbour) {
+					if(panelNeighbour!=null){
+						objReturn = panelNeighbour.searchComponent(sKeyComponent, false);
+						if(objReturn!=null) break main;
+					}					
+				}				
+			}else {
+				Hashtable<String,JComponent> htComponent = this.getHashtableComponent();
+				objReturn = htComponent.get(sKeyComponent);
+				if(objReturn!=null) break main;
+				
+				Hashtable<String,IPanelCascadedZZZ> htPanel = this.getHashtablePanel();
+				Set<String> setKey = htPanel.keySet();
+				for(String sKeyPanel : setKey){
+					IPanelCascadedZZZ objPanel = htPanel.get(sKeyPanel);
+					if(objPanel!=null){
+						Hashtable<String,JComponent> htComponentInPanels = this.getHashtableComponent();
+						objReturn = htComponentInPanels.get(sKeyComponent);
+						if(objReturn!=null) break main;
+					}
+				}	
+			}
+			
+		}//end main	
+		return objReturn;
+	}
+	
+	public ArrayList<IPanelCascadedZZZ> getPanelNeighbours() {
+		ArrayList<IPanelCascadedZZZ> listaReturn=new ArrayList<IPanelCascadedZZZ>();
+		main:{
+			IPanelCascadedZZZ panelParent = this.getPanelParent();
+			if(panelParent!=null) {			
+				Hashtable<String,IPanelCascadedZZZ> htPanel = panelParent.getHashtablePanel();
+				Set<String> setKey = htPanel.keySet();
+				for(String sKeyPanel : setKey){
+					IPanelCascadedZZZ objPanel = htPanel.get(sKeyPanel);
+					listaReturn.add(objPanel);
+				}				
+			}else{
+				KernelJDialogExtendedZZZ dialog = this.getDialogParent();
+				if(dialog!=null) {
+					IPanelCascadedZZZ objPanelButton = dialog.getPanelButton();
+					if(objPanelButton != null) {
+						listaReturn.add(objPanelButton);
+					}
+					
+					IPanelCascadedZZZ objPanelNavigator = dialog.getPanelNavigator();
+					if(objPanelNavigator != null) {
+						listaReturn.add(objPanelNavigator);
+					}
+					
+					IPanelCascadedZZZ objPanelContent = dialog.getPanelContent();
+					if(objPanelContent != null) {
+						listaReturn.add(objPanelContent);
+					}					
+				}else {
+					KernelJFrameCascadedZZZ frame = this.getFrameParent();
+					if(frame!=null) {
+						Hashtable<String,IPanelCascadedZZZ> htPanel = frame.getPanelSubAll();
+						Set<String> setKey = htPanel.keySet();
+						for(String sKeyPanel : setKey){
+							IPanelCascadedZZZ objPanel = htPanel.get(sKeyPanel);
+							listaReturn.add(objPanel);
+						}		
+					}
+				}
+			}
+		}
+		return listaReturn;
 	}
 
 	/** JPanel, searches all other parent panels until no more parent panel is available. The last found panel seems to be the root panel for all cascaded panels. 
@@ -446,7 +515,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				if(sAlias.toLowerCase().equals("content")){
 					return panelContent;
 				}else{
-					//Eine tiefergehende Suche m�sste noch entwickelt werden.
+					//Eine tiefergehende Suche muesste noch entwickelt werden.
 					IPanelCascadedZZZ panelNeighbour = panelContent.getPanelSub(sAlias);
 					return panelNeighbour;
 				}

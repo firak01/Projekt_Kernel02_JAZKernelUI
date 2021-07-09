@@ -1,6 +1,8 @@
 package basic.zKernelUI.component;
 
 
+import java.util.Hashtable;
+
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -28,4 +30,7 @@ public interface IPanelCascadedZZZ extends IComponentCascadedUserZZZ, IKernelMod
 	public abstract KernelJDialogExtendedZZZ getDialogParent();
 	
 	public abstract JComponent searchComponent(String sKeyComponent);
+	public abstract JComponent searchComponent(String sKeyComponent, boolean bInNeighbours);
+	
+	public Hashtable<String,IPanelCascadedZZZ> getHashtablePanel();
 }
