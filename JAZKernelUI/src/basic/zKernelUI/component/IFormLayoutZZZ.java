@@ -13,9 +13,14 @@ public interface IFormLayoutZZZ {
 	public abstract boolean initFormLayoutDebug() throws ExceptionZZZ;
 	public abstract boolean initFormLayoutContent() throws ExceptionZZZ;
 	
+	public abstract int getNumberOfRows();
+	public abstract void setNumberOfRows(int iNumberOfRows);
+	
 	public abstract FormLayout buildFormLayoutUsed();
+	public abstract FormLayout buildFormLayoutUsed(int iNumberOfRows);
 	
 	public abstract ArrayList<RowSpec> getRowSpecs();
+	public abstract void setRowSpecs(ArrayList<RowSpec> listaRowSpec);
 	public abstract ArrayList<RowSpec> buildRowSpecs();	
 	public abstract ArrayList<RowSpec> buildRowSpecs(int iNumberOfRows);
 	public abstract RowSpec buildRowSpecDebug();	

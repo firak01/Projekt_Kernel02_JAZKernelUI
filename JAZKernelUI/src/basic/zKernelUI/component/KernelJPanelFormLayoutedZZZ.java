@@ -38,21 +38,34 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 	ArrayList<ColumnSpec> listFormLayoutColumnSpec = null;
 	ArrayList<RowSpec> listFormLayoutRowSpec = null;
 	
+	protected int iNumberOfRows = 2; //Man muss schon beim Erstellen des Layouts wissen wieviele Zeilen vorhanden sein sollen.
+	                       //Da dies ggfs. nicht statisch definiert sein kann, diese Variable verwenden.
+	
 	public KernelJPanelFormLayoutedZZZ() {
 		super();
 	}
 	
 	public KernelJPanelFormLayoutedZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended) throws ExceptionZZZ{
 		super(objKernel, dialogExtended);
-		KernelJPanelFormLayoutedNew_(this);
+		KernelJPanelFormLayoutedNew_(this,2);//HIER DAS MODELL ÜBERGEBEN UND NICHT 2
 	}
 	
 	public KernelJPanelFormLayoutedZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended, KernelJPanelCascadedZZZ panelRoot) throws ExceptionZZZ{
 		super(objKernel, dialogExtended);
-		KernelJPanelFormLayoutedNew_(panelRoot);
+		KernelJPanelFormLayoutedNew_(panelRoot,2);
 	}
 	
-	private boolean KernelJPanelFormLayoutedNew_(KernelJPanelCascadedZZZ panelRoot) throws ExceptionZZZ{
+	public KernelJPanelFormLayoutedZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended, int iNumberOfRows) throws ExceptionZZZ{
+		super(objKernel, dialogExtended);
+		KernelJPanelFormLayoutedNew_(this,iNumberOfRows);
+	}
+	
+	public KernelJPanelFormLayoutedZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended, KernelJPanelCascadedZZZ panelRoot, int iNumberOfRows) throws ExceptionZZZ{
+		super(objKernel, dialogExtended);
+		KernelJPanelFormLayoutedNew_(panelRoot,iNumberOfRows);
+	}
+	
+	private boolean KernelJPanelFormLayoutedNew_(KernelJPanelCascadedZZZ panelRoot,int iNumberOfRows) throws ExceptionZZZ{
 		boolean bReturn = false;
 		main:{
 			//##################################################################
@@ -76,10 +89,24 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 			////	 RowSpec.parse("14dlu:0");
 			////	 RowSpec.parse("center:14dlu:0");
 			//layout.insertRow(1, rs);//RowIndex beginnt mit 1						
+			
+			this.iNumberOfRows = iNumberOfRows;
 		}//end main:
 		return bReturn;
 	}
 	
+
+
+
+	@Override
+	public int getNumberOfRows() {		
+		return this.iNumberOfRows;
+	}
+	@Override
+	public void setNumberOfRows(int iNumberOfRows) {
+		this.iNumberOfRows = iNumberOfRows;
+	}
+		
 	public int computeContentRowNumberUsed(int iRow) {
 		int iReturn=0;
 		main:{
@@ -146,7 +173,7 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 			//"5dlu, center:10dlu, 5dlu"); 
 			
 			if(this.formLayoutUsed==null) {
-				this.formLayoutUsed = this.buildFormLayoutUsed();
+				this.formLayoutUsed = this.buildFormLayoutUsed(); //
 			}
 			return this.formLayoutUsed;
 		}
@@ -154,8 +181,19 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 		public void setFormLayoutUsed(FormLayout formLayout) {
 			this.formLayoutUsed = formLayout;
 		}
+		
 		@Override
 		public FormLayout buildFormLayoutUsed() {
+			FormLayout objReturn = new FormLayout();
+			main:{
+				objReturn = this.buildFormLayoutUsed(this.getNumberOfRows());
+			}//end main;
+			return objReturn;
+		}
+		
+
+		@Override
+		public FormLayout buildFormLayoutUsed(int iNumberOfRows) {
 			FormLayout objReturn = new FormLayout();
 			main:{
 				//+++ Spalten
@@ -167,16 +205,17 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 				}
 				
 				//+++ Zeilen
-				ArrayList<RowSpec> listRow = this.getRowSpecs();
-				if(listRow!=null) {
-					for(RowSpec row:listRow) {
+				ArrayList<RowSpec> listaRowSpec = this.buildRowSpecs(iNumberOfRows);
+				this.setRowSpecs(listaRowSpec);
+				if(listaRowSpec!=null) {
+					for(RowSpec row:listaRowSpec) {
 						objReturn.appendRow(row);
 					}
 				}
 				
 				if(this.getFlag(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())) {					
 					RowSpec rowSpecDebug = this.buildRowSpecDebug();
-					if(rowSpecDebug!=null && listRow!=null) {				
+					if(rowSpecDebug!=null && listaRowSpec!=null) {				
 						objReturn.insertRow(1, rowSpecDebug);//RowIndex beginnt mit 1
 					}
 				}							
@@ -198,6 +237,11 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 				this.listFormLayoutRowSpec = this.buildRowSpecs();
 			}
 			return this.listFormLayoutRowSpec;
+		}
+		
+		@Override
+		public void setRowSpecs(ArrayList<RowSpec> listaRowSpec) {
+			this.listFormLayoutRowSpec = listaRowSpec;
 		}
 			
 		@Override
@@ -308,9 +352,36 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 			return bReturn;		
 		}		
 		
+		
+		/* Das Erstellen der Zeilen für eine ggfs. vorher ermittelte "dynamische" Anzahl an Einträgen	
+		 * 	  
+		 * (non-Javadoc)
+		 * @see basic.zKernelUI.component.IFormLayoutZZZ#buildRowSpecs(int)
+		 */
+		@Override
+		public ArrayList<RowSpec> buildRowSpecs(int iNumberOfRows) {
+			ArrayList<RowSpec>listReturn=new ArrayList<RowSpec>();
+			main:{
+				//NEIN: DIE DEBUGZEILE WIRD AM SCHLUSS EH DRAUFGERECHNET in:  .buildFormLayoutUsed(int iNumberOfRows)
+				//int iNumberOfRowsUsed = this.computeContentRowNumberUsed(iNumberOfRows);//Hier wird ggfs. noch eine DebugZeile draufgerechnet.
+				
+				iNumberOfRows = 2; 
+				TODOGOON; //20210731 MODELL HER zur Berechnung der Zeilen
+				
+				int iIndexOld = 0; int iIndexNew = 0;
+				for(int icount=1;icount<=iNumberOfRows;icount++) {
+					ArrayList<RowSpec>listTemp=this.buildRowSpecs();					
+					listReturn.addAll(iIndexOld, listTemp);
+					iIndexNew = listTemp.size();
+					iIndexOld = iIndexOld + iIndexNew;
+				}
+				
+			}//end main:
+			return listReturn;
+		}
+		
 		//+++ von den eingentlichen Klassen zu implementieren
-		public abstract ArrayList<RowSpec> buildRowSpecs();
-		public abstract ArrayList<RowSpec> buildRowSpecs(int iNumberOfRows);
+		public abstract ArrayList<RowSpec> buildRowSpecs();		
 		public abstract ArrayList<ColumnSpec> buildColumnSpecs();
 		public abstract boolean fillRowContent(CellConstraints cc, int iRow) throws ExceptionZZZ;
 		
