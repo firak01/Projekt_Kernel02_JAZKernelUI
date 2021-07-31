@@ -310,6 +310,7 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 		
 		//+++ von den eingentlichen Klassen zu implementieren
 		public abstract ArrayList<RowSpec> buildRowSpecs();
+		public abstract ArrayList<RowSpec> buildRowSpecs(int iNumberOfRows);
 		public abstract ArrayList<ColumnSpec> buildColumnSpecs();
 		public abstract boolean fillRowContent(CellConstraints cc, int iRow) throws ExceptionZZZ;
 		

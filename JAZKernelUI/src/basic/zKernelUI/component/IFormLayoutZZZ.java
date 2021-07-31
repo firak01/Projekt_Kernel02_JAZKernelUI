@@ -17,6 +17,7 @@ public interface IFormLayoutZZZ {
 	
 	public abstract ArrayList<RowSpec> getRowSpecs();
 	public abstract ArrayList<RowSpec> buildRowSpecs();	
+	public abstract ArrayList<RowSpec> buildRowSpecs(int iNumberOfRows);
 	public abstract RowSpec buildRowSpecDebug();	
 	
 	public abstract ArrayList<ColumnSpec> getColumnSpecs();
