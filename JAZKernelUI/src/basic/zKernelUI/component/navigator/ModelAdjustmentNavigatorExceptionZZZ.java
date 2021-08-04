@@ -1,4 +1,4 @@
-package basic.zKernelUI.component.adjustmentNavigator;
+package basic.zKernelUI.component.navigator;
 
 import basic.zBasic.ExceptionZZZ;
 

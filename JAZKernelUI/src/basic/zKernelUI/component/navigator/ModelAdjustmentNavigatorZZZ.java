@@ -1,4 +1,4 @@
-package basic.zKernelUI.component.adjustmentNavigator;
+package basic.zKernelUI.component.navigator;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -16,7 +16,7 @@ import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.component.model.ModelComponentHelperZZZ;
 
-public class ModelAdjustmentNavigatorZZZ extends AbstractModelAdjustmentNavigatorZZZ{	
+public class ModelAdjustmentNavigatorZZZ extends AbstractModelNavigatorZZZ{	
 	public ModelAdjustmentNavigatorZZZ() {	
 		super();
 	}
@@ -31,7 +31,7 @@ public class ModelAdjustmentNavigatorZZZ extends AbstractModelAdjustmentNavigato
 		
 	//##############################
 	@Override
-	public IModelAdjustmentNavigatorValueZZZ createModelForNavigator(String sTitle, IPanelCascadedZZZ panelParent, int iIndexInGroupCollection) throws ModelAdjustmentNavigatorExceptionZZZ, ExceptionZZZ {
+	public IModelNavigatorValueZZZ createModelForNavigator(String sTitle, IPanelCascadedZZZ panelParent, int iIndexInGroupCollection) throws ModelAdjustmentNavigatorExceptionZZZ, ExceptionZZZ {
 		 return new ModelAdjustmentNavigatorZZZ(this.getKernelObject(),sTitle, panelParent, iIndexInGroupCollection); 
 	}
 	

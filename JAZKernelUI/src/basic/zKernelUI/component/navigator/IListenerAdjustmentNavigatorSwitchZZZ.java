@@ -1,4 +1,4 @@
-package basic.zKernelUI.component.adjustmentNavigator;
+package basic.zKernelUI.component.navigator;
 
 import java.util.ArrayList;
 import java.util.EventListener;
@@ -50,8 +50,8 @@ public interface IListenerAdjustmentNavigatorSwitchZZZ extends EventListener{
 	public abstract String getGroupTitle();
 	public abstract void setGroupTitle(String sTitle);
 	
-	public IModelAdjustmentNavigatorValueZZZ getComponentValueProvider();
-	public void setComponentValueProvider(IModelAdjustmentNavigatorValueZZZ objComponentValueProvider);
+	public IModelNavigatorValueZZZ getComponentValueProvider();
+	public void setComponentValueProvider(IModelNavigatorValueZZZ objComponentValueProvider);
 	public HashMapIndexedZZZ<Integer,ArrayList<String>> getComponentValuesCustom() throws ExceptionZZZ; 
 	
 }

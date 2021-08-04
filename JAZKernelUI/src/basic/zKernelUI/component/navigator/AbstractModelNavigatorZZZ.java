@@ -1,4 +1,4 @@
-package basic.zKernelUI.component.adjustmentNavigator;
+package basic.zKernelUI.component.navigator;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,13 +18,13 @@ import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.component.model.ModelComponentHelperZZZ;
 import debug.zKernelUI.component.buttonSwitchLabelGroup.ModelRow2ZZZ;
 
-public abstract class AbstractModelAdjustmentNavigatorZZZ extends KernelUseObjectZZZ  implements IModelAdjustmentNavigatorValueZZZ{
+public abstract class AbstractModelNavigatorZZZ extends KernelUseObjectZZZ  implements IModelNavigatorValueZZZ{
 	protected String sTitle=null;
 	protected IPanelCascadedZZZ panelParent;
 	protected int iIndexInCollection=-1;	
 	protected HashMapIndexedZZZ<Integer,ArrayList<JComponent>>hmComponent=null; //Die HashMap mit dem Index für die Gruppe und der ArrayList der Komponenten der Gruppe
 		
-	public AbstractModelAdjustmentNavigatorZZZ() {		
+	public AbstractModelNavigatorZZZ() {		
 		super();
 		AbstractModelComponentGroupNew_(null, null, -1);
 	}
@@ -41,7 +41,7 @@ public abstract class AbstractModelAdjustmentNavigatorZZZ extends KernelUseObjec
 	 * @throws ExceptionZZZ
 	 * 19.05.2021, 08:52:40, Fritz Lindhauer
 	 */
-	public AbstractModelAdjustmentNavigatorZZZ(IKernelZZZ objKernel) throws ModelAdjustmentNavigatorExceptionZZZ, ExceptionZZZ {		
+	public AbstractModelNavigatorZZZ(IKernelZZZ objKernel) throws ModelAdjustmentNavigatorExceptionZZZ, ExceptionZZZ {		
 		super(objKernel);
 		AbstractModelComponentGroupNew_(null, null, -1);
 	}
@@ -54,7 +54,7 @@ public abstract class AbstractModelAdjustmentNavigatorZZZ extends KernelUseObjec
 	 * @throws ExceptionZZZ
 	 * 19.05.2021, 08:49:03, Fritz Lindhauer
 	 */
-	public AbstractModelAdjustmentNavigatorZZZ(IKernelZZZ objKernel, String sTitle, IPanelCascadedZZZ panelParent) throws ExceptionZZZ, ModelAdjustmentNavigatorExceptionZZZ {
+	public AbstractModelNavigatorZZZ(IKernelZZZ objKernel, String sTitle, IPanelCascadedZZZ panelParent) throws ExceptionZZZ, ModelAdjustmentNavigatorExceptionZZZ {
 		super(objKernel);
 		AbstractModelComponentGroupNew_(sTitle, panelParent, -1);
 	}
@@ -66,7 +66,7 @@ public abstract class AbstractModelAdjustmentNavigatorZZZ extends KernelUseObjec
 	 * @throws ExceptionZZZ
 	 * 19.05.2021, 08:49:03, Fritz Lindhauer
 	 */
-	public AbstractModelAdjustmentNavigatorZZZ(IKernelZZZ objKernel, String sTitle, IPanelCascadedZZZ panelParent, int iIndexInCollection) throws ExceptionZZZ, ModelAdjustmentNavigatorExceptionZZZ {
+	public AbstractModelNavigatorZZZ(IKernelZZZ objKernel, String sTitle, IPanelCascadedZZZ panelParent, int iIndexInCollection) throws ExceptionZZZ, ModelAdjustmentNavigatorExceptionZZZ {
 		super(objKernel);
 		AbstractModelComponentGroupNew_(sTitle, panelParent, iIndexInCollection);
 	}
@@ -120,7 +120,7 @@ public abstract class AbstractModelAdjustmentNavigatorZZZ extends KernelUseObjec
 	}
 	
 	//Im Fall einer GroupCollection, die auf einem Modell basiert...
-	public ArrayList<JAdjustmentNavigatorZZZ>createComponentGroupArrayList() throws ModelAdjustmentNavigatorExceptionZZZ, ExceptionZZZ{
+	public ArrayList<INavigatorElementZZZ>createComponentArrayList() throws ModelAdjustmentNavigatorExceptionZZZ, ExceptionZZZ{
 		ArrayList<JAdjustmentNavigatorZZZ>listaReturn = null;
 		main:{
 			HashMapIndexedZZZ<Integer,ArrayList<JComponent>>hmComponent = this.getComponentHashMap();
@@ -139,7 +139,7 @@ public abstract class AbstractModelAdjustmentNavigatorZZZ extends KernelUseObjec
 				
 				//20210518 Das Objekt der verwendeten Modelklasse hier nun jeweils passend erzeugen.
 				//IComponentValueModelZZZ objValueProvider = new Row2ModelZZZ(this.getKernelObject(),"row2",this.getPanelParent(), iIndex); //Diese Modell wird bei jedem "Click" in dem refresh() aufgerufen.
-				IModelAdjustmentNavigatorValueZZZ objValueProvider = this.createModelForNavigator(this.getTitle(), this.getPanelParent(), iIndexInGroupCollection);
+				IModelNavigatorValueZZZ objValueProvider = this.createModelForNavigator(this.getTitle(), this.getPanelParent(), iIndexInGroupCollection);
 				JAdjustmentNavigatorZZZ grouptemp = new JAdjustmentNavigatorZZZ(this.getKernelObject(), sIndexAsAlias, objValueProvider,listaComponenttemp);
 				if(grouptemp.hasAnyComponentAdded()) {				
 					listaReturn.add(grouptemp);
@@ -182,5 +182,5 @@ public abstract class AbstractModelAdjustmentNavigatorZZZ extends KernelUseObjec
 	public abstract HashMapIndexedZZZ<Integer,ArrayList<String>>createValuesText(String sTitle, IPanelCascadedZZZ panel, int iIndexInCollection) throws ModelAdjustmentNavigatorExceptionZZZ;			
 	
 	//Diese Modell wird bei jedem "Click" in dem refresh() aufgerufen.
-	public abstract IModelAdjustmentNavigatorValueZZZ createModelForNavigator(String sTitle, IPanelCascadedZZZ panelParent, int iIndexInGroupCollection) throws ModelAdjustmentNavigatorExceptionZZZ, ExceptionZZZ; 
+	public abstract IModelNavigatorValueZZZ createModelForNavigator(String sTitle, IPanelCascadedZZZ panelParent, int iIndexInGroupCollection) throws ModelAdjustmentNavigatorExceptionZZZ, ExceptionZZZ; 
 }

@@ -1,4 +1,4 @@
-package basic.zKernelUI.component.adjustmentNavigator;
+package basic.zKernelUI.component.navigator;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ public class JAdjustmentNavigatorZZZ extends KernelUseObjectZZZ implements IList
 	private IPanelCascadedZZZ panelParent=null;
 	private String sAlias=null;
 	private String sTitle=null;
-	private IModelAdjustmentNavigatorValueZZZ objValueProvider=null;
+	private IModelNavigatorValueZZZ objValueProvider=null;
 	private EventAdjustmentNavigatorSwitchZZZ eventPrevious=null;
 	private boolean bAnyComponentAdded=false;
 	
@@ -34,12 +34,12 @@ public class JAdjustmentNavigatorZZZ extends KernelUseObjectZZZ implements IList
 		super(objKernel);
 		JComponentGroupNew_(sAlias, null, sTitle, panelParent, listaComponent);
 	}
-	public JAdjustmentNavigatorZZZ(IKernelZZZ objKernel, String sAlias, IModelAdjustmentNavigatorValueZZZ objValueProvider, ArrayList<JComponent>listaComponent) throws ExceptionZZZ {
+	public JAdjustmentNavigatorZZZ(IKernelZZZ objKernel, String sAlias, IModelNavigatorValueZZZ objValueProvider, ArrayList<JComponent>listaComponent) throws ExceptionZZZ {
 		super(objKernel);
 		JComponentGroupNew_(sAlias, objValueProvider, null, null, listaComponent);
 	}
 		
-	private boolean JComponentGroupNew_(String sAlias, IModelAdjustmentNavigatorValueZZZ objComponentValueProvider, String sTitle, IPanelCascadedZZZ panelParent, ArrayList<JComponent>listaComponent) {
+	private boolean JComponentGroupNew_(String sAlias, IModelNavigatorValueZZZ objComponentValueProvider, String sTitle, IPanelCascadedZZZ panelParent, ArrayList<JComponent>listaComponent) {
 		boolean bReturn = false;
 		main:{
 			this.setGroupAlias(sAlias);
@@ -207,7 +207,7 @@ public class JAdjustmentNavigatorZZZ extends KernelUseObjectZZZ implements IList
 	}
 	@Override
 	public HashMapIndexedZZZ<Integer, ArrayList<String>> getComponentValuesCustom() throws ExceptionZZZ {
-		IModelAdjustmentNavigatorValueZZZ objValueProvider = this.getComponentValueProvider();
+		IModelNavigatorValueZZZ objValueProvider = this.getComponentValueProvider();
 		if(objValueProvider!=null) {
 			HashMapIndexedZZZ<Integer, ArrayList<String>> hmValuesCustom = objValueProvider.getNavigatorValues();
 			return hmValuesCustom;
@@ -216,11 +216,11 @@ public class JAdjustmentNavigatorZZZ extends KernelUseObjectZZZ implements IList
 		}
 	}
 	@Override
-	public IModelAdjustmentNavigatorValueZZZ getComponentValueProvider() {
+	public IModelNavigatorValueZZZ getComponentValueProvider() {
 		return this.objValueProvider;
 	}
 	@Override
-	public void setComponentValueProvider(IModelAdjustmentNavigatorValueZZZ objComponentValueProvider) {
+	public void setComponentValueProvider(IModelNavigatorValueZZZ objComponentValueProvider) {
 		this.objValueProvider = objComponentValueProvider;
 	}
 		
