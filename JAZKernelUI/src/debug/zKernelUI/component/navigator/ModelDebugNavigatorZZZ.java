@@ -21,7 +21,7 @@ import basic.zKernelUI.component.model.ModelComponentHelperZZZ;
 import basic.zKernelUI.component.navigator.AbstractModelNavigatorZZZ;
 import basic.zKernelUI.component.navigator.IModelNavigatorValueZZZ;
 import basic.zKernelUI.component.navigator.JAdjustmentNavigatorZZZ;
-import basic.zKernelUI.component.navigator.ModelAdjustmentNavigatorExceptionZZZ;
+import basic.zKernelUI.component.navigator.ModelNavigatorExceptionZZZ;
 
 public class ModelDebugNavigatorZZZ extends AbstractModelNavigatorZZZ{	
 	public ModelDebugNavigatorZZZ() {	
@@ -234,14 +234,14 @@ public class ModelDebugNavigatorZZZ extends AbstractModelNavigatorZZZ{
 
 	@Override
 	public ArrayList<JAdjustmentNavigatorZZZ> createAdjustmentNavigatorArrayList()
-			throws ModelAdjustmentNavigatorExceptionZZZ, ExceptionZZZ {
+			throws ModelNavigatorExceptionZZZ, ExceptionZZZ {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public IModelNavigatorValueZZZ createModelForNavigator(String sTitle, IPanelCascadedZZZ panelParent,
-			int iIndexInGroupCollection) throws ModelAdjustmentNavigatorExceptionZZZ, ExceptionZZZ {
+			int iIndexInGroupCollection) throws ModelNavigatorExceptionZZZ, ExceptionZZZ {
 		// TODO Auto-generated method stub
 		return null;
 	}	

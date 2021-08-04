@@ -25,18 +25,18 @@ public class ModelAdjustmentNavigatorZZZ extends AbstractModelNavigatorZZZ{
 		super(objKernel, sTitle, panelParent);
 	}
 	
-	public ModelAdjustmentNavigatorZZZ(IKernelZZZ objKernel, String sTitle, IPanelCascadedZZZ panelParent, int iIndexInCollection) throws ModelAdjustmentNavigatorExceptionZZZ, ExceptionZZZ {
+	public ModelAdjustmentNavigatorZZZ(IKernelZZZ objKernel, String sTitle, IPanelCascadedZZZ panelParent, int iIndexInCollection) throws ModelNavigatorExceptionZZZ, ExceptionZZZ {
 		super(objKernel, sTitle,panelParent,iIndexInCollection);
 	}
 		
 	//##############################
 	@Override
-	public IModelNavigatorValueZZZ createModelForNavigator(String sTitle, IPanelCascadedZZZ panelParent, int iIndexInGroupCollection) throws ModelAdjustmentNavigatorExceptionZZZ, ExceptionZZZ {
+	public IModelNavigatorValueZZZ createModelForNavigator(String sTitle, IPanelCascadedZZZ panelParent, int iIndexInGroupCollection) throws ModelNavigatorExceptionZZZ, ExceptionZZZ {
 		 return new ModelAdjustmentNavigatorZZZ(this.getKernelObject(),sTitle, panelParent, iIndexInGroupCollection); 
 	}
 	
 	@Override
-	public HashMapIndexedZZZ<Integer,ArrayList<String>>createValuesText(String sTitle, IPanelCascadedZZZ panel, int iIndexInCollection) throws ModelAdjustmentNavigatorExceptionZZZ{
+	public HashMapIndexedZZZ<Integer,ArrayList<String>>createValuesText(String sTitle, IPanelCascadedZZZ panel, int iIndexInCollection) throws ModelNavigatorExceptionZZZ{
 		/* 20210702 WICHTIG, MERKE:
 		 * Hier unbeding einen Eintrag in der Liste erzeugen, auch für die "nicht gefunden" Fälle.
 		 *  
@@ -157,7 +157,7 @@ public class ModelAdjustmentNavigatorZZZ extends AbstractModelNavigatorZZZ{
 				break main;
 			}
 			}catch(ExceptionZZZ ez) {
-				ModelAdjustmentNavigatorExceptionZZZ cme = new ModelAdjustmentNavigatorExceptionZZZ(ez);
+				ModelNavigatorExceptionZZZ cme = new ModelNavigatorExceptionZZZ(ez);
 				throw cme;
 			}
 		}//end main:
@@ -166,7 +166,7 @@ public class ModelAdjustmentNavigatorZZZ extends AbstractModelNavigatorZZZ{
 
 	@Override
 	public ArrayList<JAdjustmentNavigatorZZZ> createAdjustmentNavigatorArrayList()
-			throws ModelAdjustmentNavigatorExceptionZZZ, ExceptionZZZ {
+			throws ModelNavigatorExceptionZZZ, ExceptionZZZ {
 		// TODO Auto-generated method stub
 		return null;
 }	

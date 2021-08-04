@@ -41,7 +41,7 @@ public abstract class AbstractModelNavigatorZZZ extends KernelUseObjectZZZ  impl
 	 * @throws ExceptionZZZ
 	 * 19.05.2021, 08:52:40, Fritz Lindhauer
 	 */
-	public AbstractModelNavigatorZZZ(IKernelZZZ objKernel) throws ModelAdjustmentNavigatorExceptionZZZ, ExceptionZZZ {		
+	public AbstractModelNavigatorZZZ(IKernelZZZ objKernel) throws ModelNavigatorExceptionZZZ, ExceptionZZZ {		
 		super(objKernel);
 		AbstractModelComponentGroupNew_(null, null, -1);
 	}
@@ -54,7 +54,7 @@ public abstract class AbstractModelNavigatorZZZ extends KernelUseObjectZZZ  impl
 	 * @throws ExceptionZZZ
 	 * 19.05.2021, 08:49:03, Fritz Lindhauer
 	 */
-	public AbstractModelNavigatorZZZ(IKernelZZZ objKernel, String sTitle, IPanelCascadedZZZ panelParent) throws ExceptionZZZ, ModelAdjustmentNavigatorExceptionZZZ {
+	public AbstractModelNavigatorZZZ(IKernelZZZ objKernel, String sTitle, IPanelCascadedZZZ panelParent) throws ExceptionZZZ, ModelNavigatorExceptionZZZ {
 		super(objKernel);
 		AbstractModelComponentGroupNew_(sTitle, panelParent, -1);
 	}
@@ -66,7 +66,7 @@ public abstract class AbstractModelNavigatorZZZ extends KernelUseObjectZZZ  impl
 	 * @throws ExceptionZZZ
 	 * 19.05.2021, 08:49:03, Fritz Lindhauer
 	 */
-	public AbstractModelNavigatorZZZ(IKernelZZZ objKernel, String sTitle, IPanelCascadedZZZ panelParent, int iIndexInCollection) throws ExceptionZZZ, ModelAdjustmentNavigatorExceptionZZZ {
+	public AbstractModelNavigatorZZZ(IKernelZZZ objKernel, String sTitle, IPanelCascadedZZZ panelParent, int iIndexInCollection) throws ExceptionZZZ, ModelNavigatorExceptionZZZ {
 		super(objKernel);
 		AbstractModelComponentGroupNew_(sTitle, panelParent, iIndexInCollection);
 	}
@@ -120,7 +120,7 @@ public abstract class AbstractModelNavigatorZZZ extends KernelUseObjectZZZ  impl
 	}
 	
 	//Im Fall einer GroupCollection, die auf einem Modell basiert...
-	public ArrayList<INavigatorElementZZZ>createComponentArrayList() throws ModelAdjustmentNavigatorExceptionZZZ, ExceptionZZZ{
+	public ArrayList<INavigatorElementZZZ>createComponentArrayList() throws ModelNavigatorExceptionZZZ, ExceptionZZZ{
 		ArrayList<JAdjustmentNavigatorZZZ>listaReturn = null;
 		main:{
 			HashMapIndexedZZZ<Integer,ArrayList<JComponent>>hmComponent = this.getComponentHashMap();
@@ -131,7 +131,7 @@ public abstract class AbstractModelNavigatorZZZ extends KernelUseObjectZZZ  impl
 			while(itListaComponent.hasNext()) {
 				iIndexInGroupCollection=iIndexInGroupCollection+1;			
 				if(iIndexInGroupCollection==0) {
-					listaReturn = new ArrayList<JAdjustmentNavigatorZZZ>();	
+					listaReturn = new ArrayList<INavigatorElementZZZ>();	
 				}
 		
 				ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) itListaComponent.next();						
@@ -179,8 +179,8 @@ public abstract class AbstractModelNavigatorZZZ extends KernelUseObjectZZZ  impl
 //	}
 			
 	//Darin ist das Modell enthalten, also welche Componenten/welches Label zu welcher Gruppe gehört.
-	public abstract HashMapIndexedZZZ<Integer,ArrayList<String>>createValuesText(String sTitle, IPanelCascadedZZZ panel, int iIndexInCollection) throws ModelAdjustmentNavigatorExceptionZZZ;			
+	public abstract HashMapIndexedZZZ<Integer,ArrayList<String>>createValuesText(String sTitle, IPanelCascadedZZZ panel, int iIndexInCollection) throws ModelNavigatorExceptionZZZ;			
 	
 	//Diese Modell wird bei jedem "Click" in dem refresh() aufgerufen.
-	public abstract IModelNavigatorValueZZZ createModelForNavigator(String sTitle, IPanelCascadedZZZ panelParent, int iIndexInGroupCollection) throws ModelAdjustmentNavigatorExceptionZZZ, ExceptionZZZ; 
+	public abstract IModelNavigatorValueZZZ createModelForNavigator(String sTitle, IPanelCascadedZZZ panelParent, int iIndexInGroupCollection) throws ModelNavigatorExceptionZZZ, ExceptionZZZ; 
 }
