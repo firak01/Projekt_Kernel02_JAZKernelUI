@@ -21,154 +21,16 @@ public class ModelAdjustmentNavigatorZZZ extends AbstractModelNavigatorZZZ{
 		super();
 	}
 	
-	public ModelAdjustmentNavigatorZZZ(IKernelZZZ objKernel, String sTitle, IPanelCascadedZZZ panelParent) throws ExceptionZZZ {
-		super(objKernel, sTitle, panelParent);
-	}
-	
-	public ModelAdjustmentNavigatorZZZ(IKernelZZZ objKernel, String sTitle, IPanelCascadedZZZ panelParent, int iIndexInCollection) throws ModelNavigatorExceptionZZZ, ExceptionZZZ {
-		super(objKernel, sTitle,panelParent,iIndexInCollection);
-	}
-		
-	//##############################
-	@Override
-	public IModelNavigatorValueZZZ createModelForNavigator(String sTitle, IPanelCascadedZZZ panelParent, int iIndexInGroupCollection) throws ModelNavigatorExceptionZZZ, ExceptionZZZ {
-		 return new ModelAdjustmentNavigatorZZZ(this.getKernelObject(),sTitle, panelParent, iIndexInGroupCollection); 
-	}
-	
-	@Override
-	public HashMapIndexedZZZ<Integer,ArrayList<String>>createValuesText(String sTitle, IPanelCascadedZZZ panel, int iIndexInCollection) throws ModelNavigatorExceptionZZZ{
-		/* 20210702 WICHTIG, MERKE:
-		 * Hier unbeding einen Eintrag in der Liste erzeugen, auch für die "nicht gefunden" Fälle.
-		 *  
-		 * Grund: Auch ein Dummy-Eintrag in der Liste erzeugt immer die Komponente, bzw. die ComponentGroup.
-		 *        Falls nun das Modell später doch einen "echten Wert" findet, dann ist die Komponnente/ComponentGroup schon da
-		 *        und kann mit dem korrekten Wert gefüllt werden.
-		 * Beispiel: 
-		 * Beim Erstellen eines Panels wird ja erst das Flag ISKERNELPROGRAM im Konstruktor erst erstellt.
-		 * D.h. bis dahin wird kein Program / Programalias gefunden.
-		 * Die ComponentGroup wird aber ggfs. danach erstellt, es würde also ggfs. keine erstellt, wenn nicht ein Dummy-Eintrag als Platzhalter eingefügt wird.
-		 * 
-		 * Beim Clicken auf den "Weiterschaltbutton" wird dann  jeweils das Modell für die ComponentGroups neu errechnet.
-		 * Hier ist dann ggfs. das Flag ISKERNELPROGRAM schon gesetzt. 
-		 * Damit würde der korrekte Programname/Alias verwendet und der zuvor gesetzte Dummy-Eintrag aktualisiert.
-		 */
-		HashMapIndexedZZZ<Integer,ArrayList<String>> hmReturn = null; 
-			
-		String stemp;
-		main:{	
-			try {
-			hmReturn = new HashMapIndexedZZZ<Integer, ArrayList<String>>();
-			ArrayList<String>listaTitle = new ArrayList<String>();
-			listaTitle.add("Title:" + sTitle);
-			
-			int iLengthDefault=25;
-			int iLengthDefaultRightOffset=2;
-			switch(iIndexInCollection) {			
-			case 0:
-				{									
-					//+++ 1. Klassenname des Panels				{
-					stemp = panel.getClass().getSimpleName(); //das ist zu lang und nicht aussagekräftig genug String sParent = this.getClass().getSuperclass().getSimpleName();
-					listaTitle.add(stemp);															
-					hmReturn.put(listaTitle);
-				}
-				break;				
-			case 1:
-				{				
-					//+++ 2. Module, das zur Verfügung steht				
-					String sModule = panel.getModuleName();	
-					if(!StringZZZ.isEmpty(sModule)) {								
-						//sModule = StringZZZ.abbreviateDynamicLeft(sModule, iLengthDefault+iLengthDefaultRightOffset);
-						//Kürzen, wg. Platzmangel
-						if(StringZZZ.contains(sModule, ".")) {
-							sModule = StringZZZ.right(sModule, "."); //Weil ggfs. der Packagename auch im Programnamen enthalten ist.
-							sModule = "... ."+ sModule;
-						}
-						sModule = StringZZZ.abbreviateDynamic(sModule, iLengthDefault);
-						
-						
-						//!!! TODOGOON Wenn sich die Textlänge ständig ändert, dann verschieben sich ggfs. Nachbarpanels nach rechts aus dem Frame/der Dialogbox heraus.
-						//    Daher müsste eigentlich auch der Frame/die Dialogbox neu "gepackt" werden (frame.pack() ).
-											
-						
-						listaTitle.add("Module:" + sModule);
-						hmReturn.put(listaTitle);
-						
-												
-						//TESTE WEITERES LABEL
-						//NEIN, Nicht löschen, damit würde auch die vorherige Liste geleert. listaReturn.clear();
-						ArrayList<String>listaTest = new ArrayList<String>();
-						listaTest.add("TEST");
-						listaTest.add("Ein Testwert");
-						hmReturn.put(listaTest);						
-					}else {
-						listaTitle.add("Module: Not configured");
-						hmReturn.put(listaTitle);
-					}
-				}
-				break;
-			case 2:
-				 //+++ 3. Program, das zur Verfügung steht 
-				{
-					String sProgram = panel.getProgramName();
-					if(!StringZZZ.isEmpty(sProgram)) {
-						//Kürzen, wg. Platzmangel
-						//sProgram = StringZZZ.abbreviateDynamicLeft(sProgram, iLengthDefault+iLengthDefaultRightOffset);
-						if(StringZZZ.contains(sProgram, ".")) {
-							sProgram = StringZZZ.right(sProgram, "."); //Weil ggfs. der Packagename auch im Programnamen enthalten ist.
-							sProgram = "... ."+ sProgram;
-						}
-						//sProgram = StringZZZ.abbreviateDynamic(sProgram, iLengthDefault);
-						
-						listaTitle.add("Program: " + sProgram);
-						hmReturn.put(listaTitle);
-					}else {
-						listaTitle.add("Program: Not configured");
-						hmReturn.put(listaTitle);
-					}
-				}
-				break;
-			case 3:
-				//+++ 4. ProgramAlias, der ggfs. zur Verfügung steht
-				{
-					try {
-					String sProgram = panel.getProgramName();									
-					String sProgram4alias = panel.getProgramAlias();				
-					if(!StringZZZ.isEmpty(sProgram4alias)) {						
-						String sProgramAlias = panel.getProgramAlias();
-						if(sProgram4alias.equals(sProgram)) {
-							sProgramAlias="dito";
-						}else {
-							sProgramAlias = StringZZZ.abbreviateDynamicLeft(sProgramAlias, iLengthDefault+iLengthDefaultRightOffset);
-							sProgramAlias = StringZZZ.abbreviateDynamic(sProgramAlias, iLengthDefault);
-						}
-						
-						listaTitle.add("ProgramAlias: " + sProgramAlias);
-						hmReturn.put(listaTitle);				
-					}else {
-						listaTitle.add("ProgramAlias: Not configured");
-						hmReturn.put(listaTitle);
-					}
-					}catch(ExceptionZZZ ez) {						
-					}
-				}
-				break;
-			default: 
-				hmReturn = null; //Wenn eine Indexposition nicht existiert, null zurückgeben.				
-				break main;
-			}
-			}catch(ExceptionZZZ ez) {
-				ModelNavigatorExceptionZZZ cme = new ModelNavigatorExceptionZZZ(ez);
-				throw cme;
-			}
-		}//end main:
-		return hmReturn;
+	public ModelAdjustmentNavigatorZZZ(IKernelZZZ objKernel) throws ExceptionZZZ {
+		super(objKernel);
 	}
 
 	@Override
-	public ArrayList<JAdjustmentNavigatorZZZ> createAdjustmentNavigatorArrayList()
-			throws ModelNavigatorExceptionZZZ, ExceptionZZZ {
+	public HashMapIndexedZZZ<Integer, ArrayList<INavigatorElementZZZ>> createNavigatorElementHashMap()
+			throws ExceptionZZZ {
 		// TODO Auto-generated method stub
 		return null;
-}	
+	}
 }
+	
 

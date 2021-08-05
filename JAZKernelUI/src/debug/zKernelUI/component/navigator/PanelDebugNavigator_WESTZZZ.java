@@ -111,7 +111,10 @@ public class PanelDebugNavigator_WESTZZZ extends KernelJPanelCascadedZZZ impleme
 	        
 	        
 	        //20210804 starte mit dem Model...
-	        
+	        ModelDebugNavigatorZZZ modelNavigator = new ModelDebugNavigatorZZZ(this.getKernelObject());
+	        TODOGOON; ///20210805
+	        //für jeden Elementeintrag aufrufen... und damit die Navigator-Elemente als Panel erstellen. 
+	        //createRow(......)
 	        
 //	        gbc.gridy = 0;
 //	        createRow1(this, gbc, sModule, sProgram);
