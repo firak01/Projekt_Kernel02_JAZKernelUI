@@ -32,6 +32,7 @@ import custom.zKernel.LogZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IObjectZZZ;
 import basic.zBasic.ReflectCodeZZZ;
+import basic.zBasic.util.abstractList.ArrayListExtendedZZZ;
 import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 import basic.zBasic.util.abstractList.HashMapMultiZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
@@ -51,6 +52,7 @@ import basic.zKernelUI.component.componentGroup.JComponentGroupHelperZZZ;
 import basic.zKernelUI.component.componentGroup.JComponentGroupZZZ;
 import basic.zKernelUI.component.componentGroup.KernelSenderComponentGroupSwitchZZZ;
 import basic.zKernelUI.component.componentGroup.ModelPanelDebugZZZ;
+import basic.zKernelUI.component.navigator.INavigatorElementZZZ;
 import basic.zKernelUI.thread.KernelSwingWorkerZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
@@ -60,7 +62,7 @@ import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.component.IKernelProgramZZZ;
 
 public class PanelDebugNavigator_WESTZZZ extends KernelJPanelCascadedZZZ implements IKernelProgramZZZ {	
-    private static final String sBUTTON_SWITCH = "buttonSwitch";
+    //private static final String sBUTTON_SWITCH = "buttonSwitch";
    	
 	public PanelDebugNavigator_WESTZZZ(IKernelZZZ objKernel, JPanel panelParent) throws ExceptionZZZ {
 		super(objKernel, panelParent);
@@ -112,9 +114,15 @@ public class PanelDebugNavigator_WESTZZZ extends KernelJPanelCascadedZZZ impleme
 	        
 	        //20210804 starte mit dem Model...
 	        ModelDebugNavigatorZZZ modelNavigator = new ModelDebugNavigatorZZZ(this.getKernelObject());
-	        TODOGOON; ///20210805
+	        //TODOGOON; ///20210805
+	        
+	        ArrayListExtendedZZZ<INavigatorElementZZZ>alNavigatorElement = modelNavigator.getNavigatorElementArrayList();
+	        
 	        //für jeden Elementeintrag aufrufen... und damit die Navigator-Elemente als Panel erstellen. 
-	        //createRow(......)
+	        for(INavigatorElementZZZ objElementTemp : alNavigatorElement) {
+	        	createRow(this, gbc, objElementTemp);
+	        }
+	        //
 	        
 //	        gbc.gridy = 0;
 //	        createRow1(this, gbc, sModule, sProgram);
@@ -136,7 +144,26 @@ public class PanelDebugNavigator_WESTZZZ extends KernelJPanelCascadedZZZ impleme
 				this.getLogObject().WriteLineDate(sError);
 			}
 		}//END main:
-	}		
+	}	
+	
+	/**############################################################################################
+	   ########## DRITTE ZEILE MIT DRITTER GROUPCOLLECTION, DIE EIN ANDERES MODELL BENUTZT
+		
+	 * @param panel
+	 * @param gbc
+	 * @param sModule
+	 * @param sProgram
+	 * @throws ExceptionZZZ
+	 * @author Fritz Lindhauer, 15.05.2021, 11:46:13
+	 */
+	private void createRow(KernelJPanelCascadedZZZ panel, GridBagConstraints gbc, INavigatorElementZZZ objElement) throws ExceptionZZZ {
+		gbc.gridx = 0;
+		int iPosition = objElement.getPosition();
+		gbc.gridy = iPosition;
+		this.add(objElement.getLabel(),gbc);
+	}
+	
+	
 	
 	/**############################################################################################
 	   ########## ERSTE ZEILE MIT ERSTER GROUPCOLLECTION, OHNE MODELL
@@ -208,72 +235,6 @@ public class PanelDebugNavigator_WESTZZZ extends KernelJPanelCascadedZZZ impleme
 		this.add(label05_01,gbc);
 	}
 	
-	/**############################################################################################
-	   ########## ZWEITE ZEILE MIT ZWEITER GROUPCOLLECTION, DIE EIN MODELL BENUTZT
-		
-	 * @param panel
-	 * @param gbc
-	 * @param sModule
-	 * @param sProgram
-	 * @throws ExceptionZZZ
-	 * @author Fritz Lindhauer, 15.05.2021, 11:46:13
-	 */
-	private void createRow2(KernelJPanelCascadedZZZ panel, GridBagConstraints gbc, String sModule, String sProgram) throws ExceptionZZZ {
-		gbc.gridx = 0;
-		
-		// +++ Werte aus der KernelKonfiguration auslesen und anzeigen
-		String sLabelButtonGroup_02 = this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButtonGroupRow2").getValue();
-		JLabel labelModuleText_02 = new JLabel(sLabelButtonGroup_02, SwingConstants.LEFT);			
-		this.add(labelModuleText_02,gbc);
-		
-		String sTitle="row2";		
-		ModelDebugNavigatorZZZ modelRow2 = new ModelDebugNavigatorZZZ(this.getKernelObject(),sTitle, this);
-		
-		//++++ Die GroupCollection
-		//202105178 Jetzt muss es reichen das model zu übergeben
-		JComponentGroupCollectionZZZ groupc = new JComponentGroupCollectionZZZ(this.getKernelObject(), modelRow2);
-		groupc.setVisible(0); 
-		
-		//######## Das UI gestalten. Die Reihenfolge der Componenten ist wichtig für die Reihenfolge im UI #################
-		//++++ Die Buttons
-		String sLabelButton_02 = this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButtonRow2").getValue();
-		JButton buttonSwitch_02 = new JButton(sLabelButton_02);			
-		ActionSwitchZZZ actionSwitch_02 = new ActionSwitchZZZ(objKernel, this, groupc);			
-		buttonSwitch_02.addActionListener(actionSwitch_02);
-		
-		this.setComponent(PanelDebugNavigator_WESTZZZ.sBUTTON_SWITCH+"_02", buttonSwitch_02);
-		gbc.gridx = 1;
-		this.add(buttonSwitch_02,gbc);
-					
-		//+++ Nun erst die Label dem Panel hinzufuegen	
-		//Merke: Die auszutauschenden Komponenten müssen in die gleichen Zellen hinzugefügt werden. Sonst entstehen Leerzellen
-		HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmComponent = groupc.getHashMapIndexed();
-		Iterator it = hmComponent.iterator();
-		int iIndexOuter=-1;
-		while(it.hasNext()) {
-			JComponentGroupZZZ group = (JComponentGroupZZZ) it.next();
-			if(group!=null) {
-				iIndexOuter=iIndexOuter+1;
-				ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) group.getComponents();
-				if(listaComponenttemp!=null) {
-					
-					//Die Labels der Arraylist abarbeiten und dem panel hinzufügen
-					int iIndexInner=-1;				
-					for(JComponent componenttemp : listaComponenttemp) {
-						if(componenttemp!=null) {
-							System.out.println(ReflectCodeZZZ.getPositionCurrent() + ": Component.isVisible()='" + componenttemp.isVisible() + "'");
-							
-							iIndexInner=iIndexInner+1;
-							gbc.gridx = 2+iIndexInner;
-							this.add(componenttemp,gbc);						
-							this.setComponent("ComponentDebug"+iIndexOuter+"_"+iIndexInner, componenttemp);	
-													
-						}
-					}		
-				}
-			}	
-		}				
-	}
 	
 	
 	/**############################################################################################
