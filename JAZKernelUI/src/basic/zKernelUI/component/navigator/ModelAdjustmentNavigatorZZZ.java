@@ -12,6 +12,7 @@ import basic.zBasic.util.abstractList.ArrayListZZZ;
 import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
+import basic.zKernel.IKernelConfigSectionEntryZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
@@ -28,6 +29,12 @@ public class ModelAdjustmentNavigatorZZZ extends AbstractModelNavigatorZZZ{
 
 	@Override
 	public ArrayListExtendedZZZ<INavigatorElementZZZ> createNavigatorElementArrayList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public INavigatorElementZZZ createNavigatorElement(IKernelConfigSectionEntryZZZ objEntry) throws ExceptionZZZ {
 		// TODO Auto-generated method stub
 		return null;
 	}

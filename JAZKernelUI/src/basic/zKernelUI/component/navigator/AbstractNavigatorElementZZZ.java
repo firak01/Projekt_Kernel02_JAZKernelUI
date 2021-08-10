@@ -82,4 +82,10 @@ public abstract class AbstractNavigatorElementZZZ implements INavigatorElementZZ
 	public void setPosition(int iPosition) {
 		this.iPositionInModel = iPosition;
 	}
+	
+	@Override
+	public void setVisible(boolean bVisible) {
+		// TODO Auto-generated method stub
+		
+	}
 }

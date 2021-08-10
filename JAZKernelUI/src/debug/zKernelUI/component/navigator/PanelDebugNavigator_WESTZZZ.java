@@ -53,6 +53,7 @@ import basic.zKernelUI.component.componentGroup.JComponentGroupZZZ;
 import basic.zKernelUI.component.componentGroup.KernelSenderComponentGroupSwitchZZZ;
 import basic.zKernelUI.component.componentGroup.ModelPanelDebugZZZ;
 import basic.zKernelUI.component.navigator.INavigatorElementZZZ;
+import basic.zKernelUI.component.navigator.NavigatorElementCollectionZZZ;
 import basic.zKernelUI.thread.KernelSwingWorkerZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
@@ -112,17 +113,29 @@ public class PanelDebugNavigator_WESTZZZ extends KernelJPanelCascadedZZZ impleme
 	        //Dann die NavigatorElemente "Element für Element" also "Zeile für Zeile" hinzufügen.
 	        
 	        
-	        //20210804 starte mit dem Model...
+	        //TODOGOON 20210804 starte mit dem Model...
+	       
+	      //++++ Die GroupCollection, basierend auf dem Modell
 	        ModelDebugNavigatorZZZ modelNavigator = new ModelDebugNavigatorZZZ(this.getKernelObject());
-	        //TODOGOON; ///20210805
+			NavigatorElementCollectionZZZ<INavigatorElementZZZ> groupc = new NavigatorElementCollectionZZZ<INavigatorElementZZZ>(objKernel, this, modelNavigator);
+			groupc.setVisible(0); //Initiales Setzen der Sichtbarkeit
+			
+			Iterator<INavigatorElementZZZ> it = groupc.iterator();
+			while(it.hasNext()) {
+				INavigatorElementZZZ objElementTemp = it.next();
+				createRow(this, gbc, objElementTemp);
+			}
+			
 	        
-	        ArrayListExtendedZZZ<INavigatorElementZZZ>alNavigatorElement = modelNavigator.getNavigatorElementArrayList();
-	        
-	        //für jeden Elementeintrag aufrufen... und damit die Navigator-Elemente als Panel erstellen. 
-	        for(INavigatorElementZZZ objElementTemp : alNavigatorElement) {
-	        	createRow(this, gbc, objElementTemp);
-	        }
-	        //
+//	        ArrayListExtendedZZZ<INavigatorElementZZZ>alNavigatorElement = modelNavigator.getNavigatorElementArrayList();
+//	        
+//	        //für jeden Elementeintrag aufrufen... und damit die Navigator-Elemente als Panel erstellen. 
+//	        for(INavigatorElementZZZ objElementTemp : alNavigatorElement) {
+//	        	createRow(this, gbc, objElementTemp);
+//	        }
+			
+			
+	        //+++++++++++++++++++++++++++++++++++++++
 	        
 //	        gbc.gridy = 0;
 //	        createRow1(this, gbc, sModule, sProgram);

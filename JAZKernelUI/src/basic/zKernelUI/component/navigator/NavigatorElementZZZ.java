@@ -14,4 +14,6 @@ public class NavigatorElementZZZ extends AbstractNavigatorElementZZZ{
 	public NavigatorElementZZZ(IModelNavigatorValueZZZ objModelNavigator, IKernelConfigSectionEntryZZZ objEntry) {
 		super(objModelNavigator, objEntry);
 	}
+
+	
 }

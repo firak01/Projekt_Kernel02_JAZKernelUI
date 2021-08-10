@@ -45,6 +45,8 @@ public class ModelDebugNavigatorZZZ extends AbstractModelNavigatorZZZ{
 			//String[] saReturn = objKernel.getParameterArrayStringByProgramAlias("DebugNavigator", "PanelWest", "NavigatorContentJson");
 			IKernelConfigSectionEntryZZZ[] objaEntry = objKernel.getParameterArrayByProgramAlias("DebugNavigator", "PanelWest", "NavigatorContentJson");
 			
+			//TODOGOON; ///20210810: Nicht vergessen: Das soll eigentlich aus einer HashMap stammen, wg. Wert für das Label und einen technischen Wert, der für den Zugriff auf das Label verwendet wird.
+			
 			//2. Aus den Entry-Objekten die Navigator-Objekte machen
 			for(IKernelConfigSectionEntryZZZ objEntry : objaEntry) {
 				INavigatorElementZZZ objReturn = this.createNavigatorElement(objEntry);		
