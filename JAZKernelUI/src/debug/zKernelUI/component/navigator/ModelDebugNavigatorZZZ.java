@@ -1,6 +1,7 @@
 package debug.zKernelUI.component.navigator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.swing.JComponent;
@@ -66,17 +67,37 @@ public class ModelDebugNavigatorZZZ extends AbstractModelNavigatorZZZ{
 		}//end main:
 		return objReturn;
 	}
-	
+
+	@Override
+	public HashMapIndexedZZZ<Integer, ArrayList<INavigatorElementZZZ>> createNavigatorElementHashMap() throws ExceptionZZZ {
+		HashMapIndexedZZZ<Integer,ArrayList<JComponent>> hmReturn = new HashMapIndexedZZZ<Integer,ArrayList<JComponent>>();
+		main:{
+			//1. Auslesen des wertes aus der Ini-Konfiguration
+			IKernelZZZ objKernel = this.getKernelObject();
+			//Das wäre normalerweise mit | getrennt...., jetzt das JSON-Array hinzunehmen
+			//String[] saReturn = objKernel.getParameterArrayStringByProgramAlias("DebugNavigator", "PanelWest", "NavigatorContentJson");
+			//HashMap<String,String>hm= objKernel.getParameterHashMapStringByProgramAlias("DebugNavigator", "PanelWest", "NavigatorContentJson");
+			
+			TODOGOON; //20210811 also wie in ArrayStringByProgramAlias über Clone einzelne Entry-Objekt erstellen und diese über den Index speichern.
+			          //Entwickle das mit einem geeigneten JUnit-Test
+			HashMapIndexedZZZ<Integer,IKernelConfigSectionEntryZZZ>hm= objKernel.getParameterHashMapEntryByProgramAlias("DebugNavigator", "PanelWest", "NavigatorContentJson");
+			if(hm.isEmpty()) break main;
+			
+			//2. Aus den Entry-Objekten die Navigator-Objekte machen
+			int iIndexInCollection=0;
+			
+			
+			//Merke: Verwende eine ArrayList, die Momentan nur 1 Label enthalten wird
+			HashMapIndexedZZZ<Integer,ArrayList<String>> hmValuesText0 = this.createValuesText(sTitle, panel, iIndexInCollection);
+			boolean bComponentsForIndexFilled = ModelComponentHelperZZZ.fillComponentHashMap(hmReturn, hmValuesText0, iIndexInCollection);
+			while(bComponentsForIndexFilled) {
+				iIndexInCollection++;
+				hmComponentsIndexed.put(intIndexInCollection, listaNavigatorElement);				
+			}			
+		}//end main
+		return hmReturn;
+	}
 	
 
-	//##############################
-	
-	
-//	@Override
-//	public HashMapIndexedZZZ<Integer, ArrayList<INavigatorElementZZZ>> createNavigatorElementHashMap()
-//			throws ExceptionZZZ {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
 }
 

@@ -10,8 +10,10 @@ import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 import basic.zKernel.IKernelConfigSectionEntryZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;
 
-public interface IModelNavigatorValueZZZ {		
-	//public HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>>createNavigatorElementHashMap() throws ExceptionZZZ;
-	public ArrayListExtendedZZZ<INavigatorElementZZZ>createNavigatorElementArrayList() throws ExceptionZZZ;
+public interface IModelNavigatorValueZZZ {			
+	
 	public INavigatorElementZZZ createNavigatorElement(IKernelConfigSectionEntryZZZ objEntry) throws ExceptionZZZ;
+	
+	public HashMapIndexedZZZ<Integer, ArrayList<INavigatorElementZZZ>> createNavigatorElementHashMap() throws ExceptionZZZ;
+	public ArrayListExtendedZZZ<INavigatorElementZZZ>createNavigatorElementArrayList() throws ExceptionZZZ;
 }
