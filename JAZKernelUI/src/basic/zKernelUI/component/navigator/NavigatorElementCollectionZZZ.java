@@ -21,8 +21,9 @@ import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  implements Iterable<T> { //TODOGOON 20210810 Noch Clickbar machen....,IEventBrokerComponentGroupSwitchUserZZZ {
 	
 	//++++++++++ Mehrerer Gruppen zu der HashMap zusammenfassen.
-	//Merke: Der Button steuert über den Index die Reihenfolge
-	HashMapIndexedZZZ<Integer,INavigatorElementZZZ> hmIndexed = null;
+	//Merke1: Über den Index wird die Reihenfolge festgelegt.
+	//Merke2: Im Nomralfall ist nur 1 Element in der Arraylist... aber schon mal als Erweiterung gedacht.
+	HashMapIndexedZZZ<Integer, ArrayList<INavigatorElementZZZ>> hmIndexed = null;
 	
 	//+++ Den EventBroker DER GRUPPE hinzufügen, damit darueber der Event abgefeuert werden kann
 	//Merke: Dem EventBroker ist eine Reihefolge (über den Index) egal
@@ -70,43 +71,14 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 			this.panelParent = panelParent;
 			this.setModel(model);
 			if(model!=null) {       ///Für eine GroupCollection MIT Modell
-				HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>>hmComponent = model.createComponentHashMap();
 				
-				//+++ Die Labels auf die Gruppen verteilen
-				ArrayList<INavigatorElementZZZ>listaGroup2 = new ArrayList<INavigatorElementZZZ>();				
-				int iIndex=-1;
+				HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>>hmElement = model.createNavigatorElementHashMap();
+				this.setHashMapIndexed(hmElement);
 				
-				//String sTitle = model.getTitle();
-				//IPanelCascadedZZZ panelParent = this.getPanelParent();
-				Iterator itListaComponent = hmComponent.iterator();
-				while(itListaComponent.hasNext()) {			
-					ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) itListaComponent.next();
-					if(listaComponenttemp!=null) {
-					if(!listaComponenttemp.isEmpty()) {
-						iIndex=iIndex+1;
-						String sIndexAsAlias = Integer.toString(iIndex);
-						
-						//Für jede Gruppe ihr eigenes Model erstellen, das auch den Index in der Collection enthält, zwecks Generierung des passenden Wertes.
-						//Diese Modell wird bei jedem "Click" in dem refresh() aufgerufen.
-						IModelComponentGroupValueZZZ objValueProvider = new ModelPanelDebugZZZ(objKernel, sTitle, panelParent, iIndex); 
-						JComponentGroupZZZ grouptemp = new JComponentGroupZZZ(objKernel, sIndexAsAlias, sTitle, panelParent, listaComponenttemp);
-						grouptemp.setComponentValueProvider(objValueProvider);
-						if(grouptemp.hasAnyComponentAdded()) {
-							listaGroup2.add(grouptemp);
-						}	
-					}
-					}
-				}	
-				
-				
-				//Die Liste der ComponentsGroup-Elemente, erstellt aus dem Modell der Collection hinzufügen
-				for(JComponentGroupZZZ grouptemp : listaGroup2) {
-					if(grouptemp!=null) {
-						this.add(grouptemp);
-					}
-				}	
-				bReturn = true;
-			}					
+	
+			}	
+			bReturn = true;
+							
 		}//end main
 		return bReturn;
 	}
@@ -122,14 +94,14 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 		return this.panelParent;
 	}
 	
-	public HashMapIndexedZZZ<Integer,INavigatorElementZZZ>getHashMapIndexed() throws ExceptionZZZ{
+	public HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>>getHashMapIndexed() throws ExceptionZZZ{
 		if(this.hmIndexed==null) {
-			this.hmIndexed = new HashMapIndexedZZZ<Integer,INavigatorElementZZZ>();
+			this.hmIndexed = new HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>>();
 		}
 		return this.hmIndexed;		
 	}
-	private void setHashMapIndexed(HashMapIndexedZZZ<Integer,INavigatorElementZZZ> hmIndexed) {
-		this.hmIndexed = hmIndexed;
+	private void setHashMapIndexed(HashMapIndexedZZZ<Integer, ArrayList<INavigatorElementZZZ>> hmElement) {
+		this.hmIndexed = hmElement;
 	}
 	private VectorExtendedZZZ<Integer>getVectorIndex() throws ExceptionZZZ{
 		return this.getHashMapIndexed().getVectorIndex();
@@ -148,7 +120,7 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 			//objEventBroker.addListenerComponentGroupSwitch(group);
 			
 			//+++ Letztendlich die Gruppe der HashMap hinzufügen
-			HashMapIndexedZZZ<Integer,INavigatorElementZZZ>hmIndexed = this.getHashMapIndexed();
+			HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>>hmIndexed = this.getHashMapIndexed();
 			hmIndexed.put(group);
 						
 			bReturn = true;
@@ -162,31 +134,36 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 			if(iIndexToFind<0) break main;
 
 //			//+++ Hole aus der HashMap die Gruppe mit dem Index, setzte sie sichtbar.			
-			HashMapIndexedZZZ<Integer,INavigatorElementZZZ>hmIndexed = this.getHashMapIndexed();		
-			INavigatorElementZZZ groupToFind = (INavigatorElementZZZ) hmIndexed.getValue(iIndexToFind);
-			if(groupToFind==null) break main;			
-			groupToFind.setVisible(true);
+			HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>>hmIndexed = this.getHashMapIndexed();		
+			ArrayList<INavigatorElementZZZ> groupToFind = (ArrayList<INavigatorElementZZZ>) hmIndexed.getValue(iIndexToFind);
+			if(groupToFind==null) break main;	
+			if(groupToFind.isEmpty()) break main;
+			
+			for(INavigatorElementZZZ element : groupToFind) {
+				element.setVisible(true);
+			}
+			
 						
 			//+++ Hole aus der HashMap die anderen Gruppen und setze diese unsichtbar
 			Iterator it = hmIndexed.iterator();
 			while(it.hasNext()) {
-				INavigatorElementZZZ group = (INavigatorElementZZZ) it.next();
+				ArrayList<INavigatorElementZZZ> group = (ArrayList<INavigatorElementZZZ>) it.next();
 				if(group!=null) {
 					if(group.equals(groupToFind)) {
 						//Mache nix
 					}else {
-						group.setVisible(false);
+						for(INavigatorElementZZZ element : group) {
+							element.setVisible(true);
+						}
 					}
 				}
 			}			
 			
 			//Elternpanel aktualisieren
-			if(this.getModel()!=null) {
-				if(this.getModel().getPanelParent()!=null) {
-					JPanel panel = (JPanel) this.getModel().getPanelParent();
-					panel.revalidate();
-					panel.repaint();
-				}
+			if(this.getPanelParent()!=null) {
+				JPanel panel = (JPanel) this.getPanelParent();
+				panel.revalidate();
+				panel.repaint();
 			}
 			bReturn = true;
 		}//end main
@@ -202,30 +179,9 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 			INavigatorElementZZZ group = (INavigatorElementZZZ) this.getGroupByAlias(sGroupAlias);	
 			if(group==null)break main;
 			
-			//+++ Hole aus der HashMap die anderen Gruppen, ohne dem Alias, setzte sie unsichtbar.
-			HashMapIndexedZZZ<Integer,INavigatorElementZZZ>hmIndexed = this.getHashMapIndexed();
-			if(hmIndexed!=null) {
-				Iterator it = hmIndexed.iterator();
-				while(it.hasNext()) {
-					INavigatorElementZZZ grouptemp = (INavigatorElementZZZ) it.next();
-					if(grouptemp!=null) {
-						if(grouptemp.equals(group)){
-							//mache nix, schon vorher gemacht
-						}else {
-							grouptemp.setVisible(false);
-						}
-					}
-				}
-			}				
+			int iIndex = group.getPosition();
+			this.setVisible(iIndex);
 			
-			//Elternpanel aktualisieren
-			if(this.getModel()!=null) {
-				if(this.getModel().getPanelParent()!=null) {
-					JPanel panel = (JPanel) this.getModel().getPanelParent();
-					panel.revalidate();
-					panel.repaint();
-				}
-			}
 			bReturn = true;
 		}//end main
 		return bReturn;		
@@ -243,7 +199,7 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 			
 			Iterator it = hmIndexed.iterator();
 			while(it.hasNext()) {
-				INavigatorElementZZZ group = (INavigatorElementZZZ) it.next();
+				ArrayList<INavigatorElementZZZ> group = (ArrayList<INavigatorElementZZZ>) it.next();
 				if(group!=null) {
 					if(group.getGroupAlias().equals(sGroupAlias)) {
 						objReturn = group;

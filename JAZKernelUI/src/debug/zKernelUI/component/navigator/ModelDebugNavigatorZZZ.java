@@ -11,6 +11,7 @@ import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.util.abstractList.ArrayListExtendedZZZ;
 import basic.zBasic.util.abstractList.ArrayListZZZ;
 import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
+import basic.zBasic.util.abstractList.HashMapZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelConfigSectionEntryZZZ;
@@ -70,7 +71,7 @@ public class ModelDebugNavigatorZZZ extends AbstractModelNavigatorZZZ{
 
 	@Override
 	public HashMapIndexedZZZ<Integer, ArrayList<INavigatorElementZZZ>> createNavigatorElementHashMap() throws ExceptionZZZ {
-		HashMapIndexedZZZ<Integer,ArrayList<JComponent>> hmReturn = new HashMapIndexedZZZ<Integer,ArrayList<JComponent>>();
+		HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>> hmReturn = new HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>>();
 		main:{
 			//1. Auslesen des wertes aus der Ini-Konfiguration
 			IKernelZZZ objKernel = this.getKernelObject();
@@ -78,22 +79,25 @@ public class ModelDebugNavigatorZZZ extends AbstractModelNavigatorZZZ{
 			//String[] saReturn = objKernel.getParameterArrayStringByProgramAlias("DebugNavigator", "PanelWest", "NavigatorContentJson");
 			//HashMap<String,String>hm= objKernel.getParameterHashMapStringByProgramAlias("DebugNavigator", "PanelWest", "NavigatorContentJson");
 			
-			TODOGOON; //20210811 also wie in ArrayStringByProgramAlias über Clone einzelne Entry-Objekt erstellen und diese über den Index speichern.
-			          //Entwickle das mit einem geeigneten JUnit-Test
-			HashMapIndexedZZZ<Integer,IKernelConfigSectionEntryZZZ>hm= objKernel.getParameterHashMapEntryByProgramAlias("DebugNavigator", "PanelWest", "NavigatorContentJson");
-			if(hm.isEmpty()) break main;
+			//20210811 also wie in ArrayStringByProgramAlias über Clone einzelne Entry-Objekt erstellen und diese über den Index speichern.
+			IKernelConfigSectionEntryZZZ[] entrya = objKernel.getParameterArrayByProgramAlias("DebugNavigator", "PanelWest", "NavigatorContentJson");
 			
 			//2. Aus den Entry-Objekten die Navigator-Objekte machen
-			int iIndexInCollection=0;
-			
-			
-			//Merke: Verwende eine ArrayList, die Momentan nur 1 Label enthalten wird
-			HashMapIndexedZZZ<Integer,ArrayList<String>> hmValuesText0 = this.createValuesText(sTitle, panel, iIndexInCollection);
-			boolean bComponentsForIndexFilled = ModelComponentHelperZZZ.fillComponentHashMap(hmReturn, hmValuesText0, iIndexInCollection);
-			while(bComponentsForIndexFilled) {
+			int iIndexInCollection=-1;
+			for(IKernelConfigSectionEntryZZZ entry : entrya) {
+				
+				//Merke: Verwende eine ArrayList, die Momentan nur 1 Label enthalten wird
+				ArrayList<INavigatorElementZZZ>listaElement = new ArrayList<INavigatorElementZZZ>();
+				INavigatorElementZZZ element = this.createNavigatorElement(entry);
+				if(element!=null) {
+					listaElement.add(element);
+				}
+				
 				iIndexInCollection++;
-				hmComponentsIndexed.put(intIndexInCollection, listaNavigatorElement);				
-			}			
+				Integer intIndexInCollection = new Integer(iIndexInCollection);
+				hmReturn.put(intIndexInCollection, listaElement);
+			}
+					
 		}//end main
 		return hmReturn;
 	}
