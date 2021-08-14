@@ -122,8 +122,8 @@ public class PanelDebugNavigator_WESTZZZ extends KernelJPanelCascadedZZZ impleme
 			
 			Iterator<INavigatorElementZZZ> it = groupc.iterator();
 			while(it.hasNext()) {
-				INavigatorElementZZZ objElementTemp = it.next();
-				createRow(this, gbc, objElementTemp);
+				ArrayList<INavigatorElementZZZ> listaElementTemp = (ArrayList<INavigatorElementZZZ>) it.next();
+				createRow(this, gbc, listaElementTemp);
 			}
 			
 	        
@@ -169,11 +169,13 @@ public class PanelDebugNavigator_WESTZZZ extends KernelJPanelCascadedZZZ impleme
 	 * @throws ExceptionZZZ
 	 * @author Fritz Lindhauer, 15.05.2021, 11:46:13
 	 */
-	private void createRow(KernelJPanelCascadedZZZ panel, GridBagConstraints gbc, INavigatorElementZZZ objElement) throws ExceptionZZZ {
+	private void createRow(KernelJPanelCascadedZZZ panel, GridBagConstraints gbc, ArrayList<INavigatorElementZZZ> listaElement) throws ExceptionZZZ {
 		gbc.gridx = 0;
-		int iPosition = objElement.getPosition();
-		gbc.gridy = iPosition;
-		this.add(objElement.getLabel(),gbc);
+		for(INavigatorElementZZZ objElement : listaElement) {
+			int iPosition = objElement.getPosition();
+			gbc.gridy = iPosition;
+			this.add(objElement.getLabel(),gbc);
+		}
 	}
 	
 	

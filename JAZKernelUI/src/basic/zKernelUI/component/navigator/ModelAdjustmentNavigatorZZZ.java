@@ -39,6 +39,13 @@ public class ModelAdjustmentNavigatorZZZ extends AbstractModelNavigatorZZZ{
 		return null;
 	}
 
+	@Override
+	public HashMapIndexedZZZ<Integer, ArrayList<INavigatorElementZZZ>> createNavigatorElementHashMap()
+			throws ExceptionZZZ {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 //	@Override
 //	public HashMapIndexedZZZ<Integer, ArrayList<INavigatorElementZZZ>> createNavigatorElementHashMap()
 //			throws ExceptionZZZ {

@@ -192,8 +192,8 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 	 * @return
 	 * @author Fritz Lindhauer, 09.05.2021, 10:20:52
 	 */
-	public INavigatorElementZZZ getGroupByAlias(String sGroupAlias) {
-		INavigatorElementZZZ objReturn = null;
+	public ArrayList<INavigatorElementZZZ>  getGroupByAlias(String sGroupAlias) {
+		ArrayList<INavigatorElementZZZ> objaReturn = null;
 		main:{
 			if(StringZZZ.isEmpty(sGroupAlias)) break main;
 			
@@ -201,14 +201,23 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 			while(it.hasNext()) {
 				ArrayList<INavigatorElementZZZ> group = (ArrayList<INavigatorElementZZZ>) it.next();
 				if(group!=null) {
-					if(group.getGroupAlias().equals(sGroupAlias)) {
-						objReturn = group;
-						break main;
+					
+					//Es reicht jeweils das erste Element abzufragen
+					for(INavigatorElementZZZ element : group) {
+						if(element!=null) {
+							String sAlias = element.getAlias();
+							if(sGroupAlias.equals(sAlias)) {
+								objaReturn = group;
+							}
+							break;
+						}
 					}
 				}
+				
+				if(objaReturn!=null)break main;
 			}
 		}//end main:
-		return objReturn;
+		return objaReturn;
 	}
 
 	//######## INTERFACES

@@ -45,11 +45,17 @@ public abstract class AbstractNavigatorElementZZZ implements INavigatorElementZZ
 			sValueUsed=sValue;
 		}else {
 			this.iPositionInModel = objEntry.getIndex();
-			this.sAlias = Integer.toString(this.iPositionInModel);
+			
+			//Damit kann ein Navigator-Element sowohl aus einer Map als auch einfach nur aus einem Array gebildet werden.
+			if(StringZZZ.isEmpty(objEntry.getKey())){
+				this.sAlias = Integer.toString(this.iPositionInModel);
+			}else {
+				this.sAlias = objEntry.getKey();
+			}
 			sValueUsed=objEntry.getValue();
 		}
 		
-		JLabel label = new JLabel(sValueUsed);
+		JLabel label = new JLabel("Alias: " + this.sAlias + " - Value: " + sValueUsed);
 		this.setLabel(label);	
 	}
 	
