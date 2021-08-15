@@ -1,10 +1,18 @@
 package basic.zKernelUI.component.navigator;
 
+import java.awt.Desktop;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelConfigSectionEntryZZZ;
+import basic.zKernelUI.component.componentGroup.ActionSwitchZZZ;
 
 public abstract class AbstractNavigatorElementZZZ implements INavigatorElementZZZ {
 	//Merke: Das darf z.B. nicht von JPanel erben, da man es dann nicht einfach einem anderen Panel zuordnen kann.
@@ -57,6 +65,37 @@ public abstract class AbstractNavigatorElementZZZ implements INavigatorElementZZ
 		
 		JLabel label = new JLabel("Alias: " + this.sAlias + " - Value: " + sValueUsed);
 		this.setLabel(label);	
+		
+		//Das NavigatorElement "Clickbar" machen
+		//TODOGOON; // 20210815 Vewende eine ActionSwitchZZZ, ggfs. besser wg. Thread Behandlung
+		//ActionSwitchZZZ actionSwitch_01 = new ActionSwitchZZZ(objKernel, this, groupc_01);			
+		//label.addMouseListener(l);.addActionListener(actionSwitch_01);
+		
+		
+		label.addMouseListener(new MouseAdapter() {
+		 
+		    @Override
+		    public void mouseEntered(MouseEvent e) {
+		        // the mouse has entered the label
+		    }
+		 
+		    @Override
+		    public void mouseExited(MouseEvent e) {
+		        // the mouse has exited the label
+		    }
+		    
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        try {
+		             
+		            Desktop.getDesktop().browse(new URI("http://www.codejava.net"));
+		             
+		        } catch (IOException | URISyntaxException e1) {
+		            e1.printStackTrace();
+		        }
+		    }
+		});
+		
 	}
 	
 	@Override
