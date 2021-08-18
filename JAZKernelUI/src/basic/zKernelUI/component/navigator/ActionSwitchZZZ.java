@@ -1,6 +1,7 @@
 package basic.zKernelUI.component.navigator;
 
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
 
@@ -16,16 +17,16 @@ import basic.zKernelUI.component.KernelActionCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.thread.KernelSwingWorkerZZZ;
 
-public class ActionSwitchZZZ extends  KernelActionCascadedZZZ implements IEventBrokerComponentGroupSwitchUserZZZ, IComponentGroupCollectionUserZZZ { //KernelUseObjectZZZ implements ActionListener{
+public class ActionSwitchZZZ extends  KernelActionCascadedZZZ implements IEventBrokerNavigatorElementSwitchUserZZZ, INavigatorCollectionUserZZZ { //KernelUseObjectZZZ implements ActionListener{
 	private int iIndexCurrent = 0;
-	private JComponentGroupCollectionZZZ groupc;//zur Verwaltung von HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmIndexed
-	ISenderComponentGroupSwitchZZZ objEventBroker;
+	private NavigatorElementCollectionZZZ groupc;//zur Verwaltung von HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>> hmIndexed
+	ISenderNavigatorElementSwitchZZZ objEventBroker;
 	
-	public ActionSwitchZZZ(IKernelZZZ objKernel, IPanelCascadedZZZ panelParent, JComponentGroupCollectionZZZ groupc) throws ExceptionZZZ{
+	public ActionSwitchZZZ(IKernelZZZ objKernel, IPanelCascadedZZZ panelParent, NavigatorElementCollectionZZZ groupc) throws ExceptionZZZ{
 		super(objKernel, panelParent);
 		ActionSwitchNew_(groupc);
 	}
-	private boolean ActionSwitchNew_(JComponentGroupCollectionZZZ groupc) throws ExceptionZZZ {
+	private boolean ActionSwitchNew_(NavigatorElementCollectionZZZ groupc) throws ExceptionZZZ {
 		boolean bReturn = false;
 		main:{
 			if(groupc==null) {
@@ -33,7 +34,7 @@ public class ActionSwitchZZZ extends  KernelActionCascadedZZZ implements IEventB
 				throw ez;
 			}
 								
-			HashMapIndexedZZZ<Integer,JComponentGroupZZZ>hmIndexed = groupc.getHashMapIndexed();	
+			HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>>hmIndexed = groupc.getHashMapIndexed();	
 			if(hmIndexed==null) {
 				ExceptionZZZ ez = new ExceptionZZZ( "HashMapIndexedZZZ-Object in GroupCollection missing. Fill GroupCollection first.", iERROR_PARAMETER_MISSING, this, ReflectCodeZZZ.getMethodCurrentName()); 
 				throw ez;
@@ -41,8 +42,8 @@ public class ActionSwitchZZZ extends  KernelActionCascadedZZZ implements IEventB
 			this.setComponentGroupCollection(groupc);
 				
 			//+++ der EventBroker wird verwendet um alle Komponenten der GroupCollection über den Buttonclick zu informieren
-			ISenderComponentGroupSwitchZZZ objEventBroker = groupc.getSenderUsed();
-			this.setSenderUsed(objEventBroker);
+			//ISenderNavigatorElementSwitchZZZ objEventBroker = groupc.getSenderUsed();
+			//this.setSenderUsed(objEventBroker);
 									
 			bReturn = true;
 		}//end main:
@@ -59,7 +60,7 @@ public class ActionSwitchZZZ extends  KernelActionCascadedZZZ implements IEventB
 		int iIndexCurrent = this.getIndexCurrent();		
 		int iIndexNext = iIndexCurrent+1;
 		
-		HashMapIndexedZZZ<Integer,JComponentGroupZZZ>hmIndexed = this.groupc.getHashMapIndexed();
+		HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>>hmIndexed = this.groupc.getHashMapIndexed();
 		if(hmIndexed.size() < iIndexNext+1) {//+1 wg. Index mit Grüße vergleichen und Index beginnt immer bei 0
 			iIndexNext=0;		
 		}
@@ -89,20 +90,20 @@ public class ActionSwitchZZZ extends  KernelActionCascadedZZZ implements IEventB
 	
 	
 	//######## Getter/Setter
-	public void setComponentGroupCollection(JComponentGroupCollectionZZZ groupc) {
+	public void setComponentGroupCollection(NavigatorElementCollectionZZZ groupc) {
 		this.groupc = groupc;
 	}
-	public JComponentGroupCollectionZZZ getComponentGroupCollection() {
+	public NavigatorElementCollectionZZZ getComponentGroupCollection() {
 		return this.groupc;
 	}
 	
 	
 	//### Interface IEventBrokerUser
-	public ISenderComponentGroupSwitchZZZ getSenderUsed() {
+	public ISenderNavigatorElementSwitchZZZ getSenderUsed() {
 		return this.objEventBroker;
 	}
 
-	public void setSenderUsed(ISenderComponentGroupSwitchZZZ objEventBroker) {
+	public void setSenderUsed(ISenderNavigatorElementSwitchZZZ objEventBroker) {
 		this.objEventBroker = objEventBroker;			
 	}
 	
@@ -119,11 +120,11 @@ public class ActionSwitchZZZ extends  KernelActionCascadedZZZ implements IEventB
 		private String sText2Update;    //Der Wert, der ins Label geschreiben werden soll. Jier als Variable, damit die intene Runner-Klasse darauf zugreifen kann.
 													// Auch: Dieser Wert wird aus dem Web ausgelesen und danach in das Label des Panels geschrieben.
 						
-		private HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmIndexed;
+		private HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>> hmIndexed;
 		private int iIndexUsed;
 		private boolean bActiveState;
 		
-		public SwingWorker4ProgramSWITCH(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panel, HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmIndexed, int iIndexCurrent, boolean bActiveState, String[] saFlag4Program){
+		public SwingWorker4ProgramSWITCH(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panel, HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>> hmIndexed, int iIndexCurrent, boolean bActiveState, String[] saFlag4Program){
 			super(objKernel);
 			this.panel = panel;
 			this.saFlag4Program = saFlag4Program;	
@@ -143,10 +144,10 @@ public class ActionSwitchZZZ extends  KernelActionCascadedZZZ implements IEventB
 				
 				//### Den Event starten,
 				System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#EVENTEVENT !!!!!!!!");
-				HashMapIndexedZZZ<Integer, JComponentGroupZZZ> hmIndexed = this.hmIndexed;
-				JComponentGroupZZZ group = (JComponentGroupZZZ) hmIndexed.getValue(this.iIndexUsed);
-				EventComponentGroupSwitchZZZ eventNew= new EventComponentGroupSwitchZZZ(panel, 10002, group, this.iIndexUsed, true);				
-				objEventBroker.fireEvent(eventNew);	
+				HashMapIndexedZZZ<Integer, ArrayList<INavigatorElementZZZ>> hmIndexed = this.hmIndexed;
+				ArrayList<INavigatorElementZZZ> group = (ArrayList<INavigatorElementZZZ>) hmIndexed.getValue(this.iIndexUsed);
+				//EventNavigatorElementSwitchZZZ eventNew= new EventNavigatorElementSwitchZZZ(panel, 10002, group, this.iIndexUsed, true);				
+				//objEventBroker.fireEvent(eventNew);	
 				
 				System.out.println("#Updating Panel ...");
 				KernelJPanelCascadedZZZ objPanelParent = this.panel; //.getPanelParent();
