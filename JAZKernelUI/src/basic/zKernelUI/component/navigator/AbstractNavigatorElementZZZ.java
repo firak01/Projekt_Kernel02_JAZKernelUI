@@ -10,11 +10,14 @@ import java.net.URISyntaxException;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelConfigSectionEntryZZZ;
-import basic.zKernelUI.component.componentGroup.ActionSwitchZZZ;
+import basic.zKernel.IKernelZZZ;
+import basic.zKernel.KernelUseObjectZZZ;
+import basic.zKernelUI.component.navigator.ActionSwitchZZZ;
 
-public abstract class AbstractNavigatorElementZZZ implements INavigatorElementZZZ {
+public abstract class AbstractNavigatorElementZZZ extends KernelUseObjectZZZ implements INavigatorElementZZZ {
 	//Merke: Das darf z.B. nicht von JPanel erben, da man es dann nicht einfach einem anderen Panel zuordnen kann.
 	//       Statt dessen die Komponenten hierin definieren.
 	
@@ -28,17 +31,17 @@ public abstract class AbstractNavigatorElementZZZ implements INavigatorElementZZ
 		super();
 	}
 	
-	public AbstractNavigatorElementZZZ(IModelNavigatorValueZZZ objModelNavigator, String sAlias, int iPositionInModel, String sValue) {
-		this();
+	public AbstractNavigatorElementZZZ(IKernelZZZ objKernel, IModelNavigatorValueZZZ objModelNavigator, String sAlias, int iPositionInModel, String sValue) throws ExceptionZZZ {
+		super(objKernel);
 		NavigatorElementNew_(objModelNavigator, null, sAlias, iPositionInModel, sValue);
 	}
 	
-	public AbstractNavigatorElementZZZ(IModelNavigatorValueZZZ objModelNavigator, IKernelConfigSectionEntryZZZ objEntry) {
-		this();
+	public AbstractNavigatorElementZZZ(IKernelZZZ objKernel, IModelNavigatorValueZZZ objModelNavigator, IKernelConfigSectionEntryZZZ objEntry) throws ExceptionZZZ {
+		super(objKernel);
 		NavigatorElementNew_(objModelNavigator, objEntry, null, -1, null);
 	}
 	
-	private void NavigatorElementNew_(IModelNavigatorValueZZZ objModelNavigator, IKernelConfigSectionEntryZZZ objEntry, String sAlias, int iPositionInModel,String sValue) {		
+	private void NavigatorElementNew_(IModelNavigatorValueZZZ objModelNavigator, IKernelConfigSectionEntryZZZ objEntry, String sAlias, int iPositionInModel,String sValue) throws ExceptionZZZ {		
 		this.objModelNavigator = objModelNavigator;
 		
 		String sValueUsed=null;
@@ -63,15 +66,19 @@ public abstract class AbstractNavigatorElementZZZ implements INavigatorElementZZ
 			sValueUsed=objEntry.getValue();
 		}
 		
+		NavigatorMouseListenerZZZ l = new NavigatorMouseListenerZZZ(objKernel, this.sAlias);
+		
 		JLabel label = new JLabel("Alias: " + this.sAlias + " - Value: " + sValueUsed);
+		label.addMouseListener(l);
 		this.setLabel(label);	
 		
 		//Das NavigatorElement "Clickbar" machen
-		//TODOGOON; // 20210815 Vewende eine ActionSwitchZZZ, ggfs. besser wg. Thread Behandlung
+		//TODOGOON; // 20210815 Verwende eine ActionSwitchZZZ, ggfs. besser wg. Thread Behandlung
 		//ActionSwitchZZZ actionSwitch_01 = new ActionSwitchZZZ(objKernel, this, groupc_01);			
-		//label.addMouseListener(l);.addActionListener(actionSwitch_01);
+		//label.add.addActionListener(actionSwitch_01);
 		
-		
+		/*
+		//Einfache Variante mit MouseAdapter-Klasse
 		label.addMouseListener(new MouseAdapter() {
 		 
 		    @Override
@@ -95,6 +102,7 @@ public abstract class AbstractNavigatorElementZZZ implements INavigatorElementZZ
 		        }
 		    }
 		});
+		*/
 		
 	}
 	

@@ -16,7 +16,14 @@ import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.component.navigator.EventNavigatorElementSwitchZZZ;
 import basic.zKernelUI.component.navigator.IListenerNavigatorElementSwitchZZZ;
 import basic.zKernelUI.component.navigator.IModelNavigatorValueZZZ;
+import basic.zKernelUI.component.navigator.INavigatorElementZZZ;
 
+/*
+ * TODOGOON: Das wäre dann ggfs. die Klasse für die Panels, etc. die von der Auswahl im Navigator abhängen....
+ *           Merke: Die Navigator Elemente selbst werden in der NavigatorElementCollection behandelt.
+ *                  Für den Fall, dass es mehrere Elemente "auf einer NavigatorEbene" gibt, 
+ *                  sind diese schon als ArrayList<INavigatorElementZZZ> definiert.
+ */
 public class NavigatorElementGroupZZZ extends KernelUseObjectZZZ implements IListenerNavigatorElementSwitchZZZ { //,IEventBrokerSwitchComponentUserZZZ { //, IEventBrokerSwitchComponentUserZZZ{
 	private ArrayList<JComponent>listaComponent=null;
 	private IPanelCascadedZZZ panelParent=null;

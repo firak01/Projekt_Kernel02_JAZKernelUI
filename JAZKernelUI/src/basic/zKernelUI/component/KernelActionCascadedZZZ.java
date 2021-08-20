@@ -29,8 +29,8 @@ public abstract class KernelActionCascadedZZZ extends KernelUseObjectZZZ  implem
 	 */
 	public final void actionPerformed(ActionEvent ae) {
 		try{
-			boolean bQueryResult = this.actionPerformQueryCustom(ae); //Durch �berschreiben diesr Methode k�nnen erbende Klassen noch anderen Code ausf�hren			
-			boolean bPerformResult = this.actionPerformCustom(ae, bQueryResult);  //Durch �berschreiben dieser Methode k�nnen erbende Klassen noch anderen Code ausf�hren
+			boolean bQueryResult = this.actionPerformQueryCustom(ae); //Durch Ueberschreiben diesr Methode koennen erbende Klassen noch anderen Code ausfuehren			
+			boolean bPerformResult = this.actionPerformCustom(ae, bQueryResult);  //Durch Ueberschreiben dieser Methode koennen erbende Klassen noch anderen Code ausfuehren
 			if(bPerformResult == true){
 				this.actionPerformPostCustom(ae, bQueryResult);
 			}
