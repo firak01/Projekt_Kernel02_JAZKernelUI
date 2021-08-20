@@ -50,7 +50,7 @@ public class NavigatorMouseListenerZZZ extends KernelMouseListenerCascadedZZZ im
 		TODOGOON; //20210820
 		//TODOGOON: Irgendwie die NavigatorCollection durchgehen und die anderen "nicht geclickt setzen", diese Element "geclickt setzen";
 		
-		//TODOGOON; //Verwende analog zu ActionSwitchZZZ, ggfs. die bessere Thread Behandlung
+		//TODOGOON; //Verwende analog zu ActionSwitchZZZ, ggfs. die bessere Thread Behandlung und EINEN BROKER
 		
 		//TODOGOON: Danach einen Event werfen, damit die Panels, etc. reagieren können
 		//          Ggfs. auch diesen Event für die anderen Navigator-Elemente zum "nicht geclickt setzen" verwenden.
