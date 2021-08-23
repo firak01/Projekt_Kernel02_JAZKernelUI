@@ -16,10 +16,16 @@ import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
+import basic.zKernelUI.component.componentGroup.IEventBrokerComponentGroupSwitchUserZZZ;
+import basic.zKernelUI.component.componentGroup.ISenderComponentGroupSwitchZZZ;
+import basic.zKernelUI.component.componentGroup.KernelSenderComponentGroupSwitchZZZ;
 
-//public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  implements Iterable<T>,IEventBrokerComponentGroupSwitchUserZZZ {
-public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  implements Iterable<T> { //TODOGOON 20210810 Noch Clickbar machen....,IEventBrokerComponentGroupSwitchUserZZZ {
-	
+TODOGOON; //20210822: Wenn die Collection selbst auf einen Click eines NavigatorElements reagieren soll, den Listener implementieren
+public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  implements Iterable<T>, IEventBrokerNavigatorElementSwitchUserZZZ, IListenerNavigatorElementSwitchZZZ {
+
+//Wenn die einzelnen Elemente auf einen Click eines NavigatorElements reagieren sollen, nur dort den Listenere implementieren.
+//public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  implements Iterable<T>, IEventBrokerNavigatorElementSwitchUserZZZ { 
+			
 	//++++++++++ Mehrerer Gruppen zu der HashMap zusammenfassen.
 	//Merke1: Über den Index wird die Reihenfolge festgelegt.
 	//Merke2: Im Nomralfall ist nur 1 Element in der Arraylist... aber schon mal als Erweiterung gedacht.
@@ -28,7 +34,8 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 	//+++ Den EventBroker DER GRUPPE hinzufügen, damit darueber der Event abgefeuert werden kann
 	//Merke: Dem EventBroker ist eine Reihefolge (über den Index) egal
 	//ISenderComponentGroupSwitchZZZ objEventBroker = null;
-	
+	ISenderNavigatorElementSwitchZZZ objEventBroker = null;
+		
 	
 	//+++ Das Model
 	IModelNavigatorValueZZZ model = null;
@@ -68,6 +75,18 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 				bReturn = true;
 				break main;
 			}
+		
+			//Merke: Das ist anders als bei der ComponentGroupCollection. Darin wird der Event von einem "externen" Button aus aufgerufen.
+			//       Hier wird der Event vom NavigatorElement selbst aufgerufen.
+			
+			TODOGOON;
+		
+			//20210822 STRATEGIEFRAGE: Wird nun die Collection hinzugefügt oder jedes einzelne Element?
+			//Ich denke: erst einmal die Collection der Elemente. 
+	        //In einer zweiten Stufe, dann weitere Objekte, z.B. Panels, die dann sichtbar werden.		
+			//objEventBroker.addListenerNavigatorElementSwitch(group);
+			objEventBroker.addListenerNavigatorElementSwitch(this);
+			
 			this.panelParent = panelParent;
 			this.setModel(model);
 			if(model!=null) {       ///Für eine GroupCollection MIT Modell
@@ -116,9 +135,14 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 			if(group==null) break main;
 			
 			//+++ Die Gruppe dem EventBroker hinzufügen, der alle registrierten Gruppen über einen Button Click informiert.			
-			//ISenderComponentGroupSwitchZZZ objEventBroker = this.getSenderUsed();
-			//objEventBroker.addListenerComponentGroupSwitch(group);
+			ISenderNavigatorElementSwitchZZZ objEventBroker = this.getSenderUsed();
 			
+			TODOGOON; //20210822 STRATEGIEFRAGE: Wird nun die Collection hinzugefügt oder jedes einzelne Element?
+			//Ich denke: erst einmal die Collection der Elemente.  
+	        //In einer zweiten Stufe, dann weitere Objekte, z.B. Panels, die dann sichtbar werden.		
+			//objEventBroker.addListenerNavigatorElementSwitch(group);
+			
+		
 			//+++ Letztendlich die Gruppe der HashMap hinzufügen
 			HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>>hmIndexed = this.getHashMapIndexed();
 			hmIndexed.put(group);
@@ -304,4 +328,23 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
         };
         return it;
 	}//end inner class iterator
+
+	//######## INTERFACES
+	//+++ aus IEventBrokerNavigatorElementSwitchUserZZZ.java
+	@Override
+	public ISenderNavigatorElementSwitchZZZ getSenderUsed() throws ExceptionZZZ {
+		if(this.objEventBroker==null) {
+			IKernelZZZ objKernel = this.getKernelObject();
+			KernelSenderNavigatorElementSwitchZZZ objEventBroker = new KernelSenderNavigatorElementSwitchZZZ(objKernel);
+			this.setSenderUsed(objEventBroker);
+		}
+		return this.objEventBroker;
+	}
+
+	@Override
+	public void setSenderUsed(ISenderNavigatorElementSwitchZZZ objEventSender) {
+		this.objEventBroker = objEventSender;
+	}
+
+	
 }

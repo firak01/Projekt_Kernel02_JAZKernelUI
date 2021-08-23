@@ -16,5 +16,5 @@ public interface ISenderComponentGroupSwitchZZZ {
 
 	public abstract void addListenerComponentGroupSwitch(IListenerComponentGroupSwitchZZZ lnterfaceUser);
 	
-	public abstract ArrayList getListenerRegisteredAll();
+	public abstract ArrayList<IListenerComponentGroupSwitchZZZ> getListenerRegisteredAll();
 }

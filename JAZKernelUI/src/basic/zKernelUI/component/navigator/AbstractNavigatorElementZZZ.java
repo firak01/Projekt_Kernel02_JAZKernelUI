@@ -17,7 +17,7 @@ import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
 import basic.zKernelUI.component.navigator.ActionSwitchZZZ;
 
-public abstract class AbstractNavigatorElementZZZ extends KernelUseObjectZZZ implements INavigatorElementZZZ {
+public abstract class AbstractNavigatorElementZZZ extends KernelUseObjectZZZ implements INavigatorElementZZZ, IListenerNavigatorElementSwitchZZZ {
 	//Merke: Das darf z.B. nicht von JPanel erben, da man es dann nicht einfach einem anderen Panel zuordnen kann.
 	//       Statt dessen die Komponenten hierin definieren.
 	
@@ -66,16 +66,14 @@ public abstract class AbstractNavigatorElementZZZ extends KernelUseObjectZZZ imp
 			sValueUsed=objEntry.getValue();
 		}
 		
+		//Das NavigatorElement "Clickbar" machen
 		NavigatorMouseListenerZZZ l = new NavigatorMouseListenerZZZ(objKernel, this.sAlias);
 		
 		JLabel label = new JLabel("Alias: " + this.sAlias + " - Value: " + sValueUsed);
-		label.addMouseListener(l);
+		label.addMouseListener(l); //Merke: Darin wird dann eine ActionSwitchZZZ ausgeführt.
 		this.setLabel(label);	
 		
-		//Das NavigatorElement "Clickbar" machen
-		//TODOGOON; // 20210815 Verwende eine ActionSwitchZZZ, ggfs. besser wg. Thread Behandlung
-		//ActionSwitchZZZ actionSwitch_01 = new ActionSwitchZZZ(objKernel, this, groupc_01);			
-		//label.add.addActionListener(actionSwitch_01);
+		
 		
 		/*
 		//Einfache Variante mit MouseAdapter-Klasse

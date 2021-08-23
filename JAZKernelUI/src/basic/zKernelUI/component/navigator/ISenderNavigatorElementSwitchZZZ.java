@@ -12,9 +12,9 @@ import basic.zBasic.ExceptionZZZ;
 public interface ISenderNavigatorElementSwitchZZZ {
 	public abstract void fireEvent(EventNavigatorElementSwitchZZZ event) throws ExceptionZZZ;
 
-	public abstract void removeListenerComponentGroupSwitch(IListenerNavigatorElementSwitchZZZ lnterfaceUser);
+	public abstract void removeListenerNavigatorElementSwitch(IListenerNavigatorElementSwitchZZZ lnterfaceUser);
 
-	public abstract void addListenerComponentGroupSwitch(IListenerNavigatorElementSwitchZZZ lnterfaceUser);
+	public abstract void addListenerNavigatorElementSwitch(IListenerNavigatorElementSwitchZZZ lnterfaceUser);
 	
-	public abstract ArrayList getListenerRegisteredAll();
+	public abstract ArrayList<IListenerNavigatorElementSwitchZZZ> getListenerRegisteredAll();
 }

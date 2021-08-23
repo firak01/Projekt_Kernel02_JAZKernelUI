@@ -44,14 +44,9 @@ public interface IListenerNavigatorElementSwitchZZZ extends EventListener{
 	public abstract EventNavigatorElementSwitchZZZ getEventPrevious();    
 	public abstract void setEventPrevious(EventNavigatorElementSwitchZZZ eventComponentGroupSwitchNew);
 	
-	public abstract String getGroupAlias();
-	public abstract void setGroupAlias(String sAlias);
 	
-	public abstract String getGroupTitle();
-	public abstract void setGroupTitle(String sTitle);
-	
-	public IModelNavigatorValueZZZ getComponentValueProvider();
-	public void setComponentValueProvider(IModelNavigatorValueZZZ objComponentValueProvider);
-	public HashMapIndexedZZZ<Integer,ArrayList<String>> getComponentValuesCustom() throws ExceptionZZZ; 
+	//public IModelNavigatorValueZZZ getComponentValueProvider();
+	//public void setComponentValueProvider(IModelNavigatorValueZZZ objComponentValueProvider);
+	//public HashMapIndexedZZZ<Integer,ArrayList<String>> getComponentValuesCustom() throws ExceptionZZZ; 
 	
 }

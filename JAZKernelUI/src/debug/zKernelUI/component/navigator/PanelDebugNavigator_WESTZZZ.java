@@ -126,10 +126,10 @@ public class PanelDebugNavigator_WESTZZZ extends KernelJPanelCascadedZZZ impleme
 				createRow(this, gbc, listaElementTemp);
 			}
 			
+	        	       
 	        
-//	        ArrayListExtendedZZZ<INavigatorElementZZZ>alNavigatorElement = modelNavigator.getNavigatorElementArrayList();
-//	        
-//	        //für jeden Elementeintrag aufrufen... und damit die Navigator-Elemente als Panel erstellen. 
+	        //für jeden Elementeintrag aufrufen... und damit die Navigator-Elemente als Panel erstellen.
+//			ArrayListExtendedZZZ<INavigatorElementZZZ>alNavigatorElement = modelNavigator.getNavigatorElementArrayList();
 //	        for(INavigatorElementZZZ objElementTemp : alNavigatorElement) {
 //	        	createRow(this, gbc, objElementTemp);
 //	        }

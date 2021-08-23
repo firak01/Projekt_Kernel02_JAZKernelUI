@@ -46,8 +46,12 @@ public class NavigatorMouseListenerZZZ extends KernelMouseListenerCascadedZZZ im
 	@Override
 	public boolean customMouseClicked(MouseEvent e, boolean bQueryResult) {
 		System.out.println("Element clicked: " + this.getNavigatorElementAlias());
+		
+		//TODOGOON; //20210815 Benutze den im Konstruktor übergebenen ActionSwitchZZZ, ggfs. besser wg. Thread Behandlung
+				
+		
 		return true;
-		TODOGOON; //20210820
+		//TODOGOON; //20210820
 		//TODOGOON: Irgendwie die NavigatorCollection durchgehen und die anderen "nicht geclickt setzen", diese Element "geclickt setzen";
 		
 		//TODOGOON; //Verwende analog zu ActionSwitchZZZ, ggfs. die bessere Thread Behandlung und EINEN BROKER

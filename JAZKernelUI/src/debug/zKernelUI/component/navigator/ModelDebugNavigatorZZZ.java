@@ -64,7 +64,8 @@ public class ModelDebugNavigatorZZZ extends AbstractModelNavigatorZZZ{
 	public INavigatorElementZZZ createNavigatorElement(IKernelConfigSectionEntryZZZ objEntry) throws ExceptionZZZ {
 		INavigatorElementZZZ objReturn = null;
 		main:{			
-			objReturn = new NavigatorElementZZZ(this.getKernelObject(), this, objEntry);
+			
+			objReturn = new NavigatorElementZZZ(this.getKernelObject(), this, objEntry, objAction);
 		}//end main:
 		return objReturn;
 	}
