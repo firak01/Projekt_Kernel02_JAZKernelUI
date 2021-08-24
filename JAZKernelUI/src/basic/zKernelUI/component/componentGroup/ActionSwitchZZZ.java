@@ -19,7 +19,7 @@ import basic.zKernelUI.thread.KernelSwingWorkerZZZ;
 public class ActionSwitchZZZ extends  KernelActionCascadedZZZ implements IEventBrokerComponentGroupSwitchUserZZZ, IComponentGroupCollectionUserZZZ { //KernelUseObjectZZZ implements ActionListener{
 	private int iIndexCurrent = 0;
 	private JComponentGroupCollectionZZZ groupc;//zur Verwaltung von HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmIndexed
-	ISenderComponentGroupSwitchZZZ objEventBroker;
+	ISenderComponentGroupSwitchZZZ objEventBroker; //wird von der inneren SwingWorker Klasse verwendet
 	
 	public ActionSwitchZZZ(IKernelZZZ objKernel, IPanelCascadedZZZ panelParent, JComponentGroupCollectionZZZ groupc) throws ExceptionZZZ{
 		super(objKernel, panelParent);

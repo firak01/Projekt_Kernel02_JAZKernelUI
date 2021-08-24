@@ -1,6 +1,7 @@
 package basic.zKernelUI.component.navigator;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
@@ -15,18 +16,21 @@ import basic.zKernel.IKernelZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelActionCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
+import basic.zKernelUI.component.KernelMouseListenerCascadedZZZ;
 import basic.zKernelUI.thread.KernelSwingWorkerZZZ;
 
-public class ActionSwitchZZZ extends  KernelActionCascadedZZZ implements IEventBrokerNavigatorElementSwitchUserZZZ, INavigatorCollectionUserZZZ { //KernelUseObjectZZZ implements ActionListener{
+
+//TODOGOON: SOLL GELOESCHT WERDEN. Das Starten des Swing Workers findet in NavigatorMouseListenerZZZ statt.
+public class ActionSwitchZZZ<T> extends  KernelMouseListenerCascadedZZZ implements IEventBrokerNavigatorElementSwitchUserZZZ, INavigatorCollectionUserZZZ { //KernelUseObjectZZZ implements ActionListener{
 	private int iIndexCurrent = 0;
 	private NavigatorElementCollectionZZZ groupc;//zur Verwaltung von HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>> hmIndexed
 	ISenderNavigatorElementSwitchZZZ objEventBroker;
 	
-	public ActionSwitchZZZ(IKernelZZZ objKernel, IPanelCascadedZZZ panelParent, NavigatorElementCollectionZZZ groupc) throws ExceptionZZZ{
+	public ActionSwitchZZZ(IKernelZZZ objKernel, IPanelCascadedZZZ panelParent, NavigatorElementCollectionZZZ<T> groupc) throws ExceptionZZZ{
 		super(objKernel, panelParent);
 		ActionSwitchNew_(groupc);
 	}
-	private boolean ActionSwitchNew_(NavigatorElementCollectionZZZ groupc) throws ExceptionZZZ {
+	private boolean ActionSwitchNew_(NavigatorElementCollectionZZZ<T> groupc) throws ExceptionZZZ {
 		boolean bReturn = false;
 		main:{
 			if(groupc==null) {
@@ -50,35 +54,35 @@ public class ActionSwitchZZZ extends  KernelActionCascadedZZZ implements IEventB
 		return bReturn;
 	}
 	
-	public boolean actionPerformCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ {
-		ReportLogZZZ.write(ReportLogZZZ.DEBUG, "Performing action: 'SWITCH'");
-											
-		String[] saFlag = null;			
-		KernelJPanelCascadedZZZ panelParent = (KernelJPanelCascadedZZZ) this.getPanelParent();
-			
-		//Wenn die Gruppen einmal durchgeschaltet sind, wieder am Anfang beginnen.
-		int iIndexCurrent = this.getIndexCurrent();		
-		int iIndexNext = iIndexCurrent+1;
-		
-		HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>>hmIndexed = this.groupc.getHashMapIndexed();
-		if(hmIndexed.size() < iIndexNext+1) {//+1 wg. Index mit Grüße vergleichen und Index beginnt immer bei 0
-			iIndexNext=0;		
-		}
-		this.setIndexCurrent(iIndexNext);
-		
-		boolean bActiveState = true;
-		SwingWorker4ProgramSWITCH worker = new SwingWorker4ProgramSWITCH(objKernel, panelParent, hmIndexed, iIndexNext, bActiveState, saFlag);
-		worker.start();  //Merke: Das Setzen des Label Felds geschieht durch einen extra Thread, der mit SwingUtitlities.invokeLater(runnable) gestartet wird.
-	
-		return true;
-	}
-	
-	public boolean actionPerformQueryCustom(ActionEvent ae) throws ExceptionZZZ {
-		return true;
-	}
-	
-	public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ {
-	}			
+//	public boolean actionPerformCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ {
+//		ReportLogZZZ.write(ReportLogZZZ.DEBUG, "Performing action: 'SWITCH'");
+//											
+//		String[] saFlag = null;			
+//		KernelJPanelCascadedZZZ panelParent = (KernelJPanelCascadedZZZ) this.getPanelParent();
+//			
+//		//Wenn die Gruppen einmal durchgeschaltet sind, wieder am Anfang beginnen.
+//		int iIndexCurrent = this.getIndexCurrent();		
+//		int iIndexNext = iIndexCurrent+1;
+//		
+//		HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>>hmIndexed = this.groupc.getHashMapIndexed();
+//		if(hmIndexed.size() < iIndexNext+1) {//+1 wg. Index mit Grüße vergleichen und Index beginnt immer bei 0
+//			iIndexNext=0;		
+//		}
+//		this.setIndexCurrent(iIndexNext);
+//		
+//		boolean bActiveState = true;
+//		SwingWorker4ProgramSWITCH worker = new SwingWorker4ProgramSWITCH(objKernel, panelParent, hmIndexed, iIndexNext, bActiveState, saFlag);
+//		worker.start();  //Merke: Das Setzen des Label Felds geschieht durch einen extra Thread, der mit SwingUtitlities.invokeLater(runnable) gestartet wird.
+//	
+//		return true;
+//	}
+//	
+//	public boolean actionPerformQueryCustom(ActionEvent ae) throws ExceptionZZZ {
+//		return true;
+//	}
+//	
+//	public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ {
+//	}			
 	
 	//### Methoden, die über den reinen Button-Click hinausgehen
 	public int getIndexCurrent() {
@@ -107,11 +111,7 @@ public class ActionSwitchZZZ extends  KernelActionCascadedZZZ implements IEventB
 		this.objEventBroker = objEventBroker;			
 	}
 	
-	@Override
-	public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {
-		// TODO Auto-generated method stub		
-	}
-	
+		
 	//#### Innere Klassen
 	//##############################################################
 	class SwingWorker4ProgramSWITCH extends KernelSwingWorkerZZZ{
@@ -203,4 +203,63 @@ public class ActionSwitchZZZ extends  KernelActionCascadedZZZ implements IEventB
 		}
 	
 	} //End Class SwingWorker: SwingWorker4ProgramSWITCH	
+
+	//### INTERFACE METHODEN
+	@Override
+	public boolean customMouseClicked(MouseEvent e, boolean bQueryResult) throws ExceptionZZZ {
+		ReportLogZZZ.write(ReportLogZZZ.DEBUG, "Performing action: 'SWITCH'");
+		
+		String[] saFlag = null;			
+		KernelJPanelCascadedZZZ panelParent = (KernelJPanelCascadedZZZ) this.getPanelParent();
+			
+		//Wenn die Gruppen einmal durchgeschaltet sind, wieder am Anfang beginnen.
+		int iIndexCurrent = this.getIndexCurrent();		
+		int iIndexNext = iIndexCurrent+1;
+		
+		HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>>hmIndexed = this.groupc.getHashMapIndexed();
+		if(hmIndexed.size() < iIndexNext+1) {//+1 wg. Index mit Grüße vergleichen und Index beginnt immer bei 0
+			iIndexNext=0;		
+		}
+		this.setIndexCurrent(iIndexNext);
+		
+		boolean bActiveState = true;
+		SwingWorker4ProgramSWITCH worker = new SwingWorker4ProgramSWITCH(objKernel, panelParent, hmIndexed, iIndexNext, bActiveState, saFlag);
+		worker.start();  //Merke: Das Setzen des Label Felds geschieht durch einen extra Thread, der mit SwingUtitlities.invokeLater(runnable) gestartet wird.
+	
+		return true;
+	}
+	@Override
+	public boolean customMousePressed(MouseEvent e, boolean bQueryResult) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean customMouseReleased(MouseEvent e, boolean bQueryResult) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean customMouseEntered(MouseEvent e, boolean bQueryResult) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean customMouseExited(MouseEvent e, boolean bQueryResult) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean actionPerformQueryCustom(MouseEvent me) throws ExceptionZZZ {
+		return true;
+	}
+	@Override
+	public boolean actionPerformPostCustom(MouseEvent me, boolean bPerfomResultContinue) throws ExceptionZZZ {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public void actionPerformCustomOnError(MouseEvent me, ExceptionZZZ ez) {
+		// TODO Auto-generated method stub
+		
+	}
 }

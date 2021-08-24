@@ -65,7 +65,7 @@ public class ModelDebugNavigatorZZZ extends AbstractModelNavigatorZZZ{
 		INavigatorElementZZZ objReturn = null;
 		main:{			
 			
-			objReturn = new NavigatorElementZZZ(this.getKernelObject(), this, objEntry, objAction);
+			objReturn = new NavigatorElementZZZ(this.getKernelObject(), this, objEntry);
 		}//end main:
 		return objReturn;
 	}

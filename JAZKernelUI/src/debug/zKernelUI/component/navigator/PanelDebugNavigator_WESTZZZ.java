@@ -39,20 +39,13 @@ import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zBasicUI.thread.SwingWorker;
 import basic.zKernelUI.KernelUIZZZ;
+import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelActionCascadedZZZ;
 import basic.zKernelUI.component.KernelButtonGroupZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
-import basic.zKernelUI.component.componentGroup.ActionSwitchZZZ;
-import basic.zKernelUI.component.componentGroup.EventComponentGroupSwitchZZZ;
-import basic.zKernelUI.component.componentGroup.IModelComponentGroupValueZZZ;
-import basic.zKernelUI.component.componentGroup.IListenerComponentGroupSwitchZZZ;
-import basic.zKernelUI.component.componentGroup.ISenderComponentGroupSwitchZZZ;
-import basic.zKernelUI.component.componentGroup.JComponentGroupCollectionZZZ;
-import basic.zKernelUI.component.componentGroup.JComponentGroupHelperZZZ;
-import basic.zKernelUI.component.componentGroup.JComponentGroupZZZ;
-import basic.zKernelUI.component.componentGroup.KernelSenderComponentGroupSwitchZZZ;
-import basic.zKernelUI.component.componentGroup.ModelPanelDebugZZZ;
+import basic.zKernelUI.component.navigator.ActionSwitchZZZ;
 import basic.zKernelUI.component.navigator.INavigatorElementZZZ;
+import basic.zKernelUI.component.navigator.ISenderNavigatorElementSwitchZZZ;
 import basic.zKernelUI.component.navigator.NavigatorElementCollectionZZZ;
 import basic.zKernelUI.thread.KernelSwingWorkerZZZ;
 import basic.zKernel.IKernelUserZZZ;
@@ -110,14 +103,12 @@ public class PanelDebugNavigator_WESTZZZ extends KernelJPanelCascadedZZZ impleme
 	        //Das soll eine HashMap an Einträgen liefern
 	        //Für jeden Eintrag ein NavigatorElement erstellen, das ist ein Panel, das ein Label enthält mit dem Text
 	        
-	        //Dann die NavigatorElemente "Element für Element" also "Zeile für Zeile" hinzufügen.
-	        
 	        
 	        //TODOGOON 20210804 starte mit dem Model...
 	       
-	      //++++ Die GroupCollection, basierend auf dem Modell
+	        //++++ Die GroupCollection, basierend auf dem Modell
 	        ModelDebugNavigatorZZZ modelNavigator = new ModelDebugNavigatorZZZ(this.getKernelObject());
-			NavigatorElementCollectionZZZ<INavigatorElementZZZ> groupc = new NavigatorElementCollectionZZZ<INavigatorElementZZZ>(objKernel, this, modelNavigator);
+			NavigatorElementCollectionZZZ<INavigatorElementZZZ> groupc = new NavigatorElementCollectionZZZ<INavigatorElementZZZ>(objKernel, this, modelNavigator);	
 			groupc.setVisible(0); //Initiales Setzen der Sichtbarkeit
 			
 			Iterator<INavigatorElementZZZ> it = groupc.iterator();
@@ -180,139 +171,139 @@ public class PanelDebugNavigator_WESTZZZ extends KernelJPanelCascadedZZZ impleme
 	
 	
 	
-	/**############################################################################################
-	   ########## ERSTE ZEILE MIT ERSTER GROUPCOLLECTION, OHNE MODELL
-	 * @param panel
-	 * @param gbc
-	 * @param sModule
-	 * @param sProgram
-	 * @throws ExceptionZZZ
-	 * @author Fritz Lindhauer, 15.05.2021, 11:48:32
-	 */
-	private void createRow1(KernelJPanelCascadedZZZ panel, GridBagConstraints gbc, String sModule, String sProgram) throws ExceptionZZZ {
-
-		// +++ Werte aus der KernelKonfiguration auslesen und anzeigen
-		String sLabelButtonGroup_01 = this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButtonGroupRow1").getValue();
-		JLabel labelModuleText_01 = new JLabel(sLabelButtonGroup_01, SwingConstants.LEFT);			
-		this.add(labelModuleText_01,gbc);
-		
-		//++++ Die LabelGroupZZZ				
-		//+++++++++++ GRUPPE 1 ++++++++++++++++++
-		String sLabel02_01 = "Label 1A";
-		JLabel label02_01 = new JLabel(sLabel02_01, SwingConstants.LEFT);			
-		String sLabel03_01 = "Label 2A";
-		JLabel label03_01 = new JLabel(sLabel03_01, SwingConstants.LEFT);	
-		
-		ArrayList<JComponent>listaComponent_01 = new ArrayList<JComponent>();
-		listaComponent_01.add(label02_01);
-		listaComponent_01.add(label03_01);			
-		JComponentGroupZZZ group01_01 = new JComponentGroupZZZ(objKernel, "EINS", "Title: DebugGroup01", this, listaComponent_01);
-		
-		//++++++++++++
-		String sLabel04_01 = "Label 1B";
-		JLabel label04_01 = new JLabel(sLabel04_01, SwingConstants.LEFT);			
-		String sLabel05_01 = "Label 2B";
-		JLabel label05_01 = new JLabel(sLabel05_01, SwingConstants.LEFT);
-		
-		listaComponent_01.clear();
-		listaComponent_01.add(label04_01);
-		listaComponent_01.add(label05_01);			
-		JComponentGroupZZZ group02_01 = new JComponentGroupZZZ(objKernel, "ZWEI", "Title: DebugGroup02", this, listaComponent_01);
-															
-		//### Die Gruppen in einer Collection zusammenfassen
-		JComponentGroupCollectionZZZ groupc_01 = new JComponentGroupCollectionZZZ(objKernel);
-		groupc_01.add(group01_01);
-		groupc_01.add(group02_01);
-		groupc_01.setVisible("EINS");
-		
-		
-		//######## Das UI gestalten. Die Reihenfolge der Componenten ist wichtig für die Reihenfolge im UI #################
-		//++++ Die Buttons
-		String sLabelButton_01 = this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButtonRow1").getValue();
-		JButton buttonSwitch_01 = new JButton(sLabelButton_01);			
-		ActionSwitchZZZ actionSwitch_01 = new ActionSwitchZZZ(objKernel, this, groupc_01);			
-		buttonSwitch_01.addActionListener(actionSwitch_01);
-		
-		this.setComponent(PanelDebugNavigator_WESTZZZ.sBUTTON_SWITCH, buttonSwitch_01);
-		gbc.gridx = 1;
-		this.add(buttonSwitch_01,gbc);
-		
-		
-		//+++ Nun erst die Label dem Panel hinzufügen. 
-		//Merke: Die auszutauschenden Komponenten müssen in die gleichen Zellen hinzugefügt werden. Sonst entstehen Leerzellen		
-		gbc.gridx = 2;
-		this.add(label02_01,gbc);
-		gbc.gridx = 3;
-		this.add(label03_01,gbc);
-		gbc.gridx = 2;
-		this.add(label04_01,gbc);
-		gbc.gridx = 3;
-		this.add(label05_01,gbc);
-	}
-	
-	
-	
-	/**############################################################################################
-	   ########## DRITTE ZEILE MIT DRITTER GROUPCOLLECTION, DIE EIN ANDERES MODELL BENUTZT
-		
-	 * @param panel
-	 * @param gbc
-	 * @param sModule
-	 * @param sProgram
-	 * @throws ExceptionZZZ
-	 * @author Fritz Lindhauer, 15.05.2021, 11:46:13
-	 */
-	private void createRow3(KernelJPanelCascadedZZZ panel, GridBagConstraints gbc, String sModule, String sProgram) throws ExceptionZZZ {
-		gbc.gridx = 0;
-		
-		// +++ Werte aus der KernelKonfiguration auslesen und anzeigen
-		String sLabelButtonGroup = this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButtonGroupRow3").getValue();
-		JLabel labelModuleText = new JLabel(sLabelButtonGroup, SwingConstants.LEFT);			
-		this.add(labelModuleText,gbc);
-		
-		String sTitle="row3";		
-		ModelPanelDebugZZZ modelRow3 = new ModelPanelDebugZZZ(this.getKernelObject(),sTitle, this);
-		
-		//++++ Die GroupCollection
-		//202105178 Jetzt muss es reichen das model zu übergeben
-		JComponentGroupCollectionZZZ groupc = new JComponentGroupCollectionZZZ(this.getKernelObject(), modelRow3);
-		groupc.setVisible(0); //Initiales Setzen der Sichtbarkeit
-				
-		//######## Das UI gestalten. Die Reihenfolge der Componenten ist wichtig für die Reihenfolge im UI #################
-		//++++ Die Buttons
-		String sLabelButton = this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButtonRow3").getValue();
-		JButton buttonSwitch = JComponentGroupHelperZZZ.createButtonSwitch(objKernel, panel, groupc, sLabelButton);
-		this.setComponent(PanelDebugNavigator_WESTZZZ.sBUTTON_SWITCH+"_03", buttonSwitch);
-		gbc.gridx = 1;
-		this.add(buttonSwitch,gbc);
-					
-		//+++ Nun erst die Label dem Panel hinzufuegen	
-		//Merke: Die auszutauschenden Komponenten müssen in die gleichen Zellen hinzugefügt werden. Sonst entstehen Leerzellen
-		HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmComponent = groupc.getHashMapIndexed();
-		Iterator it = hmComponent.iterator();
-		int iIndexOuter=-1;
-		while(it.hasNext()) {
-			JComponentGroupZZZ group = (JComponentGroupZZZ) it.next();
-			if(group!=null) {
-				iIndexOuter=iIndexOuter+1;
-				ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) group.getComponents();
-				if(listaComponenttemp!=null) {
-					
-					//Die Labels der Arraylist abarbeiten und dem panel hinzufügen
-					int iIndexInner=-1;				
-					for(JComponent componenttemp : listaComponenttemp) {
-						if(componenttemp!=null) {
-							System.out.println(ReflectCodeZZZ.getPositionCurrent() + ": Component.isVisible()='" + componenttemp.isVisible() + "'");
-							
-							iIndexInner=iIndexInner+1;
-							gbc.gridx = 2+iIndexInner;
-							this.add(componenttemp,gbc);						
-							this.setComponent("ComponentDebug"+iIndexOuter+"_"+iIndexInner, componenttemp);	
-													
-						}
-					}		
-				}
-			}	
-		}
-	}
+//	/**############################################################################################
+//	   ########## ERSTE ZEILE MIT ERSTER GROUPCOLLECTION, OHNE MODELL
+//	 * @param panel
+//	 * @param gbc
+//	 * @param sModule
+//	 * @param sProgram
+//	 * @throws ExceptionZZZ
+//	 * @author Fritz Lindhauer, 15.05.2021, 11:48:32
+//	 */
+//	private void createRow1(KernelJPanelCascadedZZZ panel, GridBagConstraints gbc, String sModule, String sProgram) throws ExceptionZZZ {
+//
+//		// +++ Werte aus der KernelKonfiguration auslesen und anzeigen
+//		String sLabelButtonGroup_01 = this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButtonGroupRow1").getValue();
+//		JLabel labelModuleText_01 = new JLabel(sLabelButtonGroup_01, SwingConstants.LEFT);			
+//		this.add(labelModuleText_01,gbc);
+//		
+//		//++++ Die LabelGroupZZZ				
+//		//+++++++++++ GRUPPE 1 ++++++++++++++++++
+//		String sLabel02_01 = "Label 1A";
+//		JLabel label02_01 = new JLabel(sLabel02_01, SwingConstants.LEFT);			
+//		String sLabel03_01 = "Label 2A";
+//		JLabel label03_01 = new JLabel(sLabel03_01, SwingConstants.LEFT);	
+//		
+//		ArrayList<JComponent>listaComponent_01 = new ArrayList<JComponent>();
+//		listaComponent_01.add(label02_01);
+//		listaComponent_01.add(label03_01);			
+//		JComponentGroupZZZ group01_01 = new JComponentGroupZZZ(objKernel, "EINS", "Title: DebugGroup01", this, listaComponent_01);
+//		
+//		//++++++++++++
+//		String sLabel04_01 = "Label 1B";
+//		JLabel label04_01 = new JLabel(sLabel04_01, SwingConstants.LEFT);			
+//		String sLabel05_01 = "Label 2B";
+//		JLabel label05_01 = new JLabel(sLabel05_01, SwingConstants.LEFT);
+//		
+//		listaComponent_01.clear();
+//		listaComponent_01.add(label04_01);
+//		listaComponent_01.add(label05_01);			
+//		JComponentGroupZZZ group02_01 = new JComponentGroupZZZ(objKernel, "ZWEI", "Title: DebugGroup02", this, listaComponent_01);
+//															
+//		//### Die Gruppen in einer Collection zusammenfassen
+//		JComponentGroupCollectionZZZ groupc_01 = new JComponentGroupCollectionZZZ(objKernel);
+//		groupc_01.add(group01_01);
+//		groupc_01.add(group02_01);
+//		groupc_01.setVisible("EINS");
+//		
+//		
+//		//######## Das UI gestalten. Die Reihenfolge der Componenten ist wichtig für die Reihenfolge im UI #################
+//		//++++ Die Buttons
+//		String sLabelButton_01 = this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButtonRow1").getValue();
+//		JButton buttonSwitch_01 = new JButton(sLabelButton_01);			
+//		ActionSwitchZZZ actionSwitch_01 = new ActionSwitchZZZ(objKernel, this, groupc_01);			
+//		buttonSwitch_01.addActionListener(actionSwitch_01);
+//		
+//		this.setComponent(PanelDebugNavigator_WESTZZZ.sBUTTON_SWITCH, buttonSwitch_01);
+//		gbc.gridx = 1;
+//		this.add(buttonSwitch_01,gbc);
+//		
+//		
+//		//+++ Nun erst die Label dem Panel hinzufügen. 
+//		//Merke: Die auszutauschenden Komponenten müssen in die gleichen Zellen hinzugefügt werden. Sonst entstehen Leerzellen		
+//		gbc.gridx = 2;
+//		this.add(label02_01,gbc);
+//		gbc.gridx = 3;
+//		this.add(label03_01,gbc);
+//		gbc.gridx = 2;
+//		this.add(label04_01,gbc);
+//		gbc.gridx = 3;
+//		this.add(label05_01,gbc);
+//	}
+//	
+//	
+//	
+//	/**############################################################################################
+//	   ########## DRITTE ZEILE MIT DRITTER GROUPCOLLECTION, DIE EIN ANDERES MODELL BENUTZT
+//		
+//	 * @param panel
+//	 * @param gbc
+//	 * @param sModule
+//	 * @param sProgram
+//	 * @throws ExceptionZZZ
+//	 * @author Fritz Lindhauer, 15.05.2021, 11:46:13
+//	 */
+//	private void createRow3(KernelJPanelCascadedZZZ panel, GridBagConstraints gbc, String sModule, String sProgram) throws ExceptionZZZ {
+//		gbc.gridx = 0;
+//		
+//		// +++ Werte aus der KernelKonfiguration auslesen und anzeigen
+//		String sLabelButtonGroup = this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButtonGroupRow3").getValue();
+//		JLabel labelModuleText = new JLabel(sLabelButtonGroup, SwingConstants.LEFT);			
+//		this.add(labelModuleText,gbc);
+//		
+//		String sTitle="row3";		
+//		ModelPanelDebugZZZ modelRow3 = new ModelPanelDebugZZZ(this.getKernelObject(),sTitle, this);
+//		
+//		//++++ Die GroupCollection
+//		//202105178 Jetzt muss es reichen das model zu übergeben
+//		JComponentGroupCollectionZZZ groupc = new JComponentGroupCollectionZZZ(this.getKernelObject(), modelRow3);
+//		groupc.setVisible(0); //Initiales Setzen der Sichtbarkeit
+//				
+//		//######## Das UI gestalten. Die Reihenfolge der Componenten ist wichtig für die Reihenfolge im UI #################
+//		//++++ Die Buttons
+//		String sLabelButton = this.getKernelObject().getParameterByProgramAlias(sModule, sProgram, "LabelButtonRow3").getValue();
+//		JButton buttonSwitch = JComponentGroupHelperZZZ.createButtonSwitch(objKernel, panel, groupc, sLabelButton);
+//		this.setComponent(PanelDebugNavigator_WESTZZZ.sBUTTON_SWITCH+"_03", buttonSwitch);
+//		gbc.gridx = 1;
+//		this.add(buttonSwitch,gbc);
+//					
+//		//+++ Nun erst die Label dem Panel hinzufuegen	
+//		//Merke: Die auszutauschenden Komponenten müssen in die gleichen Zellen hinzugefügt werden. Sonst entstehen Leerzellen
+//		HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmComponent = groupc.getHashMapIndexed();
+//		Iterator it = hmComponent.iterator();
+//		int iIndexOuter=-1;
+//		while(it.hasNext()) {
+//			JComponentGroupZZZ group = (JComponentGroupZZZ) it.next();
+//			if(group!=null) {
+//				iIndexOuter=iIndexOuter+1;
+//				ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) group.getComponents();
+//				if(listaComponenttemp!=null) {
+//					
+//					//Die Labels der Arraylist abarbeiten und dem panel hinzufügen
+//					int iIndexInner=-1;				
+//					for(JComponent componenttemp : listaComponenttemp) {
+//						if(componenttemp!=null) {
+//							System.out.println(ReflectCodeZZZ.getPositionCurrent() + ": Component.isVisible()='" + componenttemp.isVisible() + "'");
+//							
+//							iIndexInner=iIndexInner+1;
+//							gbc.gridx = 2+iIndexInner;
+//							this.add(componenttemp,gbc);						
+//							this.setComponent("ComponentDebug"+iIndexOuter+"_"+iIndexInner, componenttemp);	
+//													
+//						}
+//					}		
+//				}
+//			}	
+//		}
+//	}
 }

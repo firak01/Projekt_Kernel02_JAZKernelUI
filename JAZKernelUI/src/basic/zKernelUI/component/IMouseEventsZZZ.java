@@ -6,11 +6,11 @@ import basic.zBasic.ExceptionZZZ;
 
 public interface IMouseEventsZZZ {
 		
-	public abstract boolean customMouseClicked(MouseEvent e, boolean bQueryResult);
-	public abstract boolean customMousePressed(MouseEvent e, boolean bQueryResult);
-	public abstract boolean customMouseReleased(MouseEvent e, boolean bQueryResult);
-	public abstract boolean customMouseEntered(MouseEvent e, boolean bQueryResult);
-	public abstract boolean customMouseExited(MouseEvent e, boolean bQueryResult);
+	public abstract boolean customMouseClicked(MouseEvent e, boolean bQueryResult) throws ExceptionZZZ;
+	public abstract boolean customMousePressed(MouseEvent e, boolean bQueryResult) throws ExceptionZZZ;
+	public abstract boolean customMouseReleased(MouseEvent e, boolean bQueryResult) throws ExceptionZZZ;
+	public abstract boolean customMouseEntered(MouseEvent e, boolean bQueryResult) throws ExceptionZZZ;
+	public abstract boolean customMouseExited(MouseEvent e, boolean bQueryResult) throws ExceptionZZZ;
 	
 	
 	public abstract boolean actionPerformQueryCustom(MouseEvent me) throws ExceptionZZZ;

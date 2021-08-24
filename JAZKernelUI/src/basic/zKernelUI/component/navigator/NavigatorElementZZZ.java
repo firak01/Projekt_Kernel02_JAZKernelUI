@@ -44,23 +44,6 @@ public class NavigatorElementZZZ extends AbstractNavigatorElementZZZ{
 		
 	}
 
-	@Override
-	public IModelNavigatorValueZZZ getComponentValueProvider() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setComponentValueProvider(IModelNavigatorValueZZZ objComponentValueProvider) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public HashMapIndexedZZZ<Integer, ArrayList<String>> getComponentValuesCustom() throws ExceptionZZZ {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	
 }

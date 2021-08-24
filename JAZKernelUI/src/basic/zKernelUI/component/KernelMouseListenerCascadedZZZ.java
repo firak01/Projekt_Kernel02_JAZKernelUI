@@ -142,19 +142,19 @@ public abstract class KernelMouseListenerCascadedZZZ extends KernelUseObjectZZZ 
 	}
 
 	@Override
-	public abstract boolean customMouseClicked(MouseEvent e, boolean bQueryResult);
+	public abstract boolean customMouseClicked(MouseEvent e, boolean bQueryResult) throws ExceptionZZZ;
 
 	@Override
-	public abstract boolean customMousePressed(MouseEvent e, boolean bQueryResult);
+	public abstract boolean customMousePressed(MouseEvent e, boolean bQueryResult) throws ExceptionZZZ;
 
 	@Override
-	public abstract boolean customMouseReleased(MouseEvent e,  boolean bQueryResult);
+	public abstract boolean customMouseReleased(MouseEvent e,  boolean bQueryResult) throws ExceptionZZZ;
 
 	@Override
-	public abstract boolean customMouseEntered(MouseEvent e,  boolean bQueryResult);
+	public abstract boolean customMouseEntered(MouseEvent e,  boolean bQueryResult) throws ExceptionZZZ;
 
 	@Override
-	public abstract boolean customMouseExited(MouseEvent e,  boolean bQueryResult);
+	public abstract boolean customMouseExited(MouseEvent e,  boolean bQueryResult) throws ExceptionZZZ;
 	
 	@Override
 	public abstract boolean actionPerformQueryCustom(MouseEvent me) throws ExceptionZZZ;

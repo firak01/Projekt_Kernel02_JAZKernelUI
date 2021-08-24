@@ -20,7 +20,7 @@ import basic.zKernelUI.component.componentGroup.IEventBrokerComponentGroupSwitch
 import basic.zKernelUI.component.componentGroup.ISenderComponentGroupSwitchZZZ;
 import basic.zKernelUI.component.componentGroup.KernelSenderComponentGroupSwitchZZZ;
 
-TODOGOON; //20210822: Wenn die Collection selbst auf einen Click eines NavigatorElements reagieren soll, den Listener implementieren
+//TODOGOON; //20210822: Wenn die Collection selbst auf einen Click eines NavigatorElements reagieren soll, den Listener implementieren
 public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  implements Iterable<T>, IEventBrokerNavigatorElementSwitchUserZZZ, IListenerNavigatorElementSwitchZZZ {
 
 //Wenn die einzelnen Elemente auf einen Click eines NavigatorElements reagieren sollen, nur dort den Listenere implementieren.
@@ -66,9 +66,11 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 	private boolean NavigatorElementCollectionNew_(IModelNavigatorValueZZZ model, IPanelCascadedZZZ panelParent, ArrayList<INavigatorElementZZZ>listaGroup) throws ExceptionZZZ{
 		boolean bReturn = false;		
 		main:{			
+			
+			//Dann die NavigatorElemente "Element fuer Element" also "Zeile fuer Zeile" hinzufügen.	       			
 			if(listaGroup!=null) {	//Für eine GroupCollection OHNE Modell, einfach die Liste der GroupComponents hinzufügen	
 				for(INavigatorElementZZZ grouptemp : listaGroup) {
-					if(grouptemp!=null) {
+					if(grouptemp!=null) {												
 						this.add(grouptemp);
 					}
 				}	
@@ -79,13 +81,17 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 			//Merke: Das ist anders als bei der ComponentGroupCollection. Darin wird der Event von einem "externen" Button aus aufgerufen.
 			//       Hier wird der Event vom NavigatorElement selbst aufgerufen.
 			
-			TODOGOON;
+			
+
+			
+			
+			//TODOGOON;
 		
 			//20210822 STRATEGIEFRAGE: Wird nun die Collection hinzugefügt oder jedes einzelne Element?
 			//Ich denke: erst einmal die Collection der Elemente. 
 	        //In einer zweiten Stufe, dann weitere Objekte, z.B. Panels, die dann sichtbar werden.		
 			//objEventBroker.addListenerNavigatorElementSwitch(group);
-			objEventBroker.addListenerNavigatorElementSwitch(this);
+			//objEventBroker.addListenerNavigatorElementSwitch(this);
 			
 			this.panelParent = panelParent;
 			this.setModel(model);
@@ -134,15 +140,19 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 		main:{
 			if(group==null) break main;
 			
-			//+++ Die Gruppe dem EventBroker hinzufügen, der alle registrierten Gruppen über einen Button Click informiert.			
+			//+++ Die Gruppe dem EventBroker hinzufügen, der alle registrierten Gruppen über einen Button Click informiert.
+			//ISenderNavigatorElementSwitchZZZ sollte dann auch noch beachtet werden... oder nur für die gesammte Collection?			
 			ISenderNavigatorElementSwitchZZZ objEventBroker = this.getSenderUsed();
 			
-			TODOGOON; //20210822 STRATEGIEFRAGE: Wird nun die Collection hinzugefügt oder jedes einzelne Element?
+			//TODOGOON; //20210822 STRATEGIEFRAGE: Wird nun die Collection hinzugefügt oder jedes einzelne Element?
 			//Ich denke: erst einmal die Collection der Elemente.  
 	        //In einer zweiten Stufe, dann weitere Objekte, z.B. Panels, die dann sichtbar werden.		
 			//objEventBroker.addListenerNavigatorElementSwitch(group);
 			
-		
+			 //ActionSwitchZZZ actionSwitch = new ActionSwitchZZZ(objKernel, (IPanelCascadedZZZ) panelParent, groupc);
+			ActionSwitchZZZ<T> actionSwitch = new ActionSwitchZZZ<T>(objKernel, (IPanelCascadedZZZ) panelParent, this);	       
+			group.getLabel().addMouseListener(actionSwitch);
+			
 			//+++ Letztendlich die Gruppe der HashMap hinzufügen
 			HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>>hmIndexed = this.getHashMapIndexed();
 			hmIndexed.put(group);
@@ -344,6 +354,30 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 	@Override
 	public void setSenderUsed(ISenderNavigatorElementSwitchZZZ objEventSender) {
 		this.objEventBroker = objEventSender;
+	}
+
+	@Override
+	public void doSwitch(EventNavigatorElementSwitchZZZ event) throws ExceptionZZZ {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void doSwitchCustom(EventNavigatorElementSwitchZZZ eventComponentGroupSwitchNew) throws ExceptionZZZ {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public EventNavigatorElementSwitchZZZ getEventPrevious() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setEventPrevious(EventNavigatorElementSwitchZZZ eventComponentGroupSwitchNew) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	
