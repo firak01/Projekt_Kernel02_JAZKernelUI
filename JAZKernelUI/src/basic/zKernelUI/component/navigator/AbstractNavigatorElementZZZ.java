@@ -3,6 +3,7 @@ package basic.zKernelUI.component.navigator;
 import java.awt.Desktop;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -68,13 +69,8 @@ public abstract class AbstractNavigatorElementZZZ extends KernelUseObjectZZZ imp
 			sValueUsed=objEntry.getValue();
 		}
 		
-		//Das NavigatorElement "Clickbar" machen
-		NavigatorMouseListenerZZZ l = new NavigatorMouseListenerZZZ(objKernel, this.sAlias);
-		
 		JLabel label = new JLabel("Alias: " + this.sAlias + " - Value: " + sValueUsed);
-		label.addMouseListener(l); //Merke: Darin wird dann eine ActionSwitchZZZ ausgeführt.
 		this.setLabel(label);	
-		
 		
 		
 		/*
@@ -107,6 +103,33 @@ public abstract class AbstractNavigatorElementZZZ extends KernelUseObjectZZZ imp
 	}
 	
 	@Override
+	public void addMouseListener(INavigatorElementMouseListenerZZZ listener) throws ExceptionZZZ {
+		
+		//Das NavigatorElement "Clickbar" machen
+		JLabel label = this.getLabel();
+		label.addMouseListener((MouseListener) listener); //Merke: Darin wird dann eine ActionSwitchZZZ ausgeführt.
+	}
+
+	public INavigatorElementMouseListenerZZZ createMouseListener(IPanelCascadedZZZ panelParent) throws ExceptionZZZ {		
+		this.setPanelParent(panelParent);
+		
+		String sNavigatorElementAlias = this.getAlias();
+		NavigatorMouseListenerZZZ l = new NavigatorMouseListenerZZZ(objKernel, panelParent, sNavigatorElementAlias);
+		
+		return l;			
+	}
+	
+	@Override
+	public IPanelCascadedZZZ getPanelParent() {
+		return this.panelParent;
+	}
+	
+	@Override 
+	public void setPanelParent(IPanelCascadedZZZ panelParent) {
+		this.panelParent = panelParent;
+	}
+	
+	@Override
 	public JLabel getLabel() {
 		return this.label;
 	}
@@ -120,7 +143,7 @@ public abstract class AbstractNavigatorElementZZZ extends KernelUseObjectZZZ imp
 	public String getAlias() {
 		return this.sAlias;
 	}
-
+	
 	@Override
 	public void setAlias(String sAlias) {
 		this.sAlias = sAlias;

@@ -2,7 +2,6 @@ package basic.zKernelUI.component.navigator;
 
 import java.awt.Component;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
@@ -11,19 +10,15 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ReflectCodeZZZ;
-import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;
-import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelMouseListenerCascadedZZZ;
-import basic.zKernelUI.component.componentGroup.ISenderComponentGroupSwitchZZZ;
-import basic.zKernelUI.component.navigator.ActionSwitchZZZ.SwingWorker4ProgramSWITCH;
 import basic.zKernelUI.thread.KernelSwingWorkerZZZ;
 
-public class NavigatorMouseListenerZZZ extends KernelMouseListenerCascadedZZZ implements INavigatorElementMouseListenerZZZ{
-	protected String sNavigatorElementAlias=null;	
+public class NavigatorMouseListenerZZZ extends KernelMouseListenerCascadedZZZ implements INavigatorElementMouseListenerZZZ{		
 	ISenderNavigatorElementSwitchZZZ objEventBroker=null; //Wird von der internen SwingWorker-Klasse verwendet.
+	protected String sNavigatorElementAlias=null;
 	
 	public NavigatorMouseListenerZZZ() {
 		super();
@@ -33,30 +28,20 @@ public class NavigatorMouseListenerZZZ extends KernelMouseListenerCascadedZZZ im
 		super(objKernel);	
 	}
 		
-	public NavigatorMouseListenerZZZ(IKernelZZZ objKernel, String sNavigatorElementAlias) throws ExceptionZZZ{
+	public NavigatorMouseListenerZZZ(IKernelZZZ objKernel, IPanelCascadedZZZ panelParent, String sNavigatorElementAlias) throws ExceptionZZZ{
 		super(objKernel);
-		NavigatorMouseListenerNew_(sNavigatorElementAlias);
+		NavigatorMouseListenerNew_(panelParent, sNavigatorElementAlias);
 	}
 	
-	private void NavigatorMouseListenerNew_(String sNavigatorElementAlias) {
-				this.sNavigatorElementAlias = sNavigatorElementAlias;
+	private void NavigatorMouseListenerNew_(IPanelCascadedZZZ panelParent,String sNavigatorElementAlias) {
+				this.setPanelParent(panelParent);
+				this.setNavigatorElementAlias(sNavigatorElementAlias);
 				
 				
 				//+++ der EventBroker wird verwendet um alle Komponenten über den MouseClick zu informieren
 				//ISenderNavigatorElementSwitchZZZ objEventBroker = groupc.getSenderUsed();
 				//this.setSenderUsed(objEventBroker);
 	}
-		
-	@Override
-	public String getNavigatorElementAlias() {
-		return this.sNavigatorElementAlias;
-	}
-
-	@Override
-	public void setNavigatorElementAlias(String sNavigatorElementAlias) {
-		this.sNavigatorElementAlias = sNavigatorElementAlias;
-	}
-
 	
 	@Override
 	public boolean customMouseClicked(MouseEvent e, boolean bQueryResult) {
@@ -66,9 +51,11 @@ public class NavigatorMouseListenerZZZ extends KernelMouseListenerCascadedZZZ im
 		boolean bActiveState = true;
 		
 		String[] saFlag = null;
-		TODOGOON; //20210825 Was ist denn im Modell vorhanden, also das wo der Listener erstellt wird? Das sollte dann  IPanelCascadedZZZ panelParent = this.getPanelParent();
 		String sAlias = this.getNavigatorElementAlias();
-		SwingWorker4ProgramCLICK worker = new SwingWorker4ProgramCLICK(objKernel, panelParent, sAlias, bActiveState, saFlag);
+		IPanelCascadedZZZ panelParent = this.getPanelParent();
+		
+		//20210825 Was ist denn im Modell vorhanden, also das wo der Listener erstellt wird? Das sollte dann  IPanelCascadedZZZ panelParent = this.getPanelParent();		
+		SwingWorker4ProgramCLICK worker = new SwingWorker4ProgramCLICK(objKernel, panelParent, sAlias, bActiveState, saFlag);						
 		worker.start();  //Merke: Das Setzen des Label Felds geschieht durch einen extra Thread, der mit SwingUtitlities.invokeLater(runnable) gestartet wird.
 			
 		return true;		
@@ -115,24 +102,39 @@ public class NavigatorMouseListenerZZZ extends KernelMouseListenerCascadedZZZ im
 	}
 	
 	//### Interface 
+	@Override
 	public ISenderNavigatorElementSwitchZZZ getSenderUsed() {
 		return this.objEventBroker;
 	}
 
+	@Override
 	public void setSenderUsed(ISenderNavigatorElementSwitchZZZ objEventBroker) {
 		this.objEventBroker = objEventBroker;			
+	}
+	
+	@Override
+	public String getNavigatorElementAlias() {
+		return this.sNavigatorElementAlias;
+	}
+
+	@Override
+	public void setNavigatorElementAlias(String sNavigatorElementAlias) {
+		this.sNavigatorElementAlias = sNavigatorElementAlias;
 	}
 
 	//#### Innere Klassen
 	//##############################################################
 	class SwingWorker4ProgramCLICK extends KernelSwingWorkerZZZ{
 		private IPanelCascadedZZZ panel;
+		private String sNavigatorElementAlias = null;
+		private boolean bActiveState;
+		
 		private String[] saFlag4Program;	
 		private String sText2Update;    //Der Wert, der ins Label geschreiben werden soll. Jier als Variable, damit die intene Runner-Klasse darauf zugreifen kann.
 													// Auch: Dieser Wert wird aus dem Web ausgelesen und danach in das Label des Panels geschrieben.
 						
-		private String sNavigatorElementAlias = null;
-		private boolean bActiveState;
+		
+		
 		
 		public SwingWorker4ProgramCLICK(IKernelZZZ objKernel, IPanelCascadedZZZ panel, String sNavigatorElementAlias, boolean bActiveState, String[] saFlag4Program){
 			super(objKernel);
@@ -161,14 +163,19 @@ public class NavigatorMouseListenerZZZ extends KernelMouseListenerCascadedZZZ im
                 //Alle am Event "registrierten" Labels/Componentent, bzw. die NavigatorElementCollection sollen dann reagieren.
 				
 				//### Den Event starten,
-				System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#EventBroker starten !!!!!!!!");							
-				EventNavigatorElementSwitchZZZ eventNew= new EventNavigatorElementSwitchZZZ(panel, 10002, sAlias, true);				
-				objEventBroker.fireEvent(eventNew);	
+				if(objEventBroker!=null) {
+					System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#EventBroker starten !!!!!!!!");							
+					EventNavigatorElementSwitchZZZ eventNew= new EventNavigatorElementSwitchZZZ(panel, 10002, sAlias, true);				
+					objEventBroker.fireEvent(eventNew);	
+				}else {
+					System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#ACHTUNG KEIN EventBroker verfuegbar zum Starten !!!!!!!!");
+				}
 				
-				//System.out.println("#Updating Panel ...");
-				//IPanelCascadedZZZ objPanelParent = this.panel; //.getPanelParent();
-				//updatePanel(objPanelParent);						
-			
+				if(this.panel!=null) {
+					System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#Updating Panel ...");				
+					updatePanel(this.panel);						
+				}
+					
 			}catch(ExceptionZZZ ez){
 				System.out.println(ez.getDetailAllLast());
 				ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());					
@@ -191,8 +198,8 @@ public class NavigatorMouseListenerZZZ extends KernelMouseListenerCascadedZZZ im
 				public void run(){
 	//				try {							
 						
-						System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#SWITCH GECLICKT");
-						logLineDate("SWITCH GECLICKT");					
+						System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#NAVIGATOR ELEMENT GECLICKT");
+						logLineDate("NAVIGATOR ELEMENT GECLICKT");					
 												
 						((JComponent) panel).revalidate();
 						((Component) panel).repaint();

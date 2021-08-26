@@ -3,24 +3,19 @@ package basic.zKernelUI.component.navigator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Vector;
 
-import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import basic.zBasic.ExceptionZZZ;
+import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 import basic.zBasic.util.abstractList.VectorExtendedZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;
-import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
-import basic.zKernelUI.component.componentGroup.IEventBrokerComponentGroupSwitchUserZZZ;
-import basic.zKernelUI.component.componentGroup.ISenderComponentGroupSwitchZZZ;
-import basic.zKernelUI.component.componentGroup.KernelSenderComponentGroupSwitchZZZ;
 
-//TODOGOON; //20210822: Wenn die Collection selbst auf einen Click eines NavigatorElements reagieren soll, den Listener implementieren
+//TODOGOON: 20210826 Mache diese Klasse abstrakt und überschreibe die custom-Methoden....
 public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  implements Iterable<T>, IEventBrokerNavigatorElementSwitchUserZZZ, IListenerNavigatorElementSwitchZZZ {
 
 //Wenn die einzelnen Elemente auf einen Click eines NavigatorElements reagieren sollen, nur dort den Listenere implementieren.
@@ -35,7 +30,9 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 	//Merke: Dem EventBroker ist eine Reihefolge (über den Index) egal
 	ISenderNavigatorElementSwitchZZZ objEventBroker = null;
 		
-	
+	//+++ Der vorher verwendete Event. Damit wird verhindert, dass mehrmals hintereinander das gleiche NavigatorElement angeclickt wird.
+	EventNavigatorElementSwitchZZZ eventPrevious = null;
+		
 	//+++ Das Model
 	IModelNavigatorValueZZZ model = null;
 	
@@ -65,6 +62,7 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 	private boolean NavigatorElementCollectionNew_(IModelNavigatorValueZZZ model, IPanelCascadedZZZ panelParent, ArrayList<INavigatorElementZZZ>listaGroup) throws ExceptionZZZ{
 		boolean bReturn = false;		
 		main:{			
+			this.panelParent = panelParent;
 			
 			//Dann die NavigatorElemente "Element fuer Element" also "Zeile fuer Zeile" hinzufügen.	       			
 			if(listaGroup!=null) {	//Für eine GroupCollection OHNE Modell, einfach die Liste der GroupComponents hinzufügen	
@@ -86,16 +84,29 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 			//+++ Dem Navigator den EventBroker hinzufügen, der alle registrierten Objekte über einen Button Click informiert.
 			ISenderNavigatorElementSwitchZZZ objEventBroker = this.getSenderUsed();
 			objEventBroker.addListenerNavigatorElementSwitch(this); //Die Collection soll selbst auf den Click lauschen.... andere Panels können ebenfalls darauf lauschen.
-						
-			this.panelParent = panelParent;
+									
 			this.setModel(model);
 			if(model!=null) {       ///Für eine GroupCollection MIT Modell
 				
 				HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>>hmElement = model.createNavigatorElementHashMap();
-				this.setHashMapIndexed(hmElement);
-				
+				this.setHashMapIndexed(hmElement);				
 	
 			}	
+			
+			//Nun erst die Elemente Clickbar machen, man braucht das panel
+			HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>>hmElement = this.getHashMapIndexed();
+			if(hmElement!=null) {
+				Iterator<ArrayList<INavigatorElementZZZ>> it = hmElement.iterator();
+				while(it.hasNext()) {
+					ArrayList<INavigatorElementZZZ>lista = it.next();
+					for(INavigatorElementZZZ element : lista) {
+						INavigatorElementMouseListenerZZZ l = element.createMouseListener(panelParent);
+						l.setSenderUsed(objEventBroker); //Damit wird dann der Click an die registrierten Objekte weitergeleitet... auch an die NavigatorElementCollection selbst.
+						element.addMouseListener(l);												
+					}
+				}
+			}
+						
 			bReturn = true;
 							
 		}//end main
@@ -343,26 +354,40 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 
 	@Override
 	public void doSwitch(EventNavigatorElementSwitchZZZ event) throws ExceptionZZZ {
-		// TODO Auto-generated method stub
 		
+		main:{
+			//Merke: Theoretisch wäre hier z.B. noch eine queryCustom Abfrage möglich, um zu prüfen, ob umgeschaltet werden soll.
+			//Aber jetzt erst einmal nur weiterleiten.
+			
+			EventNavigatorElementSwitchZZZ eventPrevious = this.getEventPrevious();
+			if(eventPrevious!=null) {
+				
+				TODOGOON; //20210826 Die Events auf Gleichheit prüfen können.....
+				if(eventPrevious.equals(event)) {
+					//mache nix
+					System.out.println(ReflectCodeZZZ.getPositionCurrent()+"#zuvor schon den gleichen Navigator angeclickt. Ignoriere diesen Click.");
+					break main;					
+				}
+			}
+						
+			this.setEventPrevious(event);
+			this.doSwitchCustom(event);
+		}//end main:
 	}
 
 	@Override
 	public void doSwitchCustom(EventNavigatorElementSwitchZZZ eventComponentGroupSwitchNew) throws ExceptionZZZ {
-		// TODO Auto-generated method stub
-		
+		System.out.println(ReflectCodeZZZ.getPositionCurrent()+"#mache nun die Umschaltung.");
 	}
 
 	@Override
 	public EventNavigatorElementSwitchZZZ getEventPrevious() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.eventPrevious;
 	}
 
 	@Override
 	public void setEventPrevious(EventNavigatorElementSwitchZZZ eventComponentGroupSwitchNew) {
-		// TODO Auto-generated method stub
-		
+		this.eventPrevious = eventComponentGroupSwitchNew;
 	}
 
 	

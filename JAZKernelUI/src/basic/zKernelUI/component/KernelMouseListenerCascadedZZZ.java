@@ -8,7 +8,7 @@ import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
 
 public abstract class KernelMouseListenerCascadedZZZ extends KernelUseObjectZZZ implements MouseListener, IMouseEventsZZZ,	IActionCascadedZZZ{
-	private IPanelCascadedZZZ panelParent;
+	protected IPanelCascadedZZZ panelParent;
 	
 	public KernelMouseListenerCascadedZZZ() {
 		super();

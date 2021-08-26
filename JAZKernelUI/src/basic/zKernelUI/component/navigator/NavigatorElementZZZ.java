@@ -44,7 +44,4 @@ public class NavigatorElementZZZ extends AbstractNavigatorElementZZZ{
 		// TODO Auto-generated method stub
 		
 	}
-
-	
-	
 }
