@@ -15,6 +15,7 @@ import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelConfigSectionEntryZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
+import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.navigator.ActionSwitchZZZ;
 
 public abstract class AbstractNavigatorElementZZZ extends KernelUseObjectZZZ implements INavigatorElementZZZ, IListenerNavigatorElementSwitchZZZ {
@@ -22,6 +23,7 @@ public abstract class AbstractNavigatorElementZZZ extends KernelUseObjectZZZ imp
 	//       Statt dessen die Komponenten hierin definieren.
 	
 	protected IModelNavigatorValueZZZ objModelNavigator=null;
+	protected IPanelCascadedZZZ panelParent=null;
 	protected String sAlias = null;
 	protected int iPositionInModel=0;
 	

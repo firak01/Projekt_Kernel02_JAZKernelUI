@@ -33,7 +33,6 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 	
 	//+++ Den EventBroker DER GRUPPE hinzufügen, damit darueber der Event abgefeuert werden kann
 	//Merke: Dem EventBroker ist eine Reihefolge (über den Index) egal
-	//ISenderComponentGroupSwitchZZZ objEventBroker = null;
 	ISenderNavigatorElementSwitchZZZ objEventBroker = null;
 		
 	
@@ -77,22 +76,17 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 				bReturn = true;
 				break main;
 			}
-		
+
 			//Merke: Das ist anders als bei der ComponentGroupCollection. Darin wird der Event von einem "externen" Button aus aufgerufen.
 			//       Hier wird der Event vom NavigatorElement selbst aufgerufen.
 			
-			
-
-			
-			
-			//TODOGOON;
-		
 			//20210822 STRATEGIEFRAGE: Wird nun die Collection hinzugefügt oder jedes einzelne Element?
-			//Ich denke: erst einmal die Collection der Elemente. 
-	        //In einer zweiten Stufe, dann weitere Objekte, z.B. Panels, die dann sichtbar werden.		
-			//objEventBroker.addListenerNavigatorElementSwitch(group);
-			//objEventBroker.addListenerNavigatorElementSwitch(this);
-			
+			//Ich denke: erst einmal die Collection der Elemente.  
+	        //In einer zweiten Stufe, dann weitere Objekte, z.B. Panels, die dann sichtbar werden.
+			//+++ Dem Navigator den EventBroker hinzufügen, der alle registrierten Objekte über einen Button Click informiert.
+			ISenderNavigatorElementSwitchZZZ objEventBroker = this.getSenderUsed();
+			objEventBroker.addListenerNavigatorElementSwitch(this); //Die Collection soll selbst auf den Click lauschen.... andere Panels können ebenfalls darauf lauschen.
+						
 			this.panelParent = panelParent;
 			this.setModel(model);
 			if(model!=null) {       ///Für eine GroupCollection MIT Modell
@@ -135,28 +129,19 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 		return this.getHashMapIndexed().getHashMap();		
 	}		
 	
-	public boolean add(INavigatorElementZZZ group) throws ExceptionZZZ{
+	public boolean add(INavigatorElementZZZ element) throws ExceptionZZZ{
 		boolean bReturn = false;
 		main:{
-			if(group==null) break main;
+			if(element==null) break main;
+								
+			//Das ist der MouseListener, der beim Clicken auf das Element ALS EIGENER THREAD gestartet wird. 
+			//Die einzelnen MouseListener haben einen anderen Alias, über den dann identifiziert wird wer geclickt wurde.
+			String sAlias = element.getAlias();
+			ActionSwitchZZZ<T> actionSwitch = new ActionSwitchZZZ<T>(objKernel, (IPanelCascadedZZZ) panelParent, objEventBroker, sAlias);	       
+			element.getLabel().addMouseListener(actionSwitch);
+		
+			//Merke: Im MouseListener wird dann der Event ".... NavigatorElement mit Alias xyz wurde aktiviert...." geworfen, ausgehend vom EventBroker!
 			
-			//+++ Die Gruppe dem EventBroker hinzufügen, der alle registrierten Gruppen über einen Button Click informiert.
-			//ISenderNavigatorElementSwitchZZZ sollte dann auch noch beachtet werden... oder nur für die gesammte Collection?			
-			ISenderNavigatorElementSwitchZZZ objEventBroker = this.getSenderUsed();
-			
-			//TODOGOON; //20210822 STRATEGIEFRAGE: Wird nun die Collection hinzugefügt oder jedes einzelne Element?
-			//Ich denke: erst einmal die Collection der Elemente.  
-	        //In einer zweiten Stufe, dann weitere Objekte, z.B. Panels, die dann sichtbar werden.		
-			//objEventBroker.addListenerNavigatorElementSwitch(group);
-			
-			 //ActionSwitchZZZ actionSwitch = new ActionSwitchZZZ(objKernel, (IPanelCascadedZZZ) panelParent, groupc);
-			ActionSwitchZZZ<T> actionSwitch = new ActionSwitchZZZ<T>(objKernel, (IPanelCascadedZZZ) panelParent, this);	       
-			group.getLabel().addMouseListener(actionSwitch);
-			
-			//+++ Letztendlich die Gruppe der HashMap hinzufügen
-			HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>>hmIndexed = this.getHashMapIndexed();
-			hmIndexed.put(group);
-						
 			bReturn = true;
 		}//end main:
 		return bReturn;

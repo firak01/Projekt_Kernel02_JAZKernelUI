@@ -6,6 +6,7 @@ import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 import basic.zKernel.IKernelConfigSectionEntryZZZ;
 import basic.zKernel.IKernelZZZ;
+import basic.zKernelUI.component.IPanelCascadedZZZ;
 
 public class NavigatorElementZZZ extends AbstractNavigatorElementZZZ{
 	public NavigatorElementZZZ() {

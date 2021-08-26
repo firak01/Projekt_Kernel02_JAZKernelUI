@@ -22,9 +22,8 @@ import basic.zKernelUI.component.navigator.ActionSwitchZZZ.SwingWorker4ProgramSW
 import basic.zKernelUI.thread.KernelSwingWorkerZZZ;
 
 public class NavigatorMouseListenerZZZ extends KernelMouseListenerCascadedZZZ implements INavigatorElementMouseListenerZZZ{
-	protected String sNavigatorElementAlias=null;
-	
-	ISenderNavigatorElementSwitchZZZ objEventBroker; //Wird von der internen SwingWorker-Klasse verwendet.
+	protected String sNavigatorElementAlias=null;	
+	ISenderNavigatorElementSwitchZZZ objEventBroker=null; //Wird von der internen SwingWorker-Klasse verwendet.
 	
 	public NavigatorMouseListenerZZZ() {
 		super();
@@ -33,14 +32,9 @@ public class NavigatorMouseListenerZZZ extends KernelMouseListenerCascadedZZZ im
 	public NavigatorMouseListenerZZZ(IKernelZZZ objKernel) throws ExceptionZZZ{
 		super(objKernel);	
 	}
-	
+		
 	public NavigatorMouseListenerZZZ(IKernelZZZ objKernel, String sNavigatorElementAlias) throws ExceptionZZZ{
-		super(objKernel);	
-		NavigatorMouseListenerNew_(sNavigatorElementAlias);
-	}
-	
-	public NavigatorMouseListenerZZZ(IKernelZZZ objKernel, IPanelCascadedZZZ panelParent, String sNavigatorElementAlias) throws ExceptionZZZ{
-		super(objKernel,panelParent);
+		super(objKernel);
 		NavigatorMouseListenerNew_(sNavigatorElementAlias);
 	}
 	
@@ -66,32 +60,22 @@ public class NavigatorMouseListenerZZZ extends KernelMouseListenerCascadedZZZ im
 	
 	@Override
 	public boolean customMouseClicked(MouseEvent e, boolean bQueryResult) {
-		System.out.println("Element clicked: " + this.getNavigatorElementAlias());
+		System.out.println("Element MouseClicked: " + this.getNavigatorElementAlias());
 		
-		//TODOGOON; //20210815 Benutze den SwingWorker, ggfs. besser wg. Thread Behandlung
+		//20210815 Benutze den SwingWorker, ggfs. besser wg. Thread Behandlung
 		boolean bActiveState = true;
 		
-		String[] saFlag = null; //{"useProxy"};
-		IPanelCascadedZZZ panelParent = this.getPanelParent();
+		String[] saFlag = null;
+		TODOGOON; //20210825 Was ist denn im Modell vorhanden, also das wo der Listener erstellt wird? Das sollte dann  IPanelCascadedZZZ panelParent = this.getPanelParent();
 		String sAlias = this.getNavigatorElementAlias();
 		SwingWorker4ProgramCLICK worker = new SwingWorker4ProgramCLICK(objKernel, panelParent, sAlias, bActiveState, saFlag);
 		worker.start();  //Merke: Das Setzen des Label Felds geschieht durch einen extra Thread, der mit SwingUtitlities.invokeLater(runnable) gestartet wird.
 			
-		return true;
-		//TODOGOON; //20210820
-		//TODOGOON: Irgendwie die NavigatorCollection durchgehen und die anderen "nicht geclickt setzen", diese Element "geclickt setzen";
-		
-		//TODOGOON; //Verwende analog zu ActionSwitchZZZ, ggfs. die bessere Thread Behandlung und EINEN BROKER
-		
-		//TODOGOON: Danach einen Event werfen, damit die Panels, etc. reagieren können
-		//          Ggfs. auch diesen Event für die anderen Navigator-Elemente zum "nicht geclickt setzen" verwenden.
-		
-	   
+		return true;		
 	}
 
 	@Override
 	public boolean customMousePressed(MouseEvent e, boolean bQueryResult) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -161,30 +145,34 @@ public class NavigatorMouseListenerZZZ extends KernelMouseListenerCascadedZZZ im
 		
 		//#### abstracte - Method aus SwingWorker
 		public Object construct() {
-//			try{	
+			try {	
 				//Wird ein NavigatorElement aktiv geschaltet, gehören alle anderen NavigatorElemente passiv geschaltet.
 				
 				String sAlias = this.sNavigatorElementAlias;
+				System.out.println("Im SwingWorker4ProgramCLICK");
 				
-				
-				
+				//TODOGOON; //20210820
+				//          Nun einen Event werfen, damit auch Panels, etc. reagieren können
+				//          Auch irgendwie die NavigatorCollection durchgehen und die anderen "nicht geclickt setzen", diese Element "geclickt setzen";
+
+					
 				//Wird eine Gruppe aktiv geschaltet, gehören alle anderen Gruppen passiv geschaltet.
 				//Hier das Umschalten macht man, indem man einen Event - Wirft, 
                 //Alle am Event "registrierten" Labels/Componentent, bzw. die NavigatorElementCollection sollen dann reagieren.
 				
 				//### Den Event starten,
-				//System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#EVENTEVENT !!!!!!!!");							
-				//EventNavigatorElementSwitchZZZ eventNew= new EventNavigatorElementSwitchZZZ(panel, 10002, sAlias, true);				
-				//objEventBroker.fireEvent(eventNew);	
+				System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#EventBroker starten !!!!!!!!");							
+				EventNavigatorElementSwitchZZZ eventNew= new EventNavigatorElementSwitchZZZ(panel, 10002, sAlias, true);				
+				objEventBroker.fireEvent(eventNew);	
 				
 				//System.out.println("#Updating Panel ...");
 				//IPanelCascadedZZZ objPanelParent = this.panel; //.getPanelParent();
 				//updatePanel(objPanelParent);						
 			
-//			}catch(ExceptionZZZ ez){
-//				System.out.println(ez.getDetailAllLast());
-//				ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());					
-//			}
+			}catch(ExceptionZZZ ez){
+				System.out.println(ez.getDetailAllLast());
+				ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());					
+			}
 			return "all done";
 		}
 	
