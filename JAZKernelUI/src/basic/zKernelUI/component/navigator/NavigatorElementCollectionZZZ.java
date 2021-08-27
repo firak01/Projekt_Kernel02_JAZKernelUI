@@ -367,6 +367,9 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 					//mache nix
 					System.out.println(ReflectCodeZZZ.getPositionCurrent()+"#zuvor schon den gleichen Navigator angeclickt. Ignoriere diesen Click.");
 					break main;					
+				}else {
+					TODOGOON; //20210827 setzte aktiv und andere inaktiv....
+					
 				}
 			}
 						
