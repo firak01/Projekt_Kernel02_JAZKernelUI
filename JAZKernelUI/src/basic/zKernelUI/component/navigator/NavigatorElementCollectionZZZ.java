@@ -362,7 +362,7 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 			EventNavigatorElementSwitchZZZ eventPrevious = this.getEventPrevious();
 			if(eventPrevious!=null) {
 				
-				TODOGOON; //20210826 Die Events auf Gleichheit prüfen können.....
+				//TODOGOON; //20210826 Die Events auf Gleichheit prüfen können.....
 				if(eventPrevious.equals(event)) {
 					//mache nix
 					System.out.println(ReflectCodeZZZ.getPositionCurrent()+"#zuvor schon den gleichen Navigator angeclickt. Ignoriere diesen Click.");
