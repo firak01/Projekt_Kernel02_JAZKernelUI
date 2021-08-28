@@ -368,7 +368,7 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 					System.out.println(ReflectCodeZZZ.getPositionCurrent()+"#zuvor schon den gleichen Navigator angeclickt. Ignoriere diesen Click.");
 					break main;					
 				}else {
-					TODOGOON; //20210827 setzte aktiv und andere inaktiv....
+					TODOGOON; //20210827 setzte aktiv und andere inaktiv.... TODOGOON: Den Event aber schon vor dem Aufruf des Threads abprüfen. Also beim Mausclick.
 					
 				}
 			}

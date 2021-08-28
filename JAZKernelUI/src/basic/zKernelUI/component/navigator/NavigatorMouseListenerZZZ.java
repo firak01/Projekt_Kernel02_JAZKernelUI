@@ -54,6 +54,10 @@ public class NavigatorMouseListenerZZZ extends KernelMouseListenerCascadedZZZ im
 		String sAlias = this.getNavigatorElementAlias();
 		IPanelCascadedZZZ panelParent = this.getPanelParent();
 		
+		TODOGOON; //20210828 Im SwingWorker wird bei der Behandlung des Events schon abgeprüft, ob der Event zuvor schon geworfen worden ist.
+		          //         Sinnvoll ist es diese Überprüfung schon vorher zu machen, damit der SwingWorker garnicht aufgerufen wird.
+		
+		
 		//20210825 Was ist denn im Modell vorhanden, also das wo der Listener erstellt wird? Das sollte dann  IPanelCascadedZZZ panelParent = this.getPanelParent();		
 		SwingWorker4ProgramCLICK worker = new SwingWorker4ProgramCLICK(objKernel, panelParent, sAlias, bActiveState, saFlag);						
 		worker.start();  //Merke: Das Setzen des Label Felds geschieht durch einen extra Thread, der mit SwingUtitlities.invokeLater(runnable) gestartet wird.

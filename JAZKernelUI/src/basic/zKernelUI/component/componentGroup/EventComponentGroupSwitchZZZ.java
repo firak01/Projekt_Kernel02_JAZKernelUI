@@ -2,8 +2,10 @@ package basic.zKernelUI.component.componentGroup;
 
 import java.util.EventObject;
 
+import basic.zKernelUI.component.navigator.EventNavigatorElementSwitchZZZ;
 
-public final class EventComponentGroupSwitchZZZ extends EventObject{	
+
+public final class EventComponentGroupSwitchZZZ extends EventObject implements Comparable<EventComponentGroupSwitchZZZ>{	
 	private int iId;
 	private boolean bActiveState;
 	private IListenerComponentGroupSwitchZZZ group;
@@ -37,6 +39,49 @@ public final class EventComponentGroupSwitchZZZ extends EventObject{
 		return this.iIndexInCollectionUsed;
 	}
 	
+	@Override
+	public int compareTo(EventComponentGroupSwitchZZZ o) {
+		//Das macht lediglich .sort funktionsfähig und wird nicht bei .equals(...) verwendet.
+		int iReturn = 0;
+		main:{
+			if(o==null)break main;
+			
+			int itoCompare = o.getIndexInCollection();
+			int i = this.getIndexInCollection();
+			
+			if(i==itoCompare) iReturn = 1;
+		}
+		return iReturn;
+	}
 	
-	
+	 /**
+	   * Define equality of state.
+	   */
+	   @Override 
+	   public boolean equals(Object aThat) {
+	     if (this == aThat) return true;
+	     if (!(aThat instanceof EventComponentGroupSwitchZZZ)) return false;
+	     EventComponentGroupSwitchZZZ that = (EventComponentGroupSwitchZZZ)aThat;
+	     //if(!that.getIndexInCollection().equals(((EventComponentGroupSwitchZZZ) aThat).getIndexInCollection())){
+	     if(that.getIndexInCollection() ==((EventComponentGroupSwitchZZZ) aThat).getIndexInCollection()){
+	    	 return false;
+	     }
+	     
+//	     for(int i = 0; i < this.getSigFields().length; ++i){
+//	       if (!Objects.equals(this.getSigFields()[i], that.getSigFields()[i])){
+//	         return false;
+//	       }
+//	     }
+	     return true;     
+	   }
+
+	   /**
+	   * A class that overrides equals must also override hashCode.
+	   */
+	   @Override 
+	   public int hashCode() {
+		   int i = this.getIndexInCollection();
+		   Integer inti = new Integer(i);				   
+		   return inti.hashCode();     
+	   }
 }
