@@ -48,6 +48,8 @@ public class KernelSenderNavigatorElementSwitchZZZ extends KernelUseObjectZZZ im
 	@Override
 	public void fireEvent(EventNavigatorElementSwitchZZZ event) throws ExceptionZZZ {
 		if(event.getSource() instanceof ISenderNavigatorElementSwitchZZZ){
+			
+			
 			ISenderNavigatorElementSwitchZZZ sender = (ISenderNavigatorElementSwitchZZZ) event.getSource();
 			for(int i = 0 ; i < sender.getListenerRegisteredAll().size(); i++){
 				IListenerNavigatorElementSwitchZZZ l = (IListenerNavigatorElementSwitchZZZ) sender.getListenerRegisteredAll().get(i);

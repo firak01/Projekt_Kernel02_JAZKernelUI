@@ -54,8 +54,9 @@ public class NavigatorMouseListenerZZZ extends KernelMouseListenerCascadedZZZ im
 		String sAlias = this.getNavigatorElementAlias();
 		IPanelCascadedZZZ panelParent = this.getPanelParent();
 		
-		TODOGOON; //20210828 Im SwingWorker wird bei der Behandlung des Events schon abgeprüft, ob der Event zuvor schon geworfen worden ist.
-		          //         Sinnvoll ist es diese Überprüfung schon vorher zu machen, damit der SwingWorker garnicht aufgerufen wird.
+		//Merke: Der MouseListener hängt am einzelnen NavigatorElement. Er bekommt von den anderen Elemente nichts mit.
+		//       Im SwingWorker wird bei der Behandlung des Events abgeprüft, ob der Event zuvor schon geworfen worden ist.
+		//       Wurde der gleiche Event schon vorher geworfen, dann wird abgebrochen und nicht weiter gemacht.
 		
 		
 		//20210825 Was ist denn im Modell vorhanden, also das wo der Listener erstellt wird? Das sollte dann  IPanelCascadedZZZ panelParent = this.getPanelParent();		
@@ -155,16 +156,11 @@ public class NavigatorMouseListenerZZZ extends KernelMouseListenerCascadedZZZ im
 				//Wird ein NavigatorElement aktiv geschaltet, gehören alle anderen NavigatorElemente passiv geschaltet.
 				
 				String sAlias = this.sNavigatorElementAlias;
-				System.out.println("Im SwingWorker4ProgramCLICK");
+				System.out.println("Im SwingWorker4ProgramCLICK fuer den Alias '"+sAlias+"'");
 				
-				//TODOGOON; //20210820
-				//          Nun einen Event werfen, damit auch Panels, etc. reagieren können
-				//          Auch irgendwie die NavigatorCollection durchgehen und die anderen "nicht geclickt setzen", diese Element "geclickt setzen";
-
-					
-				//Wird eine Gruppe aktiv geschaltet, gehören alle anderen Gruppen passiv geschaltet.
-				//Hier das Umschalten macht man, indem man einen Event - Wirft, 
-                //Alle am Event "registrierten" Labels/Componentent, bzw. die NavigatorElementCollection sollen dann reagieren.
+				//Das Umschalten macht man, indem man einen Event - Wirft,
+				//Alle am Event "registrierten" Labels/Componentent, bzw. die NavigatorElementCollection sollen dann reagieren.
+				//Die NavigatorElementCollection durchgehen und die anderen "nicht geclickt setzen", diese Element "geclickt setzen";
 				
 				//### Den Event starten,
 				if(objEventBroker!=null) {

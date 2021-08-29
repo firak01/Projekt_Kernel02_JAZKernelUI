@@ -1,6 +1,10 @@
 package basic.zKernelUI.component.navigator;
 
+import java.awt.Color;
 import java.util.ArrayList;
+
+import javax.swing.BorderFactory;
+import javax.swing.border.Border;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
@@ -22,26 +26,12 @@ public class NavigatorElementZZZ extends AbstractNavigatorElementZZZ{
 	}
 
 	@Override
-	public void doSwitch(EventNavigatorElementSwitchZZZ event) throws ExceptionZZZ {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void doSwitchCustom(EventNavigatorElementSwitchZZZ eventComponentGroupSwitchNew) throws ExceptionZZZ {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public EventNavigatorElementSwitchZZZ getEventPrevious() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setEventPrevious(EventNavigatorElementSwitchZZZ eventComponentGroupSwitchNew) {
-		// TODO Auto-generated method stub
-		
+	public void setVisible(boolean bVisible) {
+		if(bVisible) {
+			Border border = BorderFactory.createLineBorder(Color.red);
+			this.getLabel().setBorder(border);
+		}else {
+			this.getLabel().setBorder(null);
+		}	
 	}
 }

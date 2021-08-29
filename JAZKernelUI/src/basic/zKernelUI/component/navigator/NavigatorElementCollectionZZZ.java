@@ -1,10 +1,13 @@
 package basic.zKernelUI.component.navigator;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ReflectCodeZZZ;
@@ -183,7 +186,7 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 						//Mache nix
 					}else {
 						for(INavigatorElementZZZ element : group) {
-							element.setVisible(true);
+							element.setVisible(false);
 						}
 					}
 				}
@@ -368,7 +371,6 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 					System.out.println(ReflectCodeZZZ.getPositionCurrent()+"#zuvor schon den gleichen Navigator angeclickt. Ignoriere diesen Click.");
 					break main;					
 				}else {
-					TODOGOON; //20210827 setzte aktiv und andere inaktiv.... TODOGOON: Den Event aber schon vor dem Aufruf des Threads abprüfen. Also beim Mausclick.
 					
 				}
 			}
@@ -381,6 +383,26 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 	@Override
 	public void doSwitchCustom(EventNavigatorElementSwitchZZZ eventComponentGroupSwitchNew) throws ExceptionZZZ {
 		System.out.println(ReflectCodeZZZ.getPositionCurrent()+"#mache nun die Umschaltung.");
+		
+		//20210827 setzte aktiv und andere inaktiv.... TODOGOON: Den Event aber schon vor dem Aufruf des Threads abprüfen. Also beim Mausclick.
+		String sAlias = eventComponentGroupSwitchNew.getNavigatorElementAlias();
+		
+		
+		//Die anderen Elemente alle passiv schalten
+		HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>> hmElement = this.getHashMapIndexed();
+		Iterator<ArrayList<INavigatorElementZZZ>> itElement = hmElement.iterator();
+		
+		while(itElement.hasNext()) {
+			ArrayList<INavigatorElementZZZ> listaElementTemp = itElement.next();
+			listaElementTemp.get(0).setVisible(false);//Merke: Momentan ist das nur 1 Element in der Liste...						
+		}
+		
+		//Das ausgewählte Element aktiv schalten
+		ArrayList<INavigatorElementZZZ>listaElement = this.getGroupByAlias(sAlias);				
+		listaElement.get(0).setVisible(true);//Merke: Momentan ist das nur 1 Element in der Liste...
+		
+		//Wird schon in ActionSwitchZZZ.updatePanel() gemacht, also hier nicht notwendig...
+		//((JPanel)this.getPanelParent()).validate();
 	}
 
 	@Override

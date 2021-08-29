@@ -19,7 +19,7 @@ import basic.zKernel.KernelUseObjectZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.navigator.ActionSwitchZZZ;
 
-public abstract class AbstractNavigatorElementZZZ extends KernelUseObjectZZZ implements INavigatorElementZZZ, IListenerNavigatorElementSwitchZZZ {
+public abstract class AbstractNavigatorElementZZZ extends KernelUseObjectZZZ implements INavigatorElementZZZ {
 	//Merke: Das darf z.B. nicht von JPanel erben, da man es dann nicht einfach einem anderen Panel zuordnen kann.
 	//       Statt dessen die Komponenten hierin definieren.
 	
@@ -157,11 +157,5 @@ public abstract class AbstractNavigatorElementZZZ extends KernelUseObjectZZZ imp
 	@Override
 	public void setPosition(int iPosition) {
 		this.iPositionInModel = iPosition;
-	}
-	
-	@Override
-	public void setVisible(boolean bVisible) {
-		// TODO Auto-generated method stub
-		
-	}
+	}		
 }

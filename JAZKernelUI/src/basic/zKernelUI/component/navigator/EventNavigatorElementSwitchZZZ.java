@@ -53,9 +53,9 @@ public final class EventNavigatorElementSwitchZZZ extends EventObject implements
 	   public boolean equals(Object aThat) {
 	     if (this == aThat) return true;
 	     if (!(aThat instanceof EventNavigatorElementSwitchZZZ)) return false;
-	     EventNavigatorElementSwitchZZZ that = (EventNavigatorElementSwitchZZZ)aThat;
-	     if(!that.getNavigatorElementAlias().equals(((EventNavigatorElementSwitchZZZ) aThat).getNavigatorElementAlias())){
-	    	 return false;
+	     EventNavigatorElementSwitchZZZ that = (EventNavigatorElementSwitchZZZ)aThat;	     
+	     if(this.getNavigatorElementAlias().equals(that.getNavigatorElementAlias())){
+	    	 return true;
 	     }
 	     
 //	     for(int i = 0; i < this.getSigFields().length; ++i){
@@ -63,7 +63,7 @@ public final class EventNavigatorElementSwitchZZZ extends EventObject implements
 //	         return false;
 //	       }
 //	     }
-	     return true;     
+	     return false;     
 	   }
 
 	   /**
