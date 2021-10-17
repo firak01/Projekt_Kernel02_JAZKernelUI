@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import basic.zBasic.ExceptionZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
+import basic.zKernelUI.component.KernelJFrameCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernel.KernelZZZ;
 import custom.zKernel.LogZZZ;
@@ -21,11 +22,31 @@ public class PanelConfigZZZ extends KernelJPanelCascadedZZZ{
 	
 	public PanelConfigZZZ(IKernelZZZ objKernel, JFrame frameParent, IKernelZZZ objKernelChoosen) throws ExceptionZZZ{
 		super(objKernel, frameParent);
-        this.setKernelConfigObject(objKernelChoosen);
-				
+		PanelConfigNew_(objKernelChoosen);
+	}
+
+	public PanelConfigZZZ(IKernelZZZ objKernel, KernelJFrameCascadedZZZ frameParent, IKernelZZZ objKernelChoosen) throws ExceptionZZZ{
+		super(objKernel, frameParent);
+		PanelConfigNew_(objKernelChoosen);
+	}
+	public IKernelZZZ getKernelConfigObject(){
+		return this.objKernelChoosen;
+	}
+	public void setKernelConfigObject(IKernelZZZ objKernelConfig){
+		this.objKernelChoosen = objKernelConfig;
+	}
+	
+	//################################################
+	//Method implemented by interface
+	
+	//################################################
+	private  boolean PanelConfigNew_(IKernelZZZ objKernelChoosen) throws ExceptionZZZ {
+	
+		this.setKernelConfigObject(objKernelChoosen);
+		
 		//### Layout Manager
 		this.setLayout(new BorderLayout());
-				
+			
 		//### PANEL SOUTH
 		PanelConfig_SOUTHZZZ objPanelSouth = new PanelConfig_SOUTHZZZ(objKernel, this, objKernelChoosen);
 		this.add(objPanelSouth, BorderLayout.SOUTH); //Frontend hinzuf�gen
@@ -36,18 +57,8 @@ public class PanelConfigZZZ extends KernelJPanelCascadedZZZ{
 		this.add(objPanelCenter, BorderLayout.CENTER); //Frontend hinzuf�gen
 		this.setPanelSub("CENTER", objPanelCenter);       //Backend Hashtable hinzuf�gen
 		
-	
+		return true;
 	}
 
-	
-	public IKernelZZZ getKernelConfigObject(){
-		return this.objKernelChoosen;
-	}
-	public void setKernelConfigObject(IKernelZZZ objKernelConfig){
-		this.objKernelChoosen = objKernelConfig;
-	}
-	
-	//################################################
-	//Method implemented by interface
 	
 }//END Class

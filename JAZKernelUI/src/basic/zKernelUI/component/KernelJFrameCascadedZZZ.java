@@ -49,9 +49,9 @@ public abstract class KernelJFrameCascadedZZZ extends JFrame  implements IObject
 	private LogZZZ objLog; 
 	private KernelJFrameCascadedZZZ frameParent=null;
 	private JFrame frameBasic = null;  //Falls diese Klasse aus einem normalen JFrame erstellt werden soll.
-	private Hashtable objHtFrameSub=new Hashtable();   //Damit kann man auf Frames zugreifen, die von diesem Frame aus gestartet wurden.
-	private Hashtable<String,IPanelCascadedZZZ> objHtPanelSub=new Hashtable();     //Eigentlich enth�lt das hier nur ein Panel
-	private Hashtable objHtComponent = new Hashtable(); //Soll Komponenenten, wie z.B. ein Textfield per "Alias" greifbar machen.
+	protected Hashtable<String,IFrameCascadedZZZ> objHtFrameSub=new Hashtable<String,IFrameCascadedZZZ>();   //Damit kann man auf Frames zugreifen, die von diesem Frame aus gestartet wurden.
+	protected Hashtable<String,IPanelCascadedZZZ> objHtPanelSub=new Hashtable<String,IPanelCascadedZZZ>();     //Eigentlich enth�lt das hier nur ein Panel
+	protected Hashtable<String,JComponent>objHtComponent = new Hashtable<String,JComponent>(); //Soll Komponenenten, wie z.B. ein Textfield per "Alias" greifbar machen.
 	 
 	private ExceptionZZZ objException;
 	
@@ -595,8 +595,9 @@ private HashMap<String, Boolean>hmFlagPassed = new HashMap<String, Boolean>();
 	public JFrame getFrameSub(String sAlias){
 	return (JFrame) this.objHtFrameSub.get(sAlias);
 }
-	public void setFrameSub(String sAlias, JFrame objFrame){
-	this.objHtFrameSub.put(sAlias, objFrame);
+	
+public void setFrameSub(String sAlias, JFrame objFrame){
+	this.objHtFrameSub.put(sAlias, (IFrameCascadedZZZ) objFrame);
 }
 	
 	/**Hole den Ausgangsframe.
@@ -746,6 +747,18 @@ private HashMap<String, Boolean>hmFlagPassed = new HashMap<String, Boolean>();
 	
 	public static String getAliasPanelContent(){
 		return new String("ContentPane");		
+	}
+	
+	public Hashtable<String,JComponent> getHashtableComponent(){
+		return this.objHtComponent;
+	}
+	
+	public Hashtable<String,IPanelCascadedZZZ> getHashtablePanel(){
+		return this.objHtPanelSub;
+	}
+	
+	public Hashtable getHashtableFrame(){
+		return this.objHtFrameSub;
 	}
 	
 	/* (non-Javadoc)
