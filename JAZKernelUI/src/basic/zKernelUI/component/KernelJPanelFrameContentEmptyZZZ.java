@@ -18,18 +18,18 @@ import basic.zKernel.KernelZZZ;
 import basic.zKernel.flag.IFlagUserZZZ;
 import custom.zKernel.LogZZZ;
 
-public class KernelJPanelDialogContentEmptyZZZ extends KernelJPanelContentEmptyZZZ{
+public class KernelJPanelFrameContentEmptyZZZ extends KernelJPanelContentEmptyZZZ{
 	
-	public KernelJPanelDialogContentEmptyZZZ() throws ExceptionZZZ{
+	public KernelJPanelFrameContentEmptyZZZ() throws ExceptionZZZ{
 		super();
 	}
 	
-	public KernelJPanelDialogContentEmptyZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended) throws ExceptionZZZ{
-		super(objKernel, dialogExtended);
-		KernelJPanelDialogContentEmptyNew_();
+	public KernelJPanelFrameContentEmptyZZZ(IKernelZZZ objKernel, KernelJFrameCascadedZZZ frameExtended) throws ExceptionZZZ{
+		super(objKernel, frameExtended);
+		KernelJPanelFrameContentEmptyNew_();
 	}
 	
-	private boolean KernelJPanelDialogContentEmptyNew_() {
+	private boolean KernelJPanelFrameContentEmptyNew_() {
 		boolean bReturn = false;		
 		return bReturn;
 	}
