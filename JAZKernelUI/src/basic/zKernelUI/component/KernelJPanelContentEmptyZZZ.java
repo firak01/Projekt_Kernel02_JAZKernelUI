@@ -41,7 +41,9 @@ public class KernelJPanelContentEmptyZZZ extends KernelJPanelCascadedZZZ{
 	private boolean KernelJPanelContentEmptyNew_() {
 		boolean bReturn = false;
 		main:{			
-			if(this.getFlag(IFlagUserZZZ.FLAGZ.DEBUG.name())) {
+			//if(this.getFlag(IFlagUserZZZ.FLAGZ.DEBUG.name())) {
+			//!!! TODOGOON: Das soll in KernelJPanelCascadedZZZ.createDebugUI() gemacht werden!!!
+			if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())) {
 				JLabel label = new JLabel(this.getClass().getName());
 				this.add(label);
 			}		
