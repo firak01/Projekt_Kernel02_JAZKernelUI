@@ -11,7 +11,7 @@ public class DebugNavigatorZZZ {
 		try {
 			//1. Kernel Objekt initialisieren. Dies ist fuer das Logging grundlegend.
 			String[] saFlag= {"DEBUGUI_PANELLABEL_ON","useFormula"};
-			KernelZZZ objKernel = new KernelZZZ("FGL", "01", "", "ZKernelConfigConfig_default.ini",saFlag);
+			KernelZZZ objKernel = new KernelZZZ("FGL", "01", "", "ZKernelConfigConfig_default.ini", saFlag);
 			LogZZZ objLog = objKernel.getLogObject();
 			
 			
