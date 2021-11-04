@@ -111,8 +111,8 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 				
 				//DIE ANZAHL DER ZEILEN VON DER ANZAHL DER GEFUNDENEN EINTR�GE ABHÄNGIG MACHEN.
 				//this.setLayout(new GridLayout(iLine2Show,2)); //1 Zeilen, 2 Spalten
-				double[] daProportion={0.2, 0.8};
 				
+				double[] daProportion={0.2, 0.8};//Merke: Das wird zu WIDTH im Layout, die Anzahl der Spalten ist immer 2 !!!
 	             EntryLayout layout = new EntryLayout(daProportion);
 	             this.setLayout(layout);
 				
@@ -124,6 +124,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 				Dimension dimensionLabel = new Dimension(10,10);
 				Dimension dimensionTextfield = new Dimension(10, 10);
 				for(int icount=0; icount < iLinesWithValue; icount++){
+								
 					//Das Property - Label
 					labelaText[icount]= new JLabel(saProperty[icount] + "=", SwingConstants.RIGHT);
 					labelaText[icount].setSize(dimensionLabel);
@@ -140,7 +141,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 			}//END IF: if(saProperty==null){
 			
 			//### Damit die Labels hinsichtlich der Höhe nicht so gross werden, ggf. mit leeren Werten auffüllen
-			for(int icount = iLines2Show; icount < iLines2Fill; icount ++){
+			for(int icount = 0; icount < iLines2Fill; icount ++){
 				JLabel labeltemp = new JLabel("", SwingConstants.RIGHT);
 				this.add(labeltemp);								
 				JLabel labeltemp2 = new JLabel("", SwingConstants.LEFT);
@@ -211,25 +212,27 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 			}//end check:
 		
 		//###################################
-		//Die Hashtable immer neu f�llen, es kann sich ja gegen�ber dem Einlesen etwas ge�ndert haben
+		//Die Hashtable immer neu fuellen, es kann sich ja gegenueber dem Einlesen etwas geaendert haben
 		objReturn = new Hashtable();
 		
 		int iLineTotal = textfieldaValue.length;
 		for(int icount=0; icount<iLineTotal;icount++){
-			String sValue=this.textfieldaValue[icount].getText();
-			if(sValue.startsWith("=")){
-				//Ggf. wird dem Value das Gleichheitszeichen mitgegeben. Das wird hier am Anfang entfernt.
-				sValue = sValue.substring(1, sValue.length());
-			}
-			if (!(sValue.equals("") && bExcludeValueEmpty==true)){
-				//LEERWERTE SOLLEN �BERNOMMEN WERDEN
-				String sProperty=this.labelaText[icount].getText();
-				if(sProperty.endsWith("=")){
-					//Ggf. wird dem Label das Gleicheitszeichen mitgegeben. Das wird hier am Ende entfernt.
-					sProperty = sProperty.substring(0, sProperty.length()-1);
+			if(textfieldaValue[icount]!=null){
+				String sValue=this.textfieldaValue[icount].getText();
+				if(sValue.startsWith("=")){
+					//Ggf. wird dem Value das Gleichheitszeichen mitgegeben. Das wird hier am Anfang entfernt.
+					sValue = sValue.substring(1, sValue.length());
 				}
-				objReturn.put(sProperty,sValue);
-			}		
+				if (!(sValue.equals("") && bExcludeValueEmpty==true)){
+					//LEERWERTE SOLLEN �BERNOMMEN WERDEN
+					String sProperty=this.labelaText[icount].getText();
+					if(sProperty.endsWith("=")){
+						//Ggf. wird dem Label das Gleicheitszeichen mitgegeben. Das wird hier am Ende entfernt.
+						sProperty = sProperty.substring(0, sProperty.length()-1);
+					}
+					objReturn.put(sProperty,sValue);
+				}
+			}
 		}
 		
 		}//end main:
