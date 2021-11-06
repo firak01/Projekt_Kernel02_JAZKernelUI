@@ -79,6 +79,9 @@ public class DLGBOX4INIZZZ  extends KernelJFrameCascadedZZZ  implements IJNILotu
 			this.getContentPane().add(objPanel);
 			this.setPanelSub("ContentPane", objPanel);
 						
+			//... versuche nicht sichtbare Komponenten "zu packen"
+			this.pack();
+			
 			//... sichtbar machen erst, nachdem alle Elemente im Frame hinzugefuegt wurden !!!
 			//depreciated in 1.5 frame.show();
 			//statt dessen...

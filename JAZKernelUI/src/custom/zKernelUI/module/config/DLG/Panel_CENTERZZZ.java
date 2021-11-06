@@ -19,6 +19,7 @@ import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasicUI.layoutmanager.EntryLayout;
+import basic.zBasicUI.layoutmanager.EntryLayout4VisibleZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernelUI.KernelUIZZZ;
@@ -113,7 +114,8 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 				//this.setLayout(new GridLayout(iLine2Show,2)); //1 Zeilen, 2 Spalten
 				
 				double[] daProportion={0.2, 0.8};//Merke: Das wird zu WIDTH im Layout, die Anzahl der Spalten ist immer 2 !!!
-	             EntryLayout layout = new EntryLayout(daProportion);
+	            EntryLayout4VisibleZZZ layout = new EntryLayout4VisibleZZZ(daProportion);
+				//EntryLayout layout = new EntryLayout(daProportion);
 	             this.setLayout(layout);
 				
 				
@@ -141,12 +143,12 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 			}//END IF: if(saProperty==null){
 			
 			//### Damit die Labels hinsichtlich der Höhe nicht so gross werden, ggf. mit leeren Werten auffüllen
-			for(int icount = 0; icount < iLines2Fill; icount ++){
-				JLabel labeltemp = new JLabel("", SwingConstants.RIGHT);
-				this.add(labeltemp);								
-				JLabel labeltemp2 = new JLabel("", SwingConstants.LEFT);
-				this.add(labeltemp2);	
-			}
+//			for(int icount = 0; icount < iLines2Fill; icount ++){
+//				JLabel labeltemp = new JLabel("", SwingConstants.RIGHT);
+//				this.add(labeltemp);								
+//				JLabel labeltemp2 = new JLabel("", SwingConstants.LEFT);
+//				this.add(labeltemp2);	
+//			}
 			
 			
 				/* TODO: Auf das TextField zugreifen k�nnen, auch per Lotusscript

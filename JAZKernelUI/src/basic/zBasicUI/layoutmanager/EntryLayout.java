@@ -111,6 +111,9 @@ public class EntryLayout implements LayoutManager {
 		//                  man muss also in double casten, damit 5/2 nicht 2.0 ergibt !!!		
 		double dtemp = MathZZZ.divide(components.length, COLUMNS);		
 		int itemp = MathZZZ.roundUp(dtemp);
+		//boolean bIsRounded = MathZZZ.isRounded(dtemp, itemp);
+		
+		
 		heights = new int[itemp];
 		// System.out.println("Grid: " + widths.length + ", " + heights.length);
 
@@ -143,7 +146,7 @@ public class EntryLayout implements LayoutManager {
 		Component[] components = parent.getComponents();
 		Dimension contSize = parent.getSize();
 		for (int i=0; i<components.length; i++) {
-			int row = i / COLUMNS;
+			int row = i / COLUMNS;			
 			int col = i % COLUMNS;
 			Component c = components[i];
 			Dimension d = c.getPreferredSize();
