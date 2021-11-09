@@ -1,5 +1,6 @@
 package custom.zKernelUI.module.config.DLG;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Scrollbar;
@@ -48,14 +49,17 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 	public Panel_CENTERZZZ(IKernelZZZ objKernel, JPanel panelParent, IKernelZZZ objKernelChoosen,  IKernelModuleZZZ objModuleChoosen, String sProgram) throws ExceptionZZZ {
 		super(objKernel, panelParent);
 		main:{
-		try {			
+		try {					
 			this.objKernel2configure = objKernelChoosen;//TODOGOON 20210310: Kann man kernelChoosen komplett durch ModuleChoosen ersetzen???? BZW. es sollte KernelChoosen das einzige KernelObjekt sein!!!
 			this.setModule(objModuleChoosen);//Merke 20210310: Das ist ggfs. auch ein ganz abstraktes Moduluobjekt, also nicht etwas, das konkret existiert wie z.B. ein anderes Panel.
 			
 			
-			Border borderEtched = BorderFactory.createEtchedBorder();
-			this.setBorder(borderEtched);	
+			//Border borderEtched = BorderFactory.createEtchedBorder();
+			//this.setBorder(borderEtched);
 			
+			Border borderLine = BorderFactory.createLineBorder(Color.red);
+			this.setBorder(borderLine);
+					
 			//+++ Vor dem Anlegen der Components erst einmal pruefen, ob es ueberhaupt etwas zu tun gibt
 			String sModule = KernelUIZZZ.getModuleUsedName((IKernelModuleZZZ) this);//20210312 Hier KernelUIZZZ als Hilfsklasse verwenden, um den Modulnamen auszulesen. besser als: String sModule = this.getModule().getModuleName();
 									
@@ -71,7 +75,12 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 				}
 			}
 						
-			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++			
+			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
+			//Standardgrößen von Label und Textfeld
+			Dimension dimensionLabel = new Dimension(50,10);
+			Dimension dimensionTextfield = new Dimension(50, 10);
+			
+			//Übergreifende Zählvariablen.
 			int iLines2Show = 0; //Alle anzuzeigenden Label-Zeilen, ggf. mit leeren aufgefülllt.			
 			int iLinesWithValue = 0; //Momentan anzuzeigende "gefüllte" Label-Zeilen
 			int iLines2Fill = 0; //Die zum auffüllen verwendeten "leeren" Label-Zeilen
@@ -83,7 +92,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 			//FileIniZZZ Objekt holen
 			//Das KernelObject zu verwenden ist nicht sauber. Es muss ein eigenes Objekt fuer das zu konfigurierende Modul vorhanden sein.
 			FileIniZZZ objFileIni = this.objKernel2configure.getFileConfigIniByAlias(sModule);
-			
+								
 			//Alle Einträge dieses Keys holen
 			String[] saProperty = objFileIni.getPropertyAll(sSystemKey);
 			if(saProperty==null){
@@ -122,9 +131,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 				//DIE ARRAY GRÖSSEN VON DER ANZAHL DER GEFUNDENEN EINTRÄGE ABHÄNGIG MACHEN
 				String sValue = new String("");
 				labelaText = new JLabel[iLinesWithValue];
-				textfieldaValue = new JTextField[iLinesWithValue];
-				Dimension dimensionLabel = new Dimension(10,10);
-				Dimension dimensionTextfield = new Dimension(10, 10);
+				textfieldaValue = new JTextField[iLinesWithValue];				
 				for(int icount=0; icount < iLinesWithValue; icount++){
 								
 					//Das Property - Label
@@ -142,13 +149,24 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 				}
 			}//END IF: if(saProperty==null){
 			
+			Dimension dimensionTotal = new Dimension();
+			dimensionTotal.width = 6*(dimensionTextfield.width + dimensionLabel.width);
+			dimensionTotal.height = 4*dimensionTextfield.height * iLinesWithValue;
+			this.setPreferredSize(dimensionTotal);
+			//this.setPreferredSize(new Dimension(800, 400));
+			
+			
 			//### Damit die Labels hinsichtlich der Hoehe nicht so gross werden, ggf. mit leeren Werten auffüllen
-			for(int icount = 0; icount < iLines2Fill; icount ++){
-				JLabel labeltemp = new JLabel("", SwingConstants.RIGHT);
-				this.add(labeltemp);								
-				JLabel labeltemp2 = new JLabel("", SwingConstants.LEFT);
-				this.add(labeltemp2);	
-			}
+//			for(int icount = 0; icount < iLines2Fill; icount ++){
+//				JLabel labeltemp = new JLabel("a", SwingConstants.RIGHT);
+//				labeltemp.setSize(dimensionLabel);
+//				labeltemp.setPreferredSize(dimensionLabel);
+//				this.add(labeltemp);								
+//				JLabel labeltemp2 = new JLabel("x", SwingConstants.LEFT);
+//				labeltemp2.setSize(dimensionLabel);
+//				labeltemp.setPreferredSize(dimensionLabel);
+//				this.add(labeltemp2);	
+//			}
 			
 			
 				/* TODO: Auf das TextField zugreifen k�nnen, auch per Lotusscript

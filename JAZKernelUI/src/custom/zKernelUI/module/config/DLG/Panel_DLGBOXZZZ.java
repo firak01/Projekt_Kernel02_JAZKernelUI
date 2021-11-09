@@ -1,8 +1,10 @@
 package custom.zKernelUI.module.config.DLG;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.JFrame;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
 import basic.zBasic.ExceptionZZZ;
@@ -55,22 +57,25 @@ public class Panel_DLGBOXZZZ extends KernelJPanelCascadedZZZ {
 			*/
 			
 		
-			//!!! Wichtig ist es, dass das EAST-Panel VOR dem CENTER-PANEL eingef�gt wird !!!
+			//!!! Wichtig ist es, dass das EAST-Panel VOR dem CENTER-PANEL eingefuegt wird !!!
      		//### PANEL EAST
      		Panel_EASTZZZ objPanelEast = new Panel_EASTZZZ(objKernel, this, objKernelChoosen, objModule, sProgram);
      		this.add(objPanelEast, BorderLayout.EAST);
      		this.setPanelSub("EAST", objPanelEast); //Damit es von anderen Panels "greifbar" wird.
 
-     		/* Am einfachsten ist es den JScrollPane anzuwenden. */
-			Panel_CENTERZZZ objPanelCenter = new Panel_CENTERZZZ(objKernel, this, objKernelChoosen, objModule, sProgram);	
-			JScrollPane jsp = new JScrollPane(objPanelCenter);					
-     		this.add(jsp, BorderLayout.CENTER);  			 //Mit Bildlaufleisten. ALSO: �ber die JScrollPane wird das Panel_CENTERZZZ-Objekt eingebunden.
+     		/* Panelinhalte Scrollbar machen.
+     		 * Am einfachsten ist es den JScrollPane anzuwenden. Sein "Erscheinen hängt aber von der PreferedSize des Panels ab.
+     		 * Diese wird im Panel ausgehend von der dynamischen Anzahl Zeilen berechnet */
+			Panel_CENTERZZZ objPanelCenter = new Panel_CENTERZZZ(objKernel, this, objKernelChoosen, objModule, sProgram);			
+			
+			JScrollPane scrollPane = new JScrollPane(objPanelCenter);
+		    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);		   
+		    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED); //scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+		    scrollPane.setBounds(0, 0, objPanelCenter.getBounds().height, 50);
+			this.add(scrollPane);
      		this.setPanelSub("CENTER", objPanelCenter); //Damit es von anderen Panels "greifbar" wird.
-       		
-     		
-//     		TODO GOON die Inhalte der Textfelder des objPanelCenter f�r das objPanelEast abfragbar machen !!!
-     		
-     		
+       		   		
+//     		TODO GOON die Inhalte der Textfelder des objPanelCenter f�r das objPanelEast abfragbar machen!!!
      		
      		//#########################################################################################################
      		//#########################################################################################################

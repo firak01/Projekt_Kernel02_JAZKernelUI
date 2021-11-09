@@ -3,6 +3,8 @@ package basic.zBasicUI.layoutmanager;
 import java.awt.*;
 import java.util.ArrayList;
 
+import basic.zBasic.ExceptionZZZ;
+import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasic.util.abstractList.ArrayListZZZ;
 import basic.zBasic.util.math.MathZZZ;
 
@@ -142,12 +144,49 @@ public class EntryLayout4VisibleZZZ implements LayoutManager {
 		return new Dimension(preferredWidth, preferredHeight);
 	}
 
-	//ORIGINAL:
-	/** Lays out the container in the specified panel. */
+	//ORIGINAL, Variante beschränkt auf die nur sichtbaren:
+//	/** Lays out the container in the specified panel. */
+//	public void layoutContainer(Container parent) {
+//		// System.out.println("layoutContainer:");
+//		if (!validWidths)
+//			return;
+//		Component[] components = parent.getComponents();
+//		
+//		//FGL: Arbeite nun nur noch mit den sichtbaren Components
+//		ArrayList<Component>listaComponent = new ArrayList<Component>();
+//		for(Component c : components) {
+//			if(c.isVisible()) {
+//				listaComponent.add(c);
+//			}
+//		}
+//		Component[] componentsVisible = ArrayListZZZ.toComponentArray(listaComponent);
+//		
+//		
+//		Dimension contSize = parent.getSize();
+//		for (int i=0; i<componentsVisible.length; i++) {
+//			int row = i / COLUMNS; //Merke: Hier ist explizit abrunden gewuenscht.
+//			int col = i % COLUMNS;
+//			Component c = componentsVisible[i];
+//			Dimension d = c.getPreferredSize();
+//			int colWidth = (int)(contSize.width * widthPercentages[col]);
+//			Rectangle r = new Rectangle(
+//				col == 0 ? 0 :
+//				hpad * (col-1) + (int)(contSize.width * widthPercentages[col-1]),
+//				vpad * (row) + (row * heights[row]) + (heights[row]-d.height),
+//				colWidth, d.height);
+//			System.out.println(c.getClass() + "-->" + r);
+//			c.setBounds(r);
+//		}
+//	}
+	
+	/** FGL 20211109
+	 * Lays out the container in the specified panel. 
+	 * - Restricted to visible Components
+	 * - Restricted to 2 Columns
+	 * - Alows different row heights*/
 	public void layoutContainer(Container parent) {
 		// System.out.println("layoutContainer:");
-		if (!validWidths)
-			return;
+		if (!validWidths) return;
 		Component[] components = parent.getComponents();
 		
 		//FGL: Arbeite nun nur noch mit den sichtbaren Components
@@ -157,171 +196,79 @@ public class EntryLayout4VisibleZZZ implements LayoutManager {
 				listaComponent.add(c);
 			}
 		}
+		if(!MathZZZ.isEven(listaComponent.size())) {
+			String sLog = "Ungerade Anzahl der Components. Bei 2 Spalten nicht vorgesehen.";
+			try {
+				System.out.println(ReflectCodeZZZ.getPositionCurrent()+": " + sLog);
+			} catch (ExceptionZZZ e) {				
+				e.printStackTrace();
+			}
+			return;
+		}
+		
 		Component[] componentsVisible = ArrayListZZZ.toComponentArray(listaComponent);
 		
 		
+		//FGL: Arbeite mit Arrays, die dann feste Werte haben und sich auf die "Row" beziehen.
+		//     Also ein fest Zeilenhöhe ermitteln für die preferedSize der Komponenten einer Zeile.		
+		double dtemp = MathZZZ.divide(componentsVisible.length, COLUMNS);		
+		int itemp = MathZZZ.roundUp(dtemp);
+		int[]dimensionHeightsUsed = new int[itemp+1];
+		int[]vtempused = new int[itemp+1];
+		
+		int rowPrevious=0; int heightsum=0;
+		for (int i=0; i<componentsVisible.length; i++) {
+			Component c = componentsVisible[i];
+			Dimension d = c.getPreferredSize();
+			
+			int row = i / COLUMNS; //Merke: Hier ist explizit Abrunden gewuenscht um die aktuelle Reihe zu bekommen.		
+			dimensionHeightsUsed[row] = Math.max(d.height, dimensionHeightsUsed[row]); //Wähle die groesste Hoehe.
+			
+			//FGL: In der Ausgangsversion wird einfach die Höhe mit der Anzahl der Zeilen multipliziert.
+			//int vtempused = vpad * (row) + (row * heights[row]) + (heights[row]-d.height); 	
+			//Wenn man einfach die Höhe mit der Anzahl der Zeilen multipliziert, geht das nur, wenn die Zeilen gleich hoch sind.
+			//Das ist nicht gegeben, wenn z.B. die Komponenten des DebugUI zusätzlich angezeigt werden sollen.
+			//Also hier aufsummieren
+			heightsum = heightsum + dimensionHeightsUsed[row];
+						
+			//vtempused[row] = vpad * (row) + (heightsum);
+			vtempused[row] = (heightsum);
+		}//end for
+		//++++++++++++++++++
+		
+		int vtempprevious=0;
 		Dimension contSize = parent.getSize();
 		for (int i=0; i<componentsVisible.length; i++) {
 			int row = i / COLUMNS; //Merke: Hier ist explizit abrunden gewuenscht.
-			
-			//FGL 20211104: Wenn aber eine ungerade Zahl der Componenten da ist - wie z.B. in der DebugUI-Zeile - gibt es einen Fehler: heights = new int[(components.length / COLUMNS];
-			//ergo, aber Merke: https://stackoverflow.com/questions/43300892/dividing-numbers
-			//                  man muss also in double casten, damit 5/2 nicht 2.0 ergibt !!!		
-//			double dtemp = MathZZZ.divide(i, COLUMNS);		
-//			int itemp = MathZZZ.roundUp(dtemp);
-//			int row = itemp;
 			int col = i % COLUMNS;
 			Component c = componentsVisible[i];
 			Dimension d = c.getPreferredSize();
 			int colWidth = (int)(contSize.width * widthPercentages[col]);
+			
+//Original
+//			Rectangle r = new Rectangle(
+//				col == 0 ? 0 :
+//				hpad * (col-1) + (int)(contSize.width * widthPercentages[col-1]),
+//				vpad * (row) + (row * heights[row]) + (heights[row]-d.height),
+//				colWidth, d.height);
+//			System.out.println(c.getClass() + "-->" + r);
+			
+			int htemp = 0;
+			if(col>=1) {
+				htemp = hpad * (col-1) + (int)(contSize.width * widthPercentages[col-1]);
+			}
+			
+			//System.out.println("FGLTEST C1: row="+ row + "- col="+ col + "| htemp="+htemp + " vtempused="+vtempused[row]);
+			//Merke: Rectangle hat folgenden Konstruktor:
+			//       Rectangle(int x, int y, int width, int height)
+			//       Constructs a new Rectangle whose upper-left corner is specified as (x,y) and whose width and height are specified by the arguments of the same name.
 			Rectangle r = new Rectangle(
-				col == 0 ? 0 :
-				hpad * (col-1) + (int)(contSize.width * widthPercentages[col-1]),
-				vpad * (row) + (row * heights[row]) + (heights[row]-d.height),
-				colWidth, d.height);
-			System.out.println(c.getClass() + "-->" + r);
+				col == 0 ? 0 : htemp, vtempused[row], colWidth,	dimensionHeightsUsed[row]);
+			//System.out.println("FGLTEST C2: row="+ row + "- col="+ col + "|" + c.getClass() + "-->" + r);
+			
+			//Merke: 
 			c.setBounds(r);
+			
 		}
 	}
-	
-	/** Lays out the container in the specified panel. */
-//	public void layoutContainer(Container parent) {
-//		// System.out.println("layoutContainer:");
-//		if (!validWidths)
-//			return;
-//		Component[] components = parent.getComponents();
-//		
-//		//FGL: Arbeite nun nur noch mit den sichtbaren Components
-//		ArrayList<Component>listaComponent = new ArrayList<Component>();
-//		for(Component c : components) {
-//			if(c.isVisible()) {
-//				listaComponent.add(c);
-//			}
-//		}
-//		Component[] componentsVisible = ArrayListZZZ.toComponentArray(listaComponent);
-//		
-//		
-//		//FGL: Arbeite mit Arrays, die dann feste Werte haben und sich auf die "Row" beziehen.
-//		//     Also ein fest Zeilenhöhe ermitteln für die preferedSize der Komponenten einer Zeile.		
-//		double dtemp = MathZZZ.divide(componentsVisible.length, COLUMNS);		
-//		int itemp = MathZZZ.roundUp(dtemp);
-//		int[]dimensionHeightsUsed = new int[itemp+1];
-//		
-//		int rowPrevious=0;
-//		for (int i=0; i<componentsVisible.length; i++) {
-//			Component c = componentsVisible[i];
-//			Dimension d = c.getPreferredSize();
-//			
-//			int row = i / COLUMNS; //Merke: Hier ist explizit Abrunden gewuenscht um die aktuelle Reihe zu bekommen.		
-//			dimensionHeightsUsed[row] = 20;//Math.max(d.height, dimensionHeightsUsed[row]);						
-//		}//end for
-//		
-//		
-//		
-//		int vtempprevious = 0; int vtempused = 0;int irowPrevious = 0;
-//		Dimension contSize = parent.getSize();
-//		for (int i=0; i<componentsVisible.length; i++) {
-//			int row = i / COLUMNS; //Merke: Hier ist explizit Abrunden gewuenscht um die aktuelle Reihe zu bekommen.
-//			if(irowPrevious!=row) {
-//				//ZeilenweiseWerte wieder zurücksetzen
-//				//vtempprevious = 0;
-//			}
-//			irowPrevious = row;
-//			if(row==3) {
-//				System.out.println("BREAK Zeile 4");
-//			}
-//			//FGL 20211104: Wenn aber eine ungerade Zahl der Componenten da ist - wie z.B. in der DebugUI-Zeile - gibt es einen Fehler: heights = new int[(components.length / COLUMNS];
-//			//ergo, aber Merke: https://stackoverflow.com/questions/43300892/dividing-numbers
-//			//                  man muss also in double casten, damit 5/2 nicht 2.0 ergibt !!!		
-////			double dtemp = MathZZZ.divide(i, COLUMNS);		
-////			int itemp = MathZZZ.roundUp(dtemp);
-////			int row = itemp;
-//			int col = i % COLUMNS;
-//			Component c = componentsVisible[i];
-//			//Dimension d = c.getPreferredSize();
-//			
-//			
-//			int colWidth = (int)(contSize.width * widthPercentages[col]);
-//			int htemp = 0;
-//			if(col>=1) {
-//				htemp = hpad * (col-1) + (int)(contSize.width * widthPercentages[col-1]);
-//			}
-//			//!!! DAS KANN DOCH NUR FUNKTIONIEREN, WENN ALLE ZEILEN GLEICH HOCH SIND ... int vtemp = vpad * (row) + (row * heights[row]) + (heights[row]-d.height);
-//			//20210909: Man muss die Höhe aufsummieren
-//			int vtemp = 0;
-//			for(int iIndex=0;iIndex<=row;iIndex++) {
-//				vtemp = vtemp + heights[iIndex];
-//			}
-//			//int vtemp = vpad * (row) + (row * heights[row]) + (heights[row]-d.height);
-//			//vtempused = vpad * (row) + vtemp + (heights[row]-d.height);
-//			//Variante einfach nur erhöhen, ohne "Zusammenrechnen"
-//			vtempused = vpad + vtempprevious + heights[row] - dimensionHeightsUsed[row];
-//			//vtempused = Math.max(vtempused,vtempprevious);
-//			vtempprevious = vtempused;
-//			System.out.println("FGLTEST C1: row="+ row + "- col="+ col + "| htemp="+htemp + " vtempused="+vtempused);
-//			Rectangle r = new Rectangle(
-//				col == 0 ? 0 :
-//				htemp, vtempused, colWidth, dimensionHeightsUsed[row]);
-//			System.out.println("FGLTEST C2: row="+ row + "- col="+ col + "|" + c.getClass() + "-->" + r);
-//			c.setBounds(r);
-//		}
-//	}
-	
-	//############################
-//	public void layoutContainer(Container parent) {
-//		// System.out.println("layoutContainer:");
-//		if (!validWidths)
-//			return;
-//		Component[] components = parent.getComponents();
-//		
-//		//FGL: Arbeite nun nur noch mit den sichtbaren Components
-//		ArrayList<Component>listaComponent = new ArrayList<Component>();
-//		for(Component c : components) {
-//			if(c.isVisible()) {
-//				listaComponent.add(c);
-//			}
-//		}
-//		Component[] componentsVisible = ArrayListZZZ.toComponentArray(listaComponent);
-//		
-//		int vtempprevious = 0; int vtempused = 0;
-//		Dimension contSize = parent.getSize();
-//		for (int i=0; i<componentsVisible.length; i++) {
-//			int row = i / COLUMNS; //Merke: Hier ist explizit abrunden gewuenscht.
-//			if(row==3) {
-//				System.out.println("BREAK Zeile 4");
-//			}
-//			//FGL 20211104: Wenn aber eine ungerade Zahl der Componenten da ist - wie z.B. in der DebugUI-Zeile - gibt es einen Fehler: heights = new int[(components.length / COLUMNS];
-//			//ergo, aber Merke: https://stackoverflow.com/questions/43300892/dividing-numbers
-//			//                  man muss also in double casten, damit 5/2 nicht 2.0 ergibt !!!		
-////			double dtemp = MathZZZ.divide(i, COLUMNS);		
-////			int itemp = MathZZZ.roundUp(dtemp);
-////			int row = itemp;
-//			int col = i % COLUMNS;
-//			Component c = componentsVisible[i];
-//			Dimension d = c.getPreferredSize();
-//			int colWidth = (int)(contSize.width * widthPercentages[col]);
-//			int htemp = 0;
-//			if(col>=1) {
-//				htemp = hpad * (col-1) + (int)(contSize.width * widthPercentages[col-1]);
-//			}
-//			//!!! DAS KANN DOCH NUR FUNKTIONIEREN, WENN ALLE ZEILEN GLEICH HOCH SIND ... int vtemp = vpad * (row) + (row * heights[row]) + (heights[row]-d.height);
-//			//20210909: Man muss die Höhe aufsummieren
-//			int vtemp = 0;
-//			for(int iIndex=0;iIndex<=row;iIndex++) {
-//				vtemp = vtemp + heights[iIndex];
-//			}
-//			//int vtemp = vpad * (row) + (row * heights[row]) + (heights[row]-d.height);
-//			//vtempused = vpad * (row) + vtemp + (heights[row]-d.height);
-//			//Variante einfach nur erhöhen, ohne "Zusammenrechnen"
-//			vtempused = vpad + vtempprevious + heights[row] -d.height;
-//			vtempprevious = vtempused;
-//			System.out.println("FGLTEST C1: row="+ row + "- col="+ col + "| htemp="+htemp + " vtempused="+vtempused);
-//			Rectangle r = new Rectangle(
-//				col == 0 ? 0 :
-//				htemp, vtempused, colWidth, d.height);
-//			System.out.println("FGLTEST C2: row="+ row + "- col="+ col + "|" + c.getClass() + "-->" + r);
-//			c.setBounds(r);
-//		}
-//	}
-
 }
