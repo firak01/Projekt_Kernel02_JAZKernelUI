@@ -426,17 +426,26 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				if(this.getFlagZ(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())) {
 					panelReturn = this;
 				}else {
-					KernelJFrameCascadedZZZ frameParent = this.frameParent;
+					KernelJFrameCascadedZZZ frameParent = this.getFrameParent(); //.frameParent;
 					if(frameParent!=null) {
 						panelReturn = frameParent.getPaneContent();
-						break main;
 					}				
+					if(panelReturn!=null) break main;
 					
 					KernelJDialogExtendedZZZ dialogParent = this.dialogParent;
 					if(dialogParent!=null) {
-						panelReturn = dialogParent.getPanelContent();
-						break main;
+						panelReturn = dialogParent.getPanelContent();					
 					}
+					if(panelReturn!=null) break main;
+					
+					//Das sollte zuvor gefüllt worden sein in KernelJFrame.launchDoing()
+					//frmCascaded.setPanelSub(KernelJFrameCascadedZZZ.getAliasPanelContent(), objPanel);
+					//also hier wieder auslesen:
+					//panelReturn = frameParent.getPanelSub(KernelJFrameCascadedZZZ.getAliasPanelContent());
+					//if(panelReturn!=null) break main;
+					
+					//Letzter Ausweg: ContentPane
+					panelReturn = (IPanelCascadedZZZ) frameParent.getContentPane();
 				}
 				
 			}else{
