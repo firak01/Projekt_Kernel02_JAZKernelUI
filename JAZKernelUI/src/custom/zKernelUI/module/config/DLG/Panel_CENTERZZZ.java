@@ -142,13 +142,13 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 				}
 			}//END IF: if(saProperty==null){
 			
-			//### Damit die Labels hinsichtlich der Höhe nicht so gross werden, ggf. mit leeren Werten auffüllen
-//			for(int icount = 0; icount < iLines2Fill; icount ++){
-//				JLabel labeltemp = new JLabel("", SwingConstants.RIGHT);
-//				this.add(labeltemp);								
-//				JLabel labeltemp2 = new JLabel("", SwingConstants.LEFT);
-//				this.add(labeltemp2);	
-//			}
+			//### Damit die Labels hinsichtlich der Hoehe nicht so gross werden, ggf. mit leeren Werten auffüllen
+			for(int icount = 0; icount < iLines2Fill; icount ++){
+				JLabel labeltemp = new JLabel("", SwingConstants.RIGHT);
+				this.add(labeltemp);								
+				JLabel labeltemp2 = new JLabel("", SwingConstants.LEFT);
+				this.add(labeltemp2);	
+			}
 			
 			
 				/* TODO: Auf das TextField zugreifen k�nnen, auch per Lotusscript
