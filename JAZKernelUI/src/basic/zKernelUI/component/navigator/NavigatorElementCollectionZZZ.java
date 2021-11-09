@@ -401,6 +401,8 @@ public class NavigatorElementCollectionZZZ<T>  extends KernelUseObjectZZZ  imple
 		ArrayList<INavigatorElementZZZ>listaElement = this.getGroupByAlias(sAlias);				
 		listaElement.get(0).setVisible(true);//Merke: Momentan ist das nur 1 Element in der Liste...
 		
+		TODOGOON; //20211018 Nun das EmptyPanel verbergen und das (noch hinzuzufügenden Panel mit dem Wert anzeigen.)
+		
 		//Wird schon in ActionSwitchZZZ.updatePanel() gemacht, also hier nicht notwendig...
 		//((JPanel)this.getPanelParent()).validate();
 	}

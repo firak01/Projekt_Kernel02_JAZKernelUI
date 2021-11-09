@@ -109,7 +109,8 @@ public class PanelDebugNavigator_WESTZZZ extends KernelJPanelCascadedZZZ impleme
 	        //++++ Die GroupCollection, basierend auf dem Modell
 	        ModelDebugNavigatorZZZ modelNavigator = new ModelDebugNavigatorZZZ(this.getKernelObject());
 			NavigatorElementCollectionZZZ<INavigatorElementZZZ> groupc = new NavigatorElementCollectionZZZ<INavigatorElementZZZ>(objKernel, this, modelNavigator);	
-			groupc.setVisible(0); //Initiales Setzen der Sichtbarkeit
+			//Merke: Damit würde der erste Eintrag vorausagewählt und ein roter Rahmen käme darum
+			//groupc.setVisible(0); //Initiales Setzen der Sichtbarkeit
 			
 			Iterator<INavigatorElementZZZ> it = groupc.iterator();
 			while(it.hasNext()) {

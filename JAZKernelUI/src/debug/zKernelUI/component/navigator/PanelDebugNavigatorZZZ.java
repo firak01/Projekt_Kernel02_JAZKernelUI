@@ -17,6 +17,7 @@ import basic.zKernel.KernelZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.component.IKernelProgramZZZ;
 import custom.zKernel.LogZZZ;
+import custom.zKernelUI.component.PanelContentEmptyZZZ;
 import custom.zKernelUI.module.config.DLG.Panel_NORTHZZZ;
 
 
@@ -42,6 +43,11 @@ public class PanelDebugNavigatorZZZ extends KernelJPanelCascadedZZZ implements I
 		PanelDebugNavigator_WESTZZZ objPanelWest = new PanelDebugNavigator_WESTZZZ(objKernel, this);
 		this.add(objPanelWest, BorderLayout.WEST); //Frontend hinzufuegen
 		this.setPanelSub("WEST", objPanelWest);       //Backend Hashtable hinzufuegen
+		
+		
+		PanelContentEmptyZZZ objPanelCenterEmpty =   new PanelContentEmptyZZZ(objKernel, this);
+		this.add(objPanelCenterEmpty, BorderLayout.CENTER); //Frontend hinzufuegen
+		this.setPanelSub("CENTER",objPanelCenterEmpty);       //Backend Hashtable hinzufuegen
 	}
 
 	

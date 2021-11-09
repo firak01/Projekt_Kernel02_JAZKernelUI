@@ -62,15 +62,15 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	//Merke: Nur einige besondere Panels sind selbst Module.
 	protected String sModuleName=null;         //Notwendig, wenn das Panel selbst das Modul ist.
 
-	private IPanelCascadedZZZ panelParent;
-	private KernelJFrameCascadedZZZ frameParent;
-	private KernelJDialogExtendedZZZ dialogParent;
+	protected IPanelCascadedZZZ panelParent;
+	protected KernelJFrameCascadedZZZ frameParent;
+	protected KernelJDialogExtendedZZZ dialogParent;
 	
 	protected Hashtable<String,IPanelCascadedZZZ> htPanelSub=new Hashtable<String,IPanelCascadedZZZ>();
 	protected Hashtable<String,JComponent> htComponent = new Hashtable<String,JComponent>();
 	protected Hashtable <String, KernelButtonGroupZZZ<String, AbstractButton>> htButtonGroup = new Hashtable<String, KernelButtonGroupZZZ<String, AbstractButton>>();
 	
-	private ListenerMouseMove4DragableWindowZZZ listenerDraggableWindow = null; 
+	protected ListenerMouseMove4DragableWindowZZZ listenerDraggableWindow = null; 
 
 	protected String sProgramName  = null; //ggf. der Name des Elternprogramms, s. KernelKonfiguration
 	protected String sProgramAlias = null; //ggf. der Alias des Elternprogramms, s. KernelKonfiguration
@@ -162,7 +162,11 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				this.setPanelParent(panelParent);
 			}
 			
-			KernelJFrameCascadedZZZ frameParent = (KernelJFrameCascadedZZZ) SwingUtilities.getAncestorOfClass(KernelJFrameCascadedZZZ.class, (JComponent)contentPane);		
+			//zu 3. ... jetzt scheint es wieder schwer den ParentFrame zu ermitteln
+			KernelJFrameCascadedZZZ frameParent = (KernelJFrameCascadedZZZ) SwingUtilities.getAncestorOfClass(KernelJFrameCascadedZZZ.class, (JComponent)contentPane);
+			if(frameParent==null) {
+				frameParent = ((KernelJPanelCascadedZZZ) contentPane).getFrameParent();
+			}
 			KernelJPanelCascadedNew_(objKernel, frameParent, null, null, null);
 		}//end main:
 		

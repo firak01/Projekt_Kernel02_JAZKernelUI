@@ -1,6 +1,7 @@
 // package com.darwinsys.entrylayout;
 package basic.zBasicUI.layoutmanager;
 import java.awt.*;
+import basic.zBasic.util.math.MathZZZ;
 
 
 /** A simple layout manager, for Entry areas like:
@@ -105,7 +106,15 @@ public class EntryLayout implements LayoutManager {
 		Dimension contSize = parent.getSize();
 		int preferredWidth = 0, preferredHeight = 0;
 		widths = new int[COLUMNS];
-		heights = new int[components.length / COLUMNS];
+		//FGL 20211104: Wenn aber eine ungerade Zahl der Componenten da ist - wie z.B. in der DebugUI-Zeile - gibt es einen Fehler: heights = new int[(components.length / COLUMNS];
+		//ergo, aber Merke: https://stackoverflow.com/questions/43300892/dividing-numbers
+		//                  man muss also in double casten, damit 5/2 nicht 2.0 ergibt !!!		
+		double dtemp = MathZZZ.divide(components.length, COLUMNS);		
+		int itemp = MathZZZ.roundUp(dtemp);
+		//boolean bIsRounded = MathZZZ.isRounded(dtemp, itemp);
+		
+		
+		heights = new int[itemp];
 		// System.out.println("Grid: " + widths.length + ", " + heights.length);
 
 		int i;
@@ -137,7 +146,7 @@ public class EntryLayout implements LayoutManager {
 		Component[] components = parent.getComponents();
 		Dimension contSize = parent.getSize();
 		for (int i=0; i<components.length; i++) {
-			int row = i / COLUMNS;
+			int row = i / COLUMNS;			
 			int col = i % COLUMNS;
 			Component c = components[i];
 			Dimension d = c.getPreferredSize();

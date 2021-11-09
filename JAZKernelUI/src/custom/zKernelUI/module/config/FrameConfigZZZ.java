@@ -3,6 +3,7 @@ import javax.swing.JComponent;
 
 import basic.zKernel.KernelZZZ;
 import basic.zBasic.ExceptionZZZ;
+import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelJFrameCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.util.JFrameHelperZZZ;
@@ -53,10 +54,18 @@ public boolean launchCustom(){
 		*/
 }
  
-public KernelJPanelCascadedZZZ getPaneContent() throws ExceptionZZZ {
-	PanelConfigZZZ objPanel = new PanelConfigZZZ(this.getKernelObject(), this, this.getKernelConfigObject());
-	this.setPanelContent(objPanel);
-	return objPanel;
+public IPanelCascadedZZZ getPaneContent() throws ExceptionZZZ {
+	IPanelCascadedZZZ objReturn = null;
+	main:{
+		objReturn = super.getPaneContent();
+		if(objReturn!=null) break main;
+		
+		PanelConfigZZZ objPanel = new PanelConfigZZZ(this.getKernelObject(), this, this.getKernelConfigObject());
+		this.setPanelContent(objPanel);
+		
+		objReturn = objPanel;
+	}
+	return objReturn;
 }
 
 
