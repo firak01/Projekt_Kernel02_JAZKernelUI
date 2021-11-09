@@ -24,6 +24,7 @@ import basic.zBasicUI.layoutmanager.EntryLayout4VisibleZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernelUI.KernelUIZZZ;
+import basic.zKernelUI.component.IDebugUiZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernel.KernelZZZ;
@@ -77,8 +78,8 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 						
 			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
 			//Standardgrößen von Label und Textfeld
-			Dimension dimensionLabel = new Dimension(50,10);
-			Dimension dimensionTextfield = new Dimension(50, 10);
+			Dimension dimensionLabel = new Dimension(200,20);
+			Dimension dimensionTextfield = new Dimension(50, 20);
 			
 			//Übergreifende Zählvariablen.
 			int iLines2Show = 0; //Alle anzuzeigenden Label-Zeilen, ggf. mit leeren aufgefülllt.			
@@ -122,7 +123,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 				//DIE ANZAHL DER ZEILEN VON DER ANZAHL DER GEFUNDENEN EINTR�GE ABHÄNGIG MACHEN.
 				//this.setLayout(new GridLayout(iLine2Show,2)); //1 Zeilen, 2 Spalten
 				
-				double[] daProportion={0.2, 0.8};//Merke: Das wird zu WIDTH im Layout, die Anzahl der Spalten ist immer 2 !!!
+				double[] daProportion={0.4, 0.6};//Merke: Das wird zu WIDTH im Layout, die Anzahl der Spalten ist immer 2 !!!
 	            EntryLayout4VisibleZZZ layout = new EntryLayout4VisibleZZZ(daProportion);
 				//EntryLayout layout = new EntryLayout(daProportion);
 	             this.setLayout(layout);
@@ -137,6 +138,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 					//Das Property - Label
 					labelaText[icount]= new JLabel(saProperty[icount] + "=", SwingConstants.RIGHT);
 					labelaText[icount].setSize(dimensionLabel);
+					labelaText[icount].setPreferredSize(dimensionLabel);
 					this.add(labelaText[icount]);
 					
 					//Das Value - Textfeld										
@@ -145,13 +147,18 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 					
 					textfieldaValue[icount] = new JTextField(sValue, iTEXTFIELD_COLUMN_DEFAULT);
 					textfieldaValue[icount].setSize(dimensionTextfield);
+					textfieldaValue[icount].setPreferredSize(dimensionTextfield);
 					this.add(textfieldaValue[icount]);
 				}
 			}//END IF: if(saProperty==null){
 			
 			Dimension dimensionTotal = new Dimension();
-			dimensionTotal.width = 6*(dimensionTextfield.width + dimensionLabel.width);
-			dimensionTotal.height = 4*dimensionTextfield.height * iLinesWithValue;
+			dimensionTotal.width = 2*(dimensionTextfield.width + dimensionLabel.width);
+			
+			if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())){ 
+				iLinesWithValue = iLinesWithValue+2; //Im DebugUI 2 Zeilen dazurechnen
+			}
+			dimensionTotal.height = 2*dimensionTextfield.height * iLinesWithValue;
 			this.setPreferredSize(dimensionTotal);
 			//this.setPreferredSize(new Dimension(800, 400));
 			
