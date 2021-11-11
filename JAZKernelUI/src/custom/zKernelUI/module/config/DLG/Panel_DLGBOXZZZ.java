@@ -35,7 +35,7 @@ public class Panel_DLGBOXZZZ extends KernelJPanelCascadedZZZ {
 			
 			
 			//### PANEL CENTER
-			/* NICHT L�SCHEN. FRAGE WARUM DAS SO IST ??? 
+			/* NICHT LOESCHEN. FRAGE WARUM DAS SO IST ??? 
 			//Laufleisten werden zwar hinzugef�gt, funktionieren aber nicht  !!!!!
 			//+++ Als Zwischenschritt einen Scrollbaren Panel erzeugen 
 			JPanel objPanelScroll = new JPanel();  

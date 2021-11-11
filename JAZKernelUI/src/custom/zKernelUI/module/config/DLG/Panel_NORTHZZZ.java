@@ -10,6 +10,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
 import basic.zBasic.ExceptionZZZ;
+import basic.zBasicUI.layoutmanager.GridLayout4VisibleZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 
 
@@ -27,14 +28,13 @@ public class Panel_NORTHZZZ extends KernelJPanelCascadedZZZ {
 		main:{
 		try {
 		this.objKernelChoosen = objKernelChoosen;//TODOGOON 20210310: Kann man kernelChoosen komplett durch ModuleChoosen ersetzen????
-		this.setModule(objModuleChoosen);//Merke 20210310: Das ist ggfs. auch ein ganz abstraktes Moduluobjekt, also nicht etwas, das konkret existiert wie z.B. ein anderes Panel.
+		this.setModule(objModuleChoosen);//Merke 20210310: Das ist ggfs. auch ein ganz abstraktes Modulobjekt, also nicht etwas, das konkret existiert - wie z.B. ein anderes Panel.
 		
-		//TODO Komplizierteres aber sch�neres Layout durch einen anderen Layoutmanager
-		this.setLayout(new GridLayout(6,2)); //6 Zeilen, 2 Spalten
-	
+		
 			//Einen Rahmen um das Panel zeichnen
 			Border borderEtched = BorderFactory.createEtchedBorder();
 			this.setBorder(borderEtched);
+			
 			
 			
 			// Die grundlegenden Informationen zum Kernel-Objekt anzeigen in JLabel-Objekten
@@ -87,8 +87,7 @@ public class Panel_NORTHZZZ extends KernelJPanelCascadedZZZ {
 			JLabel labelKeyText = new JLabel("Application key: ", SwingConstants.RIGHT);
 			this.add(labelKeyText);
 			
-//			TODO GOON, ist nicht ganz sauber das eigene Kernel-Objekt hierf�r zu verwenden
-			//String sApplicationKey = this.getKernelObject().getApplicationKey();	
+			//Das ausgewählte Kernel-Objekt hierfuer verwenden	
 			String sApplicationKey = this.objKernelChoosen.getApplicationKey();
 			JLabel labelKeyValue = new JLabel(sApplicationKey, SwingConstants.LEFT);
 			this.add(labelKeyValue);
@@ -98,25 +97,21 @@ public class Panel_NORTHZZZ extends KernelJPanelCascadedZZZ {
 			JLabel labelSystemText = new JLabel("System: ", SwingConstants.RIGHT);
 			this.add(labelSystemText);
 			
-//			TODO GOON, ist nicht ganz sauber das eigene Kernel-Objekt hierf�r zu verwenden
-			//String sSystemNumber = this.getKernelObject().getSystemNumber();
+			//Das ausgewählte Kernel-Objekt hierfuer verwenden
 			String sSystemNumber = this.objKernelChoosen.getSystemNumber();
 			JLabel labelSystemValue = new JLabel(sSystemNumber, SwingConstants.LEFT);
 			this.add(labelSystemValue);
 			
 			
-			//+++ Das muss so sein, damit die anderen Labels an ihrem Platz bleiben und nicht "verschoben" werden
-			JLabel label5Text = new JLabel(" ");
-			this.add(label5Text);
-			
-			JLabel label6Text = new JLabel("  ");
-			this.add(label6Text);
-			
-			JLabel label7Text = new JLabel(" ");
-			this.add(label7Text);
-			
-			JLabel label8Text = new JLabel("  ");
-			this.add(label8Text);
+			//Nun erst das Layout, wichtig wg. Ermittlung der Anzahl Zeilen
+			//Problem: GridLayout hält Platz auch für verborgene Components
+			//         https://stackoverflow.com/questions/7727728/invisible-components-still-take-up-space-jpanel
+			//this.setLayout(new GridLayout(6,2)); //6 Zeilen, 2 Spalten
+			//Darum eine spezielle Variante dafür, nur für sichtbare Components			
+			int iComponents = this.getComponents().length; //Wg. des "Wegtrimmens" der unsichtbaren Components ist es egal, dass auch unsichtbare hier "gezaehlt" werden.
+			int iColumns = 2;
+			int iRows = iComponents / iColumns;
+			this.setLayout(new GridLayout4VisibleZZZ(iRows,iColumns));		
 			
 			} catch (ExceptionZZZ ez) {
 				this.getLogObject().WriteLineDate(ez.getDetailAllLast());

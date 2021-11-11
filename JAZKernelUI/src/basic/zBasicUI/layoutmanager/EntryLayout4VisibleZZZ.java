@@ -196,6 +196,10 @@ public class EntryLayout4VisibleZZZ implements LayoutManager {
 				listaComponent.add(c);
 			}
 		}
+		
+		//WICHTIG: DIE ANZAHL DER KOMPONENTEN MUSS IMMER DURCH DIE ANZAHL DER SPALTEN OHNE REST TEILBAR SEIN
+		//TODOGOON: MathZZZ.hasRemainder()
+		//          MathZZZ.isDivisibleWithoutRemainder();
 		if(!MathZZZ.isEven(listaComponent.size())) {
 			String sLog = "Ungerade Anzahl der Components. Bei 2 Spalten nicht vorgesehen.";
 			try {

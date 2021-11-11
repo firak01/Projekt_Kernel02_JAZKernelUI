@@ -5,13 +5,14 @@ import javax.swing.*;
 
 import basic.zBasicUI.adapter.AdapterWindowCloser;
 import basic.zBasicUI.layoutmanager.EntryLayout;
+import basic.zBasicUI.layoutmanager.EntryLayout4VisibleZZZ;
 
 
 /** Testbed for EntryLayout layout manager.
  * @author	Ian Darwin, ian@darwinsys.com
  * @version $Id: EntryLayoutTest.java,v 1.2 2007/01/12 09:40:47 lindhauer Exp $
  */
-public class EntryLayoutTest {
+public class DebugEntryLayout {
 
 	/** "main program" method - construct and show */
 	public static void main(String[] av) {
@@ -25,7 +26,7 @@ public class EntryLayoutTest {
 		cp.add(new JPasswordField(20));
 		cp.add(new JLabel("Security Domain:", SwingConstants.RIGHT));
 		cp.add(new JTextField(20));
-		// cp.add(new JLabel("Monkey wrench in works"));
+		//cp.add(new JLabel("Monkey wrench in works"));
 		f.pack();
 		f.addWindowListener(new AdapterWindowCloser(f, true));
 		f.setLocation(200, 200);
