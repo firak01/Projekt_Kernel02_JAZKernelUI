@@ -1,6 +1,7 @@
 package custom.zKernelUI.module.config.DLG;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Scrollbar;
@@ -42,7 +43,10 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 	
 	private static final int iTEXTFIELD_COLUMN_DEFAULT = 10;             //Wie breit ein Textfeld sein soll
 	private static final int iNR_OF_TEXTFIELD_SHOWN_DEFAULT = 10; //Wieviele Textfields angezeigt werden sollen
+	private static final int iNR_OF_TEXTFIELD_SHOWN_DEBUG = 1; //Wieviele Textfields im DEBUG Fall angezeigt werden sollen.
 
+	
+	private JLabel[] labelaIndex = null;
 	private JLabel[] labelaText = null;
 	private JTextField[] textfieldaValue = null; 
 	
@@ -75,16 +79,30 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 					break main;//Fall: Konfiguriertes Modul existiert nicht physikalisch als Datei am erwarteten Ort/mit dem erwarteten Namen
 				}
 			}
-						
+					
+			//+++ Layout - Manager und Anzahl Spalten festlegen ++++++++++++
+			
+			//Problem: Suche nach dem passenden LayoutManager, der fest positioniert, aber unsichtbare ausblendet.
+			//this.setLayout(new GridLayout(iLine2Show,2)); //1 Zeilen, 2 Spalten
+			//EntryLayout layout = new EntryLayout(daProportion);
+			
+			double[] daProportion={0.1, 0.3, 0.6};//Merke: Das wird zu WIDTH im Layout, die Anzahl der Spalten ist entsprechend der Proportionsparameter !!!
+            EntryLayout4VisibleZZZ layout = new EntryLayout4VisibleZZZ(daProportion);				
+            this.setLayout(layout);
+			
 			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
 			//Standardgrößen von Label und Textfeld
-			Dimension dimensionLabel = new Dimension(200,20);
+			Dimension dimensionLabelColumnFirst = new Dimension (20,20);
+			Dimension dimensionLabel = new Dimension(200,20);			
 			Dimension dimensionTextfield = new Dimension(50, 20);
 			
 			//Übergreifende Zählvariablen.
 			int iLines2Show = 0; //Alle anzuzeigenden Label-Zeilen, ggf. mit leeren aufgefülllt.			
 			int iLinesWithValue = 0; //Momentan anzuzeigende "gefüllte" Label-Zeilen
 			int iLines2Fill = 0; //Die zum auffüllen verwendeten "leeren" Label-Zeilen
+			int iLinesForDebugUI = 2; //Im DebugUI 2 Zeilen dazurechnen
+			int iColumnsForDebugUI = 2; //Im DebugUI 2 Componenten in der Gruppe (1x Button, 1. Label)
+			int iColumns2FillDebugUI = 0; //Die für die DebugUI zum Auffüllen benötigten Leer-Kompponenten.
 			
 			//SystemKey als Schluessel fuer die Section
 			//Das KernelObject zu verwenden ist nicht sauber. Es muss ein eigenes Objekt fuer das zu konfigurierende Modul vorhanden sein.
@@ -93,7 +111,22 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 			//FileIniZZZ Objekt holen
 			//Das KernelObject zu verwenden ist nicht sauber. Es muss ein eigenes Objekt fuer das zu konfigurierende Modul vorhanden sein.
 			FileIniZZZ objFileIni = this.objKernel2configure.getFileConfigIniByAlias(sModule);
-								
+			
+			//Im DebugUI Fall: Ausgehend von 2 Komponenten in der DebugUI Gruppe, für die fehlende Spalten mit Leerkomponente auffüllen.
+			if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())){ 
+				iLinesWithValue = iLinesWithValue+iLinesForDebugUI; 
+				iColumns2FillDebugUI = daProportion.length - iColumnsForDebugUI;
+				
+				for(int iCount=0; iCount < iColumns2FillDebugUI;iCount++) {
+					JLabel labelEmpty = new JLabel(" ");
+					this.add(labelEmpty);
+				}
+				
+				
+			}
+			
+			
+			
 			//Alle Einträge dieses Keys holen
 			String[] saProperty = objFileIni.getPropertyAll(sSystemKey);
 			if(saProperty==null){
@@ -101,45 +134,59 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 				iLines2Show = 1; //Die Hinweiszeile
 				iLines2Fill = iNR_OF_TEXTFIELD_SHOWN_DEFAULT - iLines2Show;
 				
+				labelaIndex = new JLabel[1];				
 				labelaText = new JLabel[1];
 				textfieldaValue = new JTextField[1];
 				
+				labelaIndex[0] = new JLabel(" ");
+				this.add(labelaIndex[0]);
 				labelaText[0]= new JLabel("No property found.", SwingConstants.RIGHT);
 				this.add(labelaText[0]);								
 				textfieldaValue[0] = new JTextField("No value found.", iTEXTFIELD_COLUMN_DEFAULT);
 				this.add(textfieldaValue[0]);
 				
 			}else{
-				//Ausrechnen mit wievielen Leerlabels das Layout aufgefüllt werden muss
-				iLinesWithValue = saProperty.length;			
-				if(iLinesWithValue >= iNR_OF_TEXTFIELD_SHOWN_DEFAULT){
-					iLines2Show = iLinesWithValue;
-					iLines2Fill = 0;  
-				}else{					
-					iLines2Show = iNR_OF_TEXTFIELD_SHOWN_DEFAULT;
-					iLines2Fill = iNR_OF_TEXTFIELD_SHOWN_DEFAULT - iLinesWithValue;
+				//Ausrechnen mit wievielen Leerlabelspalten das Layout ggfs aufgefüllt werden muss				
+				if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())){
+					//Damit es ggfs. besser aussieht, AUF 1 ZEILE BESCHNEIDEN
+					iLinesWithValue = 1;					
+					iLines2Show = iLinesWithValue + iNR_OF_TEXTFIELD_SHOWN_DEBUG;
+					iLines2Fill = 0;					
+				}else {
+					iLinesWithValue = saProperty.length;						
+					if(iLinesWithValue >= iNR_OF_TEXTFIELD_SHOWN_DEFAULT){
+						iLines2Show = iLinesWithValue;
+						iLines2Fill = 0;  
+					}else{					
+						iLines2Show = iNR_OF_TEXTFIELD_SHOWN_DEFAULT;
+						iLines2Fill = iNR_OF_TEXTFIELD_SHOWN_DEFAULT - iLinesWithValue;
+					}
 				}
-				
-				
-				//Problem: Suche nach dem passenden LayoutManager, der fest positioniert, aber unsichtbare ausblendet.
-				//this.setLayout(new GridLayout(iLine2Show,2)); //1 Zeilen, 2 Spalten
-				//EntryLayout layout = new EntryLayout(daProportion);
-				
-				double[] daProportion={0.4, 0.6};//Merke: Das wird zu WIDTH im Layout, die Anzahl der Spalten ist immer 2 !!!
-	            EntryLayout4VisibleZZZ layout = new EntryLayout4VisibleZZZ(daProportion);				
-	            this.setLayout(layout);
-				
 				
 				//DIE ARRAY GRÖSSEN VON DER ANZAHL DER GEFUNDENEN EINTRÄGE ABHÄNGIG MACHEN
 				String sValue = new String("");
+				labelaIndex = new JLabel[iLinesWithValue];
 				labelaText = new JLabel[iLinesWithValue];
 				textfieldaValue = new JTextField[iLinesWithValue];				
 				for(int icount=0; icount < iLinesWithValue; icount++){
-								
+					
+					//Das Index - Label
+					labelaIndex[icount] = new JLabel((Integer.toString(icount)+1),SwingConstants.RIGHT);
+					labelaIndex[icount].setAlignmentX(Component.RIGHT_ALIGNMENT);
+					labelaIndex[icount].setSize(dimensionLabelColumnFirst);
+					labelaIndex[icount].setPreferredSize(dimensionLabelColumnFirst);
+					this.add(labelaIndex[icount]);
+					
 					//Das Property - Label
 					labelaText[icount]= new JLabel(saProperty[icount] + "=", SwingConstants.RIGHT);
+					labelaText[icount].setAlignmentX(Component.RIGHT_ALIGNMENT);
 					labelaText[icount].setSize(dimensionLabel);
 					labelaText[icount].setPreferredSize(dimensionLabel);
+					
+					 // create a line border with the specified color and width
+			        Border border = BorderFactory.createLineBorder(Color.BLUE, 2);
+			        labelaText[icount].setBorder(border);
+					
 					this.add(labelaText[icount]);
 					
 					//Das Value - Textfeld										
@@ -147,19 +194,17 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 					sValue = this.objKernel2configure.getParameterByModuleFile(objFileIni, saProperty[icount]).getValue(); //Parameter);
 					
 					textfieldaValue[icount] = new JTextField(sValue, iTEXTFIELD_COLUMN_DEFAULT);
+					textfieldaValue[icount].setAlignmentX(Component.LEFT_ALIGNMENT);
 					textfieldaValue[icount].setSize(dimensionTextfield);
 					textfieldaValue[icount].setPreferredSize(dimensionTextfield);
 					this.add(textfieldaValue[icount]);
 				}
 			}//END IF: if(saProperty==null){
-			
+												
 			Dimension dimensionTotal = new Dimension();
-			dimensionTotal.width = 2*(dimensionTextfield.width + dimensionLabel.width);
-			
-			if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())){ 
-				iLinesWithValue = iLinesWithValue+2; //Im DebugUI 2 Zeilen dazurechnen
-			}
-			dimensionTotal.height = 2*dimensionTextfield.height * iLinesWithValue;
+			dimensionTotal.width = 2*(dimensionLabelColumnFirst.width + dimensionLabel.width + dimensionTextfield.width);
+						
+			dimensionTotal.height = 2*dimensionTextfield.height * iLinesWithValue;			
 			this.setPreferredSize(dimensionTotal);
 						
 			//### Damit die Labels hinsichtlich der Hoehe nicht so gross werden, ggf. mit leeren Werten auffüllen
@@ -180,7 +225,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 				listaText.add(objText2);
 				this.add(objText2);	
 				*/
-				
+			
 				} catch (ExceptionZZZ ez) {
 					this.getLogObject().WriteLineDate(ez.getDetailAllLast());
 				}

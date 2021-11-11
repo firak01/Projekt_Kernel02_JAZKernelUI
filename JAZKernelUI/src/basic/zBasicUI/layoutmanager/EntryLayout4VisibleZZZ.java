@@ -198,10 +198,11 @@ public class EntryLayout4VisibleZZZ implements LayoutManager {
 		}
 		
 		//WICHTIG: DIE ANZAHL DER KOMPONENTEN MUSS IMMER DURCH DIE ANZAHL DER SPALTEN OHNE REST TEILBAR SEIN
-		//TODOGOON: MathZZZ.hasRemainder()
-		//          MathZZZ.isDivisibleWithoutRemainder();
-		if(!MathZZZ.isEven(listaComponent.size())) {
-			String sLog = "Ungerade Anzahl der Components. Bei 2 Spalten nicht vorgesehen.";
+		if(!MathZZZ.isDivisibleWithoutRemainder(listaComponent.size(),COLUMNS)){
+			String sLog = "Anzahl der Components '" + listaComponent.size() + "' passt nicht zur Anzahl der Spalten '"+ COLUMNS + "'. Es muss eine voll durch die Spalten teilbare Anzahl der Komponenten sein.";
+		
+//		if(!MathZZZ.isEven(listaComponent.size())) {
+//			String sLog = "Ungerade Anzahl der Components. Bei 2 Spalten nicht vorgesehen.";
 			try {
 				System.out.println(ReflectCodeZZZ.getPositionCurrent()+": " + sLog);
 			} catch (ExceptionZZZ e) {				
