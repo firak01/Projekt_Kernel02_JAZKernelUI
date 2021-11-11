@@ -120,13 +120,14 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 					iLines2Fill = iNR_OF_TEXTFIELD_SHOWN_DEFAULT - iLinesWithValue;
 				}
 				
-				//DIE ANZAHL DER ZEILEN VON DER ANZAHL DER GEFUNDENEN EINTR�GE ABHÄNGIG MACHEN.
+				
+				//Problem: Suche nach dem passenden LayoutManager, der fest positioniert, aber unsichtbare ausblendet.
 				//this.setLayout(new GridLayout(iLine2Show,2)); //1 Zeilen, 2 Spalten
+				//EntryLayout layout = new EntryLayout(daProportion);
 				
 				double[] daProportion={0.4, 0.6};//Merke: Das wird zu WIDTH im Layout, die Anzahl der Spalten ist immer 2 !!!
-	            EntryLayout4VisibleZZZ layout = new EntryLayout4VisibleZZZ(daProportion);
-				//EntryLayout layout = new EntryLayout(daProportion);
-	             this.setLayout(layout);
+	            EntryLayout4VisibleZZZ layout = new EntryLayout4VisibleZZZ(daProportion);				
+	            this.setLayout(layout);
 				
 				
 				//DIE ARRAY GRÖSSEN VON DER ANZAHL DER GEFUNDENEN EINTRÄGE ABHÄNGIG MACHEN
@@ -160,9 +161,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 			}
 			dimensionTotal.height = 2*dimensionTextfield.height * iLinesWithValue;
 			this.setPreferredSize(dimensionTotal);
-			//this.setPreferredSize(new Dimension(800, 400));
-			
-			
+						
 			//### Damit die Labels hinsichtlich der Hoehe nicht so gross werden, ggf. mit leeren Werten auffüllen
 //			for(int icount = 0; icount < iLines2Fill; icount ++){
 //				JLabel labeltemp = new JLabel("a", SwingConstants.RIGHT);
