@@ -58,7 +58,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 			//Border borderEtched = BorderFactory.createEtchedBorder();
 			//this.setBorder(borderEtched);
 			
-			Border borderLine = BorderFactory.createLineBorder(Color.red);
+			Border borderLine = BorderFactory.createLineBorder(Color.BLACK);
 			this.setBorder(borderLine);
 					
 			//+++ Vor dem Anlegen der Components erst einmal pruefen, ob es ueberhaupt etwas zu tun gibt
