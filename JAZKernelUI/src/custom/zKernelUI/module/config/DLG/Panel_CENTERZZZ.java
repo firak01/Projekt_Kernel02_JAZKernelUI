@@ -93,8 +93,8 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
 			//Standardgrößen von Label und Textfeld
 			Dimension dimensionLabelColumnFirst = new Dimension (20,20);
-			Dimension dimensionLabel = new Dimension(200,20);			
-			Dimension dimensionTextfield = new Dimension(50, 20);
+			Dimension dimensionLabel = new Dimension(150,20);			
+			Dimension dimensionTextfield = new Dimension(200, 20);
 			
 			//Übergreifende Zählvariablen.
 			int iLines2Show = 0; //Alle anzuzeigenden Label-Zeilen, ggf. mit leeren aufgefülllt.			
@@ -202,7 +202,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 			}//END IF: if(saProperty==null){
 												
 			Dimension dimensionTotal = new Dimension();
-			dimensionTotal.width = 2*(dimensionLabelColumnFirst.width + dimensionLabel.width + dimensionTextfield.width);
+			dimensionTotal.width = (dimensionLabelColumnFirst.width + dimensionLabel.width + dimensionTextfield.width);
 						
 			dimensionTotal.height = 2*dimensionTextfield.height * iLinesWithValue;			
 			this.setPreferredSize(dimensionTotal);

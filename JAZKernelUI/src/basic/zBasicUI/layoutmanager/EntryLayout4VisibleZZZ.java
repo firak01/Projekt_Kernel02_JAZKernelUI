@@ -136,10 +136,13 @@ public class EntryLayout4VisibleZZZ implements LayoutManager {
 		// Pass two: agregate them.
 		System.out.println("FGLTEST B: Rechne jeweils die Zeilenhoehe und Breiten zusammen.");
 		for (i=0; i<widths.length; i++)
-			preferredWidth += widths[i] + hpad;
+			preferredWidth += widths[i];
 		for (i=0; i<heights.length; i++)
 			preferredHeight += heights[i] + vpad;
 
+		//nicht für jede Spalte das Padding, sondern nur für die "Zwischenräume"
+		preferredWidth += preferredWidth + (hpad*widths.length-1);
+		
 		// Finally, pass the sums back as the actual size.
 		return new Dimension(preferredWidth, preferredHeight);
 	}
@@ -213,7 +216,7 @@ public class EntryLayout4VisibleZZZ implements LayoutManager {
 		
 		Component[] componentsVisible = ArrayListZZZ.toComponentArray(listaComponent);
 		
-		
+		//####### HOEHE ##########################################
 		//FGL: Arbeite mit Arrays, die dann feste Werte haben und sich auf die "Row" beziehen.
 		//     Also ein fest Zeilenhöhe ermitteln für die preferedSize der Komponenten einer Zeile.		
 		double dtemp = MathZZZ.divide(componentsVisible.length, COLUMNS);		
@@ -235,40 +238,69 @@ public class EntryLayout4VisibleZZZ implements LayoutManager {
 			//Das ist nicht gegeben, wenn z.B. die Komponenten des DebugUI zusätzlich angezeigt werden sollen.
 			//Also hier aufsummieren
 			heightsum = heightsum + dimensionHeightsUsed[row];
-						
-			//vtempused[row] = vpad * (row) + (heightsum);
 			vtempused[row] = (heightsum);
 		}//end for
 		//++++++++++++++++++
 		
-		int vtempprevious=0;
+		//###### BREITE ############
+		//FGL: In der Ausgangsversion wird einfach die mögliche Gesamtgröße auf die Proportionen aufgeteilt.
+		//     Bei mehr als 2 Spalten kommt es bei der Strategie zu "Überlappungen".
+		//     Daher das Spaltenmaximum der Größe ermitteln	
+		//1. Schritt: Breite der Componenten
+		int[]widthOfComponentUsed = new int[COLUMNS];		
 		Dimension contSize = parent.getSize();
 		for (int i=0; i<componentsVisible.length; i++) {
 			int row = i / COLUMNS; //Merke: Hier ist explizit abrunden gewuenscht.
 			int col = i % COLUMNS;
 			Component c = componentsVisible[i];
-			Dimension d = c.getPreferredSize();
-			int colWidth = (int)(contSize.width * widthPercentages[col]);
+			//Dimension d = c.getPreferredSize();
+			int widthtemp = c.getWidth();
+			widthOfComponentUsed[col] = Math.max(widthOfComponentUsed[col], widthtemp);
+		}
 			
-//Original
+		//2. Schritt: Breite nach Bildschirmaufteilung oder Breite der vorherigen Komponente (plus hpadding)
+		int[]htempused = new int[COLUMNS];
+		int[]colwidthused = new int[COLUMNS];
+		for (int i=0; i<componentsVisible.length; i++) {
+			int row = i / COLUMNS; //Merke: Hier ist explizit abrunden gewuenscht.
+			int col = i % COLUMNS;
+
+			int htemp = (int)(contSize.width * widthPercentages[col]);			
+			if(col>=1) {								
+				htempused[col] = colwidthused[col-1];										
+			}else {
+				htempused[col] = 0;
+				if(widthOfComponentUsed[col]>htemp) {
+					colwidthused[col]=widthOfComponentUsed[col];
+				}else {
+					colwidthused[col]=htemp;
+				}
+			}
+			
+			System.out.println("FGLTEST C1: row="+ row + "- col="+ col + "| htemp="+htemp + " vtempused="+vtempused[row]);
+		}
+			
+		//+++ Nun die Positionierungs-Werte den Komponenten zuweisen
+		for (int i=0; i<componentsVisible.length; i++) {
+			int row = i / COLUMNS; //Merke: Hier ist explizit abrunden gewuenscht.
+			int col = i % COLUMNS;
+			
+			Component c = componentsVisible[i];
+			
+			//Merke: Rectangele wird hier nicht zum Zeichnen verwendet, sondern hier nur zur Positionierung.
+			//       Rectangle hat folgenden Konstruktor:
+			//       Rectangle(int x, int y, int width, int height)
+			//       Constructs a new Rectangle whose upper-left corner is specified as (x,y) and whose width and height are specified by the arguments of the same name.
+			
+			//Original
 //			Rectangle r = new Rectangle(
 //				col == 0 ? 0 :
 //				hpad * (col-1) + (int)(contSize.width * widthPercentages[col-1]),
 //				vpad * (row) + (row * heights[row]) + (heights[row]-d.height),
 //				colWidth, d.height);
 //			System.out.println(c.getClass() + "-->" + r);
-			
-			int htemp = 0;
-			if(col>=1) {
-				htemp = hpad * (col-1) + (int)(contSize.width * widthPercentages[col-1]);
-			}
-			
-			//System.out.println("FGLTEST C1: row="+ row + "- col="+ col + "| htemp="+htemp + " vtempused="+vtempused[row]);
-			//Merke: Rectangle hat folgenden Konstruktor:
-			//       Rectangle(int x, int y, int width, int height)
-			//       Constructs a new Rectangle whose upper-left corner is specified as (x,y) and whose width and height are specified by the arguments of the same name.
 			Rectangle r = new Rectangle(
-				col == 0 ? 0 : htemp, vtempused[row], colWidth,	dimensionHeightsUsed[row]);
+				col == 0 ? 0 : htempused[col], vtempused[row], colwidthused[col],	dimensionHeightsUsed[row]);
 			//System.out.println("FGLTEST C2: row="+ row + "- col="+ col + "|" + c.getClass() + "-->" + r);
 			
 			//Merke: 
