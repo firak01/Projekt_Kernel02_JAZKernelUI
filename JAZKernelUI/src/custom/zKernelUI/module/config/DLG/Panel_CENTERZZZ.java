@@ -96,6 +96,12 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 			Dimension dimensionLabel = new Dimension(150,20);			
 			Dimension dimensionTextfield = new Dimension(200, 20);
 			
+			//Übergreifende UI-DEBUG-LAYOUT Strategy
+			//1: Nur 1 Zeile anzeigen
+			//2: Die erste und die letzte Zeile anzeigen
+			//sonst, alles anzeigen...
+			int iDebugUILayoutStrategy=2;
+			
 			//Übergreifende Zählvariablen.
 			int iLines2Show = 0; //Alle anzuzeigenden Label-Zeilen, ggf. mit leeren aufgefülllt.			
 			int iLinesWithValue = 0; //Momentan anzuzeigende "gefüllte" Label-Zeilen
@@ -148,8 +154,16 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 			}else{
 				//Ausrechnen mit wievielen Leerlabelspalten das Layout ggfs aufgefüllt werden muss				
 				if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())){
-					//Damit es ggfs. besser aussieht, AUF 1 ZEILE BESCHNEIDEN
-					iLinesWithValue = 1;					
+					if(iDebugUILayoutStrategy==1) {
+						iLinesWithValue = 1; //Damit es ggfs. besser aussieht, AUF 1 ZEILE BESCHNEIDEN
+					}else if(iDebugUILayoutStrategy==2) {
+						//Damit es ggfs. besser aussieht, nur die 1. und die letzte Zeile anzeigen
+						//die zur durchlaufenden Zeilen bleiben aber gleich.
+						iLinesWithValue = saProperty.length;
+					}else {
+						//Normal
+						iLinesWithValue = saProperty.length;
+					}
 					iLines2Show = iLinesWithValue + iNR_OF_TEXTFIELD_SHOWN_DEBUG;
 					iLines2Fill = 0;					
 				}else {
@@ -167,37 +181,83 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 				String sValue = new String("");
 				labelaIndex = new JLabel[iLinesWithValue];
 				labelaText = new JLabel[iLinesWithValue];
-				textfieldaValue = new JTextField[iLinesWithValue];				
+				textfieldaValue = new JTextField[iLinesWithValue];
+				
+				boolean bDummyLineShown=false;
 				for(int icount=0; icount < iLinesWithValue; icount++){
+					boolean bShowLine=true;
+					if(iDebugUILayoutStrategy==2) { //Anwenden dieser Strategy im DebugFall: Nur 1. und letzte Zeile.
+						if(icount==0||icount==iLinesWithValue-1) {
+							bShowLine=true;
+						}else {
+							bShowLine=false;
+						}
+					}
 					
-					//Das Index - Label
-					labelaIndex[icount] = new JLabel((Integer.toString(icount)+1),SwingConstants.RIGHT);
-					labelaIndex[icount].setAlignmentX(Component.RIGHT_ALIGNMENT);
-					labelaIndex[icount].setSize(dimensionLabelColumnFirst);
-					labelaIndex[icount].setPreferredSize(dimensionLabelColumnFirst);
-					this.add(labelaIndex[icount]);
-					
-					//Das Property - Label
-					labelaText[icount]= new JLabel(saProperty[icount] + "=", SwingConstants.RIGHT);
-					labelaText[icount].setAlignmentX(Component.RIGHT_ALIGNMENT);
-					labelaText[icount].setSize(dimensionLabel);
-					labelaText[icount].setPreferredSize(dimensionLabel);
-					
-					 // create a line border with the specified color and width
-			        Border border = BorderFactory.createLineBorder(Color.BLUE, 2);
-			        labelaText[icount].setBorder(border);
-					
-					this.add(labelaText[icount]);
-					
-					//Das Value - Textfeld										
-					//Das KernelObject zu verwenden ist nicht sauber. Es muss ein eigenes Objekt fuer das zu konfigurierende Modul vorhanden sein.
-					sValue = this.objKernel2configure.getParameterByModuleFile(objFileIni, saProperty[icount]).getValue(); //Parameter);
-					
-					textfieldaValue[icount] = new JTextField(sValue, iTEXTFIELD_COLUMN_DEFAULT);
-					textfieldaValue[icount].setAlignmentX(Component.LEFT_ALIGNMENT);
-					textfieldaValue[icount].setSize(dimensionTextfield);
-					textfieldaValue[icount].setPreferredSize(dimensionTextfield);
-					this.add(textfieldaValue[icount]);
+					if(bShowLine) {
+						//Das Index - Label
+						labelaIndex[icount] = new JLabel((Integer.toString(icount+1)),SwingConstants.RIGHT);
+						labelaIndex[icount].setAlignmentX(Component.RIGHT_ALIGNMENT);
+						labelaIndex[icount].setSize(dimensionLabelColumnFirst);
+						labelaIndex[icount].setPreferredSize(dimensionLabelColumnFirst);
+						this.add(labelaIndex[icount]);
+						
+						//Das Property - Label
+						labelaText[icount]= new JLabel(saProperty[icount] + "=", SwingConstants.RIGHT);
+						labelaText[icount].setAlignmentX(Component.RIGHT_ALIGNMENT);
+						labelaText[icount].setSize(dimensionLabel);
+						labelaText[icount].setPreferredSize(dimensionLabel);
+						
+						 // create a line border with the specified color and width
+				        Border border = BorderFactory.createLineBorder(Color.BLUE, 2);
+				        labelaText[icount].setBorder(border);
+						
+						this.add(labelaText[icount]);
+						
+						//Das Value - Textfeld										
+						//Das KernelObject zu verwenden ist nicht sauber. Es muss ein eigenes Objekt fuer das zu konfigurierende Modul vorhanden sein.
+						sValue = this.objKernel2configure.getParameterByModuleFile(objFileIni, saProperty[icount]).getValue(); //Parameter);
+						
+						textfieldaValue[icount] = new JTextField(sValue, iTEXTFIELD_COLUMN_DEFAULT);
+						textfieldaValue[icount].setAlignmentX(Component.LEFT_ALIGNMENT);
+						textfieldaValue[icount].setSize(dimensionTextfield);
+						textfieldaValue[icount].setPreferredSize(dimensionTextfield);
+						this.add(textfieldaValue[icount]);
+					}else{
+						if(bDummyLineShown==false) {
+							//Eine Dummy-Zeile mit Dummy-Werten ... anzeigen
+							//Das Index - Label
+							labelaIndex[icount] = new JLabel("...",SwingConstants.RIGHT);
+							labelaIndex[icount].setAlignmentX(Component.RIGHT_ALIGNMENT);
+							labelaIndex[icount].setSize(dimensionLabelColumnFirst);
+							labelaIndex[icount].setPreferredSize(dimensionLabelColumnFirst);
+							this.add(labelaIndex[icount]);
+							
+							//Das Property - Label
+							labelaText[icount]= new JLabel("... =", SwingConstants.RIGHT);
+							labelaText[icount].setAlignmentX(Component.RIGHT_ALIGNMENT);
+							labelaText[icount].setSize(dimensionLabel);
+							labelaText[icount].setPreferredSize(dimensionLabel);
+							
+							 // create a line border with the specified color and width
+					        Border border = BorderFactory.createLineBorder(Color.BLUE, 2);
+					        labelaText[icount].setBorder(border);
+							
+							this.add(labelaText[icount]);
+							
+							//Das Value - Textfeld										
+							//Das KernelObject zu verwenden ist nicht sauber. Es muss ein eigenes Objekt fuer das zu konfigurierende Modul vorhanden sein.
+							sValue = "...";							
+							textfieldaValue[icount] = new JTextField(sValue, iTEXTFIELD_COLUMN_DEFAULT);
+							textfieldaValue[icount].setAlignmentX(Component.LEFT_ALIGNMENT);
+							textfieldaValue[icount].setSize(dimensionTextfield);
+							textfieldaValue[icount].setPreferredSize(dimensionTextfield);
+							this.add(textfieldaValue[icount]);
+														
+							bDummyLineShown=true;
+						}
+						
+					}//end if bShowLine
 				}
 			}//END IF: if(saProperty==null){
 												

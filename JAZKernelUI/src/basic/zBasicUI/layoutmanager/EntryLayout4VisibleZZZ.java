@@ -130,18 +130,21 @@ public class EntryLayout4VisibleZZZ implements LayoutManager {
 			Dimension d = c.getPreferredSize();
 			widths[col] = Math.max(widths[col], d.width);
 			heights[row] = Math.max(heights[row], d.height);
-			System.out.println("FGLTEST A: row="+ row + " - col="+ col + "|" + c.getClass() + "--> h=" + heights[row] + " w=" + widths[col]);
+			//System.out.println("FGLTEST A: row="+ row + " - col="+ col + "|" + c.getClass() + "--> h=" + heights[row] + " w=" + widths[col]);
 		}
 
 		// Pass two: agregate them.
-		System.out.println("FGLTEST B: Rechne jeweils die Zeilenhoehe und Breiten zusammen.");
+		//System.out.println("FGLTEST B: Rechne jeweils die Zeilenhoehe und Breiten zusammen.");
 		for (i=0; i<widths.length; i++)
 			preferredWidth += widths[i];
 		for (i=0; i<heights.length; i++)
-			preferredHeight += heights[i] + vpad;
+			preferredHeight += heights[i];
 
 		//nicht für jede Spalte das Padding, sondern nur für die "Zwischenräume"
 		preferredWidth += preferredWidth + (hpad*widths.length-1);
+		
+		//dito nicht für jede Zeile, sondern nur für die "Zwischenräume"
+		preferredHeight += preferredHeight + (vpad*heights.length-1);
 		
 		// Finally, pass the sums back as the actual size.
 		return new Dimension(preferredWidth, preferredHeight);
@@ -220,26 +223,39 @@ public class EntryLayout4VisibleZZZ implements LayoutManager {
 		//FGL: Arbeite mit Arrays, die dann feste Werte haben und sich auf die "Row" beziehen.
 		//     Also ein fest Zeilenhöhe ermitteln für die preferedSize der Komponenten einer Zeile.		
 		double dtemp = MathZZZ.divide(componentsVisible.length, COLUMNS);		
-		int itemp = MathZZZ.roundUp(dtemp);
-		int[]dimensionHeightsUsed = new int[itemp+1];
-		int[]vtempused = new int[itemp+1];
+		int rowTotal = MathZZZ.roundUp(dtemp);
+		int[]dimensionHeightsUsed = new int[rowTotal+1];
+		int[]vtempused = new int[rowTotal+1];
 		
-		int rowPrevious=0; int heightsum=0;
+		//1. Schritt: Höhe der Komponenten
+		int heightsum=0;
 		for (int i=0; i<componentsVisible.length; i++) {
 			Component c = componentsVisible[i];
 			Dimension d = c.getPreferredSize();
 			
 			int row = i / COLUMNS; //Merke: Hier ist explizit Abrunden gewuenscht um die aktuelle Reihe zu bekommen.		
 			dimensionHeightsUsed[row] = Math.max(d.height, dimensionHeightsUsed[row]); //Wähle die groesste Hoehe.
+		}//end for
+		
+		//2. Schritt: Die so ausgewählte Höhe der jeweiligen Zeile zuweisen.
+		for(int row=0;row<rowTotal;row++) {
 			
 			//FGL: In der Ausgangsversion wird einfach die Höhe mit der Anzahl der Zeilen multipliziert.
 			//int vtempused = vpad * (row) + (row * heights[row]) + (heights[row]-d.height); 	
 			//Wenn man einfach die Höhe mit der Anzahl der Zeilen multipliziert, geht das nur, wenn die Zeilen gleich hoch sind.
 			//Das ist nicht gegeben, wenn z.B. die Komponenten des DebugUI zusätzlich angezeigt werden sollen.
-			//Also hier aufsummieren
-			heightsum = heightsum + dimensionHeightsUsed[row];
-			vtempused[row] = (heightsum);
-		}//end for
+			//Also hier nur für die Zwischenräume aufsummieren
+			if(row>=1) {	
+				//bisherige Spaltenbreiten Zusammenrechnen PLUS Padding
+				for(int rowtemp=0;rowtemp<=row-1;rowtemp++) {
+					vtempused[row]= vtempused[row] + dimensionHeightsUsed[rowtemp] + vpad;					
+				}				
+			}else {
+				vtempused[row]= 0; //dimensionHeightsUsed[row];
+			}
+		}
+		
+		
 		//++++++++++++++++++
 		
 		//###### BREITE ############
@@ -253,7 +269,6 @@ public class EntryLayout4VisibleZZZ implements LayoutManager {
 			int row = i / COLUMNS; //Merke: Hier ist explizit abrunden gewuenscht.
 			int col = i % COLUMNS;
 			Component c = componentsVisible[i];
-			//Dimension d = c.getPreferredSize();
 			int widthtemp = c.getWidth();
 			widthOfComponentUsed[col] = Math.max(widthOfComponentUsed[col], widthtemp);
 		}
@@ -261,23 +276,24 @@ public class EntryLayout4VisibleZZZ implements LayoutManager {
 		//2. Schritt: Breite nach Bildschirmaufteilung oder Breite der vorherigen Komponente (plus hpadding)
 		int[]htempused = new int[COLUMNS];
 		int[]colwidthused = new int[COLUMNS];
-		for (int i=0; i<componentsVisible.length; i++) {
-			int row = i / COLUMNS; //Merke: Hier ist explizit abrunden gewuenscht.
-			int col = i % COLUMNS;
-
+		for (int col=0; col < COLUMNS; col++) {
 			int htemp = (int)(contSize.width * widthPercentages[col]);			
-			if(col>=1) {								
-				htempused[col] = colwidthused[col-1];										
-			}else {
-				htempused[col] = 0;
-				if(widthOfComponentUsed[col]>htemp) {
-					colwidthused[col]=widthOfComponentUsed[col];
-				}else {
-					colwidthused[col]=htemp;
+			if(col>=1) {		
+				//bisherige Spaltenbreiten Zusammenrechnen PLUS Padding
+				for(int coltemp=0;coltemp<=col-1;coltemp++) {
+					htempused[col] = htempused[col] + colwidthused[coltemp] + hpad;
 				}
-			}
+			}else {
+				//bisherige Spaltenbreite ist 0
+				htempused[col] = 0;
+			}						
 			
-			System.out.println("FGLTEST C1: row="+ row + "- col="+ col + "| htemp="+htemp + " vtempused="+vtempused[row]);
+			//Die nächste Spaltebreite vermerken
+			if(widthOfComponentUsed[col]>htemp) {
+				colwidthused[col]=widthOfComponentUsed[col];
+			}else {
+				colwidthused[col]=htemp;
+			}
 		}
 			
 		//+++ Nun die Positionierungs-Werte den Komponenten zuweisen
@@ -287,7 +303,7 @@ public class EntryLayout4VisibleZZZ implements LayoutManager {
 			
 			Component c = componentsVisible[i];
 			
-			//Merke: Rectangele wird hier nicht zum Zeichnen verwendet, sondern hier nur zur Positionierung.
+			//Merke: Rectangle wird hier nicht zum Zeichnen verwendet, sondern hier nur zur Positionierung.
 			//       Rectangle hat folgenden Konstruktor:
 			//       Rectangle(int x, int y, int width, int height)
 			//       Constructs a new Rectangle whose upper-left corner is specified as (x,y) and whose width and height are specified by the arguments of the same name.
@@ -299,8 +315,7 @@ public class EntryLayout4VisibleZZZ implements LayoutManager {
 //				vpad * (row) + (row * heights[row]) + (heights[row]-d.height),
 //				colWidth, d.height);
 //			System.out.println(c.getClass() + "-->" + r);
-			Rectangle r = new Rectangle(
-				col == 0 ? 0 : htempused[col], vtempused[row], colwidthused[col],	dimensionHeightsUsed[row]);
+			Rectangle r = new Rectangle(col == 0 ? 0 : htempused[col], vtempused[row], colwidthused[col],	dimensionHeightsUsed[row]);
 			//System.out.println("FGLTEST C2: row="+ row + "- col="+ col + "|" + c.getClass() + "-->" + r);
 			
 			//Merke: 
