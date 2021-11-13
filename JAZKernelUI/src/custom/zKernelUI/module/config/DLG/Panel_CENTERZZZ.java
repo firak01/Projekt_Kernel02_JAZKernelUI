@@ -100,7 +100,16 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 			//1: Nur 1 Zeile anzeigen
 			//2: Die erste und die letzte Zeile anzeigen
 			//sonst, alles anzeigen...
-			int iDebugUILayoutStrategy=2;
+			int iDebugUILayoutStrategy=0;
+			if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLIST_STRATEGIE_ENTRYFIRST.name())){
+				iDebugUILayoutStrategy=1;
+			}
+			if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLIST_STRATEGIE_ENTRYDUMMY.name())) {
+				iDebugUILayoutStrategy=iDebugUILayoutStrategy+2;
+			}
+			if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLIST_STRATEGIE_ENTRYLAST.name())) {
+				iDebugUILayoutStrategy=iDebugUILayoutStrategy+4;
+			}
 			
 			//Übergreifende Zählvariablen.
 			int iLines2Show = 0; //Alle anzuzeigenden Label-Zeilen, ggf. mit leeren aufgefülllt.			
@@ -152,18 +161,82 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 				this.add(textfieldaValue[0]);
 				
 			}else{
-				//Ausrechnen mit wievielen Leerlabelspalten das Layout ggfs aufgefüllt werden muss				
+				iLinesWithValue = saProperty.length;
+				//Ausrechnen mit wievielen Leerlabelspalten das Layout ggfs aufgefüllt werden muss
+				//Setzte Flags zum Anzeigen bestimmter Zeilen
+				boolean bShowLineFirst=false;
+				boolean bShowLineLast=false;
+				boolean bShowLineDummy=false;
+				boolean bUseStrategy=false;
 				if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())){
-					if(iDebugUILayoutStrategy==1) {
-						iLinesWithValue = 1; //Damit es ggfs. besser aussieht, AUF 1 ZEILE BESCHNEIDEN
-					}else if(iDebugUILayoutStrategy==2) {
-						//Damit es ggfs. besser aussieht, nur die 1. und die letzte Zeile anzeigen
-						//die zur durchlaufenden Zeilen bleiben aber gleich.
-						iLinesWithValue = saProperty.length;
-					}else {
-						//Normal
-						iLinesWithValue = saProperty.length;
+					int iStrategyChooserRest=iDebugUILayoutStrategy;
+					
+					while(iStrategyChooserRest != 0){	
+						//Zerlege schrittweise die IntegerZahl-binär				
+						int iStrategyChooser=iStrategyChooserRest/2;//Ergebnis wird durch 2 dividiert
+						iStrategyChooserRest = iStrategyChooserRest % 2; //Den neuen Rest bestimmen.
+						
+						//Der gefundene Strategieteil
+						iStrategyChooser=iStrategyChooser*2;						
+						if(iStrategyChooser==0) {
+							iStrategyChooser=iStrategyChooserRest;
+							iStrategyChooserRest=0;//zum Abbrechen der Schleife
+						}
+						
+						TODOGOON; //Die Strategiebehandlung auf die ArrayLösung umstellen
+						//wandle den Strategieteil in Handlungsanweisungen um
+						if(iStrategyChooser==1) {
+							//Erste Zeile anzeigen
+							bUseStrategy = true;
+							bShowLineFirst = true;//iLinesWithValue = 1; //Damit es ggfs. besser aussieht, AUF 1 ZEILE BESCHNEIDEN
+						}else if(iStrategyChooser==2) {
+							//Dummy Zeile anzeigen
+							bUseStrategy = true;
+							bShowLineDummy = true;//iLinesWithValue = saProperty.length;
+						}else if(iStrategyChooser==3){
+							//Letzte Zeile anzeigen
+							bUseStrategy = true;
+							bShowLineLast = true;//iLinesWithValue = saProperty.length;
+						}
+												
+						
 					}
+					
+					/*
+					 static void wandleDezInBin(){
+		Scanner eingabe = new Scanner(System.in);//Scanner zur Speicherung der Eingabe
+		System.out.println("Bitte gib eine Dezimalzahl ein!");//Aufforderung zur Eingabe
+		
+		int dezZahl = eingabe.nextInt();//Eingabe wird gespeichert
+		int anzahlStellen=0;//Anzahl der Stellen der Dualzahl
+		int dezZahlZwei=dezZahl;//Kopie der Zahl, da am Ende der while-Schleife die Zahl Null ist
+
+		 //* While Schleife soll die Anzahl der Stellen bestimmen
+
+		while (dezZahlZwei != 0){
+			dezZahlZwei=dezZahlZwei / 2;//Zahl wird solange durch 2 dividiert bis 0 herauskommt
+			anzahlStellen++;//Erhöhung der Zählvariablen
+		}
+		
+		int zahlen[] = new int [anzahlStellen];//Array mit Länge der Zählvariablen
+		
+
+		 //* For Schleife füllt das Array mit den Restwerten
+		
+		for (int i = 0; i < anzahlStellen; i++){ 
+                        zahlen[i]=dezZahl % 2; //Speichern der Restwerte im Array
+                        dezZahl = dezZahl / 2; //Die Zahl wird immer wieder durch 2 dividiert
+                    } 
+
+
+               //* Die zweite for-Schleife liest das Array von hinten nach vorne 
+              
+                for (int i = anzahlStellen - 1; i >= 0; i--){
+			System.out.print(zahlen[i]);
+		}
+	}
+					 */
+					
 					iLines2Show = iLinesWithValue + iNR_OF_TEXTFIELD_SHOWN_DEBUG;
 					iLines2Fill = 0;					
 				}else {
@@ -184,79 +257,80 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 				textfieldaValue = new JTextField[iLinesWithValue];
 				
 				boolean bDummyLineShown=false;
-				for(int icount=0; icount < iLinesWithValue; icount++){
+				for(int iCount=0; iCount < iLinesWithValue; iCount++){
 					boolean bShowLine=true;
-					if(iDebugUILayoutStrategy==2) { //Anwenden dieser Strategy im DebugFall: Nur 1. und letzte Zeile.
-						if(icount==0||icount==iLinesWithValue-1) {
+					if(bUseStrategy){ 
+						bShowLine=false;
+						if(iCount==0 && bShowLineFirst) {
 							bShowLine=true;
-						}else {
-							bShowLine=false;
 						}
-					}
-					
+						
+						if(iCount==iLinesWithValue && bShowLineLast) {
+							bShowLine=true;
+						}						
+					}					
 					if(bShowLine) {
 						//Das Index - Label
-						labelaIndex[icount] = new JLabel((Integer.toString(icount+1)),SwingConstants.RIGHT);
-						labelaIndex[icount].setAlignmentX(Component.RIGHT_ALIGNMENT);
-						labelaIndex[icount].setSize(dimensionLabelColumnFirst);
-						labelaIndex[icount].setPreferredSize(dimensionLabelColumnFirst);
-						this.add(labelaIndex[icount]);
+						labelaIndex[iCount] = new JLabel((Integer.toString(iCount+1)),SwingConstants.RIGHT);
+						labelaIndex[iCount].setAlignmentX(Component.RIGHT_ALIGNMENT);
+						labelaIndex[iCount].setSize(dimensionLabelColumnFirst);
+						labelaIndex[iCount].setPreferredSize(dimensionLabelColumnFirst);
+						this.add(labelaIndex[iCount]);
 						
 						//Das Property - Label
-						labelaText[icount]= new JLabel(saProperty[icount] + "=", SwingConstants.RIGHT);
-						labelaText[icount].setAlignmentX(Component.RIGHT_ALIGNMENT);
-						labelaText[icount].setSize(dimensionLabel);
-						labelaText[icount].setPreferredSize(dimensionLabel);
+						labelaText[iCount]= new JLabel(saProperty[iCount] + "=", SwingConstants.RIGHT);
+						labelaText[iCount].setAlignmentX(Component.RIGHT_ALIGNMENT);
+						labelaText[iCount].setSize(dimensionLabel);
+						labelaText[iCount].setPreferredSize(dimensionLabel);
 						
 						 // create a line border with the specified color and width
 				        Border border = BorderFactory.createLineBorder(Color.BLUE, 2);
-				        labelaText[icount].setBorder(border);
+				        labelaText[iCount].setBorder(border);
 						
-						this.add(labelaText[icount]);
+						this.add(labelaText[iCount]);
 						
 						//Das Value - Textfeld										
 						//Das KernelObject zu verwenden ist nicht sauber. Es muss ein eigenes Objekt fuer das zu konfigurierende Modul vorhanden sein.
-						sValue = this.objKernel2configure.getParameterByModuleFile(objFileIni, saProperty[icount]).getValue(); //Parameter);
+						sValue = this.objKernel2configure.getParameterByModuleFile(objFileIni, saProperty[iCount]).getValue(); //Parameter);
 						
-						textfieldaValue[icount] = new JTextField(sValue, iTEXTFIELD_COLUMN_DEFAULT);
-						textfieldaValue[icount].setAlignmentX(Component.LEFT_ALIGNMENT);
-						textfieldaValue[icount].setSize(dimensionTextfield);
-						textfieldaValue[icount].setPreferredSize(dimensionTextfield);
-						this.add(textfieldaValue[icount]);
+						textfieldaValue[iCount] = new JTextField(sValue, iTEXTFIELD_COLUMN_DEFAULT);
+						textfieldaValue[iCount].setAlignmentX(Component.LEFT_ALIGNMENT);
+						textfieldaValue[iCount].setSize(dimensionTextfield);
+						textfieldaValue[iCount].setPreferredSize(dimensionTextfield);
+						this.add(textfieldaValue[iCount]);							
 					}else{
-						if(bDummyLineShown==false) {
+						if(bShowLineDummy && !bDummyLineShown) {
 							//Eine Dummy-Zeile mit Dummy-Werten ... anzeigen
 							//Das Index - Label
-							labelaIndex[icount] = new JLabel("...",SwingConstants.RIGHT);
-							labelaIndex[icount].setAlignmentX(Component.RIGHT_ALIGNMENT);
-							labelaIndex[icount].setSize(dimensionLabelColumnFirst);
-							labelaIndex[icount].setPreferredSize(dimensionLabelColumnFirst);
-							this.add(labelaIndex[icount]);
+							labelaIndex[iCount] = new JLabel("...",SwingConstants.RIGHT);
+							labelaIndex[iCount].setAlignmentX(Component.RIGHT_ALIGNMENT);
+							labelaIndex[iCount].setSize(dimensionLabelColumnFirst);
+							labelaIndex[iCount].setPreferredSize(dimensionLabelColumnFirst);
+							this.add(labelaIndex[iCount]);
 							
 							//Das Property - Label
-							labelaText[icount]= new JLabel("... =", SwingConstants.RIGHT);
-							labelaText[icount].setAlignmentX(Component.RIGHT_ALIGNMENT);
-							labelaText[icount].setSize(dimensionLabel);
-							labelaText[icount].setPreferredSize(dimensionLabel);
+							labelaText[iCount]= new JLabel("... =", SwingConstants.RIGHT);
+							labelaText[iCount].setAlignmentX(Component.RIGHT_ALIGNMENT);
+							labelaText[iCount].setSize(dimensionLabel);
+							labelaText[iCount].setPreferredSize(dimensionLabel);
 							
 							 // create a line border with the specified color and width
 					        Border border = BorderFactory.createLineBorder(Color.BLUE, 2);
-					        labelaText[icount].setBorder(border);
+					        labelaText[iCount].setBorder(border);
 							
-							this.add(labelaText[icount]);
+							this.add(labelaText[iCount]);
 							
 							//Das Value - Textfeld										
 							//Das KernelObject zu verwenden ist nicht sauber. Es muss ein eigenes Objekt fuer das zu konfigurierende Modul vorhanden sein.
 							sValue = "...";							
-							textfieldaValue[icount] = new JTextField(sValue, iTEXTFIELD_COLUMN_DEFAULT);
-							textfieldaValue[icount].setAlignmentX(Component.LEFT_ALIGNMENT);
-							textfieldaValue[icount].setSize(dimensionTextfield);
-							textfieldaValue[icount].setPreferredSize(dimensionTextfield);
-							this.add(textfieldaValue[icount]);
+							textfieldaValue[iCount] = new JTextField(sValue, iTEXTFIELD_COLUMN_DEFAULT);
+							textfieldaValue[iCount].setAlignmentX(Component.LEFT_ALIGNMENT);
+							textfieldaValue[iCount].setSize(dimensionTextfield);
+							textfieldaValue[iCount].setPreferredSize(dimensionTextfield);
+							this.add(textfieldaValue[iCount]);
 														
 							bDummyLineShown=true;
-						}
-						
+						}						
 					}//end if bShowLine
 				}
 			}//END IF: if(saProperty==null){
