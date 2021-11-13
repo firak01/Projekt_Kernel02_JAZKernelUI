@@ -19,6 +19,7 @@ import javax.swing.border.Border;
 import basic.zBasic.IObjectZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ReflectCodeZZZ;
+import basic.zBasic.util.datatype.binary.BinaryTokenizerZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasicUI.layoutmanager.EntryLayout;
 import basic.zBasicUI.layoutmanager.EntryLayout4VisibleZZZ;
@@ -100,6 +101,9 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 			//1: Nur 1 Zeile anzeigen
 			//2: Die erste und die letzte Zeile anzeigen
 			//sonst, alles anzeigen...
+			TODOGOON; 20211113 Die Strategie-Werte als Enumeration 
+			//Z.B. IDebugUIZZZ.STRATEGY.ENTRYFIRST Hat einen Rang, der für iDebugUILayoutStrategy verwendet werden kann.
+			//     ABER: da es nicht 1,2,3 ist sondern 1,2,4 (wg. binär) muss es etwas trickier sein....
 			int iDebugUILayoutStrategy=0;
 			if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLIST_STRATEGIE_ENTRYFIRST.name())){
 				iDebugUILayoutStrategy=1;
@@ -169,74 +173,35 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 				boolean bShowLineDummy=false;
 				boolean bUseStrategy=false;
 				if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())){
-					int iStrategyChooserRest=iDebugUILayoutStrategy;
 					
-					while(iStrategyChooserRest != 0){	
-						//Zerlege schrittweise die IntegerZahl-binär				
-						int iStrategyChooser=iStrategyChooserRest/2;//Ergebnis wird durch 2 dividiert
-						iStrategyChooserRest = iStrategyChooserRest % 2; //Den neuen Rest bestimmen.
-						
-						//Der gefundene Strategieteil
-						iStrategyChooser=iStrategyChooser*2;						
-						if(iStrategyChooser==0) {
-							iStrategyChooser=iStrategyChooserRest;
-							iStrategyChooserRest=0;//zum Abbrechen der Schleife
-						}
-						
-						TODOGOON; //Die Strategiebehandlung auf die ArrayLösung umstellen
-						//wandle den Strategieteil in Handlungsanweisungen um
-						if(iStrategyChooser==1) {
+					boolean[] baStrategy = BinaryTokenizerZZZ.createBinaryTokens(iDebugUILayoutStrategy);
+					if(baStrategy!=null) {
+						if(baStrategy.length>=1) {
+						if(baStrategy[0]) {
 							//Erste Zeile anzeigen
 							bUseStrategy = true;
 							bShowLineFirst = true;//iLinesWithValue = 1; //Damit es ggfs. besser aussieht, AUF 1 ZEILE BESCHNEIDEN
-						}else if(iStrategyChooser==2) {
+						}
+						}
+						
+						if(baStrategy.length>=2) {
+						if(baStrategy[1]) {
 							//Dummy Zeile anzeigen
 							bUseStrategy = true;
 							bShowLineDummy = true;//iLinesWithValue = saProperty.length;
-						}else if(iStrategyChooser==3){
+						}
+						}
+						
+						if(baStrategy.length>=3) {
+						if(baStrategy[2]){
 							//Letzte Zeile anzeigen
 							bUseStrategy = true;
 							bShowLineLast = true;//iLinesWithValue = saProperty.length;
+						}					
 						}
-												
-						
 					}
 					
-					/*
-					 static void wandleDezInBin(){
-		Scanner eingabe = new Scanner(System.in);//Scanner zur Speicherung der Eingabe
-		System.out.println("Bitte gib eine Dezimalzahl ein!");//Aufforderung zur Eingabe
-		
-		int dezZahl = eingabe.nextInt();//Eingabe wird gespeichert
-		int anzahlStellen=0;//Anzahl der Stellen der Dualzahl
-		int dezZahlZwei=dezZahl;//Kopie der Zahl, da am Ende der while-Schleife die Zahl Null ist
-
-		 //* While Schleife soll die Anzahl der Stellen bestimmen
-
-		while (dezZahlZwei != 0){
-			dezZahlZwei=dezZahlZwei / 2;//Zahl wird solange durch 2 dividiert bis 0 herauskommt
-			anzahlStellen++;//Erhöhung der Zählvariablen
-		}
-		
-		int zahlen[] = new int [anzahlStellen];//Array mit Länge der Zählvariablen
-		
-
-		 //* For Schleife füllt das Array mit den Restwerten
-		
-		for (int i = 0; i < anzahlStellen; i++){ 
-                        zahlen[i]=dezZahl % 2; //Speichern der Restwerte im Array
-                        dezZahl = dezZahl / 2; //Die Zahl wird immer wieder durch 2 dividiert
-                    } 
-
-
-               //* Die zweite for-Schleife liest das Array von hinten nach vorne 
-              
-                for (int i = anzahlStellen - 1; i >= 0; i--){
-			System.out.print(zahlen[i]);
-		}
-	}
-					 */
-					
+					//Zwei zusätzliche Zeilen voranstellen für den Button und das Label.
 					iLines2Show = iLinesWithValue + iNR_OF_TEXTFIELD_SHOWN_DEBUG;
 					iLines2Fill = 0;					
 				}else {
@@ -265,7 +230,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 							bShowLine=true;
 						}
 						
-						if(iCount==iLinesWithValue && bShowLineLast) {
+						if(iCount==(iLinesWithValue-1) && bShowLineLast) {
 							bShowLine=true;
 						}						
 					}					
