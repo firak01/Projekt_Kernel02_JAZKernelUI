@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Scrollbar;
+import java.util.Collection;
 import java.util.Hashtable;
 
 import javax.swing.BorderFactory;
@@ -19,7 +20,10 @@ import javax.swing.border.Border;
 import basic.zBasic.IObjectZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ReflectCodeZZZ;
+import basic.zBasic.persistence.interfaces.enums.KeyImmutable;
 import basic.zBasic.util.datatype.binary.BinaryTokenizerZZZ;
+import basic.zBasic.util.datatype.calling.ReferenceZZZ;
+import basic.zBasic.util.datatype.enums.EnumZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasicUI.layoutmanager.EntryLayout;
 import basic.zBasicUI.layoutmanager.EntryLayout4VisibleZZZ;
@@ -29,6 +33,10 @@ import basic.zKernelUI.KernelUIZZZ;
 import basic.zKernelUI.component.IDebugUiZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
+import basic.zKernelUI.module.config.DLG.strategy.DebugUIStrategyZZZ;
+import basic.zKernelUI.module.config.DLG.strategy.EnumSetDebugUIStrategyUtilZZZ;
+import basic.zKernelUI.module.config.DLG.strategy.IEnumDebugUIStrategyZZZ;
+import basic.zKernelUI.module.config.DLG.strategy.IEnumSetDebugUIStrategyZZZ;
 import basic.zKernel.KernelZZZ;
 import basic.zKernel.component.IKernelModuleUserZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
@@ -101,7 +109,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 			//1: Nur 1 Zeile anzeigen
 			//2: Die erste und die letzte Zeile anzeigen
 			//sonst, alles anzeigen...
-			TODOGOON; 20211113 Die Strategie-Werte als Enumeration 
+			TODOGOON; 20211117 Die Strategie-Werte als Enumeration verwenden 
 			//Z.B. IDebugUIZZZ.STRATEGY.ENTRYFIRST Hat einen Rang, der für iDebugUILayoutStrategy verwendet werden kann.
 			//     ABER: da es nicht 1,2,3 ist sondern 1,2,4 (wg. binär) muss es etwas trickier sein....
 			int iDebugUILayoutStrategy=0;
@@ -114,6 +122,43 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 			if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLIST_STRATEGIE_ENTRYLAST.name())) {
 				iDebugUILayoutStrategy=iDebugUILayoutStrategy+4;
 			}
+			
+			//###### IN ARBEIT: Verwendung der Enumeration der Strategiewerte 
+			//TODOGOON: Die Strategiewerte sind nun als Enumeration greifbar, das muss aber noch hier verwendet werden.
+			//MERKE 20211117: DAS WIRD ANALOG ZU DER KLASSE TroopVariantDao des TileHexMap Projekts gemacht....			
+			DebugUIStrategyZZZ objValueTemp = new DebugUIStrategyZZZ();//Quasi als Dummy, aus dem die Enumeration (angelegt als innere Klasse) ausgelesen werden kann.
+			//Anders als bei der _fillValue(...) Lösung können hier nur die Variablen gefüllt werden. Die Zuweisung muss im Konstruktor des immutable Entity-Objekts passieren, das dies keine Setter-Methodne hat.				
+			Collection<String> colsEnumAlias = EnumZZZ.getNames(DebugUIStrategyZZZ.getThiskeyEnumClassStatic());
+			boolean btest=false;
+			long lngThisIdKey = 13; //TEST
+			for(String sEnumAlias : colsEnumAlias){
+				
+				//DAS GEHT NICHT, DA JAVA IMMER EIN PASS_BY_VALUE MACHT.
+				//Long lngThisValue = new Long(0);
+				//String sName = new String("");
+				//String sShorttext = new String("");
+				//String sLongtext = new String("");
+				//String sDescription = new String("");
+				//this._fillValueImmutable(objValueTemp, sEnumAlias, lngThisValue, sName, sShorttext, sLongtext, sDescription); 
+
+				//Hier der Workaround mit Referenz-Objekten, aus denen dann der Wert geholt werden kann. Also PASS_BY_REFERENCE durch auslesen der Properties der Objekte.  
+				ReferenceZZZ<Long> lngThisValue = new ReferenceZZZ(4);
+				ReferenceZZZ<String> sName = new ReferenceZZZ("");
+				ReferenceZZZ<String> sUniquetext = new ReferenceZZZ("");
+				ReferenceZZZ<String> sCategorytext = new ReferenceZZZ("");
+				ReferenceZZZ<Integer> iStrategyValue = new ReferenceZZZ("");
+				
+				//Einlesen der Werte, die für alle Entities vorhanden sind PLUS Werte für Amry
+				
+				this._fillValueImmutableByEnumAlias(objValueTemp, sEnumAlias, lngThisValue, sName, sUniquetext, sCategorytext, iStrategyValue);
+				
+				if(lngThisValue.get().longValue() == lngThisIdKey ){
+					btest = true;
+					break;
+				}						
+			}//end for 
+			//#######################################################
+			
 			
 			//Übergreifende Zählvariablen.
 			int iLines2Show = 0; //Alle anzuzeigenden Label-Zeilen, ggf. mit leeren aufgefülllt.			
@@ -438,4 +483,41 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 				}//end main
 				return sReturn;
 			}
-}
+			
+			
+			//####### EIGENE METHODEN ###########
+			/* Das ist die Variante für Entities, die nicht mit der Annotation "Immutable" versehen sind.
+			* Die Entities mit der Annotation "Immutable" haben nämlich keine setter-Methoden.
+			*/
+			//Da Java nur ein CALL_BY_VALUE machen kann, weden hier für die eingefüllten Werte Referenz-Objekte verwendet.
+			//Erst die normalen Enum-Werte, dann ... sUniquetext / sCategorytext / iMoveRange / sImageUrl / iThisKeyDefaulttext / iThiskeyImmutabletext;
+				//
+				//Merke: objValue - Klasse ist ein Dummy Objekt, damit man auf die als Innere Klasse deklarierte Enumeration kommt.
+			protected <T, IEnumDebugUIStrategyZZZ> void _fillValueImmutableByEnumAlias(IEnumDebugUIStrategyZZZ objValue,String sEnumAlias, ReferenceZZZ<Long> objlngThiskey, 
+				ReferenceZZZ<String> objsName, ReferenceZZZ<String> objsUniquetext, ReferenceZZZ<String> objsCategorytext, 
+				ReferenceZZZ<Integer> objintStrategyValue
+				){
+
+				//Merke: Direktes Reinschreiben geht wieder nicht wg. "bound exception"
+				//EnumSetDefaulttextUtilZZZ.getEnumConstant_DescriptionValue(EnumSetDefaulttextTestTypeTHM.class, sEnumAlias);
+						
+				//Also: Klasse holen und danach CASTEN.
+				Class<?> objClass = ((KeyImmutable) objValue).getThiskeyEnumClass();
+				Long lngThiskey = EnumSetDebugUIStrategyUtilZZZ.readEnumConstant_ThiskeyValue((Class<IEnumSetDebugUIStrategyZZZ>) objClass, sEnumAlias);//Das darf nicht NULL sein, sonst Fehler. Über diesen Schlüssel wird der Wert dann gefunden.
+				System.out.println("Gefundener Thiskey: " + lngThiskey.toString());
+				objlngThiskey.set(lngThiskey); //Damit wird CALL_BY_VALUE quasi gemacht....
+				
+				String sName = EnumSetDebugUIStrategyUtilZZZ.readEnumConstant_NameValue((Class<IEnumSetDebugUIStrategyZZZ>) objClass, sEnumAlias);
+				System.out.println("Gefundener Typname: " + sName);
+				objsName.set(sName); //Damit wird CALL_BY_VALUE quasi gemacht....
+				
+				String sUniquetext = EnumSetDebugUIStrategyUtilZZZ.readEnumConstant_UniquetextValue((Class<IEnumSetDebugUIStrategyZZZ>)objClass, sEnumAlias);
+				System.out.println("Gefundener Uniquewert: " + sUniquetext);
+				objsUniquetext.set(sUniquetext); //Damit wird CALL_BY_VALUE quasi gemacht....
+				
+				String sCategorytext = EnumSetDebugUIStrategyUtilZZZ.readEnumConstant_CategorytextValue((Class<IEnumSetDebugUIStrategyZZZ>)objClass, sEnumAlias);
+				System.out.println("Gefundener Categorytext: " + sCategorytext);
+				objsCategorytext.set(sCategorytext); //Damit wird CALL_BY_VALUE quasi gemacht....						
+			}
+			
+}//end class
