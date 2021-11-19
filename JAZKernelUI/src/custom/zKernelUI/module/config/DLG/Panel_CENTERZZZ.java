@@ -104,62 +104,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 			Dimension dimensionLabelColumnFirst = new Dimension (20,20);
 			Dimension dimensionLabel = new Dimension(150,20);			
 			Dimension dimensionTextfield = new Dimension(200, 20);
-			
-			//Übergreifende UI-DEBUG-LAYOUT Strategy
-			//1: Nur 1 Zeile anzeigen
-			//2: Die erste und die letzte Zeile anzeigen
-			//sonst, alles anzeigen...
-			TODOGOON; 20211117 Die Strategie-Werte als Enumeration verwenden 
-			//Z.B. IDebugUIZZZ.STRATEGY.ENTRYFIRST Hat einen Rang, der für iDebugUILayoutStrategy verwendet werden kann.
-			//     ABER: da es nicht 1,2,3 ist sondern 1,2,4 (wg. binär) muss es etwas trickier sein....
-			int iDebugUILayoutStrategy=0;
-			if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLIST_STRATEGIE_ENTRYFIRST.name())){
-				iDebugUILayoutStrategy=1;
-			}
-			if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLIST_STRATEGIE_ENTRYDUMMY.name())) {
-				iDebugUILayoutStrategy=iDebugUILayoutStrategy+2;
-			}
-			if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLIST_STRATEGIE_ENTRYLAST.name())) {
-				iDebugUILayoutStrategy=iDebugUILayoutStrategy+4;
-			}
-			
-			//###### IN ARBEIT: Verwendung der Enumeration der Strategiewerte 
-			//TODOGOON: Die Strategiewerte sind nun als Enumeration greifbar, das muss aber noch hier verwendet werden.
-			//MERKE 20211117: DAS WIRD ANALOG ZU DER KLASSE TroopVariantDao des TileHexMap Projekts gemacht....			
-			DebugUIStrategyZZZ objValueTemp = new DebugUIStrategyZZZ();//Quasi als Dummy, aus dem die Enumeration (angelegt als innere Klasse) ausgelesen werden kann.
-			//Anders als bei der _fillValue(...) Lösung können hier nur die Variablen gefüllt werden. Die Zuweisung muss im Konstruktor des immutable Entity-Objekts passieren, das dies keine Setter-Methodne hat.				
-			Collection<String> colsEnumAlias = EnumZZZ.getNames(DebugUIStrategyZZZ.getThiskeyEnumClassStatic());
-			boolean btest=false;
-			long lngThisIdKey = 13; //TEST
-			for(String sEnumAlias : colsEnumAlias){
-				
-				//DAS GEHT NICHT, DA JAVA IMMER EIN PASS_BY_VALUE MACHT.
-				//Long lngThisValue = new Long(0);
-				//String sName = new String("");
-				//String sShorttext = new String("");
-				//String sLongtext = new String("");
-				//String sDescription = new String("");
-				//this._fillValueImmutable(objValueTemp, sEnumAlias, lngThisValue, sName, sShorttext, sLongtext, sDescription); 
-
-				//Hier der Workaround mit Referenz-Objekten, aus denen dann der Wert geholt werden kann. Also PASS_BY_REFERENCE durch auslesen der Properties der Objekte.  
-				ReferenceZZZ<Long> lngThisValue = new ReferenceZZZ(4);
-				ReferenceZZZ<String> sName = new ReferenceZZZ("");
-				ReferenceZZZ<String> sUniquetext = new ReferenceZZZ("");
-				ReferenceZZZ<String> sCategorytext = new ReferenceZZZ("");
-				ReferenceZZZ<Integer> iStrategyValue = new ReferenceZZZ("");
-				
-				//Einlesen der Werte, die für alle Entities vorhanden sind PLUS Werte für Amry
-				
-				this._fillValueImmutableByEnumAlias(objValueTemp, sEnumAlias, lngThisValue, sName, sUniquetext, sCategorytext, iStrategyValue);
-				
-				if(lngThisValue.get().longValue() == lngThisIdKey ){
-					btest = true;
-					break;
-				}						
-			}//end for 
-			//#######################################################
-			
-			
+								
 			//Übergreifende Zählvariablen.
 			int iLines2Show = 0; //Alle anzuzeigenden Label-Zeilen, ggf. mit leeren aufgefülllt.			
 			int iLinesWithValue = 0; //Momentan anzuzeigende "gefüllte" Label-Zeilen
@@ -219,8 +164,74 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 				boolean bUseStrategy=false;
 				if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())){
 					
+					//Übergreifende UI-DEBUG-LAYOUT Strategy
+					//Erste Zeile anzeigen, Dummy Zeile anzeigen, Letzte Zeile anzeigen 			
+					int iDebugUILayoutStrategy=EnumSetDebugUIStrategyUtilZZZ.computeEnumConstant_StrategyValueForFlagUser(this);
+					System.out.println(ReflectCodeZZZ.getPositionCurrent() + ": DebugUIStrategyValue hat die Summme='"+iDebugUILayoutStrategy+"'");
+								
+//					//###### ZUM DEBUGGEN
+//					//Die Strategiewerte sind nun als Enumeration greifbar. Hier werden einge Wert gefüllt.....
+//					//MERKE 20211117: DAS WIRD ANALOG ZU DER KLASSE TroopVariantDao des TileHexMap Projekts gemacht....			
+//					DebugUIStrategyZZZ objValueTemp = new DebugUIStrategyZZZ();//Quasi als Dummy, aus dem die Enumeration (angelegt als innere Klasse) ausgelesen werden kann.
+//					//Anders als bei der _fillValue(...) Lösung können hier nur die Variablen gefüllt werden. Die Zuweisung muss im Konstruktor des immutable Entity-Objekts passieren, das dies keine Setter-Methodne hat.				
+//					Collection<String> colsEnumAlias = EnumZZZ.getNames(DebugUIStrategyZZZ.getThiskeyEnumClassStatic());
+//					boolean btest=false;
+//					long lngThisIdKey = 13; //TEST
+//					for(String sEnumAlias : colsEnumAlias){
+//						
+//						//DAS GEHT NICHT, DA JAVA IMMER EIN PASS_BY_VALUE MACHT.
+//						//Long lngThisValue = new Long(0);
+//						//String sName = new String("");
+//						//String sShorttext = new String("");
+//						//String sLongtext = new String("");
+//						//String sDescription = new String("");
+//						//this._fillValueImmutable(objValueTemp, sEnumAlias, lngThisValue, sName, sShorttext, sLongtext, sDescription); 
+//
+//						//Hier der Workaround mit Referenz-Objekten, aus denen dann der Wert geholt werden kann. Also PASS_BY_REFERENCE durch auslesen der Properties der Objekte.  
+//						ReferenceZZZ<Long> lngThisValue = new ReferenceZZZ(4);
+//						ReferenceZZZ<String> sName = new ReferenceZZZ("");
+//						ReferenceZZZ<String> sUniquetext = new ReferenceZZZ("");
+//						ReferenceZZZ<String> sCategorytext = new ReferenceZZZ("");
+//						ReferenceZZZ<Integer> iStrategyValue = new ReferenceZZZ("");
+//						
+//						//Einlesen der Werte, die für alle Entities vorhanden sind PLUS Werte für Amry
+//						
+//						this._fillValueImmutableByEnumAlias(objValueTemp, sEnumAlias, lngThisValue, sName, sUniquetext, sCategorytext, iStrategyValue);
+//						
+//						if(lngThisValue.get().longValue() == lngThisIdKey ){
+//							btest = true;
+//							break;
+//						}						
+//					}//end for 
+//					//#######################################################
+					
+					//Aus dem Strategiewert ein Array machen.
 					boolean[] baStrategy = BinaryTokenizerZZZ.createBinaryTokens(iDebugUILayoutStrategy);
 					if(baStrategy!=null) {
+						
+						TODOGOON; //20211119: Hier eine Schleife machen.
+						                      //Schleifenzähler mit der Rangzahl / ordinalzahl der Enumeration vergleichen
+						for (int icount=0;icount<=baStrategy.length-1;icount++) {
+							if(baStrategy[icount]) { //Also, wenn die Strategy gesetzt/true ist:
+								switch icount:
+								case Ordinalzahl der Strategy1:
+									//Erste Zeile anzeigen
+									bUseStrategy = true;
+									bShowLineFirst = true;
+								case Ordinalzahl der Strategy2:
+									//Dummy Zeile anzeigen
+									bUseStrategy = true;
+									bShowLineDummy = true;
+								case Ordingalzahl der Strategy3:
+									//Letzte Zeile anzeigen
+									bUseStrategy = true;
+									bShowLineLast = true;
+							}
+							
+						}
+						//END TODOGOON #################################
+						
+						
 						if(baStrategy.length>=1) {
 						if(baStrategy[0]) {
 							//Erste Zeile anzeigen

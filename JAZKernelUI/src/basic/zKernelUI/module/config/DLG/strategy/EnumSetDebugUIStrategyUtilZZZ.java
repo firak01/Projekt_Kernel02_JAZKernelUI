@@ -19,6 +19,7 @@ import basic.zBasic.util.datatype.enums.EnumSetMappedUtilZZZ;
 import basic.zBasic.util.datatype.enums.EnumSetUtilZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasic.util.file.FileEasyZZZ;
+import basic.zKernel.flag.IFlagUserZZZ;
 
 public class EnumSetDebugUIStrategyUtilZZZ extends EnumSetUtilZZZ{
 
@@ -37,6 +38,33 @@ public class EnumSetDebugUIStrategyUtilZZZ extends EnumSetUtilZZZ{
 		super(objEnumSetFactory);
 	}
 
+	//###############	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public static int computeEnumConstant_StrategyValueForFlagUser(IFlagUserZZZ obj) {
+		int iReturn = 0;
+		main:{
+			if(obj==null)break main;
+			
+			 IEnumSetDebugUIStrategyZZZ[] enumaSetMapped = (IEnumSetDebugUIStrategyZZZ[]) DebugUIStrategyZZZ.getThiskeyEnumClassStatic().getEnumConstants();
+			 if(enumaSetMapped==null) break main; //Das ist der Fall, wenn es isch um die übergebene Klasse nicht um eine Enumeration handelt
+
+			 for(IEnumSetDebugUIStrategyZZZ driver : enumaSetMapped) {
+				 
+				String sFlag = new String(driver.getStrategyFlagName());
+				if(!StringZZZ.isEmpty(sFlag)){
+					boolean bFlag = obj.getFlag(sFlag);
+					if(bFlag) {
+						int itemp = driver.getStrategyValue();  
+						iReturn = iReturn + itemp;
+					}
+				}					
+			 }
+			 
+			
+		}//end main:
+		return iReturn;
+	}
+	
 	//###############	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static Long readEnumConstant_ThiskeyValue(Class<IEnumSetDebugUIStrategyZZZ> clazz, String name) {
@@ -91,6 +119,32 @@ public class EnumSetDebugUIStrategyUtilZZZ extends EnumSetUtilZZZ{
 		}//end for
 		}//end main:
 		return sReturn;
+	}
+	
+	public static int readEnumConstant_StrategyValueByFlagName(Class<IEnumSetDebugUIStrategyZZZ> clazz, String sStrategyFlagName) {
+		int iReturn = 0;
+		main:{
+	    if (clazz==null || sStrategyFlagName==null || sStrategyFlagName.isEmpty()) break main;
+	  
+	    
+	    IEnumSetDebugUIStrategyZZZ[] enumaSetMapped = clazz.getEnumConstants();
+	    if(enumaSetMapped==null) break main; //Das ist der Fall, wenn es isch um die übergebene Klasse nicht um eine Enumeration handelt
+	    
+	  	for(IEnumSetDebugUIStrategyZZZ driver : enumaSetMapped) {
+//			  System.out.println(ReflectCodeZZZ.getPositionCurrent() + ": Driver ALIAS  als driver.name() from Enumeration="+driver.name());
+//			  System.out.println(ReflectCodeZZZ.getPositionCurrent() + ": Driver als driver.toString() from Enumeration="+driver.toString());
+//			  System.out.println(ReflectCodeZZZ.getPositionCurrent() + ": Driver als driver.abbreviaton from Enumeration="+driver.getAbbreviation());
+		
+	
+		if(!StringZZZ.isEmpty(driver.getStrategyFlagName())){
+		  if(driver.getStrategyFlagName().equals(sStrategyFlagName)){
+			  iReturn = driver.getStrategyValue();
+			  break main;
+		  }
+	  }
+		}//end for
+		}//end main:
+		return iReturn;
 	}
 	
 	public static String readEnumConstant_CategorytextValue(Class<IEnumSetDebugUIStrategyZZZ> clazz, String name) {
