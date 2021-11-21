@@ -5,8 +5,11 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Scrollbar;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.Hashtable;
+import java.util.Iterator;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -37,6 +40,7 @@ import basic.zKernelUI.module.config.DLG.strategy.DebugUIStrategyZZZ;
 import basic.zKernelUI.module.config.DLG.strategy.EnumSetDebugUIStrategyUtilZZZ;
 import basic.zKernelUI.module.config.DLG.strategy.IEnumDebugUIStrategyZZZ;
 import basic.zKernelUI.module.config.DLG.strategy.IEnumSetDebugUIStrategyZZZ;
+import basic.zKernelUI.module.config.DLG.strategy.DebugUIStrategyZZZ.EnumDebugUIStrategy;
 import basic.zKernel.KernelZZZ;
 import basic.zKernel.component.IKernelModuleUserZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
@@ -209,53 +213,80 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 					boolean[] baStrategy = BinaryTokenizerZZZ.createBinaryTokens(iDebugUILayoutStrategy);
 					if(baStrategy!=null) {
 						
-						TODOGOON; //20211119: Hier eine Schleife machen.
-						                      //Schleifenzähler mit der Rangzahl / ordinalzahl der Enumeration vergleichen
-						for (int icount=0;icount<=baStrategy.length-1;icount++) {
-							if(baStrategy[icount]) { //Also, wenn die Strategy gesetzt/true ist:
-								switch icount:
-								case Ordinalzahl der Strategy1:
-									//Erste Zeile anzeigen
-									bUseStrategy = true;
-									bShowLineFirst = true;
-								case Ordinalzahl der Strategy2:
-									//Dummy Zeile anzeigen
-									bUseStrategy = true;
-									bShowLineDummy = true;
-								case Ordingalzahl der Strategy3:
-									//Letzte Zeile anzeigen
-									bUseStrategy = true;
-									bShowLineLast = true;
-							}
-							
-						}
-						//END TODOGOON #################################
+						//Hier eine Schleife machen.
+						//Schleifenzähler mit der Rangzahl / ordinalzahl der Enumeration vergleichen
 						
 						
-						if(baStrategy.length>=1) {
-						if(baStrategy[0]) {
-							//Erste Zeile anzeigen
-							bUseStrategy = true;
-							bShowLineFirst = true;//iLinesWithValue = 1; //Damit es ggfs. besser aussieht, AUF 1 ZEILE BESCHNEIDEN
-						}
-						}
+						//Merke: Folgendes geht nicht, das in einer Switch Anweisung im case immer eine Konstante stehen muss
+//						switch icount:
+//						case Ordinalzahl der Strategy1:
+
+//						case Ordinalzahl der Strategy2:
+//							//Dummy Zeile anzeigen
+//							
+//						case Ordingalzahl der Strategy3:
+//							//Letzte Zeile anzeigen	
 						
-						if(baStrategy.length>=2) {
-						if(baStrategy[1]) {
+						//Merke: So kann man alle EnumWerte durchgehen.
+//						EnumSet<?> setEnum = DebugUIStrategyZZZ.getEnumSetUsedStatic();
+//						Iterator<?> itEnum = setEnum.iterator();
+//						while(itEnum.hasNext()) {
+//							Enum<?> objEnum = (Enum<?>) itEnum.next();
+//							
+//							if(baStrategy.length>objEnum.ordinal()) {
+//								if(baStrategy[objEnum.ordinal()]) {//Also, wenn die Strategy gesetzt/true ist:
+//									//Das bringt aber nix, da für die Zuweisung der boolschen Steuerungsvariablen der Platz 1,2,3,... quasi fest ist.
+//									//Erste Zeile anzeigen
+//									//bUseStrategy = true;
+//									//bShowLineFirst = true;
+//								}
+//							}
+//						}
+						
+						//Merke: Der Entwicklungsweg zur unten verwendeten Schleife verlief u.a. über diesen statischeren Ausdruck
+//						//int i1 = EnumDebugUIStrategy.S01.ordinal();
+//						if(baStrategy.length>EnumDebugUIStrategy.S01.getIndex()) {
+//						if(baStrategy[EnumDebugUIStrategy.S01.getIndex()]) {//Also, wenn die Strategy gesetzt/true ist:
+//							//Erste Zeile anzeigen
+//							bUseStrategy = true;
+//							bShowLineFirst = true;
+//						}
+//						}
+//						
+//						if(baStrategy.length>EnumDebugUIStrategy.S02.getIndex()) {
 							//Dummy Zeile anzeigen
-							bUseStrategy = true;
-							bShowLineDummy = true;//iLinesWithValue = saProperty.length;
-						}
-						}
+//							...
+//						}
+//						
+//						...
+//									
 						
-						if(baStrategy.length>=3) {
-						if(baStrategy[2]){
-							//Letzte Zeile anzeigen
-							bUseStrategy = true;
-							bShowLineLast = true;//iLinesWithValue = saProperty.length;
-						}					
-						}
-					}
+						//Das Durchgehen der EnumWerte und Casten UND keine statischen Werte verwenden, ausser den eh schon genutzten Flags!!!
+						EnumSet<EnumDebugUIStrategy> setEnumCasted = (EnumSet<EnumDebugUIStrategy>) DebugUIStrategyZZZ.getEnumSetUsedStatic();
+						Iterator<EnumDebugUIStrategy> itEnumCasted = setEnumCasted.iterator();
+						while(itEnumCasted.hasNext()) {
+							Enum<EnumDebugUIStrategy> objEnum = (Enum<EnumDebugUIStrategy>) itEnumCasted.next();
+							int iIndex = ((IEnumSetDebugUIStrategyZZZ) objEnum).getIndex();
+							if(baStrategy.length>iIndex) {													
+								if(baStrategy[iIndex]) {//Also, wenn die Strategy gesetzt/true ist:
+									//Die Zuweisung der boolschen Steuerungsvariablen der Platz 1,2,3,... am Flagnamen festmachen.								
+									if(((IEnumSetDebugUIStrategyZZZ) objEnum).getStrategyFlagName().equals(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLIST_STRATEGIE_ENTRYFIRST.name())) {//Also, wenn es sich um die EntryFirst-Strategy handelt:									
+										//Erste Zeile anzeigen
+										bUseStrategy = true;
+										bShowLineFirst = true;
+									}else if(((IEnumSetDebugUIStrategyZZZ) objEnum).getStrategyFlagName().equals(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLIST_STRATEGIE_ENTRYDUMMY.name())) {//Also, wenn es sich um die EntryDummy-Strategy handelt:									
+										//Dummy Zeile anzeigen
+										bUseStrategy = true;
+										bShowLineDummy = true;
+									}else if(((IEnumSetDebugUIStrategyZZZ) objEnum).getStrategyFlagName().equals(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLIST_STRATEGIE_ENTRYLAST.name())) {//Also, wenn es sich um die EntryLast-Strategy handelt:
+										//Letzte Zeile anzeigen
+										bUseStrategy = true;
+										bShowLineLast = true;//iLinesWithValue = saProperty.length;																		
+									}
+								}
+							}
+						}//end while																																							
+					}//end if baStrategy!=null
 					
 					//Zwei zusätzliche Zeilen voranstellen für den Button und das Label.
 					iLines2Show = iLinesWithValue + iNR_OF_TEXTFIELD_SHOWN_DEBUG;

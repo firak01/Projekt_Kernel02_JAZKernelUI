@@ -1,16 +1,26 @@
 package basic.zKernelUI.module.config.DLG.strategy;
 
 import java.util.EnumSet;
+import basic.zKernelUI.component.IDebugUiZZZ;
 
 import basic.zBasic.persistence.interfaces.enums.ICategoryProviderZZZ;
 import basic.zBasic.persistence.interfaces.enums.IThiskeyProviderZZZ;
+import basic.zBasic.persistence.interfaces.enums.IThiskeyUserZZZ;
 import basic.zBasic.persistence.interfaces.enums.KeyImmutable;
 
-public class DebugUIStrategyZZZ extends KeyImmutable implements IEnumDebugUIStrategyZZZ, ICategoryProviderZZZ, IThiskeyProviderZZZ<Long>{
+/**Klasse für die DebugUI - Strategy, die beim Anzeigen einer Liste verwendet wird.
+ * Sie enthält eine Enumeration mit den einzelnen Strategien, die es gibt.
+ * 
+ * Merke: Dieses Konstrukt kommt aus aus der Schlüssellisten - Persistierung mit Hibernate.
+ *        Siehe TileHexMap-Projekt, zum Beispiel Klasse TroopVariant
+ * @author Fritz Lindhauer, 21.11.2021, 08:54:39
+ * 
+ */
+public class DebugUIStrategyZZZ extends KeyImmutable implements IEnumDebugUIStrategyZZZ, IThiskeyUserZZZ, ICategoryProviderZZZ, IThiskeyProviderZZZ<Long>{
    private Long lKey;
    private String sUniquetext;
    private String sCategorytext;
-
+   
    //Spezielle für die STRATEGY
    private int iStrategyValue;	
    private String sStrategyFlagName;
@@ -54,6 +64,10 @@ public class DebugUIStrategyZZZ extends KeyImmutable implements IEnumDebugUIStra
 	public EnumSet<?>getEnumSetUsed(){
 		return EnumDebugUIStrategy.getEnumSet();
    }
+	
+	public static EnumSet<?>getEnumSetUsedStatic(){
+		return EnumDebugUIStrategy.getEnumSet();
+   }
 
 	//### Statische Methode (um einfacher darauf zugreifen zu können). Muss überschrieben werden aus der Key(Immutable)... Klasse.
 	public static Class getThiskeyEnumClassStatic(){	    
@@ -65,14 +79,14 @@ public class DebugUIStrategyZZZ extends KeyImmutable implements IEnumDebugUIStra
 	//### int Key, String shorttext, String longtext, String description
 	//#######################################################
 	public enum EnumDebugUIStrategy implements IEnumSetDebugUIStrategyZZZ{			
-		   	S01(11,"STRATEGIE_ENTRYFIRST","UI Strategie","DEBUGUI_PANELLIST_STRATEGIE_ENTRYFIRST",1), 
-		   	S02(12,"STRATEGIE_ENTRYDUMMY","UI Strategie","DEBUGUI_PANELLIST_STRATEGIE_ENTRYDUMMY",2),
-	   		S03(13,"STRATEGIE_ENTRYLAST","UI Strategie","DEBUGUI_PANELLIST_STRATEGIE_ENTRYLAST",4);
+		   	S01(11,"STRATEGIE_ENTRYFIRST","UI Strategie",IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLIST_STRATEGIE_ENTRYFIRST.name(),1), 
+		   	S02(12,"STRATEGIE_ENTRYDUMMY","UI Strategie",IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLIST_STRATEGIE_ENTRYDUMMY.name(),2),
+	   		S03(13,"STRATEGIE_ENTRYLAST","UI Strategie",IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLIST_STRATEGIE_ENTRYLAST.name(),4);
 		
 		 	private Long lKey;
 		 	private String sUniquetext;
 			private String sCategorytext;
-			   
+						   
 		   //Spezielle für die STRATEGY
 		   private int iStrategyValue;	 
 		   private String sStrategyFlagName;
@@ -151,10 +165,10 @@ public class DebugUIStrategyZZZ extends KeyImmutable implements IEnumDebugUIStra
 	       throw new IllegalArgumentException("Not a correct uniquetext: " + s);
 	   }
 
-	   @Override
-	   public EnumSet<?>getEnumSetUsed(){
-	   	return EnumDebugUIStrategy.getEnumSet();
-	   }
+//	   @Override
+//	   public EnumSet<?>getEnumSetUsed(){
+//	   	return EnumDebugUIStrategy.getEnumSet();
+//	   }
 
 		
 		//Folgendes geht nicht, da alle Enums schon von einer Java BasisKlasse erben... extends EnumSetMappedBaseZZZ{
