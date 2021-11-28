@@ -14,8 +14,11 @@ import javax.swing.border.Border;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zKernel.IKernelZZZ;
+import basic.zKernel.KernelKernelZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
 import basic.zKernelUI.KernelUIZZZ;
+import basic.zKernelUI.component.IPanelCascadedZZZ;
+import basic.zKernelUI.component.KernelActionCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernel.KernelZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
@@ -43,7 +46,7 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 			this.setBorder(borderEtched);
 			
 			check:{
-				//Kein Modul �bergeben
+				//Kein Modul uebergeben
 				if(this.getModuleChoosen()==null){
 					//Statt Button eine Meldung TODO: Wie graut man einen Button aus ???
 					JLabel labelModuleValue = new JLabel("Save unavailable", SwingConstants.LEFT);
@@ -75,10 +78,9 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 							//Fall: Alles o.k.
 							JButton buttonSave = new JButton("Save Section Values");
 							
-							//TODO GOON: Das KernelObject zu verwenden ist eigentlich nicht sauber. Es muss ein eigenes Objekt f�r das zu konfigurierende Modul vorhanden sein.
+							//Merke: Das hier verwendete KernelObjectChoosen wurde zuvor extra erstellt als eigenes Objekt für ausgewählte Modul, etc.
 							ActionSaveSection objActSAVE_SECTION = new ActionSaveSection(this.getKernelObject(), this.objKernelChoosen, this);
-							
-							
+														
 							buttonSave.addActionListener(objActSAVE_SECTION);
 							this.add(buttonSave);
 						}
@@ -109,99 +111,118 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 	
 	
 	
-	public static class ActionSaveSection extends KernelUseObjectZZZ  implements ActionListener{
-		/**
-		 * This internal class doe not extend KernelActionCascadedZZZ, because of the different constructor, which has to work with 2 KernelObjects.
-		 */
-		private JPanel panelParent;
+	public static class ActionSaveSection extends KernelActionCascadedZZZ  implements ActionListener{	
 		private IKernelZZZ objKernelChoosen;
 		public ActionSaveSection(IKernelZZZ objKernel,IKernelZZZ objKernelChoosen,  JPanel panelParent) throws ExceptionZZZ{
-			super(objKernel);
-			this.panelParent = panelParent;	
+			super(objKernel,(IPanelCascadedZZZ) panelParent);			
 			this.objKernelChoosen = objKernelChoosen;
 		}
 	
 		//### Methoden kommen aus den Schnittstellen
-		//### 
-		public void actionPerformed(ActionEvent arg0) {
+		@Override
+		public boolean actionPerformCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ {
 			try {
-			//+++ Protokolll Eintrag
-				this.getLogObject().WriteLineDate("Performing Action: 'Save Section'");
+				//+++ Protokolll Eintrag
+					this.getLogObject().WriteLineDate("Performing Action: 'Save Section'");
+					
+				//+++ Zugriff auf das Panel, in dem die Informationen stehen 
+				//Panel_EASTZZZ objPanelSubEast = (Panel_EASTZZZ)this.panelParent;  //DAS IST MIT MOCK OBJEKT NICHT TESTBAR !!!
+				KernelJPanelCascadedZZZ objPanelSubEast = (KernelJPanelCascadedZZZ)this.getPanelParent();
+				//Panel_DLGBOXZZZ objPanelDLGBox = (Panel_DLGBOXZZZ)objPanelSubEast.getPanelParent(); //DAS IST MIT MOCK OBJEKT NICHT TESTBAR !!!
+				KernelJPanelCascadedZZZ objPanelDLGBox = (KernelJPanelCascadedZZZ)objPanelSubEast.getPanelParent();
 				
-			//+++ Zugriff auf das Panel, in dem die Informationen stehen 
-			//Panel_EASTZZZ objPanelSubEast = (Panel_EASTZZZ)this.panelParent;  //DAS IST MIT MOCK OBJEKT NICHT TESTBAR !!!
-			KernelJPanelCascadedZZZ objPanelSubEast = (KernelJPanelCascadedZZZ)this.panelParent;
-			//Panel_DLGBOXZZZ objPanelDLGBox = (Panel_DLGBOXZZZ)objPanelSubEast.getPanelParent(); //DAS IST MIT MOCK OBJEKT NICHT TESTBAR !!!
-			KernelJPanelCascadedZZZ objPanelDLGBox = (KernelJPanelCascadedZZZ)objPanelSubEast.getPanelParent();
-			
-			//Panel_CENTERZZZ objPanelCenter = (Panel_CENTERZZZ)objPanelDLGBox.getPanelSub("CENTER"); 
-			//KernelJPanelCascadedZZZ objPanelCenterTemp = objPanelDLGBox.getPanelSub("CENTER");
-			Panel_CENTERZZZ objPanelCenter = (Panel_CENTERZZZ)objPanelDLGBox.getPanelSub("CENTER");
-			
-			//Merke: F�r jede Property=Value Zeile kommen 2 Component hinzu: JLabel + JTextField;						
-			//System.out.println("Anzahl der Componenten im CENTER Panel: " + objPanelCenter.getComponentCount());
-			
-			//TODO GOON Zugriff auf die JLabel und JTextFields des Panels, am besten als Hashtable
-			//System.out.println("Wert des Textfeldes an der Position 0: '" + objPanelCenter.getValue(0) + "'");
-			
-			
-//			+++ Den Namen des Moduls auslesen = TabellenAlias
-			//IKernelModuleZZZ objModule = objPanelCenter.getModule();
-			//String sModule = objModule.getModuleName();
-			
-			String sModule = KernelUIZZZ.getModuleUsedName((IKernelModuleZZZ) objPanelCenter);
-			//System.out.println("Name des Moduls: " + sModule);
-			
-			//+++ Den Namen der zu verarbeitenden Section auslesen
-			String sSection = objPanelCenter.getTableAlias();
-			this.getLogObject().WriteLineDate("Performing Action: ... on module '" + sModule + "' and section '" + sSection + "'");
-						
-			//+++ F�llen einer Tabelle mit den Werten der JLabel und JTextfield Components
-			Hashtable objHt = objPanelCenter.getTable(false);
-			boolean bSuccess;
-			if(objHt==null){
-				ExceptionZZZ ez = new ExceptionZZZ(sERROR_PARAMETER_VALUE + "Array lengths of Labels and Textfields does not match.", iERROR_PARAMETER_VALUE,  ReflectCodeZZZ.getMethodCurrentName(), "");
-				   //doesn�t work. Only works when > JDK 1.4
-				   //Exception e = new Exception();
-				   //ExceptionZZZ ez = new ExceptionZZZ(stemp,iCode,this, e, "");			  
-				   throw ez;	
-			}else if(objHt.size()<=0){
-				//TODO GOON Sicherheitsabfrage per Dialog
-				//Section l�schen				
-				//TODO GOON, das ist nicht sauber das eigenen KernelObjekt daf�r zu verwenden. Es muss ein anderes herangezogen werden.
-				//FileIniZZZ objFileIni = this.getKernelObject().getFileConfigIniByAlias(sModule);
-				FileIniZZZ objFileIni = this.objKernelChoosen.getFileConfigIniByAlias(sModule);
-				objFileIni.deleteSection(objPanelCenter.getTableAlias());
-				bSuccess = objFileIni.save();
-			}else{
-				//TODO GOON Sicherheitsabfrage per Dialog
-				//Talleneintr�ge der Section hinzuf�gen. Zudem: Section in der Datei zuerst entfernen.
+				//Panel_CENTERZZZ objPanelCenter = (Panel_CENTERZZZ)objPanelDLGBox.getPanelSub("CENTER"); 
+				//KernelJPanelCascadedZZZ objPanelCenterTemp = objPanelDLGBox.getPanelSub("CENTER");
+				Panel_CENTERZZZ objPanelCenter = (Panel_CENTERZZZ)objPanelDLGBox.getPanelSub("CENTER");
 				
-				//TODO GOON, das ist nicht sauber das eigenen KernelObjekt daf�r zu verwenden. Es muss ein anderes herangezogen werden.
-				//FileIniZZZ objFileIni = this.getKernelObject().getFileConfigIniByAlias(sModule);
-				FileIniZZZ objFileIni = this.objKernelChoosen.getFileConfigIniByAlias(sModule);
+				//Merke: F�r jede Property=Value Zeile kommen 2 Component hinzu: JLabel + JTextField;						
+				//System.out.println("Anzahl der Componenten im CENTER Panel: " + objPanelCenter.getComponentCount());
 				
-				//TODO GOON, eine sortierte Hashtable �bergeben !!!
-				objFileIni.setSection(sSection, objHt, true);	
-				bSuccess = objFileIni.save();
-			}
-			
-			//Erfolgsmeldung ausgeben
-			//TODO: Das mit einer Dialogbox machen
-			if(bSuccess==true){
-				//System.out.println("Configuration file for module '" + sModule + "' successfully updated.");
-				this.getLogObject().WriteLineDate("Performing Action: Successfully completed.");
-			}else{
-				//System.out.println("Configuration file for module '" + sModule + "' NOT updated.");
-				this.getLogObject().WriteLineDate("Performing Action: NOT ended as expected.");
-			}
-			
-			
-			} catch (ExceptionZZZ ez) {
-				// TODO Auto-generated catch block
-				ez.printStackTrace();
-			}
-		}//END actionPerformed(ActionEvent arg0) {
+				//TODO GOON Zugriff auf die JLabel und JTextFields des Panels, am besten als Hashtable
+				//System.out.println("Wert des Textfeldes an der Position 0: '" + objPanelCenter.getValue(0) + "'");
+				
+				
+//				+++ Den Namen des Moduls auslesen = TabellenAlias
+				//IKernelModuleZZZ objModule = objPanelCenter.getModule();
+				//String sModule = objModule.getModuleName();
+				
+				String sModule = KernelUIZZZ.getModuleUsedName((IKernelModuleZZZ) objPanelCenter);
+				//System.out.println("Name des Moduls: " + sModule);
+				
+				//+++ Den Namen der zu verarbeitenden Section auslesen
+				String sSection = objPanelCenter.getTableAlias();
+				this.getLogObject().WriteLineDate("Performing Action: ... on module '" + sModule + "' and section '" + sSection + "'");
+							
+				//+++ F�llen einer Tabelle mit den Werten der JLabel und JTextfield Components
+				Hashtable objHt = objPanelCenter.getTable(false);
+				boolean bSuccess;
+				if(objHt==null){
+					ExceptionZZZ ez = new ExceptionZZZ(sERROR_PARAMETER_VALUE + "Array lengths of Labels and Textfields does not match.", iERROR_PARAMETER_VALUE,  ReflectCodeZZZ.getMethodCurrentName(), "");
+					   //doesn�t work. Only works when > JDK 1.4
+					   //Exception e = new Exception();
+					   //ExceptionZZZ ez = new ExceptionZZZ(stemp,iCode,this, e, "");			  
+					   throw ez;	
+				}else if(objHt.size()<=0){
+					//TODO GOON Sicherheitsabfrage per Dialog
+					//Section löschen				
+					//Nicht das eigene KernelObjekt verwenden, sondern das im Dialog ausgewählte.
+					FileIniZZZ objFileIni = this.objKernelChoosen.getFileConfigIniByAlias(sModule);
+					objFileIni.deleteSection(sSection);
+					
+					//Ggfs. sind im Dialog Einträge über mehrere, verschiedene Sections hinweg. Diese auch löschen. 
+					String sSectionNew = KernelKernelZZZ.computeSectionFromSystemKey(sSection);
+					if(sSectionNew!=null) {
+						if(sSection!=sSectionNew) {
+							objFileIni.deleteSection(sSection);							
+						}
+					}
+					bSuccess = objFileIni.save();
+				}else{
+					//TODO GOON Sicherheitsabfrage per Dialog
+					//Talleneintr�ge der Section hinzuf�gen. Zudem: Section in der Datei zuerst entfernen.
+					
+					//TODO GOON, das ist nicht sauber das eigenen KernelObjekt daf�r zu verwenden. Es muss ein anderes herangezogen werden.
+					//FileIniZZZ objFileIni = this.getKernelObject().getFileConfigIniByAlias(sModule);
+					FileIniZZZ objFileIni = this.objKernelChoosen.getFileConfigIniByAlias(sModule);
+					
+					//TODOGOON; //20211128 Vor dem Speichern die Gesamthashtable auf die verschiedenen Subjects aufteilen!!!
+					
+					
+					//TODO: eine sortierte Hashtable �bergeben !!!
+					objFileIni.setSection(sSection, objHt, true);	
+					bSuccess = objFileIni.save();
+				}
+				
+				//Erfolgsmeldung ausgeben
+				//TODO: Das mit einer Dialogbox machen
+				if(bSuccess==true){
+					//System.out.println("Configuration file for module '" + sModule + "' successfully updated.");
+					this.getLogObject().WriteLineDate("Performing Action: Successfully completed.");
+				}else{
+					//System.out.println("Configuration file for module '" + sModule + "' NOT updated.");
+					this.getLogObject().WriteLineDate("Performing Action: NOT ended as expected.");
+				}
+				
+				
+				} catch (ExceptionZZZ ez) {
+					// TODO Auto-generated catch block
+					ez.printStackTrace();
+				}
+			return true;
+		}
+
+		@Override
+		public boolean actionPerformQueryCustom(ActionEvent ae) throws ExceptionZZZ {			
+			return true;
+		}
+
+		@Override
+		public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ {			
+		}
+
+		@Override
+		public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {			
+		}
 		
 	}//End class
 	
