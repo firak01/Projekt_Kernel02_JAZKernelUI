@@ -2,6 +2,7 @@ package custom.zKernelUI.module.config.DLG;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Enumeration;
 import java.util.Hashtable;
 
 import javax.swing.BorderFactory;
@@ -154,15 +155,15 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 				this.getLogObject().WriteLineDate("Performing Action: ... on module '" + sModule + "' and section '" + sSection + "'");
 							
 				//+++ F�llen einer Tabelle mit den Werten der JLabel und JTextfield Components
-				Hashtable objHt = objPanelCenter.getTable(false);
+				Hashtable objHtValue = objPanelCenter.getTable(false);
 				boolean bSuccess;
-				if(objHt==null){
+				if(objHtValue==null){
 					ExceptionZZZ ez = new ExceptionZZZ(sERROR_PARAMETER_VALUE + "Array lengths of Labels and Textfields does not match.", iERROR_PARAMETER_VALUE,  ReflectCodeZZZ.getMethodCurrentName(), "");
 					   //doesn�t work. Only works when > JDK 1.4
 					   //Exception e = new Exception();
 					   //ExceptionZZZ ez = new ExceptionZZZ(stemp,iCode,this, e, "");			  
 					   throw ez;	
-				}else if(objHt.size()<=0){
+				}else if(objHtValue.size()<=0){
 					//TODO GOON Sicherheitsabfrage per Dialog
 					//Section löschen				
 					//Nicht das eigene KernelObjekt verwenden, sondern das im Dialog ausgewählte.
@@ -170,7 +171,7 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 					objFileIni.deleteSection(sSection);
 					
 					//Ggfs. sind im Dialog Einträge über mehrere, verschiedene Sections hinweg. Diese auch löschen. 
-					String sSectionNew = KernelKernelZZZ.computeSectionFromSystemKey(sSection);
+					String sSectionNew = KernelKernelZZZ.computeSectionFromSystemSection(sSection);
 					if(sSectionNew!=null) {
 						if(sSection!=sSectionNew) {
 							objFileIni.deleteSection(sSection);							
@@ -185,11 +186,29 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 					//FileIniZZZ objFileIni = this.getKernelObject().getFileConfigIniByAlias(sModule);
 					FileIniZZZ objFileIni = this.objKernelChoosen.getFileConfigIniByAlias(sModule);
 					
+					
+					
 					//TODOGOON; //20211128 Vor dem Speichern die Gesamthashtable auf die verschiedenen Subjects aufteilen!!!
+					//Section erstellen oder auffüllen. Alle Elemente der Hashtable durchgehen
+//					Enumeration objEnum = objHtValue.keys();
+//					while(objEnum.hasMoreElements()){
+//						String sProperty = (String) objEnum.nextElement();
+						
+						
+//						if(!sProperty.trim().equals("")){
+//							String sValue = (String) objHtValue.get(sProperty);
+//							
+//							//Auch falls der Wert ein Leerstring ist, diesen setzen.
+//							this.setPropertyValue(sSection, sProperty, sValue, false);
+//						}
+					
+					
+//					} //end while
+					
 					
 					
 					//TODO: eine sortierte Hashtable �bergeben !!!
-					objFileIni.setSection(sSection, objHt, true);	
+					objFileIni.setSection(sSection, objHtValue, false);	
 					bSuccess = objFileIni.save();
 				}
 				
