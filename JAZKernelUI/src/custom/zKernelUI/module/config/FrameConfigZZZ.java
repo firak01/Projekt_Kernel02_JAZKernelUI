@@ -18,7 +18,11 @@ public FrameConfigZZZ(KernelZZZ objKernelConfig, String sApplication2Config, Str
 	
 	//DIE Anwendung der konfiguration soll pr�fen, ob alles korrekt konfiguriert ist. Darum wird daf�r ein internes Kernel-Objekt angelegt.
 	//ABER: Dabei entsteht ein Log-File. DAS DARF NICHT SEIN (TODO)
-	KernelZZZ objKernelChoosen = new KernelZZZ(sApplication2Config, sSystemNumber2Config, objKernelConfig, null);
+	
+	//20211201: Die im ausgewählten Kernel-Objekt gefundenen ini-Datei Werte sollen ja nur angezeigt und nicht umgewandelt werden	
+	//public KernelZZZ(String sApplicationKey, String sSystemNumber, String sFileConfigPath, String sFileConfigName, String[] saArg, String sFlagControl) throws ExceptionZZZ{
+	String[] saArg = {"-z","{\"USEEXPRESSION\":false}"};	
+	KernelZZZ objKernelChoosen = new KernelZZZ(sApplication2Config, sSystemNumber2Config, objKernelConfig, saArg, null);
 	this.setKernelConfigObject(objKernelChoosen);
 	
 	//TODO: Titel aus der Konfiguration holen

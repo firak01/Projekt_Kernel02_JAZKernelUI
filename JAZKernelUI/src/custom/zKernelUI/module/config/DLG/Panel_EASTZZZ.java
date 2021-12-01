@@ -136,7 +136,7 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 				//KernelJPanelCascadedZZZ objPanelCenterTemp = objPanelDLGBox.getPanelSub("CENTER");
 				Panel_CENTERZZZ objPanelCenter = (Panel_CENTERZZZ)objPanelDLGBox.getPanelSub("CENTER");
 				
-				//Merke: F�r jede Property=Value Zeile kommen 2 Component hinzu: JLabel + JTextField;						
+				//Merke: Fuer jede Property=Value Zeile kommen 2 Component hinzu: JLabel + JTextField;						
 				//System.out.println("Anzahl der Componenten im CENTER Panel: " + objPanelCenter.getComponentCount());
 				
 				//TODO GOON Zugriff auf die JLabel und JTextFields des Panels, am besten als Hashtable
@@ -154,7 +154,7 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 				String sSection = objPanelCenter.getTableAlias();
 				this.getLogObject().WriteLineDate("Performing Action: ... on module '" + sModule + "' and section '" + sSection + "'");
 							
-				//+++ F�llen einer Tabelle mit den Werten der JLabel und JTextfield Components
+				//+++ Fuellen einer Tabelle mit den Werten der JLabel und JTextfield Components
 				Hashtable objHtValue = objPanelCenter.getTable(false);
 				boolean bSuccess;
 				if(objHtValue==null){
@@ -185,28 +185,7 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 					//TODO GOON, das ist nicht sauber das eigenen KernelObjekt daf�r zu verwenden. Es muss ein anderes herangezogen werden.
 					//FileIniZZZ objFileIni = this.getKernelObject().getFileConfigIniByAlias(sModule);
 					FileIniZZZ objFileIni = this.objKernelChoosen.getFileConfigIniByAlias(sModule);
-					
-					
-					
-					//TODOGOON; //20211128 Vor dem Speichern die Gesamthashtable auf die verschiedenen Subjects aufteilen!!!
-					//Section erstellen oder auffüllen. Alle Elemente der Hashtable durchgehen
-//					Enumeration objEnum = objHtValue.keys();
-//					while(objEnum.hasMoreElements()){
-//						String sProperty = (String) objEnum.nextElement();
-						
-						
-//						if(!sProperty.trim().equals("")){
-//							String sValue = (String) objHtValue.get(sProperty);
-//							
-//							//Auch falls der Wert ein Leerstring ist, diesen setzen.
-//							this.setPropertyValue(sSection, sProperty, sValue, false);
-//						}
-					
-					
-//					} //end while
-					
-					
-					
+										
 					//TODO: eine sortierte Hashtable �bergeben !!!
 					objFileIni.setSection(sSection, objHtValue, false);	
 					bSuccess = objFileIni.save();

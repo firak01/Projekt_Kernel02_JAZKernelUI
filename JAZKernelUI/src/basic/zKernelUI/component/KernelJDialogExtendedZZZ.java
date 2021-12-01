@@ -771,15 +771,21 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			 * @throws ExceptionZZZ 
 			 */
 			public String[] getFlagZ(boolean bValueToSearchFor) throws ExceptionZZZ{
+				return this.getFlagZ_(bValueToSearchFor, false);
+			}
+			
+			public String[] getFlagZ(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap) throws ExceptionZZZ{
+				return this.getFlagZ_(bValueToSearchFor, bLookupExplizitInHashMap);
+			}
+			
+			private String[]getFlagZ_(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap) throws ExceptionZZZ{
 				String[] saReturn = null;
 				main:{
-					
-					
 					ArrayList<String>listasTemp=new ArrayList<String>();
 					
 					//FALLUNTERSCHEIDUNG: Alle gesetzten FlagZ werden in der HashMap gespeichert. Aber die noch nicht gesetzten FlagZ stehen dort nicht drin.
 					//                                  Diese kann man nur durch Einzelprüfung ermitteln.
-					if(bValueToSearchFor==true){
+					if(bLookupExplizitInHashMap) {
 						HashMap<String,Boolean>hmFlag=this.getHashMapFlagZ();
 						if(hmFlag==null) break main;
 						
@@ -790,11 +796,17 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 								listasTemp.add(sKey);
 							}
 						}
-					}else{
+					}else {
+						//So bekommt man alle Flags zurück, also auch die, die nicht explizit true oder false gesetzt wurden.						
 						String[]saFlagZ = this.getFlagZ();
+						
+						//20211201:
+						//Problem: Bei der Suche nach true ist das egal... aber bei der Suche nach false bekommt man jedes der Flags zurück,
+						//         auch wenn sie garnicht gesetzt wurden.
+						//Lösung:  Statt dessen explitzit über die HashMap der gesetzten Werte gehen....						
 						for(String sFlagZ : saFlagZ){
 							boolean btemp = this.getFlagZ(sFlagZ);
-							if(btemp==bValueToSearchFor ){ //also 'false'
+							if(btemp==bValueToSearchFor ){ //also 'true'
 								listasTemp.add(sFlagZ);
 							}
 						}
@@ -810,12 +822,25 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			 * @return
 			 * @throws ExceptionZZZ 
 			 */
+			@Override
 			public String[] getFlagZ_passable(boolean bValueToSearchFor, IFlagUserZZZ objUsingFlagZ) throws ExceptionZZZ{
+				return this.getFlagZ_passable_(bValueToSearchFor, false, objUsingFlagZ);
+			}
+			
+			/* (non-Javadoc)
+			 * @see basic.zKernel.flag.IFlagUserZZZ#getFlagZ_passable(boolean, boolean, basic.zKernel.flag.IFlagUserZZZ)
+			 */
+			@Override
+			public String[] getFlagZ_passable(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap, IFlagUserZZZ objUsingFlagZ) throws ExceptionZZZ{
+				return this.getFlagZ_passable_(bValueToSearchFor, bLookupExplizitInHashMap, objUsingFlagZ);
+			}
+			
+			private String[] getFlagZ_passable_(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap, IFlagUserZZZ objUsingFlagZ) throws ExceptionZZZ{
 				String[] saReturn = null;
 				main:{
 					
 					//1. Hole alle FlagZ, DIESER Klasse, mit dem gewünschten Wert.
-					String[] saFlag = this.getFlagZ(bValueToSearchFor);
+					String[] saFlag = this.getFlagZ(bValueToSearchFor,bLookupExplizitInHashMap);
 					
 					//2. Hole alle FlagZ der Zielklasse
 					String[] saFlagTarget = objUsingFlagZ.getFlagZ();
@@ -835,6 +860,10 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			 * @throws ExceptionZZZ 
 			 */
 			public String[] getFlagZ_passable(IFlagUserZZZ objUsingFlagZ) throws ExceptionZZZ{
+				return this.getFlagZ_passable_(objUsingFlagZ);
+			}
+			
+			private String[] getFlagZ_passable_(IFlagUserZZZ objUsingFlagZ) throws ExceptionZZZ{
 				String[] saReturn = null;
 				main:{
 					

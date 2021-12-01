@@ -7,8 +7,6 @@ import custom.zKernel.LogZZZ;
 import custom.zKernelUI.module.config.FrameConfigZZZ;
 public class DebugFrameConfigZZZ {
 public static void main(String[] args) {
-		
-
 			try {
 				//1. Kernel Objekt initialisieren. Dies ist fuer das Logging grundlegend.
 				KernelZZZ objKernel = new KernelZZZ("FGL", "01", "", "ZKernelConfigConfig_default.ini", args, (String)null);
