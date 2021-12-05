@@ -1,5 +1,6 @@
 package custom.zKernelUI.module.config.DLG;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
@@ -7,13 +8,18 @@ import java.util.Hashtable;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
+
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ReflectCodeZZZ;
+import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelKernelZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
@@ -21,9 +27,15 @@ import basic.zKernelUI.KernelUIZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelActionCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
+import basic.zKernelUI.thread.KernelSwingWorkerZZZ;
 import basic.zKernel.KernelZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import custom.zKernel.file.ini.FileIniZZZ;
+
+import custom.zKernelUI.module.config.DLG.Panel_EASTZZZ.SwingWorker4IniSAVEinner; 
+//Merke: Tritzdem ist diese Innere Klasse nicht aus der static inneren Klasse verwendbar.
+//Deshalb...
+import custom.zKernelUI.module.config.DLG.SwingWorker4IniSAVE;
 
 public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 	private IKernelZZZ objKernelChoosen=null;
@@ -122,31 +134,90 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 		//### Methoden kommen aus den Schnittstellen
 		@Override
 		public boolean actionPerformCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ {
-			try {
+//			try {
+			
 				//+++ Protokolll Eintrag
-					this.getLogObject().WriteLineDate("Performing Action: 'Save Section'");
+				this.getLogObject().WriteLineDate("Performing Action: 'Save Section'");
 					
 				//+++ Zugriff auf das Panel, in dem die Informationen stehen 
-				//Panel_EASTZZZ objPanelSubEast = (Panel_EASTZZZ)this.panelParent;  //DAS IST MIT MOCK OBJEKT NICHT TESTBAR !!!
 				KernelJPanelCascadedZZZ objPanelSubEast = (KernelJPanelCascadedZZZ)this.getPanelParent();
-				//Panel_DLGBOXZZZ objPanelDLGBox = (Panel_DLGBOXZZZ)objPanelSubEast.getPanelParent(); //DAS IST MIT MOCK OBJEKT NICHT TESTBAR !!!
 				KernelJPanelCascadedZZZ objPanelDLGBox = (KernelJPanelCascadedZZZ)objPanelSubEast.getPanelParent();
-				
-				//Panel_CENTERZZZ objPanelCenter = (Panel_CENTERZZZ)objPanelDLGBox.getPanelSub("CENTER"); 
-				//KernelJPanelCascadedZZZ objPanelCenterTemp = objPanelDLGBox.getPanelSub("CENTER");
 				Panel_CENTERZZZ objPanelCenter = (Panel_CENTERZZZ)objPanelDLGBox.getPanelSub("CENTER");
 				
 				//Merke: Fuer jede Property=Value Zeile kommen 2 Component hinzu: JLabel + JTextField;						
 				//System.out.println("Anzahl der Componenten im CENTER Panel: " + objPanelCenter.getComponentCount());
+						
+				//Den SwingWorker als innere Klasse zu verwenden, scheitert daran, dass der Import nicht klappt für: SwingWorker4IniSAVE worker = objPanelSubEast.new SwingWorker4IniSAVE(objKernel, objKernelChoosen, objPanelSubEast, objPanelCenter, (String[])null);
+				//SwingWorker4IniSAVEinner worker = this.new SwingWorker4IniSAVEinner(objKernel, objKernelChoosen, objPanelSubEast, objPanelCenter, (String[])null);
+				//Also den SwingWorker als eigene Klasse definieren.
+				SwingWorker4IniSAVE worker = new SwingWorker4IniSAVE(objKernel, objKernelChoosen, objPanelSubEast, objPanelCenter, (String[])null);
+				worker.start();  //Merke: Das Setzen des Label Felds geschieht durch einen extra Thread, der mit SwingUtitlities.invokeLater(runnable) gestartet wird.
+						
+//				} catch (ExceptionZZZ ez) {
+//					ez.printStackTrace();
+//				}
+			return true;
+		}
+
+		@Override
+		public boolean actionPerformQueryCustom(ActionEvent ae) throws ExceptionZZZ {			
+			return true;
+		}
+
+		@Override
+		public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ {			
+		}
+
+		@Override
+		public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {			
+		}
+		
+	}//End class
+	
+	//Merke: Diese inner Klasse steht hier nur als Beispiel dafür, dass es nicht möglich ist aus einer static inneren Klasse eine andere inner Klasse zu verwenden.
+	class SwingWorker4IniSAVEinner extends KernelSwingWorkerZZZ{
+		private IKernelZZZ objKernelChoosen;
+		private IPanelCascadedZZZ panel;
+		private Panel_CENTERZZZ objPanelCenter;
+		private String[] saFlag4Program;	
+		private String sText2Update;    //Der Wert, der ins Label geschreiben werden soll. Jier als Variable, damit die intene Runner-Klasse darauf zugreifen kann.
+													// Auch: Dieser Wert wird aus dem Web ausgelesen und danach in das Label des Panels geschrieben.
+						
+		
+		
+		
+		public SwingWorker4IniSAVEinner(IKernelZZZ objKernel, IKernelZZZ objKernelChoosen, IPanelCascadedZZZ panel, Panel_CENTERZZZ panelCenter,String[] saFlag4Program){
+			super(objKernel);
+			this.objKernelChoosen=objKernelChoosen;
+			this.panel = panel;
+			this.objPanelCenter=panelCenter;
+			this.saFlag4Program = saFlag4Program;	
+		}
+		
+		//#### abstracte - Method aus SwingWorker
+		public Object construct() {
+			try {						
+				System.out.println("Im SwingWorker4IniSAVE");
 				
-				//TODO GOON Zugriff auf die JLabel und JTextFields des Panels, am besten als Hashtable
-				//System.out.println("Wert des Textfeldes an der Position 0: '" + objPanelCenter.getValue(0) + "'");
+				
+	//### Merke: In deisem Swing Worker wird kein EventBroker verwendet, da keine anderen Objekte informiert werden müssen.
+				//Wird ein NavigatorElement aktiv geschaltet, gehören alle anderen NavigatorElemente passiv geschaltet.					
+				//Das Umschalten macht man, indem man einen Event - Wirft,
+				//Alle am Event "registrierten" Labels/Componentent, bzw. die NavigatorElementCollection sollen dann reagieren.
+				//Die NavigatorElementCollection durchgehen und die anderen "nicht geclickt setzen", diese Element "geclickt setzen";
+				
+				//### Den Event starten,
+//				if(objEventBroker!=null) {
+//					System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#EventBroker starten !!!!!!!!");							
+//					EventNavigatorElementSwitchZZZ eventNew= new EventNavigatorElementSwitchZZZ(panel, 10002, sAlias, true);				
+//					objEventBroker.fireEvent(eventNew);	
+//				}else {
+//					System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#ACHTUNG KEIN EventBroker verfuegbar zum Starten !!!!!!!!");
+//				}
+				
 				
 				
 //				+++ Den Namen des Moduls auslesen = TabellenAlias
-				//IKernelModuleZZZ objModule = objPanelCenter.getModule();
-				//String sModule = objModule.getModuleName();
-				
 				String sModule = KernelUIZZZ.getModuleUsedName((IKernelModuleZZZ) objPanelCenter);
 				//System.out.println("Name des Moduls: " + sModule);
 				
@@ -180,13 +251,13 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 					bSuccess = objFileIni.save();
 				}else{
 					//TODO GOON Sicherheitsabfrage per Dialog
-					//Talleneintr�ge der Section hinzuf�gen. Zudem: Section in der Datei zuerst entfernen.
+					//Talleneintraege der Section hinzufuegen. Zudem: Section in der Datei zuerst entfernen.
 					
-					//TODO GOON, das ist nicht sauber das eigenen KernelObjekt daf�r zu verwenden. Es muss ein anderes herangezogen werden.
+					//Es ist nicht sauber das eigenen KernelObjekt dafuer zu verwenden. Es muss ein anderes herangezogen werden.
 					//FileIniZZZ objFileIni = this.getKernelObject().getFileConfigIniByAlias(sModule);
 					FileIniZZZ objFileIni = this.objKernelChoosen.getFileConfigIniByAlias(sModule);
 										
-					//TODO: eine sortierte Hashtable �bergeben !!!
+					//TODO: eine sortierte Hashtable uebergeben !!!
 					objFileIni.setSection(sSection, objHtValue, false);	
 					bSuccess = objFileIni.save();
 				}
@@ -202,26 +273,62 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 				}
 				
 				
-				} catch (ExceptionZZZ ez) {
-					// TODO Auto-generated catch block
-					ez.printStackTrace();
+				if(this.panel!=null) {
+					System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#Updating Panel ...");				
+					updatePanel(this.panel);						
 				}
-			return true;
+					
+			}catch(ExceptionZZZ ez){
+				System.out.println(ez.getDetailAllLast());
+				ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());					
+			}
+			return "all done";
 		}
 
-		@Override
-		public boolean actionPerformQueryCustom(ActionEvent ae) throws ExceptionZZZ {			
-			return true;
+
+		/**Aus dem Worker-Thread heraus wird ein Thread gestartet (der sich in die EventQueue von Swing einreiht.)
+		 *  
+		* @param stext
+		* 					
+		 */
+		public void updatePanel(IPanelCascadedZZZ panel2updateStart){
+			this.panel = panel2updateStart;
+			
+//			Das Schreiben des Ergebnisses wieder an den EventDispatcher thread übergeben
+			Runnable runnerUpdatePanel= new Runnable(){
+
+				public void run(){
+//					try {							
+						
+						System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#INI SAVE DURCHGEFUEHRT");
+						logLineDate("INI SAVE DURCHGEFUEHRT");					
+												
+						((JComponent) panel).revalidate();
+						((Component) panel).repaint();
+												 							
+//					} catch (ExceptionZZZ e) {
+//						e.printStackTrace();
+//					}
+				}
+			};
+			
+			SwingUtilities.invokeLater(runnerUpdatePanel);		
+			//Ggfs. nach dem Swing Worker eine Statuszeile etc. aktualisieren....
+
+		}
+			
+		/**Overwritten and using an object of jakarta.commons.lang
+		 * to create this string using reflection. 
+		 * Remark: this is not yet formated. A style class is available in jakarta.commons.lang. 
+		 */
+		public String toString(){
+			String sReturn = "";
+			sReturn = ReflectionToStringBuilder.toString(this);
+			return sReturn;
 		}
 
-		@Override
-		public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ {			
-		}
-
-		@Override
-		public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {			
-		}
-		
-	}//End class
+	} //End Class SwingWorker: SwingWorker4IniSave
+	
+	
 	
 }// END class
