@@ -60,6 +60,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 
 	
 	private JLabel[] labelaIndex = null;
+	private JLabel[] labelaKey = null;
 	private JLabel[] labelaText = null;
 	private JTextField[] textfieldaValue = null; 
 	
@@ -99,13 +100,14 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 			//this.setLayout(new GridLayout(iLine2Show,2)); //1 Zeilen, 2 Spalten
 			//EntryLayout layout = new EntryLayout(daProportion);
 			
-			double[] daProportion={0.1, 0.3, 0.6};//Merke: Das wird zu WIDTH im Layout, die Anzahl der Spalten ist entsprechend der Proportionsparameter !!!
+			double[] daProportion={0.1, 0.1, 0.3, 0.5};//Merke: Das wird zu WIDTH im Layout, die Anzahl der Spalten ist entsprechend der Proportionsparameter !!!
             EntryLayout4VisibleZZZ layout = new EntryLayout4VisibleZZZ(daProportion);				
             this.setLayout(layout);
 			
 			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
 			//Standardgrößen von Label und Textfeld
 			Dimension dimensionLabelColumnFirst = new Dimension (20,20);
+			Dimension dimensionLabelColumnSecond = new Dimension (20,20);
 			Dimension dimensionLabel = new Dimension(150,20);			
 			Dimension dimensionTextfield = new Dimension(200, 20);
 								
@@ -147,12 +149,15 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 				iLines2Show = 1; //Die Hinweiszeile
 				iLines2Fill = iNR_OF_TEXTFIELD_SHOWN_DEFAULT - iLines2Show;
 				
-				labelaIndex = new JLabel[1];				
+				labelaIndex = new JLabel[1];
+				labelaKey = new JLabel[1];
 				labelaText = new JLabel[1];
 				textfieldaValue = new JTextField[1];
 				
 				labelaIndex[0] = new JLabel(" ");
 				this.add(labelaIndex[0]);
+				labelaKey[0] = new JLabel(" ");
+				this.add(labelaKey[0]);
 				labelaText[0]= new JLabel("No property found.", SwingConstants.RIGHT);
 				this.add(labelaText[0]);								
 				textfieldaValue[0] = new JTextField("No value found.", iTEXTFIELD_COLUMN_DEFAULT);
@@ -305,6 +310,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 				//DIE ARRAY GRÖSSEN VON DER ANZAHL DER GEFUNDENEN EINTRÄGE ABHÄNGIG MACHEN
 				String sValue = new String("");
 				labelaIndex = new JLabel[iLinesWithValue];
+				labelaKey = new JLabel[iLinesWithValue];
 				labelaText = new JLabel[iLinesWithValue];
 				textfieldaValue = new JTextField[iLinesWithValue];
 				
@@ -328,6 +334,14 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 						labelaIndex[iCount].setSize(dimensionLabelColumnFirst);
 						labelaIndex[iCount].setPreferredSize(dimensionLabelColumnFirst);
 						this.add(labelaIndex[iCount]);
+						
+						//Das Key - Label
+						TODOGOON;//20211208 Hier den Application Key oder die SystemNr. ausgeben, ja nachdem woher der Wert stammt.
+						labelaKey[iCount] = new JLabel((Integer.toString(iCount+1)),SwingConstants.RIGHT);
+						labelaKey[iCount].setAlignmentX(Component.RIGHT_ALIGNMENT);
+						labelaKey[iCount].setSize(dimensionLabelColumnSecond);
+						labelaKey[iCount].setPreferredSize(dimensionLabelColumnSecond);
+						this.add(labelaKey[iCount]);
 						
 						//Das Property - Label
 						labelaText[iCount]= new JLabel(saProperty[iCount] + "=", SwingConstants.RIGHT);
@@ -359,6 +373,13 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 							labelaIndex[iCount].setSize(dimensionLabelColumnFirst);
 							labelaIndex[iCount].setPreferredSize(dimensionLabelColumnFirst);
 							this.add(labelaIndex[iCount]);
+							
+							//Das Key - Label
+							labelaKey[iCount] = new JLabel("...",SwingConstants.RIGHT);
+							labelaKey[iCount].setAlignmentX(Component.RIGHT_ALIGNMENT);
+							labelaKey[iCount].setSize(dimensionLabelColumnFirst);
+							labelaKey[iCount].setPreferredSize(dimensionLabelColumnFirst);
+							this.add(labelaKey[iCount]);
 							
 							//Das Property - Label
 							labelaText[iCount]= new JLabel("... =", SwingConstants.RIGHT);
