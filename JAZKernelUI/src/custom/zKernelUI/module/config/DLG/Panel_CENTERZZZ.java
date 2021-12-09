@@ -44,6 +44,7 @@ import basic.zKernelUI.module.config.DLG.strategy.DebugUIStrategyZZZ.EnumDebugUI
 import basic.zKernel.KernelZZZ;
 import basic.zKernel.component.IKernelModuleUserZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
+import basic.zKernel.file.ini.KernelFileIniZZZ;
 import custom.zKernel.LogZZZ;
 import custom.zKernel.file.ini.FileIniZZZ;
 
@@ -336,8 +337,17 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 						this.add(labelaIndex[iCount]);
 						
 						//Das Key - Label
-						TODOGOON;//20211208 Hier den Application Key oder die SystemNr. ausgeben, ja nachdem woher der Wert stammt.
-						labelaKey[iCount] = new JLabel((Integer.toString(iCount+1)),SwingConstants.RIGHT);
+						//TODOGOON;//20211208 Hier den Application Key oder die SystemNr. ausgeben, ja nachdem woher der Wert stammt.						
+						//Neu: Statische Methode anbieten. Merke: Die wird auch beim Speichern verwendet.
+						String sSectionUsed = KernelFileIniZZZ.getSectionUsedForPropertyBySystemKey(objFileIni, sSystemKey, saProperty[iCount]);
+						String sKeyUsed = null;
+						if(KernelFileIniZZZ.isSectionWithSystemNrAny(sSectionUsed)){
+							sKeyUsed = this.objKernel2configure.getSystemNumber();
+						}else {
+							sKeyUsed = this.objKernel2configure.getApplicationKey();
+						}
+						
+						labelaKey[iCount] = new JLabel(sKeyUsed,SwingConstants.RIGHT);
 						labelaKey[iCount].setAlignmentX(Component.RIGHT_ALIGNMENT);
 						labelaKey[iCount].setSize(dimensionLabelColumnSecond);
 						labelaKey[iCount].setPreferredSize(dimensionLabelColumnSecond);
