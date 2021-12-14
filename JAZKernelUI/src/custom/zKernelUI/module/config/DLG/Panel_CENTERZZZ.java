@@ -12,6 +12,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
@@ -30,6 +31,7 @@ import basic.zBasic.util.datatype.enums.EnumZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasicUI.layoutmanager.EntryLayout;
 import basic.zBasicUI.layoutmanager.EntryLayout4VisibleZZZ;
+import basic.zKernel.IKernelConfigSectionEntryZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernelUI.KernelUIZZZ;
@@ -52,8 +54,8 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 	private IKernelZZZ objKernel2configure;
 	
 	//Besonderes Panel. hat das Module intus... 
-	protected IKernelModuleZZZ objModule=null; //Das Modul, das zur Bearbeitung ausgewählt wurde.
-	private String sModuleName = null;
+	protected IKernelModuleZZZ objModule2configure=null; //Das Modul, das zur Bearbeitung ausgewählt wurde.
+	private String sModuleName2configure = null;
 	
 	private static final int iTEXTFIELD_COLUMN_DEFAULT = 10;             //Wie breit ein Textfeld sein soll
 	private static final int iNR_OF_TEXTFIELD_SHOWN_DEFAULT = 10; //Wieviele Textfields angezeigt werden sollen
@@ -62,6 +64,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 	
 	private JLabel[] labelaIndex = null;
 	private JLabel[] labelaKey = null;
+	private JButton[] buttonaKey = null;
 	private JLabel[] labelaText = null;
 	private JTextField[] textfieldaValue = null; 
 	
@@ -71,8 +74,10 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 		main:{
 		try {					
 			this.objKernel2configure = objKernelChoosen;//TODOGOON 20210310: Kann man kernelChoosen komplett durch ModuleChoosen ersetzen???? BZW. es sollte KernelChoosen das einzige KernelObjekt sein!!!
-			this.setModule(objModuleChoosen);//Merke 20210310: Das ist ggfs. auch ein ganz abstraktes Moduluobjekt, also nicht etwas, das konkret existiert wie z.B. ein anderes Panel.
+			this.setModuleChoosen(objModuleChoosen);//Merke 20210310: Das ist ggfs. auch ein ganz abstraktes Moduluobjekt, also nicht etwas, das konkret existiert wie z.B. ein anderes Panel.
 			
+			//PROBLEM: NULL!!!!!
+			//String sModule = KernelUIZZZ.getModuleUsedName((IKernelModuleZZZ) this);//20210312 Hier KernelUIZZZ als Hilfsklasse verwenden, um den Modulnamen auszulesen. besser als: String sModule = this.getModule().getModuleName();
 			
 			//Border borderEtched = BorderFactory.createEtchedBorder();
 			//this.setBorder(borderEtched);
@@ -81,19 +86,42 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 			this.setBorder(borderLine);
 					
 			//+++ Vor dem Anlegen der Components erst einmal pruefen, ob es ueberhaupt etwas zu tun gibt
-			String sModule = KernelUIZZZ.getModuleUsedName((IKernelModuleZZZ) this);//20210312 Hier KernelUIZZZ als Hilfsklasse verwenden, um den Modulnamen auszulesen. besser als: String sModule = this.getModule().getModuleName();
+			String sModuleChoosen = KernelUIZZZ.getModuleUsedName((IKernelModuleZZZ) objModuleChoosen);//20210312 Hier KernelUIZZZ als Hilfsklasse verwenden, um den Modulnamen auszulesen. besser als: String sModule = this.getModule().getModuleName();
 									
 			//Das KernelObject zu verwenden ist nicht sauber. Es muss ein eigenes Objekt fuer das zu konfigurierende Modul vorhanden sein.
-			boolean bModuleConfigured = this.objKernel2configure.proofModuleFileIsConfigured(sModule);
+			boolean bModuleConfigured = this.objKernel2configure.proofModuleFileIsConfigured(sModuleChoosen);
 			if(bModuleConfigured==false){
 				break main;	//Fall: Modul nicht configuriert
 			}else{
 				//Das KernelObject zu verwenden ist nicht sauber. Es muss ein eigenes Objekt fuer das zu konfigurierende Modul vorhanden sein.
-				boolean bModuleExists = this.objKernel2configure.proofModuleFileExists(sModule);
+				boolean bModuleExists = this.objKernel2configure.proofModuleFileExists(sModuleChoosen);
 				if(bModuleExists==false){				
 					break main;//Fall: Konfiguriertes Modul existiert nicht physikalisch als Datei am erwarteten Ort/mit dem erwarteten Namen
 				}
 			}
+			
+			
+			//+++ Fonts festlegen
+			//TODOGOON; //20211212
+//			String sGuiButtonFontSize = null;									
+//			IKernelConfigSectionEntryZZZ objEntry = objKernel.getParameterByProgramAlias(sModule, sProgramAlias, "GuiLabelFontSize_float" ); 
+//			if(!objEntry.hasAnyValue()){
+//				String serror = "Parameter existiert nicht in der Konfiguration: 'GuiLabelFontSize_float'";
+//				System.out.println(ReflectCodeZZZ.getMethodCurrentName() + ": " +serror);
+//				ExceptionZZZ ez = new ExceptionZZZ(serror,ExceptionZZZ.iERROR_CONFIGURATION_VALUE, this,  ReflectCodeZZZ.getMethodCurrentName());
+//				throw ez;
+//			}else{
+//				sGuiLabelFontSize = objEntry.getValue();
+//			}
+//			if(StringZZZ.isEmpty(sGuiLabelFontSize)){ sGuiLabelFontSize="8.0"; }
+//			Float fltGuiLabelFontSize = new Float(sGuiLabelFontSize);
+//			
+//			//Nun Graphics-Objekt holen, zum Font holen und Größe des Fonts einstellen.
+//			//KernelJPanelCascadedZZZ objPanel = this.getPanelParent();				
+//			//Graphics g = objPanel.getGraphics(); //!!! DAS GIBT IMMER NULL. Graphics Objekt steht nur in paint() Methode zur Verfügung.
+//			
+//			objReturn = new Font("Verdana", Font.PLAIN, fltGuiLabelFontSize.intValue());
+//			
 					
 			//+++ Layout - Manager und Anzahl Spalten festlegen ++++++++++++
 			
@@ -108,7 +136,8 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
 			//Standardgrößen von Label und Textfeld
 			Dimension dimensionLabelColumnFirst = new Dimension (20,20);
-			Dimension dimensionLabelColumnSecond = new Dimension (20,20);
+			Dimension dimensionLabelColumnSecond = new Dimension (30,20);
+			Dimension dimensionButtonColumnSecond = new Dimension (30,20);
 			Dimension dimensionLabel = new Dimension(150,20);			
 			Dimension dimensionTextfield = new Dimension(200, 20);
 								
@@ -122,11 +151,11 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 			
 			//SystemKey als Schluessel fuer die Section
 			//Das KernelObject zu verwenden ist nicht sauber. Es muss ein eigenes Objekt fuer das zu konfigurierende Modul vorhanden sein.
-			String sSystemKey = this.objKernel2configure.getSystemKey();
+			String sSystemKeyChoosen = this.objKernel2configure.getSystemKey();
 			
 			//FileIniZZZ Objekt holen
 			//Das KernelObject zu verwenden ist nicht sauber. Es muss ein eigenes Objekt fuer das zu konfigurierende Modul vorhanden sein.
-			FileIniZZZ objFileIni = this.objKernel2configure.getFileConfigIniByAlias(sModule);
+			FileIniZZZ objFileIni = this.objKernel2configure.getFileConfigIniByAlias(sModuleChoosen);
 			
 			//Im DebugUI Fall: Ausgehend von 2 Komponenten in der DebugUI Gruppe, für die fehlende Spalten mit Leerkomponente auffüllen.
 			if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())){ 
@@ -144,7 +173,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 			
 			
 			//Alle Einträge dieses Keys holen
-			String[] saProperty = objFileIni.getPropertyAll(sSystemKey);
+			String[] saProperty = objFileIni.getPropertyAll(sSystemKeyChoosen);
 			if(saProperty==null){
 				//Hinweis: Keine Eintraege gefunden
 				iLines2Show = 1; //Die Hinweiszeile
@@ -154,11 +183,16 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 				labelaKey = new JLabel[1];
 				labelaText = new JLabel[1];
 				textfieldaValue = new JTextField[1];
+				buttonaKey = new JButton[1];
 				
 				labelaIndex[0] = new JLabel(" ");
 				this.add(labelaIndex[0]);
-				labelaKey[0] = new JLabel(" ");
-				this.add(labelaKey[0]);
+				//labelaKey[0] = new JLabel(" ");
+				//this.add(labelaKey[0]);
+				buttonaKey[0] = new JButton(" ");
+				this.add(buttonaKey[0]);
+				
+				
 				labelaText[0]= new JLabel("No property found.", SwingConstants.RIGHT);
 				this.add(labelaText[0]);								
 				textfieldaValue[0] = new JTextField("No value found.", iTEXTFIELD_COLUMN_DEFAULT);
@@ -178,51 +212,13 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 					//Erste Zeile anzeigen, Dummy Zeile anzeigen, Letzte Zeile anzeigen 			
 					int iDebugUILayoutStrategy=EnumSetDebugUIStrategyUtilZZZ.computeEnumConstant_StrategyValueForFlagUser(this);
 					System.out.println(ReflectCodeZZZ.getPositionCurrent() + ": DebugUIStrategyValue hat die Summme='"+iDebugUILayoutStrategy+"'");
-								
-//					//###### ZUM DEBUGGEN
-//					//Die Strategiewerte sind nun als Enumeration greifbar. Hier werden einge Wert gefüllt.....
-//					//MERKE 20211117: DAS WIRD ANALOG ZU DER KLASSE TroopVariantDao des TileHexMap Projekts gemacht....			
-//					DebugUIStrategyZZZ objValueTemp = new DebugUIStrategyZZZ();//Quasi als Dummy, aus dem die Enumeration (angelegt als innere Klasse) ausgelesen werden kann.
-//					//Anders als bei der _fillValue(...) Lösung können hier nur die Variablen gefüllt werden. Die Zuweisung muss im Konstruktor des immutable Entity-Objekts passieren, das dies keine Setter-Methodne hat.				
-//					Collection<String> colsEnumAlias = EnumZZZ.getNames(DebugUIStrategyZZZ.getThiskeyEnumClassStatic());
-//					boolean btest=false;
-//					long lngThisIdKey = 13; //TEST
-//					for(String sEnumAlias : colsEnumAlias){
-//						
-//						//DAS GEHT NICHT, DA JAVA IMMER EIN PASS_BY_VALUE MACHT.
-//						//Long lngThisValue = new Long(0);
-//						//String sName = new String("");
-//						//String sShorttext = new String("");
-//						//String sLongtext = new String("");
-//						//String sDescription = new String("");
-//						//this._fillValueImmutable(objValueTemp, sEnumAlias, lngThisValue, sName, sShorttext, sLongtext, sDescription); 
-//
-//						//Hier der Workaround mit Referenz-Objekten, aus denen dann der Wert geholt werden kann. Also PASS_BY_REFERENCE durch auslesen der Properties der Objekte.  
-//						ReferenceZZZ<Long> lngThisValue = new ReferenceZZZ(4);
-//						ReferenceZZZ<String> sName = new ReferenceZZZ("");
-//						ReferenceZZZ<String> sUniquetext = new ReferenceZZZ("");
-//						ReferenceZZZ<String> sCategorytext = new ReferenceZZZ("");
-//						ReferenceZZZ<Integer> iStrategyValue = new ReferenceZZZ("");
-//						
-//						//Einlesen der Werte, die für alle Entities vorhanden sind PLUS Werte für Amry
-//						
-//						this._fillValueImmutableByEnumAlias(objValueTemp, sEnumAlias, lngThisValue, sName, sUniquetext, sCategorytext, iStrategyValue);
-//						
-//						if(lngThisValue.get().longValue() == lngThisIdKey ){
-//							btest = true;
-//							break;
-//						}						
-//					}//end for 
-//					//#######################################################
-					
-					//Aus dem Strategiewert ein Array machen.
+													
+					//Aus dem Strategiewert ein Array machen, damit sind sie ohne gezielte Abfrage "greifbar".
 					boolean[] baStrategy = BinaryTokenizerZZZ.createBinaryTokens(iDebugUILayoutStrategy);
-					if(baStrategy!=null) {
+					if(baStrategy!=null) {						
+						//Jetzt eine Schleife machen: Schleifenzähler mit der Rangzahl / ordinalzahl der Enumeration vergleichen
 						
-						//Hier eine Schleife machen.
-						//Schleifenzähler mit der Rangzahl / ordinalzahl der Enumeration vergleichen
-						
-						
+//++++++ START: KOMMENTARE AUS DOKUGRUENDEN STEHEN LASSEN.......						
 						//Merke: Folgendes geht nicht, das in einer Switch Anweisung im case immer eine Konstante stehen muss
 //						switch icount:
 //						case Ordinalzahl der Strategy1:
@@ -266,6 +262,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 //						
 //						...
 //									
+//ENDE: KOMMENTARE AUS DOKUGRUENDEN STEHEN LASSEN.......
 						
 						//Das Durchgehen der EnumWerte und Casten UND keine statischen Werte verwenden, ausser den eh schon genutzten Flags!!!
 						EnumSet<EnumDebugUIStrategy> setEnumCasted = (EnumSet<EnumDebugUIStrategy>) DebugUIStrategyZZZ.getEnumSetUsedStatic();
@@ -312,6 +309,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 				String sValue = new String("");
 				labelaIndex = new JLabel[iLinesWithValue];
 				labelaKey = new JLabel[iLinesWithValue];
+				buttonaKey = new JButton[iLinesWithValue];
 				labelaText = new JLabel[iLinesWithValue];
 				textfieldaValue = new JTextField[iLinesWithValue];
 				
@@ -335,23 +333,41 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 						labelaIndex[iCount].setSize(dimensionLabelColumnFirst);
 						labelaIndex[iCount].setPreferredSize(dimensionLabelColumnFirst);
 						this.add(labelaIndex[iCount]);
+
 						
-						//Das Key - Label
-						//TODOGOON;//20211208 Hier den Application Key oder die SystemNr. ausgeben, ja nachdem woher der Wert stammt.						
 						//Neu: Statische Methode anbieten. Merke: Die wird auch beim Speichern verwendet.
-						String sSectionUsed = KernelFileIniZZZ.getSectionUsedForPropertyBySystemKey(objFileIni, sSystemKey, saProperty[iCount]);
+						String sSectionUsed = KernelFileIniZZZ.getSectionUsedForPropertyBySystemKey(objFileIni, sSystemKeyChoosen, saProperty[iCount]);
+						
+						//Key - Eintrag: //20211208 Hier den Application Key oder die SystemNr. ausgeben, ja nachdem woher der Wert stammt.
 						String sKeyUsed = null;
+						//TODOGOON 20211212; ActionEditProperty objActionEditProperty = null;
 						if(KernelFileIniZZZ.isSectionWithSystemNrAny(sSectionUsed)){
 							sKeyUsed = this.objKernel2configure.getSystemNumber();
+//							objActionEditProperty = new ActionEditProperty_SYSTEM_REMOVE();//Also wenn man hierauf clickt den ApplicationWert anzeigen, den SystemWert entfernen.
+							
 						}else {
 							sKeyUsed = this.objKernel2configure.getApplicationKey();
+//							objActionEditProperty = new ActionEditProperty_SYSTEM_ADD();//Also wenn man hierauf clickt den SystemWert "default" als neuen Wert mit dem ApplicationWert-Eintrag anzeigen.
 						}
 						
-						labelaKey[iCount] = new JLabel(sKeyUsed,SwingConstants.RIGHT);
-						labelaKey[iCount].setAlignmentX(Component.RIGHT_ALIGNMENT);
-						labelaKey[iCount].setSize(dimensionLabelColumnSecond);
-						labelaKey[iCount].setPreferredSize(dimensionLabelColumnSecond);
-						this.add(labelaKey[iCount]);
+						
+						//Der Key als Button
+						buttonaKey[iCount] = new JButton(sKeyUsed);
+						buttonaKey[iCount].setAlignmentX(Component.RIGHT_ALIGNMENT);
+						buttonaKey[iCount].setSize(dimensionButtonColumnSecond);
+						buttonaKey[iCount].setPreferredSize(dimensionButtonColumnSecond);						
+						//buttonaKey[iCount].addActionListener(objActionEditProperty);
+						this.add(buttonaKey[iCount]);
+						
+						//Der Key als Label
+//						labelaKey[iCount] = new JLabel(sKeyUsed,SwingConstants.RIGHT);
+//						labelaKey[iCount].setAlignmentX(Component.RIGHT_ALIGNMENT);
+//						labelaKey[iCount].setSize(dimensionLabelColumnSecond);
+//						labelaKey[iCount].setPreferredSize(dimensionLabelColumnSecond);
+//						this.add(labelaKey[iCount]);
+					
+						
+						
 						
 						//Das Property - Label
 						labelaText[iCount]= new JLabel(saProperty[iCount] + "=", SwingConstants.RIGHT);
@@ -529,34 +545,31 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 	
 	//#######################################################
 	//### GETTER / SETTER
-
-	//### Aus IKernelModuleUserZZZ
-	public IKernelModuleZZZ getModule() {
-		return this.objModule;
+	public IKernelModuleZZZ getModuleChoosen() {
+		return this.objModule2configure;
 	}
-	public void setModule(IKernelModuleZZZ objModule) {
-		this.objModule = objModule;
+	public void setModuleChoosen(IKernelModuleZZZ objModule) {
+		this.objModule2configure = objModule;
 	}
 	
-	//#################### Interface IKernelModuleUserZZZ
-			public String getModuleName() throws ExceptionZZZ {
-				String sReturn = new String("");
-				main:{	
-					//TODOGOON; //20210310: Jetzt gibt es ja noch ggfs. ein Abstraktes Module-Objekt.
-					//                    Wenn das abstrakte Modul Objekt vorhanden ist, dann den ModulNamen daraus verwenden.
-					//                    Ist das abstrakte Modul Objekt nicht vorhanden, dann den Modulnamen wie bisher anhand des Panels selbst ermitteln.				
-					if(StringZZZ.isEmpty(this.sModuleName)) {
-						if(this.getModule()!=null) {
-							this.sModuleName = KernelUIZZZ.getModuleUsedName((IKernelModuleZZZ)this.getModule());
-						}else {
-							this.sModuleName = KernelUIZZZ.getModuleUsedName((IPanelCascadedZZZ)this);
-						}
-					}
-					sReturn = this.sModuleName;
-				}//end main
-				return sReturn;
+	public String getModuleChoosenName() throws ExceptionZZZ {
+		String sReturn = new String("");
+		main:{	
+			//TODOGOON; //20210310: Jetzt gibt es ja noch ggfs. ein Abstraktes Module-Objekt.
+			//                    Wenn das abstrakte Modul Objekt vorhanden ist, dann den ModulNamen daraus verwenden.
+			//                    Ist das abstrakte Modul Objekt nicht vorhanden, dann den Modulnamen wie bisher anhand des Panels selbst ermitteln.				
+			if(StringZZZ.isEmpty(this.sModuleName)) {
+				if(this.getModuleChoosen()!=null) {
+					this.sModuleName = KernelUIZZZ.getModuleUsedName((IKernelModuleZZZ)this.getModuleChoosen());
+				}else {
+					this.sModuleName = KernelUIZZZ.getModuleUsedName((IPanelCascadedZZZ)this);
+				}
 			}
-			
+			sReturn = this.sModuleName;
+		}//end main
+		return sReturn;
+	}
+		
 			
 			//####### EIGENE METHODEN ###########
 			/* Das ist die Variante für Entities, die nicht mit der Annotation "Immutable" versehen sind.

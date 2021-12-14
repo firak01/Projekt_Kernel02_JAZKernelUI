@@ -74,9 +74,7 @@ public class Panel_DLGBOXZZZ extends KernelJPanelCascadedZZZ {
 		    scrollPane.setBounds(0, 0, objPanelCenter.getBounds().height, 50);
 			this.add(scrollPane);
      		this.setPanelSub("CENTER", objPanelCenter); //Damit es von anderen Panels "greifbar" wird.
-       		   		
-//     		TODO GOON die Inhalte der Textfelder des objPanelCenter f�r das objPanelEast abfragbar machen!!!
-     		
+       		   		     		
      		//#########################################################################################################
      		//#########################################################################################################
      		 
@@ -120,6 +118,8 @@ public class Panel_DLGBOXZZZ extends KernelJPanelCascadedZZZ {
 		//	} catch (ExceptionZZZ ez) {
 		//		ez.printStackTrace();
 		//	}
+     		
+     		
 	}
 	
 

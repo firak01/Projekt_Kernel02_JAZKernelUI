@@ -1,6 +1,7 @@
 package custom.zKernelUI.module.config;
 import javax.swing.JComponent;
 
+import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;
@@ -9,11 +10,11 @@ import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.util.JFrameHelperZZZ;
 
 public class FrameConfigZZZ extends KernelJFrameCascadedZZZ{
-	private KernelZZZ objKernelChoosen;   //Dieser Frame stellt die Konfiguration eines anderen Kernels dar. Dieser andere, intern verwendete Kernel ist hiermit gemeint.
+	private IKernelZZZ objKernelChoosen;   //Dieser Frame stellt die Konfiguration eines anderen Kernels dar. Dieser andere, intern verwendete Kernel ist hiermit gemeint.
 	
 	
 	
-public FrameConfigZZZ(KernelZZZ objKernelConfig, String sApplication2Config, String sSystemNumber2Config) throws ExceptionZZZ{
+public FrameConfigZZZ(IKernelZZZ objKernelConfig, String sApplication2Config, String sSystemNumber2Config) throws ExceptionZZZ{
 	super(objKernelConfig); //Es gibt keinen ParentFrame
 	
 	//DIE Anwendung der konfiguration soll pr�fen, ob alles korrekt konfiguriert ist. Darum wird daf�r ein internes Kernel-Objekt angelegt.
@@ -22,12 +23,10 @@ public FrameConfigZZZ(KernelZZZ objKernelConfig, String sApplication2Config, Str
 	//20211201: Die im ausgewählten Kernel-Objekt gefundenen ini-Datei Werte sollen ja nur angezeigt und nicht umgewandelt werden	
 	//public KernelZZZ(String sApplicationKey, String sSystemNumber, String sFileConfigPath, String sFileConfigName, String[] saArg, String sFlagControl) throws ExceptionZZZ{
 	String[] saArg = {"-z","{\"USEEXPRESSION\":false}"};	
-	KernelZZZ objKernelChoosen = new KernelZZZ(sApplication2Config, sSystemNumber2Config, objKernelConfig, saArg, null);
-	this.setKernelConfigObject(objKernelChoosen);
+	IKernelZZZ objKernelChoosen = new KernelZZZ(sApplication2Config, sSystemNumber2Config, objKernelConfig, saArg, null);
+	this.setKernelObjectChoosen(objKernelChoosen);
 	
-	//TODO: Titel aus der Konfiguration holen
 	setTitle("setTitel() has to be set by the custom classes");
-
 }
 public boolean launchCustom(){
 	return true;
@@ -64,32 +63,34 @@ public IPanelCascadedZZZ getPaneContent() throws ExceptionZZZ {
 		objReturn = super.getPaneContent();
 		if(objReturn!=null) break main;
 		
-		PanelConfigZZZ objPanel = new PanelConfigZZZ(this.getKernelObject(), this, this.getKernelConfigObject());
-		this.setPanelContent(objPanel);
+		objReturn = this.getPanelContent();
+		if(objReturn!=null) break main;
 		
-		objReturn = objPanel;
+		//Merke: Endlosschleifengefahr... daher woanders definieren,....
+		//PanelConfigZZZ objPanel = new PanelConfigZZZ(this.getKernelObject(), this, this.getKernelConfigObject());
+		//this.setPanelContent(objPanel);
+		//objReturn = objPanel;
 	}
 	return objReturn;
 }
 
 
-public KernelZZZ getKernelConfigObject(){
+public IKernelZZZ getKernelObjectChoosen(){
 	return this.objKernelChoosen;
 }
-public void setKernelConfigObject(KernelZZZ objKernelConfig){
+public void setKernelObjectChoosen(IKernelZZZ objKernelConfig){
 	this.objKernelChoosen = objKernelConfig;
 }
-public JComponent getPaneContent(String sAlias) throws ExceptionZZZ {
-	// TODO Auto-generated method stub
-	//Hier wird nix in einen anderen Pane als den ContentPane gestellt.
-	return null;
-}
+
 @Override
 public boolean setSizeDefault() throws ExceptionZZZ {
 	JFrameHelperZZZ.setSizeDefault(this);
 	return true;
 }
 
-
-
+@Override
+public IPanelCascadedZZZ createPanelContent() throws ExceptionZZZ {
+	PanelConfigZZZ objReturn = new PanelConfigZZZ(this.getKernelObject(), this, this.objKernelChoosen);//, this.getKernelConfigObject());
+	return objReturn;
+}
 }//END class

@@ -104,6 +104,13 @@ public class ModelPanelDebugZZZ extends AbstractModelComponentGroupZZZ{
 					}else {
 						listaTitle.add("Module: Not configured");
 						hmReturn.put(listaTitle);
+						
+						//TESTE WEITERES LABEL
+						//NEIN, Nicht löschen, damit würde auch die vorherige Liste geleert. listaReturn.clear();
+						ArrayList<String>listaTest = new ArrayList<String>();
+						listaTest.add("TEST");
+						listaTest.add("Ein Testwert");
+						hmReturn.put(listaTest);
 					}
 				}
 				break;

@@ -7,9 +7,11 @@ import javax.swing.JFrame;
 import basic.zBasic.IJNILotusscriptCallableZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
+import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelJFrameCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.util.JFrameHelperZZZ;
+import custom.zKernelUI.module.config.PanelConfigZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
 import basic.zKernel.flag.IFlagUserZZZ;
@@ -85,7 +87,9 @@ public class DLGBOX4INIZZZ  extends KernelJFrameCascadedZZZ  implements IJNILotu
 			//Grundflaeche in den Rahmen hinzufuegen...
 			Panel_DLGBOXZZZ objPanel = new Panel_DLGBOXZZZ(this.getKernelObject(),this, this.objKernelChoosen, sModule2Config, sProgram);
 			
-			//... das wird nun �ber das ContentPane der Frames gemacht
+			
+			
+			//... das wird nun ueber das ContentPane der Frames gemacht
 			this.getContentPane().add(objPanel);
 			this.setPanelSub("ContentPane", objPanel);
 						
@@ -127,6 +131,12 @@ public class DLGBOX4INIZZZ  extends KernelJFrameCascadedZZZ  implements IJNILotu
 	public boolean setSizeDefault() throws ExceptionZZZ {
 		JFrameHelperZZZ.setSizeDefault(this);
 		return true;
+	}
+
+
+	@Override
+	public IPanelCascadedZZZ createPanelContent() throws ExceptionZZZ {		
+		return null;
 	}
 
 	

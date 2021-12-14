@@ -26,7 +26,8 @@ public class ModelComponentHelperZZZ {
 			String[]saParent=ArrayListZZZ.toStringArray(listaText);				
 			String sHtml = StringArrayZZZ.asHtml(saParent);
 											
-			objReturn = new JLabel(sHtml);					
+			objReturn = new JLabel(sHtml);	
+			objReturn.setToolTipText(sHtml); //Workaround... falls das Feld sehr klein wird, soll das helfen den Text zu erkennen.
 			
 		}//end main:
 		return objReturn;

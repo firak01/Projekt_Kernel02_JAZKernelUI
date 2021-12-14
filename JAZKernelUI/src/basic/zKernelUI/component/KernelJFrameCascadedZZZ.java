@@ -571,24 +571,33 @@ private HashMap<String, Boolean>hmFlagPassed = new HashMap<String, Boolean>();
 	}
 
 	public IPanelCascadedZZZ getPanelSub(String sAlias) {		
-		return this.objHtPanelSub.get(sAlias);
+		return this.getHashtablePanel().get(sAlias);
 	}
 	public void setPanelSub(String sAlias, IPanelCascadedZZZ objPanel) {
-		this.objHtPanelSub.put(sAlias, objPanel);
+		this.getHashtablePanel().put(sAlias, objPanel);
 	}
 	public Hashtable getPanelSubAll(){
-		return this.objHtPanelSub;
+		return this.getHashtablePanel();
 	}
 	
+	public abstract IPanelCascadedZZZ createPanelContent() throws ExceptionZZZ;
 	
 	/* (non-Javadoc)
 	 * @see basic.zKernelUI.component.IFrameLaunchableZZZ#getPaneContent()
 	 */
 	public IPanelCascadedZZZ getPaneContent() throws ExceptionZZZ{
-		return this.objHtPanelSub.get(KernelJFrameCascadedZZZ.getAliasPanelContent());
+		return this.getHashtablePanel().get(KernelJFrameCascadedZZZ.getAliasPanelContent());
 	}
+	public JComponent getPaneContent(String sAlias) throws ExceptionZZZ {
+		return (JComponent) this.getHashtablePanel().get(sAlias);
+	}
+	
+	public IPanelCascadedZZZ getPanelContent() throws ExceptionZZZ {
+		return this.getHashtablePanel().get(KernelJFrameCascadedZZZ.getAliasPanelContent());
+	}
+	
 	public void setPanelContent(IPanelCascadedZZZ objPanelRoot){
-		this.objHtPanelSub.put(KernelJFrameCascadedZZZ.getAliasPanelContent(), objPanelRoot);
+		this.getHashtablePanel().put(KernelJFrameCascadedZZZ.getAliasPanelContent(), objPanelRoot);
 		this.setContentPane((Container) objPanelRoot);
 	}
 
@@ -656,6 +665,7 @@ public void setFrameSub(String sAlias, JFrame objFrame){
 				SwingUtilities.invokeLater(runnerFrame); //Damit also die Erzeugung des Frames in den EventDispatchThread stellen. Merke: Das macht nur Sinn, wenn in launchCustom() weiterer zeitaufwendiger Code ausgef�hrt wird.
 				bReturn = true;
 			}else{
+				
 				//!!! Hier wird das gewünschte ContentPanel eingebaut !!!
 				KernelJFrameCascadedZZZ.launchDoing(this, sTitle, this.bLaunchedBefore);
 				bReturn = true;
@@ -722,16 +732,18 @@ public void setFrameSub(String sAlias, JFrame objFrame){
 				if(objPanel !=null){
 					if(!frmCascaded.getContentPane().equals(objPanel)) {
 						frmCascaded.getContentPane().add((Component) objPanel);
-					}
-					frmCascaded.setPanelSub(KernelJFrameCascadedZZZ.getAliasPanelContent(), objPanel);
+					}					
+				}else {
+					objPanel = frmCascaded.createPanelContent();//Merke 2021121: Nur an dieser Stelle das ContenPanel einbauen sonst Endlosschleifengefahr.
+					frmCascaded.getContentPane().add((Component) objPanel);
 				}
+				frmCascaded.setPanelSub(KernelJFrameCascadedZZZ.getAliasPanelContent(), objPanel);
 				
 				//FGL 20080912: Ggf. ein weiteres Panel hinzufügen
 				IPanelCascadedZZZ objPanelContent = (IPanelCascadedZZZ) frmCascaded.getPaneContent(KernelJFrameCascadedZZZ.getAliasPanelContent() + "Sub");
 				if(objPanelContent != null){
 					if (objPanel != null){
-						((JComponent) objPanel).setOpaque(false);
-						//if(!objPanel.equals(objPanelContent))objPanel.add(objPanelContent);
+						((JComponent) objPanel).setOpaque(false);						
 						objPanel.setPanelSub(KernelJFrameCascadedZZZ.getAliasPanelContent()+"Sub", objPanelContent);
 					}else{
 						if(!frmCascaded.getContentPane().equals(objPanelContent))frmCascaded.getContentPane().add((JComponent)objPanelContent);
@@ -834,17 +846,17 @@ public void setFrameSub(String sAlias, JFrame objFrame){
 					//Das doing der launch Methode als static-Methode.
 					KernelJFrameCascadedZZZ.launchDoing(this.frmCascaded, this.sTitle, this.bLaunchedBefore);
 					
-					//Hier werden dann die speziellen Panels des Frames hinzugef�gt
+					//Hier werden dann die speziellen Panels des Frames hinzugefuegt
 					boolean bReturn = this.frmCascaded.launchCustom();
 					if(bReturn){
-						//nix machen, wenn so gestartet wurde. Dann soll die Frame-Gr��e nicht von den Komponenten abh�ngen.
+						//nix machen, wenn so gestartet wurde. Dann soll die Frame-Groesse nicht von den Komponenten abhaengen.
 					}else{
-						this.frmCascaded.pack(); //Frame Gr��e h�ngt von den Komponenten ab
+						this.frmCascaded.pack(); //Frame Groesse haengt von den Komponenten ab
 					}
 					this.bLaunchedBefore = true;
 					//das kostet sehr viel Performance:    ReportLogZZZ.write(ReportLogZZZ.DEBUG, "Frame '" + this.sTitle + "' launched");		
 					
-	//				... sichtbar machen erst, nachdem alle Elemente im Frame hinzugef�gt wurden !!!
+	//				... sichtbar machen erst, nachdem alle Elemente im Frame hinzugefuegt wurden !!!
 					//depreciated in 1.5 frame.show();
 					//statt dessen...
 					this.frmCascaded.setVisible(true); //Meke: Trotz alledem wird das Fenster erst komplett angezeigt, wenn der code in launchCustom() beendet ist....

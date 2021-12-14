@@ -9,6 +9,7 @@ import junit.framework.TestCase;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernelUI.KernelUIZZZ;
+import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelJFrameCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.util.JFrameHelperZZZ;
@@ -89,6 +90,12 @@ public class KernelUIZZZTest  extends TestCase{
 		public boolean setSizeDefault() throws ExceptionZZZ {
 			JFrameHelperZZZ.setSizeDefault(this);
 			return true;
+		}
+
+		@Override
+		public IPanelCascadedZZZ createPanelContent() throws ExceptionZZZ {
+			// TODO Auto-generated method stub
+			return null;
 		} 
 	}//END class fFrmMain4test
 }//END class KernelUIZZZTest

@@ -4,6 +4,7 @@ import javax.swing.JComponent;
 import basic.zKernel.KernelZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zBasic.ExceptionZZZ;
+import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelJFrameCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.util.JFrameHelperZZZ;
@@ -75,6 +76,11 @@ public JComponent getPaneContent(String sAlias) throws ExceptionZZZ {
 public boolean setSizeDefault() throws ExceptionZZZ {
 	JFrameHelperZZZ.setSizeDefault(this);
 	return true;
+}
+@Override
+public IPanelCascadedZZZ createPanelContent() throws ExceptionZZZ {
+	// TODO Auto-generated method stub
+	return null;
 }
 
 

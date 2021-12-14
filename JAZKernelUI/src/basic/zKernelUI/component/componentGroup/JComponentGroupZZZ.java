@@ -1,5 +1,6 @@
 package basic.zKernelUI.component.componentGroup;
 
+import java.awt.Component;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
@@ -144,6 +145,7 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 					
 					JLabel label = (JLabel)component;
 					label.setText(sHtml);
+					label.setToolTipText(sHtml);
 				}				
 			}
 		}
@@ -186,7 +188,7 @@ public class JComponentGroupZZZ extends KernelUseObjectZZZ implements IListenerC
 		//z.B. kann es sein, dass seit der initialen Erstellung der Gruppe sich an den Panels etwas geändert hat.		        		
 		this.refreshValues(iIndexUsedInCollection);
 		this.setVisible(bActiveStateUsed);			
-		this.setEventPrevious(eventComponentGroupSwitchNew);
+		this.setEventPrevious(eventComponentGroupSwitchNew);		
 	}
 	
 	

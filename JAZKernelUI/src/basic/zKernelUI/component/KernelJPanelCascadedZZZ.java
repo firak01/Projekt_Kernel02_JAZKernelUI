@@ -449,7 +449,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 					//if(panelReturn!=null) break main;
 					
 					//Letzter Ausweg: ContentPane
-					panelReturn = (IPanelCascadedZZZ) frameParent.getContentPane();
+					//ABER BEIM CASTEN MISSMATCH panelReturn = (IPanelCascadedZZZ) frameParent.getContentPane();
 				}
 				
 			}else{
@@ -1057,15 +1057,21 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			if(StringZZZ.isEmpty(this.sModuleName)) {
 				if(this.objModule!=null) {
 					if(this.objModule.getClass().isInstance(this.getClass())||this.objModule.getClass().equals(this.getClass())) {
-						sReturn = KernelUIZZZ.getModuleUsedName((IPanelCascadedZZZ)this);	
-						this.sModuleName = sReturn;
+						sReturn = KernelUIZZZ.getModuleUsedName((IPanelCascadedZZZ)this);							
 					}else {
 						sReturn = KernelUIZZZ.getModuleUsedName(objModule);						
 					}
 				}else {
-					sReturn = KernelUIZZZ.getModuleUsedName((IPanelCascadedZZZ)this);	
-					this.sModuleName = sReturn;
-				}				
+					
+					IKernelModuleZZZ objModule = KernelUIZZZ.searchModule(this);
+					if(objModule!=null) {
+						sReturn = KernelUIZZZ.getModuleUsedName(objModule);					
+					}else {						
+						//"Nicht weiter suchen, sonst Endlosscheifengefahr": undefinierter Modulname als Ergebnis zurückgeben.						
+						sReturn = this.sMODULE_UNDEFINED;							
+					}
+				}		
+				this.sModuleName = sReturn;
 			}else {
 				sReturn = this.sModuleName;				
 			}								
@@ -1134,21 +1140,21 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 					JComponentGroupZZZ group = (JComponentGroupZZZ) hmComponent.getValue(iIndexOuter);
 					if(group!=null) {
 											
-					ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) group.getComponents();
-					if(listaComponenttemp!=null) {
-					if(!listaComponenttemp.isEmpty()) {
-						
-						//Die Labels der Arraylist abarbeiten und dem panel hinzufügen
-						int iIndexInner=-1;				
-						for(JComponent componenttemp : listaComponenttemp) {
-							if(componenttemp!=null) {
-								iIndexInner=iIndexInner+1;
-								this.add(componenttemp);
-								this.setComponent("ComponentDebug"+iIndexOuter+"_"+iIndexInner, componenttemp);
-							}
-						}		
-					}
-					}
+						ArrayList<JComponent>listaComponenttemp = (ArrayList<JComponent>) group.getComponents();
+						if(listaComponenttemp!=null) {
+						if(!listaComponenttemp.isEmpty()) {
+							
+							//Die Labels der Arraylist abarbeiten und dem panel hinzufügen
+							int iIndexInner=-1;				
+							for(JComponent componenttemp : listaComponenttemp) {
+								if(componenttemp!=null) {
+									iIndexInner=iIndexInner+1;
+									this.add(componenttemp);
+									this.setComponent("ComponentDebug"+iIndexOuter+"_"+iIndexInner, componenttemp);
+								}
+							}		
+						}
+						}
 					}
 				}
 				bReturn = true;

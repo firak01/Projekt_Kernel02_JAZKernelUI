@@ -118,6 +118,11 @@ public class KernelJPanelCascadedZZZTest  extends TestCase{
 		public boolean setSizeDefault() throws ExceptionZZZ {
 			JFrameHelperZZZ.setSizeDefault(this);
 			return true;
+		}
+		@Override
+		public IPanelCascadedZZZ createPanelContent() throws ExceptionZZZ {
+			// TODO Auto-generated method stub
+			return null;
 		} 
 	}//END class fFrmMain4test
 	

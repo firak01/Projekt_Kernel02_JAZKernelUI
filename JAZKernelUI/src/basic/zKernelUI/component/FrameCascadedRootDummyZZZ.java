@@ -35,5 +35,10 @@ public class FrameCascadedRootDummyZZZ extends KernelJFrameCascadedZZZ{
 		JFrameHelperZZZ.setSizeDefault(this);
 		return true;
 	}
+
+	@Override
+	public IPanelCascadedZZZ createPanelContent() throws ExceptionZZZ {		
+		return null;
+	}
 }
 	
