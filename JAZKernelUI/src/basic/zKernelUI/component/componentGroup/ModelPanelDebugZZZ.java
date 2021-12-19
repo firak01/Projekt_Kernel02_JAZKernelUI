@@ -1,5 +1,7 @@
 package basic.zKernelUI.component.componentGroup;
 
+import java.awt.Container;
+import java.awt.LayoutManager;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -71,6 +73,58 @@ public class ModelPanelDebugZZZ extends AbstractModelComponentGroupZZZ{
 					stemp = panel.getClass().getSimpleName(); //das ist zu lang und nicht aussagekräftig genug String sParent = this.getClass().getSuperclass().getSimpleName();
 					listaTitle.add(stemp);															
 					hmReturn.put(listaTitle);
+					
+					//Hier: Für Spaltenorientierte Layouts, wird an dieser Stelle die Anzahl der Komponenten 
+					//      aufgefüllt mit Leerkomponenten. Damit ist die Gesamtzahl der Komponenten
+					//      ohne Rest teilbar durch die Anzahl der Spalten
+					//Das bedeutet, das fuer unterschiedliche Layout-Manager die Anzahl der "Fuellkomponenten" auch unterschiedlich sein muss.
+					LayoutManager objLayoutManager = ((Container) this.getPanelParent()).getLayout();
+					System.out.println(objLayoutManager.getClass().getName());
+					TODOGOON; //20121219
+					//IDEE: Nun eine Factory-Klasse anbieten, die mit den Details die Füllobjekte erstellt.
+					//Dazu braucht man die Anzahl der Spalten und die Gesamtzahl der Komponenten
+					//                 UND den verwendeten LayoutManager-Typ
+					//objLayoutManager.
+					
+					
+					//A) Ohne LayoutManager, z.B. KernelJPanelCascadedZZZ /JPanel pur
+					//Keine Füllkomponenten
+					
+					//B) EntryLayout4visibleZZZ
+					//MERKE: HIER MUSS DIE ANZAHL DER KOMPONENTEN IN ALLEN CASE FAELLEN DURCH DIE ANZAHL DER SPALTEN TEILBAR SEIN,
+					//       DABEI ZAEHLT DAS MAXIMUM. ALSO WENN IN EINEM CASE FALL NEUE KOMPONENTEN HINZUKOMMEN, NICHT UNBEDIMGT DIE ANZAHL ANPASSEN.
+//					ArrayList<String>listaTest = new ArrayList<String>();
+//					listaTest.add(" ");
+//					hmReturn.put(listaTest);
+//					
+//					ArrayList<String>listaTest2 = new ArrayList<String>();
+//					listaTest2.add(" ");
+//					hmReturn.put(listaTest2);
+//					
+//					ArrayList<String>listaTest3 = new ArrayList<String>();
+//					listaTest3.add(" ");
+//					hmReturn.put(listaTest3);	
+//					
+//					ArrayList<String>listaTest4 = new ArrayList<String>();
+//					listaTest4.add(" ");
+//					hmReturn.put(listaTest4);	
+					
+					//C) GridLayout4VisibleZZZ (schon als Lösung für das normale GridLayout)
+					//Problem: GridLayout hält Platz auch für verborgene Components
+					//         https://stackoverflow.com/questions/7727728/invisible-components-still-take-up-space-jpanel
+					//panel.setLayout(new GridLayout(6,2)); //6 Zeilen, 2 Spalten
+					//Darum diese spezielle Variante dafür, nur für sichtbare Components	
+					//MERKE: HIER MUSS DIE ANZAHL DER KOMPONENTEN IN ALLEN CASE FAELLEN GLEICH SEIN,
+					//       ALSO WENN IN EINEM CASE FALL NEUE KOMPONENTEN HINZUKOMMEN, HIER DIE ANZAHL ANPASSEN.
+					//Bei 2 Spalten, allerdings kein Füller, denn das wäre eine ganze neue Zeile
+//					ArrayList<String>listaTest = new ArrayList<String>();
+//					listaTest.add("A");
+//					hmReturn.put(listaTest);
+//					
+//					ArrayList<String>listaTest2 = new ArrayList<String>();
+//					listaTest2.add("B");
+//					hmReturn.put(listaTest2);
+					
 				}
 				break;				
 			case 1:
@@ -94,13 +148,10 @@ public class ModelPanelDebugZZZ extends AbstractModelComponentGroupZZZ{
 						listaTitle.add("Module:" + sModule);
 						hmReturn.put(listaTitle);
 						
-												
-						//TESTE WEITERES LABEL
-						//NEIN, Nicht löschen, damit würde auch die vorherige Liste geleert. listaReturn.clear();
 						ArrayList<String>listaTest = new ArrayList<String>();
 						listaTest.add("TEST");
-						listaTest.add("Ein Testwert");
-						hmReturn.put(listaTest);						
+						listaTest.add("2. Zeile");
+						hmReturn.put(listaTest);
 					}else {
 						listaTitle.add("Module: Not configured");
 						hmReturn.put(listaTitle);
@@ -112,6 +163,36 @@ public class ModelPanelDebugZZZ extends AbstractModelComponentGroupZZZ{
 						listaTest.add("Ein Testwert");
 						hmReturn.put(listaTest);
 					}
+					
+					//Hier: Für Spaltenorientierte Layouts, wird an dieser Stelle die Anzahl der Komponenten 
+					//      aufgefüllt mit Leerkomponenten. Damit ist die Gesamtzahl der Komponenten
+					//      ohne Rest teilbar durch die Anzahl der Spalten  
+					//Das bedeutet, das fuer unterschiedliche Layout-Manager die Anzahl der "Fuellkomponenten" auch unterschiedlich sein muss.
+					//A) EntryLayout4visibleZZZ
+//					ArrayList<String>listaTest = new ArrayList<String>();
+//					listaTest.add(" ");
+//					hmReturn.put(listaTest);
+//					
+//					ArrayList<String>listaTest2 = new ArrayList<String>();
+//					listaTest2.add(" ");
+//					hmReturn.put(listaTest2);
+//					
+//					ArrayList<String>listaTest3 = new ArrayList<String>();
+//					listaTest3.add(" ");
+//					hmReturn.put(listaTest3);	
+//					
+//					ArrayList<String>listaTest4 = new ArrayList<String>();
+//					listaTest4.add(" ");
+//					hmReturn.put(listaTest4);
+					
+					//C) GridLayout4VisibleZZZ (schon als Lösung für das normale GridLayout)
+					//Problem: GridLayout hält Platz auch für verborgene Components
+					//         https://stackoverflow.com/questions/7727728/invisible-components-still-take-up-space-jpanel
+					//panel.setLayout(new GridLayout(6,2)); //6 Zeilen, 2 Spalten
+					//Darum diese spezielle Variante dafür, nur für sichtbare Components	
+					ArrayList<String>listaTest = new ArrayList<String>();
+					listaTest.add("B");
+					hmReturn.put(listaTest);
 				}
 				break;
 			case 2:
@@ -133,6 +214,41 @@ public class ModelPanelDebugZZZ extends AbstractModelComponentGroupZZZ{
 						listaTitle.add("Program: Not configured");
 						hmReturn.put(listaTitle);
 					}
+					
+					//Hier: Für Spaltenorientierte Layouts, wird an dieser Stelle die Anzahl der Komponenten 
+					//      aufgefüllt mit Leerkomponenten. Damit ist die Gesamtzahl der Komponenten
+					//      ohne Rest teilbar durch die Anzahl der Spalten  
+					//Das bedeutet, das fuer unterschiedliche Layout-Manager die Anzahl der "Fuellkomponenten" auch unterschiedlich sein muss.
+					//A) EntryLayout4visibleZZZ
+//					ArrayList<String>listaTest = new ArrayList<String>();
+//					listaTest.add(" ");
+//					hmReturn.put(listaTest);
+//					
+//					ArrayList<String>listaTest2 = new ArrayList<String>();
+//					listaTest2.add(" ");
+//					hmReturn.put(listaTest2);
+//					
+//					ArrayList<String>listaTest3 = new ArrayList<String>();
+//					listaTest3.add(" ");
+//					hmReturn.put(listaTest3);	
+//					
+//					ArrayList<String>listaTest4 = new ArrayList<String>();
+//					listaTest4.add(" ");
+//					hmReturn.put(listaTest4);	
+					
+					//C) GridLayout4VisibleZZZ (schon als Lösung für das normale GridLayout)
+					//Problem: GridLayout hält Platz auch für verborgene Components
+					//         https://stackoverflow.com/questions/7727728/invisible-components-still-take-up-space-jpanel
+					//panel.setLayout(new GridLayout(6,2)); //6 Zeilen, 2 Spalten
+					//Darum diese spezielle Variante dafür, nur für sichtbare Components	
+					//Bei 2 Spalten, allerdings kein Füller, denn das wäre eine ganze neue Zeile
+//					ArrayList<String>listaTest = new ArrayList<String>();
+//					listaTest.add("A");
+//					hmReturn.put(listaTest);
+//					
+//					ArrayList<String>listaTest2 = new ArrayList<String>();
+//					listaTest2.add("B");
+//					hmReturn.put(listaTest2);
 				}
 				break;
 			case 3:
@@ -158,6 +274,41 @@ public class ModelPanelDebugZZZ extends AbstractModelComponentGroupZZZ{
 					}
 					}catch(ExceptionZZZ ez) {						
 					}
+					
+					//Hier: Für Spaltenorientierte Layouts, wird an dieser Stelle die Anzahl der Komponenten 
+					//      aufgefüllt mit Leerkomponenten. Damit ist die Gesamtzahl der Komponenten
+					//      ohne Rest teilbar durch die Anzahl der Spalten  
+					//Das bedeutet, das fuer unterschiedliche Layout-Manager die Anzahl der "Fuellkomponenten" auch unterschiedlich sein muss.
+					//A) EntryLayout4visibleZZZ
+//					ArrayList<String>listaTest = new ArrayList<String>();
+//					listaTest.add(" ");
+//					hmReturn.put(listaTest);
+//					
+//					ArrayList<String>listaTest2 = new ArrayList<String>();
+//					listaTest2.add(" ");
+//					hmReturn.put(listaTest2);
+//					
+//					ArrayList<String>listaTest3 = new ArrayList<String>();
+//					listaTest3.add(" ");
+//					hmReturn.put(listaTest3);	
+//					
+//					ArrayList<String>listaTest4 = new ArrayList<String>();
+//					listaTest4.add(" ");
+//					hmReturn.put(listaTest4);	
+					
+					//C) GridLayout4VisibleZZZ (schon als Lösung für das normale GridLayout)
+					//Problem: GridLayout hält Platz auch für verborgene Components
+					//         https://stackoverflow.com/questions/7727728/invisible-components-still-take-up-space-jpanel
+					//panel.setLayout(new GridLayout(6,2)); //6 Zeilen, 2 Spalten
+					//Darum diese spezielle Variante dafür, nur für sichtbare Components	
+					//Bei 2 Spalten, allerdings kein Füller, denn das wäre eine ganze neue Zeile
+//					ArrayList<String>listaTest = new ArrayList<String>();
+//					listaTest.add("A");
+//					hmReturn.put(listaTest);
+//					
+//					ArrayList<String>listaTest2 = new ArrayList<String>();
+//					listaTest2.add("B");
+//					hmReturn.put(listaTest2);
 				}
 				break;
 			default: 
