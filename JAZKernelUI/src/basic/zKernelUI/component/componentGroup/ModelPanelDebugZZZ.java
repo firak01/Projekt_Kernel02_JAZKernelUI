@@ -85,7 +85,7 @@ public class ModelPanelDebugZZZ extends AbstractModelComponentGroupZZZ{
 					//Dazu braucht man die Anzahl der Spalten und die Gesamtzahl der Komponenten
 					//                 UND den verwendeten LayoutManager-Typ
 					//objLayoutManager.
-					
+					ModelComponentFillerFactoryZZZ.getInstance().getFillerForLayoutManagerUsed(objLayoutManager);
 					
 					//A) Ohne LayoutManager, z.B. KernelJPanelCascadedZZZ /JPanel pur
 					//Keine Füllkomponenten
