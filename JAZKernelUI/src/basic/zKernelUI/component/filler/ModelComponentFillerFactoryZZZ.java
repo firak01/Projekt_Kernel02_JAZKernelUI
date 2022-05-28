@@ -1,4 +1,4 @@
-package basic.zKernelUI.component.componentGroup;
+package basic.zKernelUI.component.filler;
 
 
 import static java.lang.System.out;
@@ -17,6 +17,12 @@ import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
 import basic.zKernel.config.KernelConfigDefaultEntryZZZ;
 
+/**
+ *  
+ * 
+ * @author Fritz Lindhauer, 28.05.2022, 09:30:51
+ * siehe: EnumSetFactoryZZZ als Ideenvorlage
+ */
 public class ModelComponentFillerFactoryZZZ extends ObjectZZZ implements IModelComponentFillerFactoryZZZ {
 	private static ModelComponentFillerFactoryZZZ objComponentFactory = null;  //muss static sein, wg. getInstance()!!!
 	

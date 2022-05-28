@@ -1,4 +1,4 @@
-package basic.zKernelUI.component.componentGroup;
+package basic.zKernelUI.component.filler;
 
 import java.awt.LayoutManager;
 import java.util.ArrayList;
