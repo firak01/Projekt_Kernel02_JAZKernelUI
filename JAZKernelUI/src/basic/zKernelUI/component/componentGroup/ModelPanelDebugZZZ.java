@@ -16,6 +16,8 @@ import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
+import basic.zKernelUI.component.filler.IComponentFillerCreatorZZZ;
+import basic.zKernelUI.component.filler.ModelComponentFillerCreatorFactoryZZZ;
 import basic.zKernelUI.component.filler.ModelComponentFillerFactoryZZZ;
 import basic.zKernelUI.component.model.ModelComponentHelperZZZ;
 import debug.zKernelUI.component.buttonSwitchLabelGroup.ModelRow2ZZZ;
@@ -84,9 +86,9 @@ public class ModelPanelDebugZZZ extends AbstractModelComponentGroupZZZ{
 					TODOGOON; //20121219
 					//IDEE: Nun eine Factory-Klasse anbieten, die mit den Details die Füllobjekte erstellt.
 					//Dazu braucht man die Anzahl der Spalten und die Gesamtzahl der Komponenten
-					//                 UND den verwendeten LayoutManager-Typ
-					//objLayoutManager.
-					ModelComponentFillerFactoryZZZ.getInstance().getFillerForLayoutManagerUsed(objLayoutManager);
+					//                 UND den verwendeten LayoutManager-Typ					
+					IComponentFillerCreatorZZZ objFillerCreator = ModelComponentFillerCreatorFactoryZZZ.getInstance().getFillerCreatorObject(objLayoutManager);
+					ArrayList<String>listaTest = objFillerCreator.getFiller(iComponentAvailable, iColumnTotal);
 					
 					//A) Ohne LayoutManager, z.B. KernelJPanelCascadedZZZ /JPanel pur
 					//Keine Füllkomponenten

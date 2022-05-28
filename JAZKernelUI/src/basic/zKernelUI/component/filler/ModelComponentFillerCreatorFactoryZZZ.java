@@ -23,23 +23,23 @@ import basic.zKernel.config.KernelConfigDefaultEntryZZZ;
  * @author Fritz Lindhauer, 28.05.2022, 09:30:51
  * siehe: EnumSetFactoryZZZ als Ideenvorlage
  */
-public class ModelComponentFillerFactoryZZZ extends ObjectZZZ implements IModelComponentFillerFactoryZZZ {
-	private static ModelComponentFillerFactoryZZZ objComponentFactory = null;  //muss static sein, wg. getInstance()!!!
+public class ModelComponentFillerCreatorFactoryZZZ extends ObjectZZZ implements IModelComponentFillerCreatorFactoryZZZ {
+	private static ModelComponentFillerCreatorFactoryZZZ objComponentFactory = null;  //muss static sein, wg. getInstance()!!!
 	
 	/**Konstruktor ist private, wg. Singleton
 	 * @param objKernel
 	 * @throws ExceptionZZZ
 	 */
-	private ModelComponentFillerFactoryZZZ(IKernelZZZ objKernel) throws ExceptionZZZ{
+	private ModelComponentFillerCreatorFactoryZZZ(IKernelZZZ objKernel) throws ExceptionZZZ{
 		super();
 	}
-	private ModelComponentFillerFactoryZZZ(){
+	private ModelComponentFillerCreatorFactoryZZZ(){
 		super();
 	}
 	
-	public static ModelComponentFillerFactoryZZZ getInstance(){
+	public static ModelComponentFillerCreatorFactoryZZZ getInstance(){
 		if(objComponentFactory==null){
-			objComponentFactory = new ModelComponentFillerFactoryZZZ();
+			objComponentFactory = new ModelComponentFillerCreatorFactoryZZZ();
 		}
 		return objComponentFactory;		
 	}
@@ -61,6 +61,11 @@ public class ModelComponentFillerFactoryZZZ extends ObjectZZZ implements IModelC
 //		return objEnumSet;
 //	}
 	
+	
+	/*
+	 * Beispiel für die Implemtierung des Kerngedankens der Factory
+	 * TODO: Bei den Fillern dann die Fallunterscheidung in die entsprechende Methode verschieben.
+	 */
 	public EnumSet<?>getEnumSet(String sClassNameEnum) throws ExceptionZZZ{
 		EnumSet<?>objEnumSetReturn = null;
 		main:{
@@ -115,17 +120,19 @@ public class ModelComponentFillerFactoryZZZ extends ObjectZZZ implements IModelC
 	return objEnumSetReturn;
 	}
 	
-	public ArrayList<String>getFillerForLayoutManagerUsed(LayoutManager objLayoutManager) throws ExceptionZZZ{
-		ArrayList<String>listaReturn = null;
+	
+	@Override
+	public IComponentFillerCreatorZZZ getFillerCreatorObject(LayoutManager objLayoutManager) throws ExceptionZZZ {
+		IComponentFillerCreatorZZZ objReturn = null;
 		main:{
-			if(objLayoutManager==null){
-				ExceptionZZZ ez  = new ExceptionZZZ("LayoutManagerObject", iERROR_PARAMETER_MISSING, this.getClass().getName(), ReflectCodeZZZ.getMethodCurrentName());
-				throw ez;
-			}
-			
-			
-			
-		}//end main:
-		return listaReturn;
+		if(objLayoutManager==null){
+			ExceptionZZZ ez  = new ExceptionZZZ("LayoutManagerObject", iERROR_PARAMETER_MISSING, this.getClass().getName(), ReflectCodeZZZ.getMethodCurrentName());
+			throw ez;
+		}
+		
+		TODOGOON: Fallunterscheidung einbauen
+		
+	}//end main:
+	return objReturn;
 	}
 }
