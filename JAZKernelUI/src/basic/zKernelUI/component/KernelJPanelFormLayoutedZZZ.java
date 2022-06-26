@@ -366,7 +366,7 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 				//int iNumberOfRowsUsed = this.computeContentRowNumberUsed(iNumberOfRows);//Hier wird ggfs. noch eine DebugZeile draufgerechnet.
 				
 				iNumberOfRows = 2; 
-				TODOGOON; //20210731 MODELL HER zur Berechnung der Zeilen
+				//TODOGOON; //20210731 MODELL HER zur Berechnung der Zeilen
 				
 				int iIndexOld = 0; int iIndexNew = 0;
 				for(int icount=1;icount<=iNumberOfRows;icount++) {
