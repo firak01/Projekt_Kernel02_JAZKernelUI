@@ -144,7 +144,7 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 			boolean bReturn = false;
 			main:{											
 				this.formLayoutUsed = this.getFormLayoutUsed();
-				
+				this.setLayout(this.formLayoutUsed);//20220718 Das ggfs. neu erzeugte Layout muss auch hinzugefügt werden BEVOR die Zeilen gefüllt werden.
 				CellConstraints cc = new CellConstraints();
 					
 				//PROBLEM: Problem, wenn auf Daten über einen Programmnamen zugegriffen werden soll, der erst später über das FlagSetzen definiert wird., der aber erst später als FlagGesetzt wird.
@@ -156,6 +156,8 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 				boolean bGoon = true;				
 				while (bGoon) {
 					iRow++;
+					
+					//TODOGOON 20220718: Die Reihenfolge der Einträge entspricht nicht der Reihenfolge in der ini-Konfiguration!!!
 					bGoon = this.fillRowContent(cc, iRow);
 				}
 				bReturn = true;

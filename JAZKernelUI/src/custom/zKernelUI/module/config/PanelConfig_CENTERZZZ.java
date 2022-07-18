@@ -13,7 +13,7 @@ import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
 
 public class PanelConfig_CENTERZZZ extends KernelJPanelCascadedZZZ{
-	/** Klasse enth�lt die Buttons zur Auswahl des zu bearbeitenden Moduls und Systems
+	/** Klasse enthaelt die Buttons zur Auswahl des zu bearbeitenden Moduls und Systems
 	 * 
 	 */	
 	private IKernelZZZ objKernel2Config;
@@ -27,7 +27,7 @@ public class PanelConfig_CENTERZZZ extends KernelJPanelCascadedZZZ{
 		//this.setLayout(new GridLayout());
 				
 			
-		//Es sollen in dieser Phase nur konfigurierte und existierende Module bearbeitet werden d�rfen
+		//Es sollen in dieser Phase nur konfigurierte und existierende Module bearbeitet werden duerfen
 		ArrayList listaModule = objKernel2Config.getModuleFileAliasAll(true, true);
 		if(listaModule.size()>= 1){
 			//Comboboxen zum Einstellen des Moduls + Systems
@@ -35,8 +35,8 @@ public class PanelConfig_CENTERZZZ extends KernelJPanelCascadedZZZ{
 		
 			for(int icount = 0; icount < listaModule.size(); icount++){
 				
-				//Die ber�cksichtigten Module 
-				this.getLogObject().WriteLineDate(ReflectCodeZZZ.getMethodCurrentName() + "#Modul f�r den Key '" + objKernel2Config.getSystemKey() + "' --- '"  + (String) listaModule.get(icount) + "'");
+				//Die beruecksichtigten Module 
+				this.getLogObject().WriteLineDate(ReflectCodeZZZ.getMethodCurrentName() + "#Modul fuer den Key '" + objKernel2Config.getSystemKey() + "' --- '"  + (String) listaModule.get(icount) + "'");
 				
 				comboModule.addItem((String) listaModule.get(icount));
 			}			
