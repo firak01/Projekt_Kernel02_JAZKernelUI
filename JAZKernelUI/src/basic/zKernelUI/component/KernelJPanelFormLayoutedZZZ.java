@@ -50,6 +50,11 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 		KernelJPanelFormLayoutedNew_(this,2);//HIER DAS MODELL ÜBERGEBEN UND NICHT 2
 	}
 	
+	public KernelJPanelFormLayoutedZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended, String sFlagLocal) throws ExceptionZZZ{
+		super(objKernel, dialogExtended, sFlagLocal);
+		KernelJPanelFormLayoutedNew_(this,2);//HIER DAS MODELL ÜBERGEBEN UND NICHT 2
+	}
+	
 	public KernelJPanelFormLayoutedZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended, KernelJPanelCascadedZZZ panelRoot) throws ExceptionZZZ{
 		super(objKernel, dialogExtended);
 		KernelJPanelFormLayoutedNew_(panelRoot,2);
@@ -91,6 +96,13 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 			//layout.insertRow(1, rs);//RowIndex beginnt mit 1						
 			
 			this.iNumberOfRows = iNumberOfRows;
+			
+			//20220720: Ohne diese Anweisung fehlen die Debug-Zeilen. Die createDebugUI() Methode von KernelJPanelCascadedZZZ wird zwar überschrieben. 
+			            //Aber die dort hinzugefügten COmponenten gehen durch die Neuanlage der layouts in dieser Klasse verloren.
+			//Ggfs. die DebugUI-Angaben hinzufügen, das kann z.B. nur das Label mit dem Klassennamen sein.
+			//Gesteuert werde soll das durch Flags, die auch über die Kommandozeile übergeben werden können.
+			boolean bDebugUI = this.createDebugUi();
+			
 		}//end main:
 		return bReturn;
 	}
@@ -152,7 +164,9 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 				//         Darum ist fillRowContent eine abstrakte Methode.
 				
 				//Solange wie eine Zeile gefüllt wird, weitere Zeile füllen
-				int iRow = 0;
+				int iRow = 0;//TODOGOON: 20220719 - testweise von 0 auf 2 geändert, wg. Problem, dass keine Debugzeile ausgegeben wird. 
+				             //vielleicht liegt es an irgendeinem überschreiben.
+				            //NEIN: Die Navigatorzeile wird nur später gefüllt, halt ab zeile 3.
 				boolean bGoon = true;				
 				while (bGoon) {
 					iRow++;
@@ -348,7 +362,7 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 			boolean bReturn = false;
 			main:{					
 				if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())) {
-					this.initFormLayoutDebug();																			
+					bReturn = this.initFormLayoutDebug();																			
 				}						
 			}//end main:
 			return bReturn;		
@@ -382,7 +396,7 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 			return listReturn;
 		}
 		
-		//+++ von den eingentlichen Klassen zu implementieren
+		//+++ von den eigentlichen Klassen zu implementieren
 		public abstract ArrayList<RowSpec> buildRowSpecs();		
 		public abstract ArrayList<ColumnSpec> buildColumnSpecs();
 		public abstract boolean fillRowContent(CellConstraints cc, int iRow) throws ExceptionZZZ;

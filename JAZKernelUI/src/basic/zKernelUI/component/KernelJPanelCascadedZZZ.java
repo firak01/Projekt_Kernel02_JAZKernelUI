@@ -89,7 +89,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	}
 	private HashMap<String, Boolean>hmFlag=new HashMap<String, Boolean>();
 	private HashMap<String, Boolean>hmFlagPassed = new HashMap<String, Boolean>();
-	
+	private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 	
 	/**
 	 * DEFAULT Konstruktor, notwendig, damit man objClass.newInstance(); einfach machen kann.
@@ -105,7 +105,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	
 	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel) throws ExceptionZZZ{
 		super(); //Das initialisiert JPanel;		
-		KernelJPanelCascadedNew_(objKernel, null, null, null, null);		
+		KernelJPanelCascadedNew_(objKernel, null, null, null, null,null);		
 	}
 	
 	/** constructor used for creating a ROOT-Panel
@@ -116,12 +116,12 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	 */
 	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, KernelJFrameCascadedZZZ frameParent) throws ExceptionZZZ{
 		super(); //Das initialisiert JPanel;		
-		KernelJPanelCascadedNew_(objKernel, frameParent, null, null, null);
+		KernelJPanelCascadedNew_(objKernel, frameParent, null, null, null,null);
 	}
 	
 	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, JFrame frameBasic) throws ExceptionZZZ{		
 		FrameCascadedRootDummyZZZ frameParent = new FrameCascadedRootDummyZZZ(objKernel, frameBasic);				
-		KernelJPanelCascadedNew_(objKernel, frameParent, null, null, null);
+		KernelJPanelCascadedNew_(objKernel, frameParent, null, null, null,null);
 	}
 	
 	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, Container contentPane) throws ExceptionZZZ{
@@ -140,7 +140,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				frame.getContentPane().add(this);
 			     
 				FrameCascadedRootDummyZZZ frameParent = new FrameCascadedRootDummyZZZ(objKernel, frame);
-				KernelJPanelCascadedNew_(objKernel, frameParent, null, null, null);
+				KernelJPanelCascadedNew_(objKernel, frameParent, null, null, null,null);
 				break main;
 			}
 			
@@ -148,7 +148,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			if(bIsCascadedFrame){				
 				KernelJFrameCascadedZZZ frameParent =  (KernelJFrameCascadedZZZ) contentPane;   //SwingUtilities.getAncestorOfClass(KernelJFrameCascadedZZZ.class, (JComponent)contentPane);
 				frameParent.getContentPane().add(this);
-				KernelJPanelCascadedNew_(objKernel, frameParent, null, null, null);
+				KernelJPanelCascadedNew_(objKernel, frameParent, null, null, null,null);
 				break main;
 			}
 			
@@ -167,22 +167,41 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			if(frameParent==null) {
 				frameParent = ((KernelJPanelCascadedZZZ) contentPane).getFrameParent();
 			}
-			KernelJPanelCascadedNew_(objKernel, frameParent, null, null, null);
+			KernelJPanelCascadedNew_(objKernel, frameParent, null, null, null,null);
 		}//end main:
 		
 	}
 	
 	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialog) throws ExceptionZZZ{
-		KernelJPanelCascadedNew_(objKernel, null, dialog, null, null);
+		KernelJPanelCascadedNew_(objKernel, null, dialog, null, null,null);
+	}
+	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialog, String sFlagLocal) throws ExceptionZZZ{
+		HashMap<String,Boolean>hmFlagLocal=new HashMap<String,Boolean>();
+		if(!StringZZZ.isEmpty(sFlagLocal)) {
+			hmFlagLocal.put(sFlagLocal, true);
+		}
+		KernelJPanelCascadedNew_(objKernel, null, dialog, null, hmFlagLocal, null);
 	}
 	
 	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialog, KernelJPanelCascadedZZZ panelRoot) throws ExceptionZZZ{
-		KernelJPanelCascadedNew_(objKernel, null, dialog, panelRoot, null);
+		KernelJPanelCascadedNew_(objKernel, null, dialog, panelRoot, null,null);
 	}
 	
 	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialog,  HashMap<String, Boolean>hmFlag) throws ExceptionZZZ{
 		this(objKernel, dialog);
 		String stemp; boolean btemp; String sLog;
+		
+		//Die ggfs. vorhanden lokalen Flags setzen
+		if(hmFlagLocal!=null) {
+			for(String sKey:hmFlagLocal.keySet()){
+				stemp = sKey;
+				btemp = this.setFlagZLocal(sKey, hmFlagLocal.get(sKey));
+				if(btemp==false){
+					ExceptionZZZ ez = new ExceptionZZZ( "the LOCAL flag '" + stemp + "' is not available (passed by hashmap). Maybe an interface is not implemented.", iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
+					throw ez;		 
+				}			
+			}
+		}
 		
 		//Die ggf. vorhandenen Flags setzen.
 		if(hmFlag!=null){
@@ -205,17 +224,34 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	 * @throws ExceptionZZZ 
 	 */
 	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent) throws ExceptionZZZ{		
-		KernelJPanelCascadedNew_(objKernel, null, null, panelParent, null);
+		KernelJPanelCascadedNew_(objKernel, null, null, panelParent, null,null);
 	}
 	
 	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panelParent, HashMap<String, Boolean> hmFlag) throws ExceptionZZZ{	
-		KernelJPanelCascadedNew_(objKernel, null, null, panelParent, hmFlag);
+		KernelJPanelCascadedNew_(objKernel, null, null, panelParent, hmFlag,null);
 	}
 	
-	private boolean KernelJPanelCascadedNew_(IKernelZZZ objKernel, KernelJFrameCascadedZZZ frameParent, KernelJDialogExtendedZZZ dialog, KernelJPanelCascadedZZZ panelParent, HashMap<String, Boolean> hmFlag ) throws ExceptionZZZ{
+	private boolean KernelJPanelCascadedNew_(IKernelZZZ objKernel, KernelJFrameCascadedZZZ frameParent, KernelJDialogExtendedZZZ dialog, KernelJPanelCascadedZZZ panelParent, HashMap<String, Boolean> hmFlagLocal, HashMap<String, Boolean> hmFlag ) throws ExceptionZZZ{
 		boolean bReturn = false;
 		main:{
 		String stemp; boolean btemp; String sLog;
+		
+		//Merke: Das Lokale Flag wirkt sich nur in dieser Methode aus. Die anderen Flags auch aus hieraus erbenden Klassen.
+		if(hmFlagLocal!=null){
+			for(String sKey:hmFlagLocal.keySet()){				
+				stemp = sKey;
+				btemp = this.setFlagZLocal(sKey, hmFlagLocal.get(sKey));
+				if(btemp==false){
+					ExceptionZZZ ez = new ExceptionZZZ( "the LOCAL flag '" + stemp + "' is not available (passed by hashmap). Maybe an interface is not implemented.", iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
+					throw ez;		 
+				}	
+			}
+		}
+		if(this.getFlagZLocal("INIT")==true){
+			bReturn = true;
+			break main; 
+		}	
+		
 		
 		//Das direkte Setzen der Flags, da nicht aus ObjectZZZ geerbt werden kann, hier ausführen.
 		//Die ggf. vorhandenen Flags setzen.
@@ -288,7 +324,10 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		
 		//Ggfs. die DebugUI-Angaben hinzufügen, das kann z.B. nur das Label mit dem Klassennamen sein.
 		//Gesteuert werde soll das durch Flags, die auch über die Kommandozeile übergeben werden können.
-		boolean bDebugUI = this.createDebugUi();
+		//Merke: Beispielsweise für FormLayoutete Panels - die aus PanelCascaded erben - macht das einfache Hinzufügen keinen Sinn. Das Layout wird dann eh ersetzt. Also überspringen.
+		if(this.getFlagZLocal(FLAGZLOCAL.SKIPDEBUGUI.name())==false) {
+			boolean bDebugUI = this.createDebugUi();
+		}
 		
 		//Einen Mouse Listener hinzufuegen, der es erlaubt Fenster zu ziehen (auch im Panel und nicht nur in der Titelleiste)
 		//if(this.getFlag("isdraggable")){
@@ -822,6 +861,9 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				}
 			}
 			
+			
+			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			//+++++++++++++++++++++++++++++++++++++++++++
 			/* @see basic.zBasic.IFlagZZZ#getFlagZ(java.lang.String)
 			 * 	 Weteire Voraussetzungen:
 			 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
@@ -845,7 +887,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				return bFunction;	
 			}
 		/** DIESE METHODE MUSS IN ALLEN KLASSEN VORHANDEN SEIN - über Vererbung -, DIE IHRE FLAGS SETZEN WOLLEN
-		 * Weteire Voraussetzungen:
+		 * Weitere Voraussetzungen:
 		 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
 		 * - Innere Klassen müssen auch public deklariert werden.
 		 * @param objClassParent
@@ -879,77 +921,244 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		public HashMap<String, Boolean>getHashMapFlagZ(){
 			return this.hmFlag;
 		}
+		
+		/**Gibt alle möglichen FlagZ Werte als Array zurück. 
+		 * @return
+		 * @throws ExceptionZZZ 
+		 */
+		public String[] getFlagZ() throws ExceptionZZZ{
+			String[] saReturn = null;
+			main:{	
+				saReturn = FlagZHelperZZZ.getFlagsZ(this.getClass());				
+			}//end main:
+			return saReturn;
+		}
+	
+		/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück. 
+		 * @return
+		 * @throws ExceptionZZZ 
+		 */
+		public String[] getFlagZ(boolean bValueToSearchFor) throws ExceptionZZZ{
+			return this.getFlagZ_(bValueToSearchFor, false);
+		}
+		
+		public String[] getFlagZ(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap) throws ExceptionZZZ{
+			return this.getFlagZ_(bValueToSearchFor, bLookupExplizitInHashMap);
+		}
+		
+		private String[]getFlagZ_(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap) throws ExceptionZZZ{
+			String[] saReturn = null;
+			main:{
+				ArrayList<String>listasTemp=new ArrayList<String>();
+				
+				//FALLUNTERSCHEIDUNG: Alle gesetzten FlagZ werden in der HashMap gespeichert. Aber die noch nicht gesetzten FlagZ stehen dort nicht drin.
+				//                                  Diese kann man nur durch Einzelprüfung ermitteln.
+				if(bLookupExplizitInHashMap) {
+					HashMap<String,Boolean>hmFlag=this.getHashMapFlagZ();
+					if(hmFlag==null) break main;
+					
+					Set<String> setKey = hmFlag.keySet();
+					for(String sKey : setKey){
+						boolean btemp = hmFlag.get(sKey);
+						if(btemp==bValueToSearchFor){
+							listasTemp.add(sKey);
+						}
+					}
+				}else {
+					//So bekommt man alle Flags zurück, also auch die, die nicht explizit true oder false gesetzt wurden.						
+					String[]saFlagZ = this.getFlagZ();
+					
+					//20211201:
+					//Problem: Bei der Suche nach true ist das egal... aber bei der Suche nach false bekommt man jedes der Flags zurück,
+					//         auch wenn sie garnicht gesetzt wurden.
+					//Lösung:  Statt dessen explitzit über die HashMap der gesetzten Werte gehen....						
+					for(String sFlagZ : saFlagZ){
+						boolean btemp = this.getFlagZ(sFlagZ);
+						if(btemp==bValueToSearchFor ){ //also 'true'
+							listasTemp.add(sFlagZ);
+						}
+					}
+				}
+				saReturn = listasTemp.toArray(new String[listasTemp.size()]);
+			}//end main:
+			return saReturn;
+		}
+		
+		/** DIESE METHODE MUSS IN ALLEN KLASSEN VORHANDEN SEIN - über Vererbung ODER Interface Implementierung -, DIE IHRE FLAGS SETZEN WOLLEN
+		 *  SIE WIRD PER METHOD.INVOKE(....) AUFGERUFEN.
+		 * @param name 
+		 * @param sFlagName
+		 * @return
+		 * lindhaueradmin, 23.07.2013
+		 * @throws ExceptionZZZ 
+		 */
+		public boolean proofFlagZExists(String sFlagName) throws ExceptionZZZ{
+			boolean bReturn = false;
+			main:{
+				if(StringZZZ.isEmpty(sFlagName))break main;
+				bReturn = FlagZHelperZZZ.proofFlagZExists(this.getClass(), sFlagName);				
+			}//end main:
+			return bReturn;
+		}
+					
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		//++++++++++++++++++++++++
+		/* @see basic.zBasic.IFlagZZZ#getFlagZ(java.lang.String)
+		 * 	 Weteire Voraussetzungen:
+		 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
+		 * - Innere Klassen m�ssen auch public deklariert werden.(non-Javadoc)
+		 */
+		public boolean getFlagZLocal(String sFlagName) {
+			boolean bFunction = false;
+			main:{
+				if(StringZZZ.isEmpty(sFlagName)) break main;
+											
+				HashMap<String, Boolean> hmFlag = this.getHashMapFlagZLocal();
+				Boolean objBoolean = hmFlag.get(sFlagName.toUpperCase());
+				if(objBoolean==null){
+					bFunction = false;
+				}else{
+					bFunction = objBoolean.booleanValue();
+				}
+								
+			}	// end main:
 			
+			return bFunction;	
+		}
+		
+		/** DIESE METHODEN MUSS IN ALLEN KLASSEN VORHANDEN SEIN - über Vererbung -, DIE IHRE FLAGS SETZEN WOLLEN
+		 * Weitere Voraussetzungen:
+		 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
+		 * - Innere Klassen müssen auch public deklariert werden.
+		 * @param objClassParent
+		 * @param sFlagName
+		 * @param bFlagValue
+		 * @return
+		 * lindhaueradmin, 23.07.2013
+		 */
+		public boolean setFlagZLocal(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
+			boolean bFunction = false;
+			main:{
+				if(StringZZZ.isEmpty(sFlagName)) {
+					bFunction = true;
+					break main;
+				}
+							
+				bFunction = this.proofFlagZLocalExists(sFlagName);															
+				if(bFunction == true){
+					
+					//Setze das Flag nun in die HashMap
+					HashMap<String, Boolean> hmFlag = this.getHashMapFlagZLocal();
+					hmFlag.put(sFlagName.toUpperCase(), bFlagValue);
+					bFunction = true;								
+				}										
+			}	// end main:
+			
+			return bFunction;	
+		}
+			
+		@Override
+		public HashMap<String, Boolean>getHashMapFlagZLocal(){
+			return this.hmFlagLocal;
+		}
+		
+		@Override
+		public void setHashMapFlagZLocal(HashMap<String, Boolean> hmFlagLocal) {
+			this.hmFlagLocal = hmFlagLocal;
+		}
+		
+		/**Gibt alle möglichen FlagZ Werte als Array zurück. 
+		 * @return
+		 * @throws ExceptionZZZ 
+		 */
+		public String[] getFlagZLocal() throws ExceptionZZZ{
+			String[] saReturn = null;
+			main:{	
+				saReturn = FlagZHelperZZZ.getFlagsZDirectAvailable(this.getClass());				
+			}//end main:
+			return saReturn;
+		}
+	
+		/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück. 
+		 * @return
+		 * @throws ExceptionZZZ 
+		 */
+		public String[] getFlagZLocal(boolean bValueToSearchFor) throws ExceptionZZZ{
+			return this.getFlagZLocal_(bValueToSearchFor, false);
+		}
+		
+		public String[] getFlagZLocal(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap) throws ExceptionZZZ{
+			return this.getFlagZLocal_(bValueToSearchFor, bLookupExplizitInHashMap);
+		}
+		
+		private String[]getFlagZLocal_(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap) throws ExceptionZZZ{
+			String[] saReturn = null;
+			main:{
+				ArrayList<String>listasTemp=new ArrayList<String>();
+				
+				//FALLUNTERSCHEIDUNG: Alle gesetzten FlagZ werden in der HashMap gespeichert. Aber die noch nicht gesetzten FlagZ stehen dort nicht drin.
+				//                                  Diese kann man nur durch Einzelprüfung ermitteln.
+				if(bLookupExplizitInHashMap) {
+					HashMap<String,Boolean>hmFlag=this.getHashMapFlagZLocal();
+					if(hmFlag==null) break main;
+					
+					Set<String> setKey = hmFlag.keySet();
+					for(String sKey : setKey){
+						boolean btemp = hmFlag.get(sKey);
+						if(btemp==bValueToSearchFor){
+							listasTemp.add(sKey);
+						}
+					}
+				}else {
+					//So bekommt man alle Flags zurück, also auch die, die nicht explizit true oder false gesetzt wurden.						
+					String[]saFlagZ = this.getFlagZLocal();
+					
+					//20211201:
+					//Problem: Bei der Suche nach true ist das egal... aber bei der Suche nach false bekommt man jedes der Flags zurück,
+					//         auch wenn sie garnicht gesetzt wurden.
+					//Lösung:  Statt dessen explitzit über die HashMap der gesetzten Werte gehen....						
+					for(String sFlagZ : saFlagZ){
+						boolean btemp = this.getFlagZLocal(sFlagZ);
+						if(btemp==bValueToSearchFor ){ //also 'true'
+							listasTemp.add(sFlagZ);
+						}
+					}
+				}
+				saReturn = listasTemp.toArray(new String[listasTemp.size()]);
+			}//end main:
+			return saReturn;
+		}
+		
+		/** DIESE METHODE MUSS IN ALLEN KLASSEN VORHANDEN SEIN - über Vererbung ODER Interface Implementierung -, DIE IHRE FLAGS SETZEN WOLLEN
+		 *  SIE WIRD PER METHOD.INVOKE(....) AUFGERUFEN.
+		 * @param name 
+		 * @param sFlagName
+		 * @return
+		 * lindhaueradmin, 23.07.2013
+		 * @throws ExceptionZZZ 
+		 */
+		public boolean proofFlagZLocalExists(String sFlagName) throws ExceptionZZZ{
+			boolean bReturn = false;
+			main:{
+				if(StringZZZ.isEmpty(sFlagName))break main;
+				bReturn = FlagZHelperZZZ.proofFlagZLocalExists(this.getClass(), sFlagName);				
+			}//end main:
+			return bReturn;
+		}
+			
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		//++++++++++++++++++++++++
 		@Override
 		public HashMap<String, Boolean> getHashMapFlagZpassed() {
 			return this.hmFlagPassed;
 		}
+		
 		@Override
 		public void setHashMapFlagZpassed(HashMap<String, Boolean> hmFlagPassed) {
 			this.hmFlagPassed = hmFlagPassed;
 		}
 		
-			/**Gibt alle möglichen FlagZ Werte als Array zurück. 
-			 * @return
-			 * @throws ExceptionZZZ 
-			 */
-			public String[] getFlagZ() throws ExceptionZZZ{
-				String[] saReturn = null;
-				main:{	
-					saReturn = FlagZHelperZZZ.getFlagsZ(this.getClass());				
-				}//end main:
-				return saReturn;
-			}
-		
-			/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück. 
-			 * @return
-			 * @throws ExceptionZZZ 
-			 */
-			public String[] getFlagZ(boolean bValueToSearchFor) throws ExceptionZZZ{
-				return this.getFlagZ_(bValueToSearchFor, false);
-			}
 			
-			public String[] getFlagZ(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap) throws ExceptionZZZ{
-				return this.getFlagZ_(bValueToSearchFor, bLookupExplizitInHashMap);
-			}
-			
-			private String[]getFlagZ_(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap) throws ExceptionZZZ{
-				String[] saReturn = null;
-				main:{
-					ArrayList<String>listasTemp=new ArrayList<String>();
-					
-					//FALLUNTERSCHEIDUNG: Alle gesetzten FlagZ werden in der HashMap gespeichert. Aber die noch nicht gesetzten FlagZ stehen dort nicht drin.
-					//                                  Diese kann man nur durch Einzelprüfung ermitteln.
-					if(bLookupExplizitInHashMap) {
-						HashMap<String,Boolean>hmFlag=this.getHashMapFlagZ();
-						if(hmFlag==null) break main;
-						
-						Set<String> setKey = hmFlag.keySet();
-						for(String sKey : setKey){
-							boolean btemp = hmFlag.get(sKey);
-							if(btemp==bValueToSearchFor){
-								listasTemp.add(sKey);
-							}
-						}
-					}else {
-						//So bekommt man alle Flags zurück, also auch die, die nicht explizit true oder false gesetzt wurden.						
-						String[]saFlagZ = this.getFlagZ();
-						
-						//20211201:
-						//Problem: Bei der Suche nach true ist das egal... aber bei der Suche nach false bekommt man jedes der Flags zurück,
-						//         auch wenn sie garnicht gesetzt wurden.
-						//Lösung:  Statt dessen explitzit über die HashMap der gesetzten Werte gehen....						
-						for(String sFlagZ : saFlagZ){
-							boolean btemp = this.getFlagZ(sFlagZ);
-							if(btemp==bValueToSearchFor ){ //also 'true'
-								listasTemp.add(sFlagZ);
-							}
-						}
-					}
-					saReturn = listasTemp.toArray(new String[listasTemp.size()]);
-				}//end main:
-				return saReturn;
-			}
 			
 			/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück, die auch als FLAGZ in dem anderen Objekt überhaupt vorhanden sind.
 			 *  Merke: Diese Methode ist dazu gedacht FlagZ-Werte von einem Objekt auf ein anderes zu übertragen.	
@@ -1010,28 +1219,6 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				}//end main:
 				return saReturn;
 			}
-			
-			
-			
-			
-			
-
-		/** DIESE METHODE MUSS IN ALLEN KLASSEN VORHANDEN SEIN - über Vererbung ODER Interface Implementierung -, DIE IHRE FLAGS SETZEN WOLLEN
-		 *  SIE WIRD PER METHOD.INVOKE(....) AUFGERUFEN.
-		 * @param name 
-		 * @param sFlagName
-		 * @return
-		 * lindhaueradmin, 23.07.2013
-		 * @throws ExceptionZZZ 
-		 */
-		public boolean proofFlagZExists(String sFlagName) throws ExceptionZZZ{
-			boolean bReturn = false;
-			main:{
-				if(StringZZZ.isEmpty(sFlagName))break main;
-				bReturn = FlagZHelperZZZ.proofFlagZExists(this.getClass(), sFlagName);				
-			}//end main:
-			return bReturn;
-		}
 		//#######################################
 
 		//### Functions #########################

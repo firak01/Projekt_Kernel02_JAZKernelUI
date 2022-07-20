@@ -70,6 +70,7 @@ public enum FLAGZ{
 
 private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 20130721 ersetzt die einzelnen Flags, irgendwann...
 private HashMap<String, Boolean>hmFlagPassed = new HashMap<String, Boolean>();
+private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 
 	public KernelJFrameCascadedZZZ(){
 		super();
@@ -381,6 +382,156 @@ private HashMap<String, Boolean>hmFlagPassed = new HashMap<String, Boolean>();
 				}//end main:
 				return saReturn;
 			}
+			
+			
+			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			//++++++++++++++++++++++++
+			/* @see basic.zBasic.IFlagZZZ#getFlagZ(java.lang.String)
+			 * 	 Weteire Voraussetzungen:
+			 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
+			 * - Innere Klassen m�ssen auch public deklariert werden.(non-Javadoc)
+			 */
+			public boolean getFlagZLocal(String sFlagName) {
+				boolean bFunction = false;
+				main:{
+					if(StringZZZ.isEmpty(sFlagName)) break main;
+												
+					HashMap<String, Boolean> hmFlag = this.getHashMapFlagZLocal();
+					Boolean objBoolean = hmFlag.get(sFlagName.toUpperCase());
+					if(objBoolean==null){
+						bFunction = false;
+					}else{
+						bFunction = objBoolean.booleanValue();
+					}
+									
+				}	// end main:
+				
+				return bFunction;	
+			}
+			
+			/** DIESE METHODEN MUSS IN ALLEN KLASSEN VORHANDEN SEIN - über Vererbung -, DIE IHRE FLAGS SETZEN WOLLEN
+			 * Weitere Voraussetzungen:
+			 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
+			 * - Innere Klassen müssen auch public deklariert werden.
+			 * @param objClassParent
+			 * @param sFlagName
+			 * @param bFlagValue
+			 * @return
+			 * lindhaueradmin, 23.07.2013
+			 */
+			public boolean setFlagZLocal(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
+				boolean bFunction = false;
+				main:{
+					if(StringZZZ.isEmpty(sFlagName)) {
+						bFunction = true;
+						break main;
+					}
+								
+					bFunction = this.proofFlagZLocalExists(sFlagName);															
+					if(bFunction == true){
+						
+						//Setze das Flag nun in die HashMap
+						HashMap<String, Boolean> hmFlag = this.getHashMapFlagZLocal();
+						hmFlag.put(sFlagName.toUpperCase(), bFlagValue);
+						bFunction = true;								
+					}										
+				}	// end main:
+				
+				return bFunction;	
+			}
+				
+			@Override
+			public HashMap<String, Boolean>getHashMapFlagZLocal(){
+				return this.hmFlagLocal;
+			}
+			
+			@Override
+			public void setHashMapFlagZLocal(HashMap<String, Boolean> hmFlagLocal) {
+				this.hmFlagLocal = hmFlagLocal;
+			}
+			
+			/**Gibt alle möglichen FlagZ Werte als Array zurück. 
+			 * @return
+			 * @throws ExceptionZZZ 
+			 */
+			public String[] getFlagZLocal() throws ExceptionZZZ{
+				String[] saReturn = null;
+				main:{	
+					saReturn = FlagZHelperZZZ.getFlagsZDirectAvailable(this.getClass());				
+				}//end main:
+				return saReturn;
+			}
+		
+			/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück. 
+			 * @return
+			 * @throws ExceptionZZZ 
+			 */
+			public String[] getFlagZLocal(boolean bValueToSearchFor) throws ExceptionZZZ{
+				return this.getFlagZLocal_(bValueToSearchFor, false);
+			}
+			
+			public String[] getFlagZLocal(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap) throws ExceptionZZZ{
+				return this.getFlagZLocal_(bValueToSearchFor, bLookupExplizitInHashMap);
+			}
+			
+			private String[]getFlagZLocal_(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap) throws ExceptionZZZ{
+				String[] saReturn = null;
+				main:{
+					ArrayList<String>listasTemp=new ArrayList<String>();
+					
+					//FALLUNTERSCHEIDUNG: Alle gesetzten FlagZ werden in der HashMap gespeichert. Aber die noch nicht gesetzten FlagZ stehen dort nicht drin.
+					//                                  Diese kann man nur durch Einzelprüfung ermitteln.
+					if(bLookupExplizitInHashMap) {
+						HashMap<String,Boolean>hmFlag=this.getHashMapFlagZLocal();
+						if(hmFlag==null) break main;
+						
+						Set<String> setKey = hmFlag.keySet();
+						for(String sKey : setKey){
+							boolean btemp = hmFlag.get(sKey);
+							if(btemp==bValueToSearchFor){
+								listasTemp.add(sKey);
+							}
+						}
+					}else {
+						//So bekommt man alle Flags zurück, also auch die, die nicht explizit true oder false gesetzt wurden.						
+						String[]saFlagZ = this.getFlagZLocal();
+						
+						//20211201:
+						//Problem: Bei der Suche nach true ist das egal... aber bei der Suche nach false bekommt man jedes der Flags zurück,
+						//         auch wenn sie garnicht gesetzt wurden.
+						//Lösung:  Statt dessen explitzit über die HashMap der gesetzten Werte gehen....						
+						for(String sFlagZ : saFlagZ){
+							boolean btemp = this.getFlagZLocal(sFlagZ);
+							if(btemp==bValueToSearchFor ){ //also 'true'
+								listasTemp.add(sFlagZ);
+							}
+						}
+					}
+					saReturn = listasTemp.toArray(new String[listasTemp.size()]);
+				}//end main:
+				return saReturn;
+			}
+			
+			/** DIESE METHODE MUSS IN ALLEN KLASSEN VORHANDEN SEIN - über Vererbung ODER Interface Implementierung -, DIE IHRE FLAGS SETZEN WOLLEN
+			 *  SIE WIRD PER METHOD.INVOKE(....) AUFGERUFEN.
+			 * @param name 
+			 * @param sFlagName
+			 * @return
+			 * lindhaueradmin, 23.07.2013
+			 * @throws ExceptionZZZ 
+			 */
+			public boolean proofFlagZLocalExists(String sFlagName) throws ExceptionZZZ{
+				boolean bReturn = false;
+				main:{
+					if(StringZZZ.isEmpty(sFlagName))break main;
+					bReturn = FlagZHelperZZZ.proofFlagZDirectExists(this.getClass(), sFlagName);				
+				}//end main:
+				return bReturn;
+			}
+				
+			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			//++++++++++++++++++++++++
+		
 			
 			/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück, die auch als FLAGZ in dem anderen Objekt überhaupt vorhanden sind.
 			 *  Merke: Diese Methode ist dazu gedacht FlagZ-Werte von einem Objekt auf ein anderes zu übertragen.	
