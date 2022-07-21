@@ -27,6 +27,7 @@ import basic.zKernel.KernelZZZ;
 import basic.zKernel.component.IKernelModuleUserZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.flag.FlagZHelperZZZ;
+import basic.zKernel.flag.IFlagLocalUserZZZ;
 import basic.zKernel.flag.IFlagUserZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import basic.zUtil.io.KernelFileZZZ.FLAGZ;
@@ -48,7 +49,7 @@ import basic.zKernel.IKernelUserZZZ;
  * @author 0823
  *
  */
-public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConstantZZZ, IObjectZZZ, IKernelUserZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IScreenFeatureZZZ, IMouseFeatureZZZ, IFlagUserZZZ{	
+public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConstantZZZ, IObjectZZZ, IKernelUserZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IScreenFeatureZZZ, IMouseFeatureZZZ, IFlagUserZZZ, IFlagLocalUserZZZ{	
 	protected IKernelZZZ objKernel;
 	protected LogZZZ objLog;
 	protected ExceptionZZZ objException;
@@ -128,7 +129,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 				String stemp = sKey;
 				boolean btemp = this.setFlagZ(sKey, hmFlag.get(sKey));
 				if(btemp==false){
-					ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available (passed by hashmap).", iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
+					ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available (passed by hashmap).", IFlagUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
 					throw ez;		 
 				}
 			}

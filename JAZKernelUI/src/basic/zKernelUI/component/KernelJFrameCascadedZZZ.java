@@ -36,6 +36,7 @@ import basic.zKernel.KernelLogZZZ;
 import basic.zKernel.KernelZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.flag.FlagZHelperZZZ;
+import basic.zKernel.flag.IFlagLocalUserZZZ;
 import basic.zKernel.flag.IFlagUserZZZ;
 import basic.zKernel.flag.IFlagUserZZZ.FLAGZ;
 import basic.zKernelUI.KernelUIZZZ;
@@ -44,7 +45,7 @@ import custom.zKernel.LogZZZ;
 /** Class is base for all frames used by the configuration module
  * @author Lindhauer
  */
-public abstract class KernelJFrameCascadedZZZ extends JFrame  implements IObjectZZZ, IFlagUserZZZ, IKernelUserZZZ, IKernelModuleZZZ, IComponentCascadedUserZZZ, IFrameCascadedZZZ, IFrameLaunchableZZZ, IScreenFeatureZZZ{
+public abstract class KernelJFrameCascadedZZZ extends JFrame  implements IObjectZZZ, IFlagUserZZZ, IFlagLocalUserZZZ, IKernelUserZZZ, IKernelModuleZZZ, IComponentCascadedUserZZZ, IFrameCascadedZZZ, IFrameLaunchableZZZ, IScreenFeatureZZZ{
 	private IKernelZZZ objKernel;
 	private LogZZZ objLog; 
 	private KernelJFrameCascadedZZZ frameParent=null;

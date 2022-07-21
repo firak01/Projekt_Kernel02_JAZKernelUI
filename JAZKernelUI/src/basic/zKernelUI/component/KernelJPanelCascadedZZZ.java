@@ -34,6 +34,7 @@ import basic.zKernel.KernelLogZZZ;
 import basic.zKernel.component.IKernelModuleUserZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.flag.FlagZHelperZZZ;
+import basic.zKernel.flag.IFlagLocalUserZZZ;
 import basic.zKernel.flag.IFlagUserZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import basic.zKernelUI.component.componentGroup.ActionSwitchZZZ;
@@ -50,7 +51,7 @@ import custom.zKernel.LogZZZ;
  * 
  *  Merke: Die Panels können sowohl nur modulnutzer als auch selber Modul sein. Darum werden beide Interfaces implementiert.
  */
-public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IKernelUserZZZ, IObjectZZZ, IMouseFeatureZZZ, IDebugUiZZZ, IFlagUserZZZ{
+public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IKernelUserZZZ, IObjectZZZ, IMouseFeatureZZZ, IDebugUiZZZ, IFlagUserZZZ, IFlagLocalUserZZZ{
 	protected static final String sBUTTON_SWITCH = "buttonSwitch";
    	
 	
@@ -86,6 +87,9 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	private boolean bFlagTerminate = false;*/	
 	public enum FLAGZ{
 		COMPONENT_DRAGGABLE, TERMINATE;
+	}
+	public enum FLAGZLOCAL {
+		SKIPDEBUGUI;
 	}
 	private HashMap<String, Boolean>hmFlag=new HashMap<String, Boolean>();
 	private HashMap<String, Boolean>hmFlagPassed = new HashMap<String, Boolean>();
@@ -197,7 +201,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				stemp = sKey;
 				btemp = this.setFlagZLocal(sKey, hmFlagLocal.get(sKey));
 				if(btemp==false){
-					ExceptionZZZ ez = new ExceptionZZZ( "the LOCAL flag '" + stemp + "' is not available (passed by hashmap). Maybe an interface is not implemented.", iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
+					ExceptionZZZ ez = new ExceptionZZZ( "the LOCAL flag '" + stemp + "' is not available (passed by hashmap). Maybe an interface is not implemented.", IFlagLocalUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
 					throw ez;		 
 				}			
 			}
@@ -209,7 +213,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				stemp = sKey;
 				btemp = this.setFlagZ(sKey, hmFlag.get(sKey));
 				if(btemp==false){
-					ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available (passed by hashmap). Maybe an interface is not implemented.", iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
+					ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available (passed by hashmap). Maybe an interface is not implemented.", IFlagUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
 					throw ez;		 
 				}			
 			}
@@ -242,7 +246,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				stemp = sKey;
 				btemp = this.setFlagZLocal(sKey, hmFlagLocal.get(sKey));
 				if(btemp==false){
-					ExceptionZZZ ez = new ExceptionZZZ( "the LOCAL flag '" + stemp + "' is not available (passed by hashmap). Maybe an interface is not implemented.", iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
+					ExceptionZZZ ez = new ExceptionZZZ( "the LOCAL flag '" + stemp + "' is not available (passed by hashmap). Maybe an interface is not implemented.", IFlagLocalUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
 					throw ez;		 
 				}	
 			}
@@ -260,7 +264,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				stemp = sKey;
 				btemp = this.setFlagZ(sKey, hmFlag.get(sKey));
 				if(btemp==false){
-					ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available (passed by hashmap). Maybe an interface is not implemented.", iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
+					ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available (passed by hashmap). Maybe an interface is not implemented.", IFlagUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
 					throw ez;		 
 				}	
 			}
@@ -788,7 +792,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			stemp = FLAGZ.COMPONENT_DRAGGABLE.name();
 			btemp = this.setFlagZ(stemp, bValue);
 			if(btemp==false){
-				ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available. Maybe an interface is not implemented.", iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
+				ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available. Maybe an interface is not implemented.", IFlagUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
 				throw ez;		 
 			}	
 		} catch (ExceptionZZZ e) {

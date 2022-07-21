@@ -11,6 +11,7 @@ import basic.zKernel.IKernelZZZ;
 import basic.zKernel.component.AbstractKernelProgramZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.component.IKernelProgramZZZ;
+import basic.zKernel.flag.IFlagUserZZZ;
 import basic.zKernelUI.util.JTextFieldHelperZZZ;
 
 public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZZ{
@@ -47,7 +48,7 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 						stemp = saFlagControl[iCount];
 						btemp = setFlag(stemp, true);
 						if(btemp==false){ 								   
-							   ExceptionZZZ ez = new ExceptionZZZ(stemp, iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 							
+							   ExceptionZZZ ez = new ExceptionZZZ(stemp, IFlagUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 							
 							   throw ez;		 
 						}
 					}

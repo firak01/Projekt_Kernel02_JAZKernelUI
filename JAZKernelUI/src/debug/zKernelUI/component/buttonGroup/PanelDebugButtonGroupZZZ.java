@@ -17,6 +17,8 @@ import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernel.KernelZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.component.IKernelProgramZZZ;
+import basic.zKernel.flag.IFlagLocalUserZZZ;
+import basic.zKernel.flag.IFlagUserZZZ;
 import custom.zKernel.LogZZZ;
 import custom.zKernelUI.module.config.DLG.Panel_NORTHZZZ;
 
@@ -50,7 +52,7 @@ public class PanelDebugButtonGroupZZZ extends KernelJPanelCascadedZZZ implements
         stemp = IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name();
 		btemp = this.setFlagZ(stemp, true);	
 		if(btemp==false){
-			ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available. Maybe an interface is not implemented.", iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
+			ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available. Maybe an interface is not implemented.", IFlagUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
 			throw ez;		 
 		}
 		
