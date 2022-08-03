@@ -335,8 +335,13 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 										
 										// *2 wg. der "GAP" Spalte zwischen den Spalten
 										int iStartingColumnCurrent=iStartingColumn+2+(iIndexInner*2);
+										if (iStartingColumnCurrent>iColumns) {
+											iStartingColumnCurrent=iColumns; //kann das denn sein >iColumns ?    Da ist doch bei der Berechnung irgendwo ein Fehler.
+										}
 										int iWidthRemainingCurrent=iColumns-iStartingColumn-2-(iIndexInner*2);
-										
+										if (iWidthRemainingCurrent<0) {
+											iWidthRemainingCurrent=0;//kann das denn sein <0 ?    Da ist doch bei der Berechnung irgendwo ein Fehler.
+										}
 										this.add(componenttemp, cc.xyw(iStartingColumnCurrent,iStartingRow,iWidthRemainingCurrent));
 										this.setComponent("ComponentDebug_"+iIndexOuter+"_"+iIndexInner, componenttemp);
 									}

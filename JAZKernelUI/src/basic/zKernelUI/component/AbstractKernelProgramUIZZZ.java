@@ -40,16 +40,20 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 	}
 	
 	private void AbstractKernelProgramUINew_(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panel, String[] saFlagControl) throws ExceptionZZZ {
-		main:{
+		main:{			
 			check:{	 		
 				if(saFlagControl != null){
-					String stemp; boolean btemp;
+					boolean btemp; String stemp; String sLog;
 					for(int iCount = 0;iCount<=saFlagControl.length-1;iCount++){
 						stemp = saFlagControl[iCount];
 						btemp = setFlag(stemp, true);
-						if(btemp==false){ 								   
-							   ExceptionZZZ ez = new ExceptionZZZ(stemp, IFlagUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 							
-							   throw ez;		 
+						if(btemp==false){
+							 String sKey = stemp;
+							 sLog = "the passed flag '" + sKey + "' is not available for class '" + this.getClass() + "'.";
+							 this.logLineDate(ReflectCodeZZZ.getPositionCurrent() + ": " + sLog);
+							//							  Bei der "Übergabe auf Verdacht" keinen Fehler werfen!!!							
+							// ExceptionZZZ ez = new ExceptionZZZ(stemp, IFlagUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 							
+							// throw ez;								   							   
 						}
 					}
 					if(this.getFlag("init")) break main;										
