@@ -155,7 +155,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 			
 			//FileIniZZZ Objekt holen
 			//Das KernelObject zu verwenden ist nicht sauber. Es muss ein eigenes Objekt fuer das zu konfigurierende Modul vorhanden sein.
-			FileIniZZZ objFileIni = this.objKernel2configure.getFileConfigIniByAlias(sModuleChoosen);
+			FileIniZZZ objFileIni = this.objKernel2configure.getFileModuleIniByAlias(sModuleChoosen);
 			
 			//Im DebugUI Fall: Ausgehend von 2 Komponenten in der DebugUI Gruppe, für die fehlende Spalten mit Leerkomponente auffüllen.
 			if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())){ 

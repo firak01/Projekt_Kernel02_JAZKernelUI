@@ -238,7 +238,7 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 					//TODO GOON Sicherheitsabfrage per Dialog
 					//Section löschen				
 					//Nicht das eigene KernelObjekt verwenden, sondern das im Dialog ausgewählte.
-					FileIniZZZ objFileIni = this.objKernelChoosen.getFileConfigIniByAlias(sModule);
+					FileIniZZZ objFileIni = this.objKernelChoosen.getFileModuleIniByAlias(sModule);
 					objFileIni.deleteSection(sSection);
 					
 					//Ggfs. sind im Dialog Einträge über mehrere, verschiedene Sections hinweg. Diese auch löschen. 
@@ -255,7 +255,7 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 					
 					//Es ist nicht sauber das eigenen KernelObjekt dafuer zu verwenden. Es muss ein anderes herangezogen werden.
 					//FileIniZZZ objFileIni = this.getKernelObject().getFileConfigIniByAlias(sModule);
-					FileIniZZZ objFileIni = this.objKernelChoosen.getFileConfigIniByAlias(sModule);
+					FileIniZZZ objFileIni = this.objKernelChoosen.getFileModuleIniByAlias(sModule);
 										
 					//TODO: eine sortierte Hashtable uebergeben !!!
 					objFileIni.setSection(sSection, objHtValue, false);	
