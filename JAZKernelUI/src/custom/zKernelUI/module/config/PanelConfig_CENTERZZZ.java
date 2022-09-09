@@ -28,7 +28,7 @@ public class PanelConfig_CENTERZZZ extends KernelJPanelCascadedZZZ{
 				
 			
 		//Es sollen in dieser Phase nur konfigurierte und existierende Module bearbeitet werden duerfen
-		ArrayList listaModule = objKernel2Config.getModuleFileAliasAll(true, true);
+		ArrayList listaModule = objKernel2Config.getFileConfigModuleAliasAll(true, true);
 		if(listaModule.size()>= 1){
 			//Comboboxen zum Einstellen des Moduls + Systems
 			JComboBox comboModule = new JComboBox();

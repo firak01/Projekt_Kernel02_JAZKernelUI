@@ -88,7 +88,7 @@ final class SwingWorker4IniSAVE extends KernelSwingWorkerZZZ{
 				//TODO GOON Sicherheitsabfrage per Dialog
 				//Section löschen				
 				//Nicht das eigene KernelObjekt verwenden, sondern das im Dialog ausgewählte.
-				FileIniZZZ objFileIni = this.objKernelChoosen.getFileModuleIniByAlias(sModule);
+				FileIniZZZ objFileIni = this.objKernelChoosen.getFileConfigModuleIni(sModule);
 				objFileIni.deleteSection(sSection);
 				
 				//Ggfs. sind im Dialog Einträge über mehrere, verschiedene Sections hinweg. Diese auch löschen. 
@@ -105,7 +105,7 @@ final class SwingWorker4IniSAVE extends KernelSwingWorkerZZZ{
 				
 				//Es ist nicht sauber das eigenen KernelObjekt dafuer zu verwenden. Es muss ein anderes herangezogen werden.
 				//FileIniZZZ objFileIni = this.getKernelObject().getFileConfigIniByAlias(sModule);
-				FileIniZZZ objFileIni = this.objKernelChoosen.getFileModuleIniByAlias(sModule);
+				FileIniZZZ objFileIni = this.objKernelChoosen.getFileConfigModuleIni(sModule);
 									
 				//TODO: eine sortierte Hashtable uebergeben !!!
 				objFileIni.setSection(sSection, objHtValue, false);	

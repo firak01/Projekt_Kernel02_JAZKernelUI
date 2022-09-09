@@ -89,12 +89,12 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 			String sModuleChoosen = KernelUIZZZ.getModuleUsedName((IKernelModuleZZZ) objModuleChoosen);//20210312 Hier KernelUIZZZ als Hilfsklasse verwenden, um den Modulnamen auszulesen. besser als: String sModule = this.getModule().getModuleName();
 									
 			//Das KernelObject zu verwenden ist nicht sauber. Es muss ein eigenes Objekt fuer das zu konfigurierende Modul vorhanden sein.
-			boolean bModuleConfigured = this.objKernel2configure.proofModuleFileIsConfigured(sModuleChoosen);
+			boolean bModuleConfigured = this.objKernel2configure.proofFileConfigModuleIsConfigured(sModuleChoosen);
 			if(bModuleConfigured==false){
 				break main;	//Fall: Modul nicht configuriert
 			}else{
 				//Das KernelObject zu verwenden ist nicht sauber. Es muss ein eigenes Objekt fuer das zu konfigurierende Modul vorhanden sein.
-				boolean bModuleExists = this.objKernel2configure.proofModuleFileExists(sModuleChoosen);
+				boolean bModuleExists = this.objKernel2configure.proofFileConfigModuleExists(sModuleChoosen);
 				if(bModuleExists==false){				
 					break main;//Fall: Konfiguriertes Modul existiert nicht physikalisch als Datei am erwarteten Ort/mit dem erwarteten Namen
 				}
@@ -155,7 +155,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 			
 			//FileIniZZZ Objekt holen
 			//Das KernelObject zu verwenden ist nicht sauber. Es muss ein eigenes Objekt fuer das zu konfigurierende Modul vorhanden sein.
-			FileIniZZZ objFileIni = this.objKernel2configure.getFileModuleIniByAlias(sModuleChoosen);
+			FileIniZZZ objFileIni = this.objKernel2configure.getFileConfigModuleIni(sModuleChoosen);
 			
 			//Im DebugUI Fall: Ausgehend von 2 Komponenten in der DebugUI Gruppe, für die fehlende Spalten mit Leerkomponente auffüllen.
 			if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())){ 

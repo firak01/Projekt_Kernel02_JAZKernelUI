@@ -55,13 +55,13 @@ public class Panel_NORTHZZZ extends KernelJPanelCascadedZZZ {
 					//ModuleExists ?
 					String sModule = objModule.getModuleName();
 					
-					boolean bModuleConfigured = this.objKernelChoosen.proofModuleFileIsConfigured(sModule);
+					boolean bModuleConfigured = this.objKernelChoosen.proofFileConfigModuleIsConfigured(sModule);
 					if(bModuleConfigured==false){
 						//Fall: Modul nicht configuriert
 						JLabel labelModuleValue = new JLabel(sModule + ", Error: This is not configured in the kernel main .ini-file.", SwingConstants.LEFT);
 						this.add(labelModuleValue);
 					}else{						
-						boolean bModuleExists = this.objKernelChoosen.proofModuleFileExists(sModule);
+						boolean bModuleExists = this.objKernelChoosen.proofFileConfigModuleExists(sModule);
 						if(bModuleExists==false){
 							//Fall: Konfiguriertes Modul existiert nicht physikalisch als Datei am erwarteten Ort/mit dem erwarteten Namen
 							JLabel labelModuleValue = new JLabel(sModule + ", Error: The .ini-file does not exist.", SwingConstants.LEFT);

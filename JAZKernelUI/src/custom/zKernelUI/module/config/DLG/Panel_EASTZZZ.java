@@ -76,13 +76,13 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 					//ModuleExists ?
 					String sModule = this.getModuleChoosen().getModuleName();
 										
-					boolean bModuleConfigured = this.objKernelChoosen.proofModuleFileIsConfigured(sModule);
+					boolean bModuleConfigured = this.objKernelChoosen.proofFileConfigModuleIsConfigured(sModule);
 					if(bModuleConfigured==false){
 						//Fall: Modul nicht configuriert
 						JLabel labelModuleValue = new JLabel(sModule + ", Error: This is not configured in the kernel main .ini-file.", SwingConstants.LEFT);
 						this.add(labelModuleValue);
 					}else{
-						boolean bModuleExists = this.objKernelChoosen.proofModuleFileExists(sModule);
+						boolean bModuleExists = this.objKernelChoosen.proofFileConfigModuleExists(sModule);
 						if(bModuleExists==false){
 							//Fall: Konfiguriertes Modul existiert nicht physikalisch als Datei am erwarteten Ort/mit dem erwarteten Namen
 							JLabel labelModuleValue = new JLabel(sModule + ", Error: The .ini-file does not exist.", SwingConstants.LEFT);
@@ -238,7 +238,7 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 					//TODO GOON Sicherheitsabfrage per Dialog
 					//Section löschen				
 					//Nicht das eigene KernelObjekt verwenden, sondern das im Dialog ausgewählte.
-					FileIniZZZ objFileIni = this.objKernelChoosen.getFileModuleIniByAlias(sModule);
+					FileIniZZZ objFileIni = this.objKernelChoosen.getFileConfigModuleIni(sModule);
 					objFileIni.deleteSection(sSection);
 					
 					//Ggfs. sind im Dialog Einträge über mehrere, verschiedene Sections hinweg. Diese auch löschen. 
@@ -255,7 +255,7 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 					
 					//Es ist nicht sauber das eigenen KernelObjekt dafuer zu verwenden. Es muss ein anderes herangezogen werden.
 					//FileIniZZZ objFileIni = this.getKernelObject().getFileConfigIniByAlias(sModule);
-					FileIniZZZ objFileIni = this.objKernelChoosen.getFileModuleIniByAlias(sModule);
+					FileIniZZZ objFileIni = this.objKernelChoosen.getFileConfigModuleIni(sModule);
 										
 					//TODO: eine sortierte Hashtable uebergeben !!!
 					objFileIni.setSection(sSection, objHtValue, false);	
