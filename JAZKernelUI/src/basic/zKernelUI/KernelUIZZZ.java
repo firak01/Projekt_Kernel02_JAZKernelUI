@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.swing.JFrame;
 
+import basic.zKernel.IKernelConfigConstantZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
 import basic.zKernel.component.IKernelModuleUserZZZ;
@@ -28,7 +29,7 @@ import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 
 /**Klasse dient zur Ermittlung von Informationen aus der KernelKonfiguration f�r die entsprechenden Komponenten.
  * Merke: Als Modul gilt nur das, was in der KErnel-Applikations-Konfigurations-Datei auch als Modul definiert wurde.
- *           D.h. es gibt dort einen Eintrag KernelConfigFile... , mit ... ist dann der Klassenname einer UI-Komponente (oder auch ein String)
+ *           D.h. es gibt dort einen Eintrag KernelConfigFile... bzw, IKernelConfigConstantZZZ.sMODULE_FILENAME_PREFIX... , mit ... ist dann der Klassenname einer UI-Komponente (oder auch ein String)
  * @author lindhaueradmin
  *
  */
