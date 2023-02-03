@@ -1083,5 +1083,15 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	@Override
 	public void setModule(IKernelModuleZZZ objModule) {
 		this.objModule = objModule;		
-	}					
+	}
+	
+	//### Aus IFlagUserZZZ
+	@Override
+	public boolean getFlag(IFlagUserZZZ.FLAGZ objEnumFlag) {
+		return this.getFlag(objEnumFlag.name());
+	}
+	@Override
+	public void setFlag(IFlagUserZZZ.FLAGZ objEnumFlag, boolean bFlagValue) {
+		this.setFlag(objEnumFlag.name(), bFlagValue);
+	}
 }

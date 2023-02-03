@@ -973,7 +973,19 @@ public void setFrameSub(String sAlias, JFrame objFrame){
 	}
 	
 	
+	//### Aus IFlagUserZZZ
+	@Override
+	public boolean getFlag(IFlagUserZZZ.FLAGZ objEnumFlag) {
+		return this.getFlag(objEnumFlag.name());
+	}
+	@Override
+	public void setFlag(IFlagUserZZZ.FLAGZ objEnumFlag, boolean bFlagValue) {
+		this.setFlag(objEnumFlag.name(), bFlagValue);
+	}
 	
+	//###################################################################################
+	//### Interne Runnable Klasse
+	//###################################################################################
 	private class RunnerFrameMainZZZ implements Runnable{
 		/**Klasse bietet eine run() Methode an, die von KernelJFRameCascadedZZZ.launch() genutzt wird.
 		 * Hintergrund: �ber SwingUtilities.invokeLater(RunnerJFrameCascadedZZZ) soll die Performance erh�ht werden,
