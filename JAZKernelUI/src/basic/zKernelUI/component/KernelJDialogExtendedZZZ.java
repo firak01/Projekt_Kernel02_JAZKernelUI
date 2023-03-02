@@ -1089,7 +1089,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	}
 	    
 		
-	//### AUS IKernelModuleUserZZZ
+	//### AUS IKernelModuleZZZ
 	@Override
 	public IKernelModuleZZZ getModule() throws ExceptionZZZ {
 		if(this.objModule==null && this.getFlagZ(IKernelModuleUserZZZ.FLAGZ.ISKERNELMODULEUSER.name())) {
@@ -1101,6 +1101,32 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	@Override
 	public void setModule(IKernelModuleZZZ objModule) {
 		this.objModule = objModule;		
+	}
+	
+	@Override
+	public boolean getFlag(IKernelModuleZZZ.FLAGZ objEnumFlag) {
+		return this.getFlag(objEnumFlag.name());
+	}
+	@Override
+	public boolean setFlag(IKernelModuleZZZ.FLAGZ objEnumFlag, boolean bFlagValue) {
+		return this.setFlag(objEnumFlag.name(), bFlagValue);
+	}
+	
+	@Override
+	public boolean[] setFlag(IKernelModuleZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) {
+		boolean[] baReturn=null;
+		main:{
+			if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
+				baReturn = new boolean[objaEnumFlag.length];
+				int iCounter=-1;
+				for(IKernelModuleZZZ.FLAGZ objEnumFlag:objaEnumFlag) {
+					iCounter++;
+					boolean bReturn = this.setFlag(objEnumFlag, bFlagValue);
+					baReturn[iCounter]=bReturn;
+				}
+			}
+		}//end main:
+		return baReturn;
 	}
 	
 	//### Aus IFlagUserZZZ
@@ -1121,6 +1147,33 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 				baReturn = new boolean[objaEnumFlag.length];
 				int iCounter=-1;
 				for(IFlagUserZZZ.FLAGZ objEnumFlag:objaEnumFlag) {
+					iCounter++;
+					boolean bReturn = this.setFlag(objEnumFlag, bFlagValue);
+					baReturn[iCounter]=bReturn;
+				}
+			}
+		}//end main:
+		return baReturn;
+	}
+	
+	//### Aus IKernelModuleUserZZZ
+	@Override
+	public boolean getFlag(IKernelModuleUserZZZ.FLAGZ objEnumFlag) {
+		return this.getFlag(objEnumFlag.name());
+	}
+	@Override
+	public boolean setFlag(IKernelModuleUserZZZ.FLAGZ objEnumFlag, boolean bFlagValue) {
+		return this.setFlag(objEnumFlag.name(), bFlagValue);
+	}
+	
+	@Override
+	public boolean[] setFlag(IKernelModuleUserZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) {
+		boolean[] baReturn=null;
+		main:{
+			if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
+				baReturn = new boolean[objaEnumFlag.length];
+				int iCounter=-1;
+				for(IKernelModuleUserZZZ.FLAGZ objEnumFlag:objaEnumFlag) {
 					iCounter++;
 					boolean bReturn = this.setFlag(objEnumFlag, bFlagValue);
 					baReturn[iCounter]=bReturn;

@@ -34,6 +34,7 @@ import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelLogZZZ;
 import basic.zKernel.component.IKernelModuleUserZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
+import basic.zKernel.component.IKernelProgramZZZ;
 import basic.zKernel.flag.FlagZHelperZZZ;
 import basic.zKernel.flag.IFlagLocalUserZZZ;
 import basic.zKernel.flag.IFlagUserZZZ;
@@ -1269,7 +1270,34 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		//#######################################
 
 		//### Functions #########################
-		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	//###Aus iKernelProgram
+	@Override
+	public boolean getFlag(IKernelProgramZZZ.FLAGZ objEnumFlag) {
+		return this.getFlag(objEnumFlag.name());
+	}
+	@Override
+	public boolean setFlag(IKernelProgramZZZ.FLAGZ objEnumFlag, boolean bFlagValue) {
+		return this.setFlag(objEnumFlag.name(), bFlagValue);
+	}
+	
+	@Override
+	public boolean[] setFlag(IKernelProgramZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) {
+		boolean[] baReturn=null;
+		main:{
+			if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
+				baReturn = new boolean[objaEnumFlag.length];
+				int iCounter=-1;
+				for(IKernelProgramZZZ.FLAGZ objEnumFlag:objaEnumFlag) {
+					iCounter++;
+					boolean bReturn = this.setFlag(objEnumFlag, bFlagValue);
+					baReturn[iCounter]=bReturn;
+				}
+			}
+		}//end main:
+		return baReturn;
+	}			
+			
 	//### AUS IKernelModuleUserZZZ
 	@Override
 	public IKernelModuleZZZ getModule() throws ExceptionZZZ {
@@ -1284,6 +1312,34 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		this.objModule = objModule;		
 	}
 	
+	
+	@Override
+	public boolean getFlag(IKernelModuleUserZZZ.FLAGZ objEnumFlag) {
+		return this.getFlag(objEnumFlag.name());
+	}
+	@Override
+	public boolean setFlag(IKernelModuleUserZZZ.FLAGZ objEnumFlag, boolean bFlagValue) {
+		return this.setFlag(objEnumFlag.name(), bFlagValue);
+	}
+	
+	@Override
+	public boolean[] setFlag(IKernelModuleUserZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) {
+		boolean[] baReturn=null;
+		main:{
+			if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
+				baReturn = new boolean[objaEnumFlag.length];
+				int iCounter=-1;
+				for(IKernelModuleUserZZZ.FLAGZ objEnumFlag:objaEnumFlag) {
+					iCounter++;
+					boolean bReturn = this.setFlag(objEnumFlag, bFlagValue);
+					baReturn[iCounter]=bReturn;
+				}
+			}
+		}//end main:
+		return baReturn;
+	}
+	
+	//### Aus IKernelModule
 	@Override
 	public String getModuleName() throws ExceptionZZZ {
 		String sReturn = null;
@@ -1318,6 +1374,33 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	 */
 	public void resetModuleUsed() {
 		this.sModuleName = null;
+	}
+	
+	
+	@Override
+	public boolean getFlag(IKernelModuleZZZ.FLAGZ objEnumFlag) {
+		return this.getFlag(objEnumFlag.name());
+	}
+	@Override
+	public boolean setFlag(IKernelModuleZZZ.FLAGZ objEnumFlag, boolean bFlagValue) {
+		return this.setFlag(objEnumFlag.name(), bFlagValue);
+	}
+	
+	@Override
+	public boolean[] setFlag(IKernelModuleZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) {
+		boolean[] baReturn=null;
+		main:{
+			if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
+				baReturn = new boolean[objaEnumFlag.length];
+				int iCounter=-1;
+				for(IKernelModuleZZZ.FLAGZ objEnumFlag:objaEnumFlag) {
+					iCounter++;
+					boolean bReturn = this.setFlag(objEnumFlag, bFlagValue);
+					baReturn[iCounter]=bReturn;
+				}
+			}
+		}//end main:
+		return baReturn;
 	}
 	
 	//#### IComponentCascadedUserZZZ
