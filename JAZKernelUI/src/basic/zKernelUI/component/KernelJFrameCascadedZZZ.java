@@ -36,17 +36,17 @@ import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelLogZZZ;
 import basic.zKernel.KernelZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
-import basic.zKernel.flag.FlagZHelperZZZ;
 import basic.zKernel.flag.IFlagLocalUserZZZ;
-import basic.zKernel.flag.IFlagUserZZZ;
-import basic.zKernel.flag.IFlagUserZZZ.FLAGZ;
+import basic.zKernel.flag.IFlagZUserZZZ;
+import basic.zKernel.flag.IFlagZUserZZZ.FLAGZ;
+import basic.zKernel.flag.json.FlagZHelperZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import custom.zKernel.LogZZZ;
 
 /** Class is base for all frames used by the configuration module
  * @author Lindhauer
  */
-public abstract class KernelJFrameCascadedZZZ extends JFrame  implements IObjectZZZ, IFlagUserZZZ, IFlagLocalUserZZZ, IKernelUserZZZ, IKernelModuleZZZ, IComponentCascadedUserZZZ, IFrameCascadedZZZ, IFrameLaunchableZZZ, IScreenFeatureZZZ{
+public abstract class KernelJFrameCascadedZZZ extends JFrame  implements IObjectZZZ, IFlagZUserZZZ, IFlagLocalUserZZZ, IKernelUserZZZ, IKernelModuleZZZ, IComponentCascadedUserZZZ, IFrameCascadedZZZ, IFrameLaunchableZZZ, IScreenFeatureZZZ{
 	private IKernelZZZ objKernel;
 	private LogZZZ objLog; 
 	private KernelJFrameCascadedZZZ frameParent=null;
@@ -559,7 +559,7 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 			 * @throws ExceptionZZZ 
 			 */
 			@Override
-			public String[] getFlagZ_passable(boolean bValueToSearchFor, IFlagUserZZZ objUsingFlagZ) throws ExceptionZZZ{
+			public String[] getFlagZ_passable(boolean bValueToSearchFor, IFlagZUserZZZ objUsingFlagZ) throws ExceptionZZZ{
 				return this.getFlagZ_passable_(bValueToSearchFor, false, objUsingFlagZ);
 			}
 			
@@ -567,11 +567,11 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 			 * @see basic.zKernel.flag.IFlagUserZZZ#getFlagZ_passable(boolean, boolean, basic.zKernel.flag.IFlagUserZZZ)
 			 */
 			@Override
-			public String[] getFlagZ_passable(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap, IFlagUserZZZ objUsingFlagZ) throws ExceptionZZZ{
+			public String[] getFlagZ_passable(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap, IFlagZUserZZZ objUsingFlagZ) throws ExceptionZZZ{
 				return this.getFlagZ_passable_(bValueToSearchFor, bLookupExplizitInHashMap, objUsingFlagZ);
 			}
 			
-			private String[] getFlagZ_passable_(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap, IFlagUserZZZ objUsingFlagZ) throws ExceptionZZZ{
+			private String[] getFlagZ_passable_(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap, IFlagZUserZZZ objUsingFlagZ) throws ExceptionZZZ{
 				String[] saReturn = null;
 				main:{
 					
@@ -595,11 +595,11 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 			 * @return
 			 * @throws ExceptionZZZ 
 			 */
-			public String[] getFlagZ_passable(IFlagUserZZZ objUsingFlagZ) throws ExceptionZZZ{
+			public String[] getFlagZ_passable(IFlagZUserZZZ objUsingFlagZ) throws ExceptionZZZ{
 				return this.getFlagZ_passable_(objUsingFlagZ);
 			}
 			
-			private String[] getFlagZ_passable_(IFlagUserZZZ objUsingFlagZ) throws ExceptionZZZ{
+			private String[] getFlagZ_passable_(IFlagZUserZZZ objUsingFlagZ) throws ExceptionZZZ{
 				String[] saReturn = null;
 				main:{
 					
@@ -993,22 +993,22 @@ public void setFrameSub(String sAlias, JFrame objFrame){
 	
 	//### Aus IFlagUserZZZ
 	@Override
-	public boolean getFlag(IFlagUserZZZ.FLAGZ objEnumFlag) {
+	public boolean getFlag(IFlagZUserZZZ.FLAGZ objEnumFlag) {
 		return this.getFlag(objEnumFlag.name());
 	}
 	@Override
-	public boolean setFlag(IFlagUserZZZ.FLAGZ objEnumFlag, boolean bFlagValue) {
+	public boolean setFlag(IFlagZUserZZZ.FLAGZ objEnumFlag, boolean bFlagValue) {
 		return this.setFlag(objEnumFlag.name(), bFlagValue);
 	}
 	
 	@Override
-	public boolean[] setFlag(IFlagUserZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) {
+	public boolean[] setFlag(IFlagZUserZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) {
 		boolean[] baReturn=null;
 		main:{
 			if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
 				baReturn = new boolean[objaEnumFlag.length];
 				int iCounter=-1;
-				for(IFlagUserZZZ.FLAGZ objEnumFlag:objaEnumFlag) {
+				for(IFlagZUserZZZ.FLAGZ objEnumFlag:objaEnumFlag) {
 					iCounter++;
 					boolean bReturn = this.setFlag(objEnumFlag, bFlagValue);
 					baReturn[iCounter]=bReturn;

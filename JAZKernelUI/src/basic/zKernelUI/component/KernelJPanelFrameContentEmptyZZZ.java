@@ -15,7 +15,7 @@ import basic.zBasic.IObjectZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
-import basic.zKernel.flag.IFlagUserZZZ;
+import basic.zKernel.flag.IFlagZUserZZZ;
 import custom.zKernel.LogZZZ;
 
 public class KernelJPanelFrameContentEmptyZZZ extends KernelJPanelContentEmptyZZZ{

@@ -15,7 +15,7 @@ import basic.zBasic.util.abstractList.HashMapExtendedZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.KernelUseObjectZZZ;
 import basic.zKernel.KernelZZZ;
-import basic.zKernel.flag.IFlagUserZZZ;
+import basic.zKernel.flag.IFlagZUserZZZ;
 
 public class KernelButtonGroupZZZ<T,X>  extends KernelUseObjectZZZ{
 

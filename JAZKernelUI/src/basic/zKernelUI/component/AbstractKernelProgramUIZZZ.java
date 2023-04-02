@@ -11,7 +11,7 @@ import basic.zKernel.IKernelZZZ;
 import basic.zKernel.component.AbstractKernelProgramZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.component.IKernelProgramZZZ;
-import basic.zKernel.flag.IFlagUserZZZ;
+import basic.zKernel.flag.IFlagZUserZZZ;
 import basic.zKernelUI.util.JTextFieldHelperZZZ;
 
 public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZZ{

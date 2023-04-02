@@ -19,7 +19,7 @@ import basic.zBasic.util.datatype.enums.EnumSetMappedUtilZZZ;
 import basic.zBasic.util.datatype.enums.EnumSetUtilZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasic.util.file.FileEasyZZZ;
-import basic.zKernel.flag.IFlagUserZZZ;
+import basic.zKernel.flag.IFlagZUserZZZ;
 
 public class EnumSetDebugUIStrategyUtilZZZ extends EnumSetUtilZZZ{
 
@@ -40,7 +40,7 @@ public class EnumSetDebugUIStrategyUtilZZZ extends EnumSetUtilZZZ{
 
 	//###############	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static int computeEnumConstant_StrategyValueForFlagUser(IFlagUserZZZ obj) {
+	public static int computeEnumConstant_StrategyValueForFlagUser(IFlagZUserZZZ obj) {
 		int iReturn = 0;
 		main:{
 			if(obj==null)break main;

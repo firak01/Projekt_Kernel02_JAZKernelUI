@@ -17,7 +17,7 @@ import basic.zKernel.KernelZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.component.IKernelProgramZZZ;
 import basic.zKernel.flag.IFlagLocalUserZZZ;
-import basic.zKernel.flag.IFlagUserZZZ;
+import basic.zKernel.flag.IFlagZUserZZZ;
 import custom.zKernel.LogZZZ;
 import custom.zKernelUI.component.PanelContentEmptyZZZ;
 import custom.zKernelUI.module.config.DLG.Panel_NORTHZZZ;
@@ -35,7 +35,7 @@ public class PanelDebugNavigatorZZZ extends KernelJPanelCascadedZZZ implements I
         stemp = IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name();
 		btemp = this.setFlagZ(stemp, true);	
 		if(btemp==false){
-			ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available. Maybe an interface is not implemented.", IFlagUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
+			ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available. Maybe an interface is not implemented.", IFlagZUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
 			throw ez;		 
 		}
 		

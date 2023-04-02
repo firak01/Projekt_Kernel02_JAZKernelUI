@@ -35,9 +35,9 @@ import basic.zKernel.KernelLogZZZ;
 import basic.zKernel.component.IKernelModuleUserZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.component.IKernelProgramZZZ;
-import basic.zKernel.flag.FlagZHelperZZZ;
 import basic.zKernel.flag.IFlagLocalUserZZZ;
-import basic.zKernel.flag.IFlagUserZZZ;
+import basic.zKernel.flag.IFlagZUserZZZ;
+import basic.zKernel.flag.json.FlagZHelperZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import basic.zKernelUI.component.componentGroup.ActionSwitchZZZ;
 import basic.zKernelUI.component.componentGroup.IModelComponentGroupValueZZZ;
@@ -53,7 +53,7 @@ import custom.zKernel.LogZZZ;
  * 
  *  Merke: Die Panels können sowohl nur modulnutzer als auch selber Modul sein. Darum werden beide Interfaces implementiert.
  */
-public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IKernelUserZZZ, IObjectZZZ, IMouseFeatureZZZ, IDebugUiZZZ, IFlagUserZZZ, IFlagLocalUserZZZ{
+public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IKernelUserZZZ, IObjectZZZ, IMouseFeatureZZZ, IDebugUiZZZ, IFlagZUserZZZ, IFlagLocalUserZZZ{
 	protected static final String sBUTTON_SWITCH = "buttonSwitch";
    	
 	
@@ -215,7 +215,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				stemp = sKey;
 				btemp = this.setFlagZ(sKey, hmFlag.get(sKey));
 				if(btemp==false){
-					ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available (passed by hashmap). Maybe an interface is not implemented.", IFlagUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
+					ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available (passed by hashmap). Maybe an interface is not implemented.", IFlagZUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
 					throw ez;		 
 				}			
 			}
@@ -266,7 +266,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				stemp = sKey;
 				btemp = this.setFlagZ(sKey, hmFlag.get(sKey));
 				if(btemp==false){
-					ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available (passed by hashmap). Maybe an interface is not implemented.", IFlagUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
+					ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available (passed by hashmap). Maybe an interface is not implemented.", IFlagZUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
 					throw ez;		 
 				}	
 			}
@@ -794,7 +794,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			stemp = FLAGZ.COMPONENT_DRAGGABLE.name();
 			btemp = this.setFlagZ(stemp, bValue);
 			if(btemp==false){
-				ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available. Maybe an interface is not implemented.", IFlagUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
+				ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available. Maybe an interface is not implemented.", IFlagZUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
 				throw ez;		 
 			}	
 		} catch (ExceptionZZZ e) {
@@ -805,22 +805,22 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	
 	//### Aus IFlagUserZZZ
 	@Override
-	public boolean getFlag(IFlagUserZZZ.FLAGZ objEnumFlag) {
+	public boolean getFlag(IFlagZUserZZZ.FLAGZ objEnumFlag) {
 		return this.getFlag(objEnumFlag.name());
 	}
 	@Override
-	public boolean setFlag(IFlagUserZZZ.FLAGZ objEnumFlag, boolean bFlagValue) {
+	public boolean setFlag(IFlagZUserZZZ.FLAGZ objEnumFlag, boolean bFlagValue) {
 		return this.setFlag(objEnumFlag.name(), bFlagValue);
 	}	
 	
 	@Override
-	public boolean[] setFlag(IFlagUserZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) {
+	public boolean[] setFlag(IFlagZUserZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) {
 		boolean[] baReturn=null;
 		main:{
 			if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
 				baReturn = new boolean[objaEnumFlag.length];
 				int iCounter=-1;
-				for(IFlagUserZZZ.FLAGZ objEnumFlag:objaEnumFlag) {
+				for(IFlagZUserZZZ.FLAGZ objEnumFlag:objaEnumFlag) {
 					iCounter++;
 					boolean bReturn = this.setFlag(objEnumFlag, bFlagValue);
 					baReturn[iCounter]=bReturn;
@@ -1214,15 +1214,15 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			 * @return
 			 * @throws ExceptionZZZ 
 			 */
-			public String[] getFlagZ_passable(boolean bValueToSearchFor, IFlagUserZZZ objUsingFlagZ) throws ExceptionZZZ{
+			public String[] getFlagZ_passable(boolean bValueToSearchFor, IFlagZUserZZZ objUsingFlagZ) throws ExceptionZZZ{
 				return this.getFlagZ_passable_(bValueToSearchFor, false, objUsingFlagZ);
 			}
 			
-			public String[] getFlagZ_passable(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap, IFlagUserZZZ objUsingFlagZ) throws ExceptionZZZ{
+			public String[] getFlagZ_passable(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap, IFlagZUserZZZ objUsingFlagZ) throws ExceptionZZZ{
 				return this.getFlagZ_passable_(bValueToSearchFor, bLookupExplizitInHashMap, objUsingFlagZ);
 			}
 			
-			private String[] getFlagZ_passable_(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap, IFlagUserZZZ objUsingFlagZ) throws ExceptionZZZ{
+			private String[] getFlagZ_passable_(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap, IFlagZUserZZZ objUsingFlagZ) throws ExceptionZZZ{
 				String[] saReturn = null;
 				main:{
 					
@@ -1246,11 +1246,11 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			 * @return
 			 * @throws ExceptionZZZ 
 			 */
-			public String[] getFlagZ_passable(IFlagUserZZZ objUsingFlagZ) throws ExceptionZZZ{
+			public String[] getFlagZ_passable(IFlagZUserZZZ objUsingFlagZ) throws ExceptionZZZ{
 				return this.getFlagZ_passable_(objUsingFlagZ);
 			}
 			
-			private String[] getFlagZ_passable_(IFlagUserZZZ objUsingFlagZ) throws ExceptionZZZ{
+			private String[] getFlagZ_passable_(IFlagZUserZZZ objUsingFlagZ) throws ExceptionZZZ{
 				String[] saReturn = null;
 				main:{
 					
