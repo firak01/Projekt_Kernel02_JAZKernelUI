@@ -15,7 +15,6 @@ import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -35,16 +34,14 @@ import basic.zKernel.KernelLogZZZ;
 import basic.zKernel.component.IKernelModuleUserZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.component.IKernelProgramZZZ;
+import basic.zKernelUI.component.IMouseFeatureZZZ;
 import basic.zKernel.flag.IFlagLocalUserZZZ;
 import basic.zKernel.flag.IFlagZUserZZZ;
 import basic.zKernel.flag.json.FlagZHelperZZZ;
 import basic.zKernelUI.KernelUIZZZ;
-import basic.zKernelUI.component.componentGroup.ActionSwitchZZZ;
-import basic.zKernelUI.component.componentGroup.IModelComponentGroupValueZZZ;
 import basic.zKernelUI.component.componentGroup.JComponentGroupCollectionZZZ;
 import basic.zKernelUI.component.componentGroup.JComponentGroupHelperZZZ;
 import basic.zKernelUI.component.componentGroup.JComponentGroupZZZ;
-import basic.zKernelUI.component.componentGroup.KernelSenderComponentGroupSwitchZZZ;
 import basic.zKernelUI.component.componentGroup.ModelPanelDebugZZZ;
 import custom.zKernel.LogZZZ;
 
@@ -53,7 +50,7 @@ import custom.zKernel.LogZZZ;
  * 
  *  Merke: Die Panels können sowohl nur modulnutzer als auch selber Modul sein. Darum werden beide Interfaces implementiert.
  */
-public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IKernelUserZZZ, IObjectZZZ, IMouseFeatureZZZ, IDebugUiZZZ, IFlagZUserZZZ, IFlagLocalUserZZZ{
+public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IKernelModuleUserZZZ, IKernelUserZZZ, IObjectZZZ, IMouseFeatureZZZ, IDebugUiZZZ, IFlagZUserZZZ, IFlagLocalUserZZZ{
 	protected static final String sBUTTON_SWITCH = "buttonSwitch";
    	
 	
@@ -77,19 +74,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 
 	protected String sProgramName  = null; //ggf. der Name des Elternprogramms, s. KernelKonfiguration
 	protected String sProgramAlias = null; //ggf. der Alias des Elternprogramms, s. KernelKonfiguration
-	
-	/**20130721: Umgestellt auf HashMap und die Enum-Flags, Compiler auf 1.7 geaendert
-	 * 
-	 */
-	/*private boolean flagComponentKernelProgram = false; // 2013-07-08: Damit wird gesagt, dass fuer dieses Panel ein "Program-Abschnitt" in der Kernel - Konfigurations .ini - Datei vorhanden ist.
-	                                                    //             Bei der Suche nach Parametern wird von der aktuellen Komponente weiter "nach oben" durchgegangen und der Parameter f�r jede Programkomponente gesucht.
-	private boolean flagComponentDraggable = true;
-	private boolean bFlagDebug = false;
-	private boolean bFlagInit = false;
-	private boolean bFlagTerminate = false;*/	
-	public enum FLAGZ{
-		COMPONENT_DRAGGABLE, TERMINATE;
-	}
+		
 	public enum FLAGZLOCAL {
 		SKIPDEBUGUI;
 	}
@@ -337,7 +322,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		
 		//Einen Mouse Listener hinzufuegen, der es erlaubt Fenster zu ziehen (auch im Panel und nicht nur in der Titelleiste)
 		//if(this.getFlag("isdraggable")){
-		if(this.getFlagZ(FLAGZ.COMPONENT_DRAGGABLE.name())){	
+		if(this.getFlagZ(IMouseFeatureZZZ.FLAGZ.COMPONENT_DRAGGABLE.name())){	
 			this.setJComponentContentDraggable(this.isJComponentContentDraggable());
 		}
 			bReturn = true;
@@ -761,13 +746,12 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		this.panelParent = objPanel;
 	}
 	
-	//#################### Interface IComponentDraggable
+	//#################### Interface IMouseFeature
 	/* (non-Javadoc)
 	 * @see basic.zKernelUI.IMouseFeatureZZZ#isJComponentContentDraggable()
 	 */
-	public boolean isJComponentContentDraggable() {	
-		//return this.flagComponentDraggable;
-		return this.getFlagZ(FLAGZ.COMPONENT_DRAGGABLE.name());
+	public boolean isJComponentContentDraggable() {			
+		return this.getFlag(IMouseFeatureZZZ.FLAGZ.COMPONENT_DRAGGABLE);
 	}
 
 	/* (non-Javadoc)
@@ -791,7 +775,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		}
 		
 		try {
-			stemp = FLAGZ.COMPONENT_DRAGGABLE.name();
+			stemp = IMouseFeatureZZZ.FLAGZ.COMPONENT_DRAGGABLE.name();
 			btemp = this.setFlagZ(stemp, bValue);
 			if(btemp==false){
 				ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available. Maybe an interface is not implemented.", IFlagZUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
@@ -801,6 +785,37 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public boolean getFlag(IMouseFeatureZZZ.FLAGZ objEnumFlag) {
+		return this.getFlag(objEnumFlag.name());
+	}
+	@Override
+	public boolean setFlag(IMouseFeatureZZZ.FLAGZ objEnumFlag, boolean bFlagValue) {
+		return this.setFlag(objEnumFlag.name(), bFlagValue);
+	}	
+	
+	@Override
+	public boolean[] setFlag(IMouseFeatureZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) {
+		boolean[] baReturn=null;
+		main:{
+			if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
+				baReturn = new boolean[objaEnumFlag.length];
+				int iCounter=-1;
+				for(IMouseFeatureZZZ.FLAGZ objEnumFlag:objaEnumFlag) {
+					iCounter++;
+					boolean bReturn = this.setFlag(objEnumFlag, bFlagValue);
+					baReturn[iCounter]=bReturn;
+				}
+			}
+		}//end main:
+		return baReturn;
+	}
+	
+	@Override
+	public boolean proofFlagZExists(IMouseFeatureZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+		return this.proofFlagZExists(objEnumFlag.name());
 	}
 	
 	//### Aus IFlagUserZZZ
@@ -829,6 +844,16 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		}//end main:
 		return baReturn;
 	}
+	
+	@Override
+	public boolean proofFlagZExists(IFlagZUserZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+		return this.proofFlagZExists(objEnumFlag.name());
+	}
+	
+	
+	
+	
+	//######################
 			@Override
 			public boolean getFlag(String sFlagName) {
 				//Version Vor Java 1.6
@@ -1271,7 +1296,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 
 		//### Functions #########################
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	//###Aus iKernelProgram
+	//###Aus IKernelProgramZZZ
 	@Override
 	public boolean getFlag(IKernelProgramZZZ.FLAGZ objEnumFlag) {
 		return this.getFlag(objEnumFlag.name());
@@ -1296,7 +1321,12 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			}
 		}//end main:
 		return baReturn;
-	}			
+	}		
+	
+	@Override
+	public boolean proofFlagZExists(IKernelProgramZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+		return this.proofFlagZExists(objEnumFlag.name());
+	}
 			
 	//### AUS IKernelModuleUserZZZ
 	@Override
@@ -1338,6 +1368,11 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		}//end main:
 		return baReturn;
 	}
+	
+	@Override
+	public boolean proofFlagZExists(IKernelModuleUserZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+			return this.proofFlagZExists(objEnumFlag.name());
+		}
 	
 	//### Aus IKernelModule
 	@Override
@@ -1402,6 +1437,12 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		}//end main:
 		return baReturn;
 	}
+	
+	@Override
+	public boolean proofFlagZExists(IKernelModuleZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+		return this.proofFlagZExists(objEnumFlag.name());
+	}
+
 	
 	//#### IComponentCascadedUserZZZ
 	@Override

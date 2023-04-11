@@ -616,6 +616,11 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 				}//end main:
 				return saReturn;
 			}
+			
+			@Override
+			public boolean proofFlagZExists(IFlagZUserZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+				return this.proofFlagZExists(objEnumFlag.name());
+			}
 		
 		/** DIESE METHODE MUSS IN ALLEN KLASSEN VORHANDEN SEIN - über Vererbung ODER Interface Implementierung -, DIE IHRE FLAGS SETZEN WOLLEN
 		 *  SIE WIRD PER METHOD.INVOKE(....) AUFGERUFEN.
@@ -1044,6 +1049,11 @@ public void setFrameSub(String sAlias, JFrame objFrame){
 		}//end main:
 		return baReturn;
 	}
+	
+	@Override
+	public boolean proofFlagZExists(IKernelModuleZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ{
+		return this.proofFlagZExists(objEnumFlag.name());
+	} 
 	
 	//###################################################################################
 	//### Interne Runnable Klasse

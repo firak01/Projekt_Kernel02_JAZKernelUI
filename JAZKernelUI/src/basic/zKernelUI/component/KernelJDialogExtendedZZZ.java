@@ -5,9 +5,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -15,28 +12,14 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import basic.zKernel.IKernelZZZ;
-import basic.zKernel.KernelLogZZZ;
-import basic.zKernel.KernelZZZ;
-import basic.zKernel.component.IKernelModuleUserZZZ;
-import basic.zKernel.component.IKernelModuleZZZ;
-import basic.zKernel.flag.IFlagLocalUserZZZ;
-import basic.zKernel.flag.IFlagZUserZZZ;
-import basic.zKernel.flag.json.FlagZHelperZZZ;
-import basic.zKernelUI.KernelUIZZZ;
-import basic.zUtil.io.KernelFileZZZ.FLAGZ;
-import custom.zKernel.LogZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IConstantZZZ;
 import basic.zBasic.IObjectZZZ;
-import basic.zBasic.ObjectZZZ;
-import basic.zBasic.ReflectClassZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasic.util.abstractArray.ArrayUtilZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
@@ -45,6 +28,15 @@ import basic.zBasicUI.adapter.AdapterJComponent4ScreenSnapperZZZ;
 import basic.zBasicUI.listener.ListenerMouseMove4DragableWindowZZZ;
 import basic.zKernel.IKernelConfigZZZ;
 import basic.zKernel.IKernelUserZZZ;
+import basic.zKernel.IKernelZZZ;
+import basic.zKernel.KernelLogZZZ;
+import basic.zKernel.component.IKernelModuleUserZZZ;
+import basic.zKernel.component.IKernelModuleZZZ;
+import basic.zKernel.flag.IFlagLocalUserZZZ;
+import basic.zKernel.flag.IFlagZUserZZZ;
+import basic.zKernel.flag.json.FlagZHelperZZZ;
+import basic.zKernelUI.KernelUIZZZ;
+import custom.zKernel.LogZZZ;
 
 /**Diese Klasse soll sicherstellen, das ein Dialogfenster auch nur einmal geoeffnet wird.
  * @author 0823
@@ -1129,6 +1121,11 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		return baReturn;
 	}
 	
+	@Override
+	public boolean proofFlagZExists(IKernelModuleZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+		return this.proofFlagZExists(objEnumFlag.name());
+	}
+	
 	//### Aus IFlagUserZZZ
 	@Override
 	public boolean getFlag(IFlagZUserZZZ.FLAGZ objEnumFlag) {
@@ -1156,6 +1153,11 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		return baReturn;
 	}
 	
+	@Override
+	public boolean proofFlagZExists(IFlagZUserZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+		return this.proofFlagZExists(objEnumFlag.name());
+	}
+	
 	//### Aus IKernelModuleUserZZZ
 	@Override
 	public boolean getFlag(IKernelModuleUserZZZ.FLAGZ objEnumFlag) {
@@ -1181,5 +1183,41 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			}
 		}//end main:
 		return baReturn;
+	}
+	
+	@Override
+	public boolean proofFlagZExists(IKernelModuleUserZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+			return this.proofFlagZExists(objEnumFlag.name());
+		}
+	
+	//### Aus IMouseFeatureZZZ
+	@Override
+	public boolean getFlag(IMouseFeatureZZZ.FLAGZ objEnumFlag) {
+		return this.getFlag(objEnumFlag.name());
+	}
+	@Override
+	public boolean setFlag(IMouseFeatureZZZ.FLAGZ objEnumFlag, boolean bFlagValue) {
+		return this.setFlag(objEnumFlag.name(), bFlagValue);
+	}
+	@Override
+	public boolean[] setFlag(IMouseFeatureZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) {
+		boolean[] baReturn=null;
+		main:{
+			if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
+				baReturn = new boolean[objaEnumFlag.length];
+				int iCounter=-1;
+				for(IMouseFeatureZZZ.FLAGZ objEnumFlag:objaEnumFlag) {
+					iCounter++;
+					boolean bReturn = this.setFlag(objEnumFlag, bFlagValue);
+					baReturn[iCounter]=bReturn;
+				}
+			}
+		}//end main:
+		return baReturn;
+	}
+	
+	@Override
+	public boolean proofFlagZExists(IMouseFeatureZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+		return this.proofFlagZExists(objEnumFlag.name());
 	}
 }

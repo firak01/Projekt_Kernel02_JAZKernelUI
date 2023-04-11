@@ -69,17 +69,17 @@ public class KernelJPanelCascadedZZZTest  extends TestCase{
 			}
 		
 			//Test auf Flags aus dem basic-Bereich
-			boolean btemp = panelMainTest.proofFlagZExists(ObjectZZZ.FLAGZ.DEBUG.name());			
+			boolean btemp = panelMainTest.proofFlagZExists(ObjectZZZ.FLAGZ.DEBUG);			
 			assertTrue(btemp);
 			
 			btemp = panelMainTest.proofFlagZExists("nixda");			
 			assertFalse(btemp);
 			
-			btemp = panelMainTest.proofFlagZExists(KernelJPanelCascadedZZZ.FLAGZ.COMPONENT_DRAGGABLE.name());
+			btemp = panelMainTest.proofFlagZExists(IMouseFeatureZZZ.FLAGZ.COMPONENT_DRAGGABLE);
 			assertTrue(btemp);
 			
 			//Test auf Flags aus dem component-Bereich
-			btemp = panelMainTest.proofFlagZExists(IKernelProgramZZZ.FLAGZ.ISKERNELPROGRAM.name());
+			btemp = panelMainTest.proofFlagZExists(IKernelProgramZZZ.FLAGZ.ISKERNELPROGRAM);
 			assertTrue(btemp);
 //		} catch (ExceptionZZZ ez) {
 //			fail("Method throws an exception." + ez.getMessageLast());
@@ -123,7 +123,7 @@ public class KernelJPanelCascadedZZZTest  extends TestCase{
 		public IPanelCascadedZZZ createPanelContent() throws ExceptionZZZ {
 			// TODO Auto-generated method stub
 			return null;
-		} 
+		}		
 	}//END class fFrmMain4test
 	
 	//public deklaration notwendig , um per ObjectZZZ auf diese innere Klasse zugreifen zu k�nnen ?

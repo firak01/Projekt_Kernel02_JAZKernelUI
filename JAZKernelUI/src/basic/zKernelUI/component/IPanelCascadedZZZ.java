@@ -16,7 +16,7 @@ import basic.zKernel.flag.IFlagZUserZZZ;
 /**Interface defines methods for setting and getting handles on other JPanels
  * @author Lindhauer
  */
-public interface IPanelCascadedZZZ extends IComponentCascadedUserZZZ, IKernelModuleZZZ, IKernelProgramZZZ, IFlagZUserZZZ{
+public interface IPanelCascadedZZZ extends IComponentCascadedUserZZZ, IKernelModuleZZZ, IKernelProgramZZZ,IFlagZUserZZZ{
 	public abstract IPanelCascadedZZZ getPanelParent();
 	public abstract void setPanelParent(IPanelCascadedZZZ objPanel);
 	
