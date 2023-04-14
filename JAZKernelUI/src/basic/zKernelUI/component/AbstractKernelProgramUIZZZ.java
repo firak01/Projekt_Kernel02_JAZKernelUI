@@ -127,12 +127,8 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 				//20210707: Hier ggfs. auch in den Nachbarpanels nach dem Feld suchen!!!
 				JTextField textField = (JTextField) getPanelParent().searchComponent(sTextfield4Update);
 				if(textField!=null) {
-					textField.setText(sText2Update);
-					
-					JTextFieldHelperZZZ.markAndFocus(textField);//Merke: Jetzt den Cursor noch verändern macht dies wieder rückgängig.
-					
-					getPanelParent().revalidate();
-					getPanelParent().repaint();
+					textField.setText(sText2Update);					
+					JTextFieldHelperZZZ.markAndFocus(getPanelParent(),textField);//Merke: Jetzt den Cursor noch verändern macht dies wieder rückgängig.
 				}else {
 					ReportLogZZZ.write(ReportLogZZZ.DEBUG, "JTextField '" + sTextfield4Update + "' NOT FOUND in panel '" + getPanelParent().getName() + "' !!!");										
 				}

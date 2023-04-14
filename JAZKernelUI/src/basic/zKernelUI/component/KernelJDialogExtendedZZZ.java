@@ -15,6 +15,7 @@ import java.util.Set;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import basic.zBasic.ExceptionZZZ;
@@ -36,6 +37,7 @@ import basic.zKernel.flag.IFlagLocalUserZZZ;
 import basic.zKernel.flag.IFlagZUserZZZ;
 import basic.zKernel.flag.json.FlagZHelperZZZ;
 import basic.zKernelUI.KernelUIZZZ;
+import basic.zKernelUI.util.JTextFieldHelperZZZ;
 import custom.zKernel.LogZZZ;
 
 /**Diese Klasse soll sicherstellen, das ein Dialogfenster auch nur einmal geoeffnet wird.
@@ -165,6 +167,13 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		}		
 		
 		this.getContentPane().setLayout(new BorderLayout());
+
+		JPanel panelContent = (JPanel)this.getPanelContent();
+		if(panelContent!=null) {
+			panelContent.revalidate(); //Das Neuzeichnen ist wichtig!!!
+			panelContent.repaint();
+		}
+		
 		}//end main:
 		return bReturn;
 	}
@@ -359,11 +368,17 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			}else{
 				owner =(Frame) SwingUtilities.getAncestorOfClass(Frame.class, objParentComponent);				
 			}
-			
+		
 			if(this.isCentered()) this.centerOnParent();
-			this.pack();
+
+			JPanel panelContent = (JPanel)this.getPanelContent();
+			if(panelContent!=null) {				
+				panelContent.revalidate(); //Das Neuzeichnen ist ggfs. wichtig!!!
+				panelContent.repaint();
+			}
 			
-			this.setTitle(sTitle);
+			this.pack();
+			this.setTitle(sTitle);						
 			this.setVisible(true);
 			bReturn = true;			
 		}//End main:
