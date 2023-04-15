@@ -59,6 +59,9 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	protected ExceptionZZZ objException;
 	protected IKernelModuleZZZ objModule=null; //Das Modul, z.B. die Dialogbox, in der das Program gestartet wird.
 
+	//Zum Suchen das Panels einen Alias vergeben.
+	protected String sAlias=null;
+	
 	//Merke: Nur einige besondere Panels sind selbst Module.
 	protected String sModuleName=null;         //Notwendig, wenn das Panel selbst das Modul ist.
 
@@ -329,7 +332,16 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		}//end main:
 		return bReturn;		
 	}
+
+	@Override
+	public String getAlias() {
+		return this.sAlias;
+	}
 	
+	@Override
+	public void setAlias(String sAlias) {
+		this.sAlias = sAlias;
+	}
 	
 	public KernelJDialogExtendedZZZ getDialogParent(){
 		return this.dialogParent;
@@ -503,15 +515,15 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		}
 	}
 	
-	/** Suche Rekursiv nach einem Panel mit dem angegebenen Alias. F�ngt dabei bei sich selber an.
+	/** Suche Rekursiv nach einem Panel mit dem angegebenen Alias. Faengt dabei bei sich selber an.
 	* @param sAlias
 	* @return
 	* 
 	* lindhaueradmin; 16.03.2007 11:51:02
 	 * @throws ExceptionZZZ 
 	 */
-	public KernelJPanelCascadedZZZ searchPanelSub(String sAlias) throws ExceptionZZZ{
-		KernelJPanelCascadedZZZ objReturn=null;
+	public IPanelCascadedZZZ searchPanelSub(String sAlias) throws ExceptionZZZ{
+		IPanelCascadedZZZ objReturn=null;
 		main:{
 			//Zuerst prüfen, ob es sich um das Root-Panel handelt, dann kann ja ggf. das Root-Panel selbst gesucht werden.
 			if(this.getPanelParent()==null){
@@ -523,6 +535,13 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				}
 			}
 			
+			//Ist das Panel selbst mit dem Alias versehen
+			String sPanelAlias = this.getAlias();
+			if(sAlias.equalsIgnoreCase(sPanelAlias)) {
+				objReturn = this;
+				break main;
+			}
+			
 			//Nun direkte Unterpanels suchen
 			objReturn = this.getPanelSub(sAlias);
 			if(objReturn!=null) break main;
@@ -531,10 +550,61 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			Enumeration objEnum = this.getHashtablePanel().elements();					
 			while(objEnum.hasMoreElements()){
 				String stemp = (String) objEnum.nextElement();
-				KernelJPanelCascadedZZZ panelTemp = this.getPanelSub(stemp);
+				IPanelCascadedZZZ panelTemp = this.getPanelSub(stemp);
 				if(panelTemp!=null){
 					objReturn = panelTemp.searchPanelSub(sAlias);
 				}
+			}			
+		}//ENd main
+		return objReturn;
+	}
+	
+	/** Suche Rekursiv nach einem Panel mit dem angegebenen Alias. Faengt dabei bei sich selber an.
+	* @param sAlias
+	* @return
+	* 
+	* lindhaueradmin; 16.03.2007 11:51:02
+	 * @throws ExceptionZZZ 
+	 */
+	public IPanelCascadedZZZ searchPanel(String sAlias) throws ExceptionZZZ{
+		IPanelCascadedZZZ objReturn=null;
+		main:{
+			//Zuerst prüfen, ob es sich um das Root-Panel handelt, dann kann ja ggf. das Root-Panel selbst gesucht werden.
+			if(this.getPanelParent()==null){							
+				String sRootAlias = KernelJFrameCascadedZZZ.getAliasPanelContent();
+				if(sRootAlias.equals(sAlias)){
+					objReturn = this;
+					break main;
+				}
+			}
+			
+			KernelJFrameCascadedZZZ frameParent = this.getFrameParent();
+			if(frameParent!=null) {				
+				System.out.println("Hier fehlt was: Kann noch nicht vom Frame aus nach den Unterpanels suchen.");
+			}
+			
+			KernelJDialogExtendedZZZ dialogParent = this.getDialogParent();
+			if(dialogParent!=null) {	
+				IPanelCascadedZZZ panelContent = dialogParent.getPanelContent();
+				if(panelContent!=null) {
+					objReturn = panelContent.searchPanelSub(sAlias);
+					if(objReturn!=null)break main;
+				}
+			}
+			
+			
+			ArrayList<IPanelCascadedZZZ>alPanelNeighbours = this.getPanelNeighbours();
+			for(IPanelCascadedZZZ panelNeighbour : alPanelNeighbours) {
+				//Pruefen, ob das Nachbarpanel nicht mit dem Alias definiert ist
+				String sProgramAlias = panelNeighbour.getProgramAlias();
+				if(sAlias.equalsIgnoreCase(sProgramAlias)) {
+					objReturn = this;
+					break main;
+				}
+				
+				//In den Nachbarpanels das Unterpanel suchen
+				objReturn = panelNeighbour.searchPanelSub(sAlias);
+				if(objReturn!=null) break main;
 			}			
 		}//ENd main
 		return objReturn;

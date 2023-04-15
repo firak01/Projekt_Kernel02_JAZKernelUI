@@ -17,10 +17,15 @@ import basic.zKernel.flag.IFlagZUserZZZ;
  * @author Lindhauer
  */
 public interface IPanelCascadedZZZ extends IComponentCascadedUserZZZ, IKernelModuleZZZ, IKernelProgramZZZ,IFlagZUserZZZ{
+	public String getAlias();
+	public void setAlias(String sAlias);
+	
 	public abstract IPanelCascadedZZZ getPanelParent();
 	public abstract void setPanelParent(IPanelCascadedZZZ objPanel);
 	
+	public abstract IPanelCascadedZZZ searchPanel(String string) throws ExceptionZZZ;
 	public abstract IPanelCascadedZZZ searchPanelRoot() throws ExceptionZZZ;
+	public abstract IPanelCascadedZZZ searchPanelSub(String sAlias) throws ExceptionZZZ;
 	
 	public abstract IPanelCascadedZZZ getPanelSub(String sAlias);
 	public abstract void setPanelSub(String sAlias, IPanelCascadedZZZ objJPanel);
@@ -33,4 +38,6 @@ public interface IPanelCascadedZZZ extends IComponentCascadedUserZZZ, IKernelMod
 	public abstract JComponent searchComponent(String sKeyComponent, boolean bInNeighbours);
 	
 	public Hashtable<String,IPanelCascadedZZZ> getHashtablePanel();
+	
+	
 }
