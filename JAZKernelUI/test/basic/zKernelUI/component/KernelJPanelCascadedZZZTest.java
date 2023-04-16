@@ -69,17 +69,17 @@ public class KernelJPanelCascadedZZZTest  extends TestCase{
 			}
 		
 			//Test auf Flags aus dem basic-Bereich
-			boolean btemp = panelMainTest.proofFlagZExists(ObjectZZZ.FLAGZ.DEBUG);			
+			boolean btemp = panelMainTest.proofFlagExists(ObjectZZZ.FLAGZ.DEBUG);			
 			assertTrue(btemp);
 			
-			btemp = panelMainTest.proofFlagZExists("nixda");			
+			btemp = panelMainTest.proofFlagExists("nixda");			
 			assertFalse(btemp);
 			
-			btemp = panelMainTest.proofFlagZExists(IMouseFeatureZZZ.FLAGZ.COMPONENT_DRAGGABLE);
+			btemp = panelMainTest.proofFlagExists(IMouseFeatureZZZ.FLAGZ.COMPONENT_DRAGGABLE);
 			assertTrue(btemp);
 			
 			//Test auf Flags aus dem component-Bereich
-			btemp = panelMainTest.proofFlagZExists(IKernelProgramZZZ.FLAGZ.ISKERNELPROGRAM);
+			btemp = panelMainTest.proofFlagExists(IKernelProgramZZZ.FLAGZ.ISKERNELPROGRAM);
 			assertTrue(btemp);
 //		} catch (ExceptionZZZ ez) {
 //			fail("Method throws an exception." + ez.getMessageLast());

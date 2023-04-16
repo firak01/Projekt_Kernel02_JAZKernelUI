@@ -41,7 +41,11 @@ public abstract class KernelActionCascadedZZZ extends KernelUseObjectZZZ  implem
 			ez.printStackTrace();
 			
 			//Das ist z.B. sinnvoll um eine Fehlermeldung in einem Feld eines UIClients sichtbar zu machen
-			this.actionPerformCustomOnError(ae, ez);
+			try {
+				this.actionPerformCustomOnError(ae, ez);
+			} catch (ExceptionZZZ e) {				
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -166,6 +170,6 @@ public abstract class KernelActionCascadedZZZ extends KernelUseObjectZZZ  implem
 	/* (non-Javadoc)
 	 * @see basic.zKernelUI.component.IButtonEventZZZ#actionPerformCustomOnError(java.awt.event.ActionEvent, basic.zBasic.ExceptionZZZ)
 	 */
-	public abstract void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez);
+	public abstract void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) throws ExceptionZZZ;
 	
 }

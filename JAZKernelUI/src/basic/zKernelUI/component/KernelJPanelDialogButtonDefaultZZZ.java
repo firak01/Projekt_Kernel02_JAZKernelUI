@@ -167,8 +167,11 @@ public class KernelJPanelDialogButtonDefaultZZZ extends KernelJPanelCascadedZZZ 
 		}
 		
 		@Override
-		public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult){		
-			this.getPanelParent().getDialogParent().setDisposed();
+		public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ{		
+			KernelJDialogExtendedZZZ dialogExtended = this.getPanelParent().getDialogParent();
+			if(dialogExtended!=null) {
+				dialogExtended.onCancel();
+			}
 		}
 
 		@Override
@@ -198,22 +201,25 @@ public class KernelJPanelDialogButtonDefaultZZZ extends KernelJPanelCascadedZZZ 
 		* lindhaueradmin; 09.01.2007 09:03:32
 		 */
 		@Override
-		public boolean actionPerformQueryCustom(ActionEvent ae){
+		public boolean actionPerformQueryCustom(ActionEvent ae)throws ExceptionZZZ{
 			return true;
 		}
 		
 		@Override
-		public boolean actionPerformCustom(ActionEvent ae, boolean bQueryResult){				
+		public boolean actionPerformCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ{				
 			return true;
 		}
 		
 		@Override
-		public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult){
-			this.getPanelParent().getDialogParent().setHidden();
+		public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ{
+			KernelJDialogExtendedZZZ dialogExtended = this.getPanelParent().getDialogParent();
+			if(dialogExtended!=null) {
+				dialogExtended.onClose();
+			}
 		}
 
 		@Override
-		public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) {
+		public void actionPerformCustomOnError(ActionEvent ae, ExceptionZZZ ez) throws ExceptionZZZ {
 			
 		}
 		
@@ -253,14 +259,16 @@ public class KernelJPanelDialogButtonDefaultZZZ extends KernelJPanelCascadedZZZ 
 			String stemp = texttemp.getText();			
 			System.out.println(stemp);
 			*/
-			System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# default ok button");
-			this.getPanelParent().getDialogParent().setDisposed();
+			System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# default ok button");			
 			return true;
 		}
 		
 		@Override
 		public void actionPerformPostCustom(ActionEvent ae, boolean bQueryResult) throws ExceptionZZZ{
-			
+			KernelJDialogExtendedZZZ dialogExtended = this.getPanelParent().getDialogParent();
+			if(dialogExtended!=null) {
+				dialogExtended.onOk();
+			}
 		}
 
 		@Override

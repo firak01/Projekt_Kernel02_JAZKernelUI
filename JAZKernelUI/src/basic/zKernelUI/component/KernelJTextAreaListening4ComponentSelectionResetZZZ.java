@@ -26,7 +26,7 @@ import basic.zKernelUI.component.model.EventComponentSelectionResetZZZ;
 import basic.zKernelUI.component.model.IListenerSelectionResetZZZ;
 import custom.zKernel.LogZZZ;
 
-public abstract class KernelJTextAreaListening4ComponentSelectionResetZZZ extends JTextArea implements IObjectZZZ, IFlagZUserZZZ, IKernelUserZZZ, IListenerSelectionResetZZZ{
+public abstract class KernelJTextAreaListening4ComponentSelectionResetZZZ extends JTextArea implements ITextAreaListening4ComponentSelectionResetZZZ, IObjectZZZ, IFlagZUserZZZ, IKernelUserZZZ, IListenerSelectionResetZZZ{
 	private IKernelZZZ objKernel;
 	private LogZZZ objLog;
 	
@@ -92,79 +92,79 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 	/* (non-Javadoc)
 	 * @see basic.zBasic.IFunctionZZZ#getFlag(java.lang.String)
 	 */
-	public boolean getFlag(String sFlagName) {
-		boolean bFunction = false;
-	main:{
-		if(sFlagName == null) break main;
-		if(sFlagName.equals("")) break main;
-		
-		// hier keine Superclass aufrufen, ist ja nicht ObjectZZZ
-		//bFunction = super.getFlag(sFlagName);
-		//if(bFunction == true) break main;
-		
-		// Die Flags dieser Klasse setzen
-		String stemp = sFlagName.toLowerCase();
-		if(stemp.equals("debug")){
-			bFunction = this.bFlagDebug;
-			break main;
-		}else if(stemp.equals("init")){
-			bFunction = this.bFlagInit;
-			break main;
-		}else if(stemp.equals("useeventresetdefault")){
-			bFunction = this.bFlagUseEventResetDefault;
-			break main;
-		}else{
-			bFunction = false;
-		}		
-	}	// end main:
-	
-	return bFunction;	
-	}
+//	public boolean getFlag(String sFlagName) {
+//		boolean bFunction = false;
+//	main:{
+//		if(sFlagName == null) break main;
+//		if(sFlagName.equals("")) break main;
+//		
+//		// hier keine Superclass aufrufen, ist ja nicht ObjectZZZ
+//		//bFunction = super.getFlag(sFlagName);
+//		//if(bFunction == true) break main;
+//		
+//		// Die Flags dieser Klasse setzen
+//		String stemp = sFlagName.toLowerCase();
+//		if(stemp.equals("debug")){
+//			bFunction = this.bFlagDebug;
+//			break main;
+//		}else if(stemp.equals("init")){
+//			bFunction = this.bFlagInit;
+//			break main;
+//		}else if(stemp.equals("useeventresetdefault")){
+//			bFunction = this.bFlagUseEventResetDefault;
+//			break main;
+//		}else{
+//			bFunction = false;
+//		}		
+//	}	// end main:
+//	
+//	return bFunction;	
+//	}
 
 	/** Function can set the flags of this class or the super-class.
 	 * The following new flags are supported:
 	 * --- debug
  * @see basic.zBasic.IFunctionZZZ_loesch#setFlag(java.lang.String, boolean)
  */
-public boolean setFlag(String sFlagName, boolean bFlagValue){
-	boolean bFunction = false;
-	main:{
-		if(StringZZZ.isEmpty(sFlagName)) break main;
-		
-		// hier keine Superclass aufrufen, ist ja nicht von ObjectZZZ erbend
-		// bFunction = super.setFlag(sFlagName, bFlagValue);
-		// if(bFunction == true) break main;
-		
-		// Die Flags dieser Klasse setzen
-		String stemp = sFlagName.toLowerCase();
-		if(stemp.equals("debug")){
-			this.bFlagDebug = bFlagValue;
-			bFunction = true;                            //durch diesen return wert kann man "reflexiv" ermitteln, ob es in dem ganzen hierarchie-strang das flag �berhaupt gibt !!!
-			break main;
-		}else if(stemp.equals("init")){
-			this.bFlagInit = bFlagValue;
-			bFunction = true;
-			break main;
-		}else if(stemp.equals("useeventresetdefault")){
-			this.bFlagUseEventResetDefault = bFlagValue;
-			bFunction = true;
-			break main;
-		}else{
-			bFunction = false;
-		}	
-		
-	}	// end main:
-	
-	return bFunction;	
-}
+//public boolean setFlag(String sFlagName, boolean bFlagValue){
+//	boolean bFunction = false;
+//	main:{
+//		if(StringZZZ.isEmpty(sFlagName)) break main;
+//		
+//		// hier keine Superclass aufrufen, ist ja nicht von ObjectZZZ erbend
+//		// bFunction = super.setFlag(sFlagName, bFlagValue);
+//		// if(bFunction == true) break main;
+//		
+//		// Die Flags dieser Klasse setzen
+//		String stemp = sFlagName.toLowerCase();
+//		if(stemp.equals("debug")){
+//			this.bFlagDebug = bFlagValue;
+//			bFunction = true;                            //durch diesen return wert kann man "reflexiv" ermitteln, ob es in dem ganzen hierarchie-strang das flag �berhaupt gibt !!!
+//			break main;
+//		}else if(stemp.equals("init")){
+//			this.bFlagInit = bFlagValue;
+//			bFunction = true;
+//			break main;
+//		}else if(stemp.equals("useeventresetdefault")){
+//			this.bFlagUseEventResetDefault = bFlagValue;
+//			bFunction = true;
+//			break main;
+//		}else{
+//			bFunction = false;
+//		}	
+//		
+//	}	// end main:
+//	
+//	return bFunction;	
+//}
 
 //20170308: Enum FLAGZ nutzen
 //### FlagMethods ##########################		
 	public Class getClassFlagZ(){
-		return FLAGZ.class;
+		return ITextAreaListening4ComponentSelectionResetZZZ.FLAGZ.class;
 	}
 
-		public HashMap<String, Boolean>getHashMapFlagZ(){
+		public HashMap<String, Boolean>getHashMapFlag(){
 			return this.hmFlag;
 		} 
 	
@@ -178,17 +178,17 @@ public boolean setFlag(String sFlagName, boolean bFlagValue){
 	 * @return
 	 * lindhaueradmin, 23.07.2013
 	 */
-	public boolean setFlagZ(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
+	public boolean setFlag(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
 		boolean bFunction = false;
 		main:{
 			if(StringZZZ.isEmpty(sFlagName)) break main;
 			
 
-			bFunction = this.proofFlagZExists(sFlagName);												
+			bFunction = this.proofFlagExists(sFlagName);												
 			if(bFunction == true){
 				
 				//Setze das Flag nun in die HashMap
-				HashMap<String, Boolean> hmFlag = this.getHashMapFlagZ();
+				HashMap<String, Boolean> hmFlag = this.getHashMapFlag();
 				hmFlag.put(sFlagName.toUpperCase(), bFlagValue);
 				bFunction = true;								
 			}										
@@ -205,55 +205,55 @@ public boolean setFlag(String sFlagName, boolean bFlagValue){
 	 * lindhaueradmin, 23.07.2013
 	 * @throws ExceptionZZZ 
 	 */
-	public boolean proofFlagZExists(String sFlagName) throws ExceptionZZZ{
-		boolean bReturn = false;
-		main:{
-			if(StringZZZ.isEmpty(sFlagName))break main;
-				System.out.println("sFlagName = " + sFlagName);
-				
-				Class objClass4Enum = this.getClassFlagZ();	//Aufgrund des Interfaces IFlagZZZ wird vorausgesetzt, dass diese Methode vorhanden ist.
-				String sFilterName = objClass4Enum.getSimpleName();
-				
-				ArrayList<Class<?>> listEmbedded = ReflectClassZZZ.getEmbeddedClasses(this.getClass(), sFilterName);
-				if(listEmbedded == null) break main;
-				out.format("%s# ListEmbeddedClasses.size()...%s%n", ReflectCodeZZZ.getPositionCurrent(), listEmbedded.size());
-				
-				for(Class objClass : listEmbedded){
-					out.format("%s# Class...%s%n", ReflectCodeZZZ.getPositionCurrent(), objClass.getName());
-					Field[] fields = objClass.getDeclaredFields();
-					for(Field field : fields){
-						if(!field.isSynthetic()){ //Sonst wird ENUM$VALUES auch zurückgegeben.
-							//out.format("%s# Field...%s%n", ReflectCodeZZZ.getPositionCurrent(), field.getName());
-							if(sFlagName.equalsIgnoreCase(field.getName())){
-								bReturn = true;
-								break main;
-							}
-						}				
-				}//end for
-			}//end for
-				
-			//20170307: Durch das Verschieben von FLAGZ mit den Werten DEBUG und INIT in das IObjectZZZ Interface, muss man explizit auch dort nachsehen.
-		   //                Merke: Das Verschieben ist deshlab notwenig, weil nicht alle Klassen direkt von ObjectZZZ erben können, sondern das Interface implementieren müsssen.
-		
-							
-				//TODO GOON: 
-				//Merke: bReturn = set.contains(sFlagName.toUpperCase());
-				//          Weil das nicht funktioniert meine Util-Klasse erstellen, die dann den String tatsächlich prüfen kann
-				
-				Class<FLAGZ> enumClass = FLAGZ.class;
-				//EnumSet<FLAGZ> set = EnumSet.noneOf(enumClass);//Erstelle ein leeres EnumSet
-				
-				for(Object obj : FLAGZ.class.getEnumConstants()){
-					System.out.println(obj + "; "+obj.getClass().getName());
-					if(sFlagName.equalsIgnoreCase(obj.toString())) {
-						bReturn = true;
-						break main;
-					}
-					//set.add((FLAGZ) obj);
-				}				
-		}//end main:
-		return bReturn;
-	}
+//	public boolean proofFlagZExists(String sFlagName) throws ExceptionZZZ{
+//		boolean bReturn = false;
+//		main:{
+//			if(StringZZZ.isEmpty(sFlagName))break main;
+//				System.out.println("sFlagName = " + sFlagName);
+//				
+//				Class objClass4Enum = this.getClassFlagZ();	//Aufgrund des Interfaces IFlagZZZ wird vorausgesetzt, dass diese Methode vorhanden ist.
+//				String sFilterName = objClass4Enum.getSimpleName();
+//				
+//				ArrayList<Class<?>> listEmbedded = ReflectClassZZZ.getEmbeddedClasses(this.getClass(), sFilterName);
+//				if(listEmbedded == null) break main;
+//				out.format("%s# ListEmbeddedClasses.size()...%s%n", ReflectCodeZZZ.getPositionCurrent(), listEmbedded.size());
+//				
+//				for(Class objClass : listEmbedded){
+//					out.format("%s# Class...%s%n", ReflectCodeZZZ.getPositionCurrent(), objClass.getName());
+//					Field[] fields = objClass.getDeclaredFields();
+//					for(Field field : fields){
+//						if(!field.isSynthetic()){ //Sonst wird ENUM$VALUES auch zurückgegeben.
+//							//out.format("%s# Field...%s%n", ReflectCodeZZZ.getPositionCurrent(), field.getName());
+//							if(sFlagName.equalsIgnoreCase(field.getName())){
+//								bReturn = true;
+//								break main;
+//							}
+//						}				
+//				}//end for
+//			}//end for
+//				
+//			//20170307: Durch das Verschieben von FLAGZ mit den Werten DEBUG und INIT in das IObjectZZZ Interface, muss man explizit auch dort nachsehen.
+//		   //                Merke: Das Verschieben ist deshlab notwenig, weil nicht alle Klassen direkt von ObjectZZZ erben können, sondern das Interface implementieren müsssen.
+//		
+//							
+//				//TODO GOON: 
+//				//Merke: bReturn = set.contains(sFlagName.toUpperCase());
+//				//          Weil das nicht funktioniert meine Util-Klasse erstellen, die dann den String tatsächlich prüfen kann
+//				
+//				Class<FLAGZ> enumClass = FLAGZ.class;
+//				//EnumSet<FLAGZ> set = EnumSet.noneOf(enumClass);//Erstelle ein leeres EnumSet
+//				
+//				for(Object obj : FLAGZ.class.getEnumConstants()){
+//					System.out.println(obj + "; "+obj.getClass().getName());
+//					if(sFlagName.equalsIgnoreCase(obj.toString())) {
+//						bReturn = true;
+//						break main;
+//					}
+//					//set.add((FLAGZ) obj);
+//				}				
+//		}//end main:
+//		return bReturn;
+//	}
 
 
 	
@@ -298,12 +298,12 @@ public boolean setFlag(String sFlagName, boolean bFlagValue){
 	 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
 	 * - Innere Klassen m�ssen auch public deklariert werden.(non-Javadoc)
 	 */
-	public boolean getFlagZ(String sFlagName) {
+	public boolean getFlag(String sFlagName) {
 		boolean bFunction = false;
 		main:{
 			if(StringZZZ.isEmpty(sFlagName)) break main;
 										
-			HashMap<String, Boolean> hmFlag = this.getHashMapFlagZ();
+			HashMap<String, Boolean> hmFlag = this.getHashMapFlag();
 			Boolean objBoolean = hmFlag.get(sFlagName.toUpperCase());
 			if(objBoolean==null){
 				bFunction = false;

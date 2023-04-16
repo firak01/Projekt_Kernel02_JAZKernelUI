@@ -33,7 +33,8 @@ import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelLogZZZ;
 import basic.zKernel.component.IKernelModuleUserZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
-import basic.zKernel.flag.IFlagLocalUserZZZ;
+import basic.zKernel.file.ini.IKernelEncryptionIniSolverZZZ;
+import basic.zKernel.flag.IFlagZLocalUserZZZ;
 import basic.zKernel.flag.IFlagZUserZZZ;
 import basic.zKernel.flag.json.FlagZHelperZZZ;
 import basic.zKernelUI.KernelUIZZZ;
@@ -44,7 +45,7 @@ import custom.zKernel.LogZZZ;
  * @author 0823
  *
  */
-public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConstantZZZ, IObjectZZZ, IKernelUserZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IScreenFeatureZZZ, IMouseFeatureZZZ, IFlagZUserZZZ, IFlagLocalUserZZZ{	
+public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialogExtendedZZZ, IConstantZZZ, IObjectZZZ, IKernelUserZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IScreenFeatureZZZ, IMouseFeatureZZZ, IFlagZUserZZZ, IFlagZLocalUserZZZ{
 	protected IKernelZZZ objKernel;
 	protected LogZZZ objLog;
 	protected ExceptionZZZ objException;
@@ -88,7 +89,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 //	private boolean bFlagInit = false;
 //	private boolean bFlagTerminate = false;
 	public enum FLAGZ{
-		TERMINATE,ISDRAGGABLE; //Merke: DEBUG und INIT über IFlagZZZ eingebunden werden, weil von ObjectkZZZ kann man ja nicht erben. Es wird schon von anderer Objektklasse geerbt.
+		TERMINATE,ISDRAGGABLE; //Merke: DEBUG und INIT über IFlagZZZ eingebunden werden, weil von ObjectZZZ kann man ja nicht erben. Es wird schon von anderer Objektklasse geerbt.
 	}
 	private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>();
 	private HashMap<String, Boolean>hmFlagPassed = new HashMap<String, Boolean>();
@@ -107,28 +108,55 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	}
 	public KernelJDialogExtendedZZZ(IKernelZZZ objKernel, KernelJFrameCascadedZZZ frameOwner, boolean bModal, HashMap<String, Boolean> hmFlag) throws ExceptionZZZ{
 		super(frameOwner, bModal);	//Das initialisiert JDialog
-		KernelJDialogExtendedNew_(objKernel, frameOwner, bModal, hmFlag);
+		KernelJDialogExtendedNew_(objKernel, frameOwner, bModal, null, hmFlag);
 	}
 	
-	private boolean KernelJDialogExtendedNew_(IKernelZZZ objKernel, KernelJFrameCascadedZZZ frameOwner, boolean bModal, HashMap<String, Boolean> hmFlag) throws ExceptionZZZ {
+	public KernelJDialogExtendedZZZ(IKernelZZZ objKernel, KernelJFrameCascadedZZZ frameOwner, boolean bModal, HashMap<String, Boolean> hmFlagLocal, HashMap<String, Boolean> hmFlag) throws ExceptionZZZ{
+		super(frameOwner, bModal);	//Das initialisiert JDialog
+		KernelJDialogExtendedNew_(objKernel, frameOwner, bModal, hmFlagLocal, hmFlag);
+	}
+	
+	private boolean KernelJDialogExtendedNew_(IKernelZZZ objKernel, KernelJFrameCascadedZZZ frameOwner, boolean bModal, HashMap<String, Boolean> hmFlagLocal, HashMap<String, Boolean> hmFlag) throws ExceptionZZZ {
 		boolean bReturn = false;
 		main:{
-		//Jetzt muss im Prinzip alles gemacht werden, das in KernelUseObjectZZZ und ObjectZZZ auch gemacht wird. 
-		//Leider kann diese Klasse nicht davon erben.
-		this.setKernelObject(objKernel);
-		this.setLogObject(objKernel.getLogObject());
+			//Merke: Das Lokale Flag wirkt sich nur in dieser Methode aus. Die anderen Flags auch aus hieraus erbenden Klassen.
+			if(hmFlagLocal!=null){
+				for(String sKey:hmFlagLocal.keySet()){				
+					String stemp = sKey;
+					boolean btemp = this.setFlagLocal(sKey, hmFlagLocal.get(sKey));
+					if(btemp==false){
+						ExceptionZZZ ez = new ExceptionZZZ( "the LOCAL flag '" + stemp + "' is not available (passed by hashmap). Maybe an interface is not implemented.", IFlagZLocalUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
+						throw ez;		 
+					}	
+				}
+			}
+			if(this.getFlagLocal("INIT")){
+				bReturn = true;
+				break main; 
+			}	
+			
+		
 				
 		//Die ggf. vorhandenen Flags setzen.
 		if(hmFlag!=null){
 			for(String sKey:hmFlag.keySet()){
 				String stemp = sKey;
-				boolean btemp = this.setFlagZ(sKey, hmFlag.get(sKey));
+				boolean btemp = this.setFlag(sKey, hmFlag.get(sKey));
 				if(btemp==false){
 					ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available (passed by hashmap).", IFlagZUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
 					throw ez;		 
 				}
 			}
 		}
+		if(this.getFlag("INIT")){
+			bReturn = true;
+			break main; 
+		}	
+		
+		//Jetzt muss im Prinzip alles gemacht werden, das in KernelUseObjectZZZ und ObjectZZZ auch gemacht wird. 
+		//Leider kann diese Klasse nicht davon erben.
+		this.setKernelObject(objKernel);
+		this.setLogObject(objKernel.getLogObject());
 		
 		//++++++++++++++++++++++++++++++
 		boolean btemp; String sLog;		
@@ -139,7 +167,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			IKernelConfigZZZ objConfig = this.getKernelObject().getConfigObject();
 			if(objConfig!=null) {
 				//Übernimm die als Kommandozeilenargument gesetzten FlagZ... die können auch "false" sein.
-				Map<String,Boolean>hmFlagZpassed = objConfig.getHashMapFlagZpassed();
+				Map<String,Boolean>hmFlagZpassed = objConfig.getHashMapFlagPassed();
 				if(hmFlagZpassed!=null) {
 					Set<String> setFlag = hmFlagZpassed.keySet();
 					Iterator<String> itFlag = setFlag.iterator();
@@ -415,7 +443,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		//JDialog dialogParent = (JDialog) SwingUtilities.getAncestorOfClass(JDialog.class, this.getPanelParent());
 		//dialogParent.dispose();
 		this.dispose();
-		this.isDisposed(true);
+		this.isDisposed(true);		
 	}
 	
 	public void setHidden() {
@@ -423,6 +451,12 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		//JDialog dialogParent = (JDialog) SwingUtilities.getAncestorOfClass(JDialog.class, this.getPanelParent());
 		//dialogParent.setVisible(false);	//dialogParent.hide();
 		this.setVisible(false);
+		this.isDisposed(false);
+	}
+	
+	public void setVisible() {
+		//Wenn man direkt auf den Dialog, z.B. aus einem Button heraus zugreifen möchte:
+		this.setVisible(true);
 		this.isDisposed(false);
 	}
 			
@@ -504,6 +538,31 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		return panel;
 	}
 	
+	//Defaultverhalten der Dialogbox beim OK, CLOSE, CANCEL
+	public void onClose() throws ExceptionZZZ{
+		if(this.getFlagLocal(KernelJDialogExtendedZZZ.FLAGZLOCAL.HIDE_ON_CLOSE)){
+			this.setHidden(); 
+		}else {
+			this.setDisposed();
+		}
+	}
+	
+	public void onOk() throws ExceptionZZZ{
+		if(this.getFlagLocal(KernelJDialogExtendedZZZ.FLAGZLOCAL.HIDE_ON_OK)){
+			this.setHidden(); 
+		}else {
+			this.setDisposed();
+			this.getKernelObject().getCacheObject().clear(); //!!! solange beim Schreiben der Werte in die ini noch 
+		}		
+	}
+	
+	public void onCancel() throws ExceptionZZZ{
+		if(this.getFlagLocal(KernelJDialogExtendedZZZ.FLAGZLOCAL.HIDE_ON_CANCEL)){
+			this.setHidden(); 
+		}else {
+			this.setDisposed();
+		}
+	}
 	
 	
 		
@@ -601,7 +660,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	/* (non-Javadoc)
 	 * @see basic.zKernelUI.component.IMouseFeatureZZZ#setJComponentContentDraggable(boolean)
 	 */
-	public void setJComponentContentDraggable(boolean bValue){
+	public void setJComponentContentDraggable(boolean bValue) throws ExceptionZZZ{
 		this.setFlag(KernelJDialogExtendedZZZ.FLAGZ.ISDRAGGABLE.name(), bValue);
 	}
 
@@ -634,8 +693,8 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	}
 		
 	//### FlagMethods ##########################		
-			@Override
-			public boolean getFlag(String sFlagName) {
+//			@Override
+//			public boolean getFlag(String sFlagName) {
 				//Version Vor Java 1.6
 //				boolean bFunction = false;
 //			main:{
@@ -659,10 +718,10 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 //			}	// end main:
 		//	
 //			return bFunction;	
-				return this.getFlagZ(sFlagName);
-			}
-			@Override
-			public boolean setFlag(String sFlagName, boolean bFlagValue) {
+//				return this.getFlag(sFlagName);
+//			}
+//			@Override
+//			public boolean setFlag(String sFlagName, boolean bFlagValue) {
 				//Version Vor Java 1.6
 //				boolean bFunction = true;
 //				main:{
@@ -689,16 +748,16 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 //				}	// end main:
 //				
 //				return bFunction;	
-				try {
-					return this.setFlagZ(sFlagName, bFlagValue);
-				} catch (ExceptionZZZ e) {
-					System.out.println("ExceptionZZZ (aus compatibilitaetgruenden mit Version vor Java 6 nicht weitergereicht) : " + e.getDetailAllLast());
-					return false;
-				}
-			}
+//				try {
+//					return this.setFlag(sFlagName, bFlagValue);
+//				} catch (ExceptionZZZ e) {
+//					System.out.println("ExceptionZZZ (aus compatibilitaetgruenden mit Version vor Java 6 nicht weitergereicht) : " + e.getDetailAllLast());
+//					return false;
+//				}
+//			}
 			
 			@Override
-			public boolean[] setFlag(String[] saFlagName, boolean bFlagValue) {
+			public boolean[] setFlag(String[] saFlagName, boolean bFlagValue) throws ExceptionZZZ {
 				boolean[] baReturn=null;
 				main:{
 					if(!StringArrayZZZ.isEmptyTrimmed(saFlagName)) {
@@ -719,12 +778,12 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
 			 * - Innere Klassen m�ssen auch public deklariert werden.(non-Javadoc)
 			 */
-			public boolean getFlagZ(String sFlagName) {
+			public boolean getFlag(String sFlagName) {
 				boolean bFunction = false;
 				main:{
 					if(StringZZZ.isEmpty(sFlagName)) break main;
 												
-					HashMap<String, Boolean> hmFlag = this.getHashMapFlagZ();
+					HashMap<String, Boolean> hmFlag = this.getHashMapFlag();
 					Boolean objBoolean = hmFlag.get(sFlagName.toUpperCase());
 					if(objBoolean==null){
 						bFunction = false;
@@ -746,7 +805,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		 * @return
 		 * lindhaueradmin, 23.07.2013
 		 */
-		public boolean setFlagZ(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
+		public boolean setFlag(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
 			boolean bFunction = false;
 			main:{
 				if(StringZZZ.isEmpty(sFlagName)) {
@@ -754,11 +813,11 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 					break main;
 				}
 							
-				bFunction = this.proofFlagZExists(sFlagName);															
+				bFunction = this.proofFlagExists(sFlagName);															
 				if(bFunction == true){
 					
 					//Setze das Flag nun in die HashMap
-					HashMap<String, Boolean> hmFlag = this.getHashMapFlagZ();
+					HashMap<String, Boolean> hmFlag = this.getHashMapFlag();
 					hmFlag.put(sFlagName.toUpperCase(), bFlagValue);
 					bFunction = true;								
 				}										
@@ -768,16 +827,16 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		}
 			
 		@Override
-		public HashMap<String, Boolean>getHashMapFlagZ(){
+		public HashMap<String, Boolean>getHashMapFlag(){
 			return this.hmFlag;
 		}
 			
 		@Override
-		public HashMap<String, Boolean> getHashMapFlagZpassed() {
+		public HashMap<String, Boolean> getHashMapFlagPassed() {
 			return this.hmFlagPassed;
 		}
 		@Override
-		public void setHashMapFlagZpassed(HashMap<String, Boolean> hmFlagPassed) {
+		public void setHashMapFlagPassed(HashMap<String, Boolean> hmFlagPassed) {
 			this.hmFlagPassed = hmFlagPassed;
 		}
 		
@@ -813,7 +872,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 					//FALLUNTERSCHEIDUNG: Alle gesetzten FlagZ werden in der HashMap gespeichert. Aber die noch nicht gesetzten FlagZ stehen dort nicht drin.
 					//                                  Diese kann man nur durch Einzelprüfung ermitteln.
 					if(bLookupExplizitInHashMap) {
-						HashMap<String,Boolean>hmFlag=this.getHashMapFlagZ();
+						HashMap<String,Boolean>hmFlag=this.getHashMapFlag();
 						if(hmFlag==null) break main;
 						
 						Set<String> setKey = hmFlag.keySet();
@@ -832,7 +891,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 						//         auch wenn sie garnicht gesetzt wurden.
 						//Lösung:  Statt dessen explitzit über die HashMap der gesetzten Werte gehen....						
 						for(String sFlagZ : saFlagZ){
-							boolean btemp = this.getFlagZ(sFlagZ);
+							boolean btemp = this.getFlag(sFlagZ);
 							if(btemp==bValueToSearchFor ){ //also 'true'
 								listasTemp.add(sFlagZ);
 							}
@@ -846,17 +905,19 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			//++++++++++++++++++++++++
+			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			//++++++++++++++++++++++++
 			/* @see basic.zBasic.IFlagZZZ#getFlagZ(java.lang.String)
 			 * 	 Weteire Voraussetzungen:
 			 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
 			 * - Innere Klassen m�ssen auch public deklariert werden.(non-Javadoc)
 			 */
-			public boolean getFlagZLocal(String sFlagName) {
+			public boolean getFlagLocal(String sFlagName) {
 				boolean bFunction = false;
 				main:{
 					if(StringZZZ.isEmpty(sFlagName)) break main;
 												
-					HashMap<String, Boolean> hmFlag = this.getHashMapFlagZLocal();
+					HashMap<String, Boolean> hmFlag = this.getHashMapFlagLocal();
 					Boolean objBoolean = hmFlag.get(sFlagName.toUpperCase());
 					if(objBoolean==null){
 						bFunction = false;
@@ -869,6 +930,41 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 				return bFunction;	
 			}
 			
+			
+			//### Aus IDialogExtendedZZZ
+			@Override
+			public boolean getFlagLocal(IDialogExtendedZZZ.FLAGZLOCAL objEnumFlag) {
+				return this.getFlagLocal(objEnumFlag.name());
+			}
+			
+			@Override
+			public boolean setFlagLocal(IDialogExtendedZZZ.FLAGZLOCAL objEnumFlag, boolean bValue) throws ExceptionZZZ {
+				return this.setFlag(objEnumFlag.name(), bValue);
+			}
+			
+			@Override
+			public boolean[] setFlagLocal(IDialogExtendedZZZ.FLAGZLOCAL[] objaEnumFlag, boolean bValue) throws ExceptionZZZ {
+				boolean[] baReturn=null;
+				main:{
+					if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
+						baReturn = new boolean[objaEnumFlag.length];
+						int iCounter=-1;
+						for(IDialogExtendedZZZ.FLAGZLOCAL objEnumFlag:objaEnumFlag) {
+							iCounter++;
+							boolean bReturn = this.setFlagLocal(objEnumFlag, bValue);
+							baReturn[iCounter]=bReturn;
+						}
+					}
+				}//end main:
+				return baReturn;
+			}
+			
+			@Override
+			public boolean proofFlagLocalExists(IDialogExtendedZZZ.FLAGZLOCAL objEnumFlag) throws ExceptionZZZ {
+				return this.proofFlagExists(objEnumFlag.name());
+			}
+				
+			
 			/** DIESE METHODEN MUSS IN ALLEN KLASSEN VORHANDEN SEIN - über Vererbung -, DIE IHRE FLAGS SETZEN WOLLEN
 			 * Weitere Voraussetzungen:
 			 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
@@ -879,7 +975,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			 * @return
 			 * lindhaueradmin, 23.07.2013
 			 */
-			public boolean setFlagZLocal(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
+			public boolean setFlagLocal(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
 				boolean bFunction = false;
 				main:{
 					if(StringZZZ.isEmpty(sFlagName)) {
@@ -887,11 +983,11 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 						break main;
 					}
 								
-					bFunction = this.proofFlagZLocalExists(sFlagName);															
+					bFunction = this.proofFlagLocalExists(sFlagName);															
 					if(bFunction == true){
 						
 						//Setze das Flag nun in die HashMap
-						HashMap<String, Boolean> hmFlag = this.getHashMapFlagZLocal();
+						HashMap<String, Boolean> hmFlag = this.getHashMapFlagLocal();
 						hmFlag.put(sFlagName.toUpperCase(), bFlagValue);
 						bFunction = true;								
 					}										
@@ -899,14 +995,31 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 				
 				return bFunction;	
 			}
-				
+			
 			@Override
-			public HashMap<String, Boolean>getHashMapFlagZLocal(){
+			public boolean[] setFlagLocal(String[] saFlag, boolean bValue) throws ExceptionZZZ {
+				boolean[] baReturn=null;
+				main:{
+					if(!StringArrayZZZ.isEmptyTrimmed(saFlag)) {
+						baReturn = new boolean[saFlag.length];
+						int iCounter=-1;
+						for(String sFlag:saFlag) {
+							iCounter++;
+							boolean bReturn = this.setFlag(sFlag, bValue);
+							baReturn[iCounter]=bReturn;
+						}
+					}
+				}//end main:
+				return baReturn;
+			}
+						
+			@Override
+			public HashMap<String, Boolean>getHashMapFlagLocal(){
 				return this.hmFlagLocal;
 			}
 			
 			@Override
-			public void setHashMapFlagZLocal(HashMap<String, Boolean> hmFlagLocal) {
+			public void setHashMapFlagLocal(HashMap<String, Boolean> hmFlagLocal) {
 				this.hmFlagLocal = hmFlagLocal;
 			}
 			
@@ -942,7 +1055,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 					//FALLUNTERSCHEIDUNG: Alle gesetzten FlagZ werden in der HashMap gespeichert. Aber die noch nicht gesetzten FlagZ stehen dort nicht drin.
 					//                                  Diese kann man nur durch Einzelprüfung ermitteln.
 					if(bLookupExplizitInHashMap) {
-						HashMap<String,Boolean>hmFlag=this.getHashMapFlagZLocal();
+						HashMap<String,Boolean>hmFlag=this.getHashMapFlagLocal();
 						if(hmFlag==null) break main;
 						
 						Set<String> setKey = hmFlag.keySet();
@@ -961,7 +1074,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 						//         auch wenn sie garnicht gesetzt wurden.
 						//Lösung:  Statt dessen explitzit über die HashMap der gesetzten Werte gehen....						
 						for(String sFlagZ : saFlagZ){
-							boolean btemp = this.getFlagZLocal(sFlagZ);
+							boolean btemp = this.getFlagLocal(sFlagZ);
 							if(btemp==bValueToSearchFor ){ //also 'true'
 								listasTemp.add(sFlagZ);
 							}
@@ -980,15 +1093,16 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 			 * lindhaueradmin, 23.07.2013
 			 * @throws ExceptionZZZ 
 			 */
-			public boolean proofFlagZLocalExists(String sFlagName) throws ExceptionZZZ{
+			public boolean proofFlagLocalExists(String sFlagName) throws ExceptionZZZ{				
 				boolean bReturn = false;
 				main:{
 					if(StringZZZ.isEmpty(sFlagName))break main;
-					bReturn = FlagZHelperZZZ.proofFlagZDirectExists(this.getClass(), sFlagName);				
+					bReturn = FlagZHelperZZZ.proofFlagZLocalExists(this.getClass(), sFlagName);				
 				}//end main:
 				return bReturn;
 			}
 				
+			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			//++++++++++++++++++++++++
 		
@@ -1069,7 +1183,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		 * lindhaueradmin, 23.07.2013
 		 * @throws ExceptionZZZ 
 		 */
-		public boolean proofFlagZExists(String sFlagName) throws ExceptionZZZ{
+		public boolean proofFlagExists(String sFlagName) throws ExceptionZZZ{
 			boolean bReturn = false;
 			main:{
 				if(StringZZZ.isEmpty(sFlagName))break main;
@@ -1099,7 +1213,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	//### AUS IKernelModuleZZZ
 	@Override
 	public IKernelModuleZZZ getModule() throws ExceptionZZZ {
-		if(this.objModule==null && this.getFlagZ(IKernelModuleUserZZZ.FLAGZ.ISKERNELMODULEUSER.name())) {
+		if(this.objModule==null && this.getFlag(IKernelModuleUserZZZ.FLAGZ.ISKERNELMODULEUSER.name())) {
 			this.objModule = KernelUIZZZ.searchModule(this);
 		}
 		return this.objModule;
@@ -1115,12 +1229,12 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		return this.getFlag(objEnumFlag.name());
 	}
 	@Override
-	public boolean setFlag(IKernelModuleZZZ.FLAGZ objEnumFlag, boolean bFlagValue) {
+	public boolean setFlag(IKernelModuleZZZ.FLAGZ objEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		return this.setFlag(objEnumFlag.name(), bFlagValue);
 	}
 	
 	@Override
-	public boolean[] setFlag(IKernelModuleZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) {
+	public boolean[] setFlag(IKernelModuleZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		boolean[] baReturn=null;
 		main:{
 			if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
@@ -1137,8 +1251,8 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	}
 	
 	@Override
-	public boolean proofFlagZExists(IKernelModuleZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
-		return this.proofFlagZExists(objEnumFlag.name());
+	public boolean proofFlagExists(IKernelModuleZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+		return this.proofFlagExists(objEnumFlag.name());
 	}
 	
 	//### Aus IFlagUserZZZ
@@ -1147,12 +1261,12 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		return this.getFlag(objEnumFlag.name());
 	}
 	@Override
-	public boolean setFlag(IFlagZUserZZZ.FLAGZ objEnumFlag, boolean bFlagValue) {
+	public boolean setFlag(IFlagZUserZZZ.FLAGZ objEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		return this.setFlag(objEnumFlag.name(), bFlagValue);
 	}
 	
 	@Override
-	public boolean[] setFlag(IFlagZUserZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) {
+	public boolean[] setFlag(IFlagZUserZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		boolean[] baReturn=null;
 		main:{
 			if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
@@ -1169,8 +1283,8 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	}
 	
 	@Override
-	public boolean proofFlagZExists(IFlagZUserZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
-		return this.proofFlagZExists(objEnumFlag.name());
+	public boolean proofFlagExists(IFlagZUserZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+		return this.proofFlagExists(objEnumFlag.name());
 	}
 	
 	//### Aus IKernelModuleUserZZZ
@@ -1179,12 +1293,12 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		return this.getFlag(objEnumFlag.name());
 	}
 	@Override
-	public boolean setFlag(IKernelModuleUserZZZ.FLAGZ objEnumFlag, boolean bFlagValue) {
+	public boolean setFlag(IKernelModuleUserZZZ.FLAGZ objEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		return this.setFlag(objEnumFlag.name(), bFlagValue);
 	}
 	
 	@Override
-	public boolean[] setFlag(IKernelModuleUserZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) {
+	public boolean[] setFlag(IKernelModuleUserZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		boolean[] baReturn=null;
 		main:{
 			if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
@@ -1201,8 +1315,8 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	}
 	
 	@Override
-	public boolean proofFlagZExists(IKernelModuleUserZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
-			return this.proofFlagZExists(objEnumFlag.name());
+	public boolean proofFlagExists(IKernelModuleUserZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+			return this.proofFlagExists(objEnumFlag.name());
 		}
 	
 	//### Aus IMouseFeatureZZZ
@@ -1211,11 +1325,11 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 		return this.getFlag(objEnumFlag.name());
 	}
 	@Override
-	public boolean setFlag(IMouseFeatureZZZ.FLAGZ objEnumFlag, boolean bFlagValue) {
+	public boolean setFlag(IMouseFeatureZZZ.FLAGZ objEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		return this.setFlag(objEnumFlag.name(), bFlagValue);
 	}
 	@Override
-	public boolean[] setFlag(IMouseFeatureZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) {
+	public boolean[] setFlag(IMouseFeatureZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		boolean[] baReturn=null;
 		main:{
 			if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
@@ -1232,7 +1346,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IConst
 	}
 	
 	@Override
-	public boolean proofFlagZExists(IMouseFeatureZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
-		return this.proofFlagZExists(objEnumFlag.name());
+	public boolean proofFlagExists(IMouseFeatureZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+		return this.proofFlagExists(objEnumFlag.name());
 	}
 }

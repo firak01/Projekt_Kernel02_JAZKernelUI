@@ -36,7 +36,7 @@ import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelLogZZZ;
 import basic.zKernel.KernelZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
-import basic.zKernel.flag.IFlagLocalUserZZZ;
+import basic.zKernel.flag.IFlagZLocalUserZZZ;
 import basic.zKernel.flag.IFlagZUserZZZ;
 import basic.zKernel.flag.IFlagZUserZZZ.FLAGZ;
 import basic.zKernel.flag.json.FlagZHelperZZZ;
@@ -46,7 +46,7 @@ import custom.zKernel.LogZZZ;
 /** Class is base for all frames used by the configuration module
  * @author Lindhauer
  */
-public abstract class KernelJFrameCascadedZZZ extends JFrame  implements IObjectZZZ, IFlagZUserZZZ, IFlagLocalUserZZZ, IKernelUserZZZ, IKernelModuleZZZ, IComponentCascadedUserZZZ, IFrameCascadedZZZ, IFrameLaunchableZZZ, IScreenFeatureZZZ{
+public abstract class KernelJFrameCascadedZZZ extends JFrame  implements IObjectZZZ, IFlagZUserZZZ, IFlagZLocalUserZZZ, IKernelUserZZZ, IKernelModuleZZZ, IComponentCascadedUserZZZ, IFrameCascadedZZZ, IFrameLaunchableZZZ, IScreenFeatureZZZ{
 	private IKernelZZZ objKernel;
 	private LogZZZ objLog; 
 	private KernelJFrameCascadedZZZ frameParent=null;
@@ -193,8 +193,8 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 	}
 		
 	//### FlagMethods ##########################		
-			@Override
-			public boolean getFlag(String sFlagName) {
+//			@Override
+//			public boolean getFlag(String sFlagName) {
 				//Version Vor Java 1.6
 //				boolean bFunction = false;
 //			main:{
@@ -218,10 +218,10 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 //			}	// end main:
 		//	
 //			return bFunction;	
-				return this.getFlagZ(sFlagName);
-			}
-			@Override
-			public boolean setFlag(String sFlagName, boolean bFlagValue) {
+//				return this.getFlag(sFlagName);
+//			}
+//			@Override
+//			public boolean setFlag(String sFlagName, boolean bFlagValue) {
 				//Version Vor Java 1.6
 //				boolean bFunction = true;
 //				main:{
@@ -248,16 +248,16 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 //				}	// end main:
 //				
 //				return bFunction;	
-				try {
-					return this.setFlagZ(sFlagName, bFlagValue);
-				} catch (ExceptionZZZ e) {
-					System.out.println("ExceptionZZZ (aus compatibilitaetgruenden mit Version vor Java 6 nicht weitergereicht) : " + e.getDetailAllLast());
-					return false;
-				}
-			}
+//				try {
+//					return this.setFlag(sFlagName, bFlagValue);
+//				} catch (ExceptionZZZ e) {
+//					System.out.println("ExceptionZZZ (aus compatibilitaetgruenden mit Version vor Java 6 nicht weitergereicht) : " + e.getDetailAllLast());
+//					return false;
+//				}
+//			}
 			
 			@Override
-			public boolean[] setFlag(String[] saFlagName, boolean bFlagValue) {
+			public boolean[] setFlag(String[] saFlagName, boolean bFlagValue) throws ExceptionZZZ {
 				boolean[] baReturn=null;
 				main:{
 					if(!StringArrayZZZ.isEmptyTrimmed(saFlagName)) {
@@ -278,12 +278,12 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 			 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
 			 * - Innere Klassen m�ssen auch public deklariert werden.(non-Javadoc)
 			 */
-			public boolean getFlagZ(String sFlagName) {
+			public boolean getFlag(String sFlagName) {
 				boolean bFunction = false;
 				main:{
 					if(StringZZZ.isEmpty(sFlagName)) break main;
 												
-					HashMap<String, Boolean> hmFlag = this.getHashMapFlagZ();
+					HashMap<String, Boolean> hmFlag = this.getHashMapFlag();
 					Boolean objBoolean = hmFlag.get(sFlagName.toUpperCase());
 					if(objBoolean==null){
 						bFunction = false;
@@ -305,7 +305,7 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 		 * @return
 		 * lindhaueradmin, 23.07.2013
 		 */
-		public boolean setFlagZ(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
+		public boolean setFlag(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
 			boolean bFunction = false;
 			main:{
 				if(StringZZZ.isEmpty(sFlagName)) {
@@ -317,7 +317,7 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 				if(bFunction == true){
 					
 					//Setze das Flag nun in die HashMap
-					HashMap<String, Boolean> hmFlag = this.getHashMapFlagZ();
+					HashMap<String, Boolean> hmFlag = this.getHashMapFlag();
 					hmFlag.put(sFlagName.toUpperCase(), bFlagValue);
 					bFunction = true;								
 				}										
@@ -327,16 +327,44 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 		}
 			
 		@Override
-		public HashMap<String, Boolean>getHashMapFlagZ(){
+		public boolean proofFlagExists(String sFlag) throws ExceptionZZZ {
+			boolean bReturn = false;
+			main:{
+				if(StringZZZ.isEmpty(sFlag))break main;
+				bReturn = FlagZHelperZZZ.proofFlagZExists(this.getClass(), sFlag);				
+			}//end main:
+			return bReturn;
+		}
+		
+		@Override
+		public boolean[] setFlagLocal(String[] saFlag, boolean bValue) throws ExceptionZZZ {
+			boolean[] baReturn=null;
+			main:{
+				if(!StringArrayZZZ.isEmptyTrimmed(saFlag)) {
+					baReturn = new boolean[saFlag.length];
+					int iCounter=-1;
+					for(String sFlagName:saFlag) {
+						iCounter++;
+						boolean bReturn = this.setFlag(sFlagName, bValue);
+						baReturn[iCounter]=bReturn;
+					}
+				}
+			}//end main:
+			return baReturn;
+		}
+		
+		
+		@Override
+		public HashMap<String, Boolean>getHashMapFlag(){
 			return this.hmFlag;
 		}
 			
 		@Override
-		public HashMap<String, Boolean> getHashMapFlagZpassed() {
+		public HashMap<String, Boolean> getHashMapFlagPassed() {
 			return this.hmFlagPassed;
 		}
 		@Override
-		public void setHashMapFlagZpassed(HashMap<String, Boolean> hmFlagPassed) {
+		public void setHashMapFlagPassed(HashMap<String, Boolean> hmFlagPassed) {
 			this.hmFlagPassed = hmFlagPassed;
 		}
 		
@@ -372,7 +400,7 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 					//FALLUNTERSCHEIDUNG: Alle gesetzten FlagZ werden in der HashMap gespeichert. Aber die noch nicht gesetzten FlagZ stehen dort nicht drin.
 					//                                  Diese kann man nur durch Einzelprüfung ermitteln.
 					if(bLookupExplizitInHashMap) {
-						HashMap<String,Boolean>hmFlag=this.getHashMapFlagZ();
+						HashMap<String,Boolean>hmFlag=this.getHashMapFlag();
 						if(hmFlag==null) break main;
 						
 						Set<String> setKey = hmFlag.keySet();
@@ -391,7 +419,7 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 						//         auch wenn sie garnicht gesetzt wurden.
 						//Lösung:  Statt dessen explitzit über die HashMap der gesetzten Werte gehen....						
 						for(String sFlagZ : saFlagZ){
-							boolean btemp = this.getFlagZ(sFlagZ);
+							boolean btemp = this.getFlag(sFlagZ);
 							if(btemp==bValueToSearchFor ){ //also 'true'
 								listasTemp.add(sFlagZ);
 							}
@@ -410,12 +438,12 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 			 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
 			 * - Innere Klassen m�ssen auch public deklariert werden.(non-Javadoc)
 			 */
-			public boolean getFlagZLocal(String sFlagName) {
+			public boolean getFlagLocal(String sFlagName) {
 				boolean bFunction = false;
 				main:{
 					if(StringZZZ.isEmpty(sFlagName)) break main;
 												
-					HashMap<String, Boolean> hmFlag = this.getHashMapFlagZLocal();
+					HashMap<String, Boolean> hmFlag = this.getHashMapFlagLocal();
 					Boolean objBoolean = hmFlag.get(sFlagName.toUpperCase());
 					if(objBoolean==null){
 						bFunction = false;
@@ -438,7 +466,7 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 			 * @return
 			 * lindhaueradmin, 23.07.2013
 			 */
-			public boolean setFlagZLocal(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
+			public boolean setFlagLocal(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
 				boolean bFunction = false;
 				main:{
 					if(StringZZZ.isEmpty(sFlagName)) {
@@ -446,11 +474,11 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 						break main;
 					}
 								
-					bFunction = this.proofFlagZLocalExists(sFlagName);															
+					bFunction = this.proofFlagLocalExists(sFlagName);															
 					if(bFunction == true){
 						
 						//Setze das Flag nun in die HashMap
-						HashMap<String, Boolean> hmFlag = this.getHashMapFlagZLocal();
+						HashMap<String, Boolean> hmFlag = this.getHashMapFlagLocal();
 						hmFlag.put(sFlagName.toUpperCase(), bFlagValue);
 						bFunction = true;								
 					}										
@@ -460,12 +488,12 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 			}
 				
 			@Override
-			public HashMap<String, Boolean>getHashMapFlagZLocal(){
+			public HashMap<String, Boolean>getHashMapFlagLocal(){
 				return this.hmFlagLocal;
 			}
 			
 			@Override
-			public void setHashMapFlagZLocal(HashMap<String, Boolean> hmFlagLocal) {
+			public void setHashMapFlagLocal(HashMap<String, Boolean> hmFlagLocal) {
 				this.hmFlagLocal = hmFlagLocal;
 			}
 			
@@ -501,7 +529,7 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 					//FALLUNTERSCHEIDUNG: Alle gesetzten FlagZ werden in der HashMap gespeichert. Aber die noch nicht gesetzten FlagZ stehen dort nicht drin.
 					//                                  Diese kann man nur durch Einzelprüfung ermitteln.
 					if(bLookupExplizitInHashMap) {
-						HashMap<String,Boolean>hmFlag=this.getHashMapFlagZLocal();
+						HashMap<String,Boolean>hmFlag=this.getHashMapFlagLocal();
 						if(hmFlag==null) break main;
 						
 						Set<String> setKey = hmFlag.keySet();
@@ -520,7 +548,7 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 						//         auch wenn sie garnicht gesetzt wurden.
 						//Lösung:  Statt dessen explitzit über die HashMap der gesetzten Werte gehen....						
 						for(String sFlagZ : saFlagZ){
-							boolean btemp = this.getFlagZLocal(sFlagZ);
+							boolean btemp = this.getFlagLocal(sFlagZ);
 							if(btemp==bValueToSearchFor ){ //also 'true'
 								listasTemp.add(sFlagZ);
 							}
@@ -539,7 +567,7 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 			 * lindhaueradmin, 23.07.2013
 			 * @throws ExceptionZZZ 
 			 */
-			public boolean proofFlagZLocalExists(String sFlagName) throws ExceptionZZZ{
+			public boolean proofFlagLocalExists(String sFlagName) throws ExceptionZZZ{
 				boolean bReturn = false;
 				main:{
 					if(StringZZZ.isEmpty(sFlagName))break main;
@@ -618,7 +646,7 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 			}
 			
 			@Override
-			public boolean proofFlagZExists(IFlagZUserZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+			public boolean proofFlagExists(IFlagZUserZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
 				return this.proofFlagZExists(objEnumFlag.name());
 			}
 		
@@ -1002,12 +1030,12 @@ public void setFrameSub(String sAlias, JFrame objFrame){
 		return this.getFlag(objEnumFlag.name());
 	}
 	@Override
-	public boolean setFlag(IFlagZUserZZZ.FLAGZ objEnumFlag, boolean bFlagValue) {
+	public boolean setFlag(IFlagZUserZZZ.FLAGZ objEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		return this.setFlag(objEnumFlag.name(), bFlagValue);
 	}
 	
 	@Override
-	public boolean[] setFlag(IFlagZUserZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) {
+	public boolean[] setFlag(IFlagZUserZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		boolean[] baReturn=null;
 		main:{
 			if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
@@ -1029,12 +1057,12 @@ public void setFrameSub(String sAlias, JFrame objFrame){
 		return this.getFlag(objEnumFlag.name());
 	}
 	@Override
-	public boolean setFlag(IKernelModuleZZZ.FLAGZ objEnumFlag, boolean bFlagValue) {
+	public boolean setFlag(IKernelModuleZZZ.FLAGZ objEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		return this.setFlag(objEnumFlag.name(), bFlagValue);
 	}
 	
 	@Override
-	public boolean[] setFlag(IKernelModuleZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) {
+	public boolean[] setFlag(IKernelModuleZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		boolean[] baReturn=null;
 		main:{
 			if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
@@ -1051,7 +1079,7 @@ public void setFrameSub(String sAlias, JFrame objFrame){
 	}
 	
 	@Override
-	public boolean proofFlagZExists(IKernelModuleZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ{
+	public boolean proofFlagExists(IKernelModuleZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ{
 		return this.proofFlagZExists(objEnumFlag.name());
 	} 
 	

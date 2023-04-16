@@ -158,7 +158,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 			FileIniZZZ objFileIni = this.objKernel2configure.getFileConfigModuleIni(sModuleChoosen);
 			
 			//Im DebugUI Fall: Ausgehend von 2 Komponenten in der DebugUI Gruppe, für die fehlende Spalten mit Leerkomponente auffüllen.
-			if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())){ 
+			if(this.getFlag(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())){ 
 				iLinesWithValue = iLinesWithValue+iLinesForDebugUI; 
 				iColumns2FillDebugUI = daProportion.length - iColumnsForDebugUI;
 				
@@ -206,7 +206,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 				boolean bShowLineLast=false;
 				boolean bShowLineDummy=false;
 				boolean bUseStrategy=false;
-				if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())){
+				if(this.getFlag(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())){
 					
 					//Übergreifende UI-DEBUG-LAYOUT Strategy
 					//Erste Zeile anzeigen, Dummy Zeile anzeigen, Letzte Zeile anzeigen 			

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.swing.BorderFactory;
@@ -52,6 +53,11 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 	
 	public KernelJPanelFormLayoutedZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended, String sFlagLocal) throws ExceptionZZZ{
 		super(objKernel, dialogExtended, sFlagLocal);
+		KernelJPanelFormLayoutedNew_(this,2);//HIER DAS MODELL ÜBERGEBEN UND NICHT 2
+	}
+	
+	public KernelJPanelFormLayoutedZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended,  HashMap<String, Boolean>hmFlagLocal, HashMap<String, Boolean>hmFlag) throws ExceptionZZZ{
+		super(objKernel, dialogExtended, hmFlagLocal, hmFlag);
 		KernelJPanelFormLayoutedNew_(this,2);//HIER DAS MODELL ÜBERGEBEN UND NICHT 2
 	}
 	
@@ -366,7 +372,7 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 		public boolean createDebugUi() throws ExceptionZZZ {
 			boolean bReturn = false;
 			main:{					
-				if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())) {
+				if(this.getFlag(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())) {
 					bReturn = this.initFormLayoutDebug();																			
 				}						
 			}//end main:

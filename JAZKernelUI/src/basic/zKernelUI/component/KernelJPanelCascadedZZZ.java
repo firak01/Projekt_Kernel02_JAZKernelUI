@@ -35,7 +35,7 @@ import basic.zKernel.component.IKernelModuleUserZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.component.IKernelProgramZZZ;
 import basic.zKernelUI.component.IMouseFeatureZZZ;
-import basic.zKernel.flag.IFlagLocalUserZZZ;
+import basic.zKernel.flag.IFlagZLocalUserZZZ;
 import basic.zKernel.flag.IFlagZUserZZZ;
 import basic.zKernel.flag.json.FlagZHelperZZZ;
 import basic.zKernelUI.KernelUIZZZ;
@@ -50,10 +50,9 @@ import custom.zKernel.LogZZZ;
  * 
  *  Merke: Die Panels können sowohl nur modulnutzer als auch selber Modul sein. Darum werden beide Interfaces implementiert.
  */
-public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IKernelModuleUserZZZ, IKernelUserZZZ, IObjectZZZ, IMouseFeatureZZZ, IDebugUiZZZ, IFlagZUserZZZ, IFlagLocalUserZZZ{
+public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IKernelModuleUserZZZ, IKernelUserZZZ, IObjectZZZ, IMouseFeatureZZZ, IDebugUiZZZ, IFlagZUserZZZ, IFlagZLocalUserZZZ{
 	protected static final String sBUTTON_SWITCH = "buttonSwitch";
-   	
-	
+		
 	protected IKernelZZZ objKernel;   //das "protected" erlaubt es hiervon erbende Klassen mit XYXErbendeKlasse.objKernel zu arbeiten.
 	protected LogZZZ objLog;
 	protected ExceptionZZZ objException;
@@ -77,10 +76,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 
 	protected String sProgramName  = null; //ggf. der Name des Elternprogramms, s. KernelKonfiguration
 	protected String sProgramAlias = null; //ggf. der Alias des Elternprogramms, s. KernelKonfiguration
-		
-	public enum FLAGZLOCAL {
-		SKIPDEBUGUI;
-	}
+			
 	private HashMap<String, Boolean>hmFlag=new HashMap<String, Boolean>();
 	private HashMap<String, Boolean>hmFlagPassed = new HashMap<String, Boolean>();
 	private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
@@ -182,32 +178,39 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	}
 	
 	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialog,  HashMap<String, Boolean>hmFlag) throws ExceptionZZZ{
-		this(objKernel, dialog);
-		String stemp; boolean btemp; String sLog;
+		KernelJPanelCascadedNew_(objKernel, null, dialog, null, null, hmFlag);
 		
-		//Die ggfs. vorhanden lokalen Flags setzen
-		if(hmFlagLocal!=null) {
-			for(String sKey:hmFlagLocal.keySet()){
-				stemp = sKey;
-				btemp = this.setFlagZLocal(sKey, hmFlagLocal.get(sKey));
-				if(btemp==false){
-					ExceptionZZZ ez = new ExceptionZZZ( "the LOCAL flag '" + stemp + "' is not available (passed by hashmap). Maybe an interface is not implemented.", IFlagLocalUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
-					throw ez;		 
-				}			
-			}
-		}
-		
-		//Die ggf. vorhandenen Flags setzen.
-		if(hmFlag!=null){
-			for(String sKey:hmFlag.keySet()){
-				stemp = sKey;
-				btemp = this.setFlagZ(sKey, hmFlag.get(sKey));
-				if(btemp==false){
-					ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available (passed by hashmap). Maybe an interface is not implemented.", IFlagZUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
-					throw ez;		 
-				}			
-			}
-		}
+//		this(objKernel, dialog);
+//		String stemp; boolean btemp; String sLog;
+//		
+//		//Die ggfs. vorhanden lokalen Flags setzen
+//		if(hmFlagLocal!=null) {
+//			for(String sKey:hmFlagLocal.keySet()){
+//				stemp = sKey;
+//				btemp = this.setFlagZLocal(sKey, hmFlagLocal.get(sKey));
+//				if(btemp==false){
+//					ExceptionZZZ ez = new ExceptionZZZ( "the LOCAL flag '" + stemp + "' is not available (passed by hashmap). Maybe an interface is not implemented.", IFlagLocalUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
+//					throw ez;		 
+//				}			
+//			}
+//		}
+//		
+//		//Die ggf. vorhandenen Flags setzen.
+//		if(hmFlag!=null){
+//			for(String sKey:hmFlag.keySet()){
+//				stemp = sKey;
+//				btemp = this.setFlagZ(sKey, hmFlag.get(sKey));
+//				if(btemp==false){
+//					ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available (passed by hashmap). Maybe an interface is not implemented.", IFlagZUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
+//					throw ez;		 
+//				}			
+//			}
+//		}
+	}
+	
+	
+	public KernelJPanelCascadedZZZ(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialog,  HashMap<String, Boolean>hmFlagLocal, HashMap<String, Boolean>hmFlag) throws ExceptionZZZ{
+		KernelJPanelCascadedNew_(objKernel, null, dialog, null, hmFlagLocal, hmFlag);
 	}
 	
 	
@@ -234,14 +237,14 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		if(hmFlagLocal!=null){
 			for(String sKey:hmFlagLocal.keySet()){				
 				stemp = sKey;
-				btemp = this.setFlagZLocal(sKey, hmFlagLocal.get(sKey));
+				btemp = this.setFlagLocal(sKey, hmFlagLocal.get(sKey));
 				if(btemp==false){
-					ExceptionZZZ ez = new ExceptionZZZ( "the LOCAL flag '" + stemp + "' is not available (passed by hashmap). Maybe an interface is not implemented.", IFlagLocalUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
+					ExceptionZZZ ez = new ExceptionZZZ( "the LOCAL flag '" + stemp + "' is not available (passed by hashmap). Maybe an interface is not implemented.", IFlagZLocalUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
 					throw ez;		 
 				}	
 			}
 		}
-		if(this.getFlagZLocal("INIT")==true){
+		if(this.getFlagLocal("INIT")==true){
 			bReturn = true;
 			break main; 
 		}	
@@ -252,7 +255,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		if(hmFlag!=null){
 			for(String sKey:hmFlag.keySet()){				
 				stemp = sKey;
-				btemp = this.setFlagZ(sKey, hmFlag.get(sKey));
+				btemp = this.setFlag(sKey, hmFlag.get(sKey));
 				if(btemp==false){
 					ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available (passed by hashmap). Maybe an interface is not implemented.", IFlagZUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
 					throw ez;		 
@@ -274,7 +277,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			IKernelConfigZZZ objConfig = this.getKernelObject().getConfigObject();
 			if(objConfig!=null) {
 				//Übernimm die als Kommandozeilenargument gesetzten FlagZ... die können auch "false" sein.
-				Map<String,Boolean>hmFlagZpassed = objConfig.getHashMapFlagZpassed();	
+				Map<String,Boolean>hmFlagZpassed = objConfig.getHashMapFlagPassed();	
 				if(hmFlagZpassed!=null) {
 					Set<String> setFlag = hmFlagZpassed.keySet();
 					Iterator<String> itFlag = setFlag.iterator();
@@ -319,13 +322,13 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		//Ggfs. die DebugUI-Angaben hinzufügen, das kann z.B. nur das Label mit dem Klassennamen sein.
 		//Gesteuert werde soll das durch Flags, die auch über die Kommandozeile übergeben werden können.
 		//Merke: Beispielsweise für FormLayoutete Panels - die aus PanelCascaded erben - macht das einfache Hinzufügen keinen Sinn. Das Layout wird dann eh ersetzt. Also überspringen.
-		if(this.getFlagZLocal(FLAGZLOCAL.SKIPDEBUGUI.name())==false) {
+		if(this.getFlagLocal(FLAGZLOCAL.SKIPDEBUGUI.name())==false) {
 			boolean bDebugUI = this.createDebugUi();
 		}
 		
 		//Einen Mouse Listener hinzufuegen, der es erlaubt Fenster zu ziehen (auch im Panel und nicht nur in der Titelleiste)
 		//if(this.getFlag("isdraggable")){
-		if(this.getFlagZ(IMouseFeatureZZZ.FLAGZ.COMPONENT_DRAGGABLE.name())){	
+		if(this.getFlag(IMouseFeatureZZZ.FLAGZ.COMPONENT_DRAGGABLE.name())){	
 			this.setJComponentContentDraggable(this.isJComponentContentDraggable());
 		}
 			bReturn = true;
@@ -469,7 +472,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		IPanelCascadedZZZ panelReturn = null;
 		main:{
 			if(this.panelParent==null){
-				if(this.getFlagZ(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())) {
+				if(this.getFlag(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())) {
 					panelReturn = this;
 				}else {
 					KernelJFrameCascadedZZZ frameParent = this.getFrameParent();
@@ -846,7 +849,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		
 		try {
 			stemp = IMouseFeatureZZZ.FLAGZ.COMPONENT_DRAGGABLE.name();
-			btemp = this.setFlagZ(stemp, bValue);
+			btemp = this.setFlag(stemp, bValue);
 			if(btemp==false){
 				ExceptionZZZ ez = new ExceptionZZZ( "the flag '" + stemp + "' is not available. Maybe an interface is not implemented.", IFlagZUserZZZ.iERROR_FLAG_UNAVAILABLE, this, ReflectCodeZZZ.getMethodCurrentName()); 
 				throw ez;		 
@@ -862,12 +865,12 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		return this.getFlag(objEnumFlag.name());
 	}
 	@Override
-	public boolean setFlag(IMouseFeatureZZZ.FLAGZ objEnumFlag, boolean bFlagValue) {
+	public boolean setFlag(IMouseFeatureZZZ.FLAGZ objEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		return this.setFlag(objEnumFlag.name(), bFlagValue);
 	}	
 	
 	@Override
-	public boolean[] setFlag(IMouseFeatureZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) {
+	public boolean[] setFlag(IMouseFeatureZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		boolean[] baReturn=null;
 		main:{
 			if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
@@ -884,8 +887,8 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	}
 	
 	@Override
-	public boolean proofFlagZExists(IMouseFeatureZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
-		return this.proofFlagZExists(objEnumFlag.name());
+	public boolean proofFlagExists(IMouseFeatureZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+		return this.proofFlagExists(objEnumFlag.name());
 	}
 	
 	//### Aus IFlagUserZZZ
@@ -894,12 +897,12 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		return this.getFlag(objEnumFlag.name());
 	}
 	@Override
-	public boolean setFlag(IFlagZUserZZZ.FLAGZ objEnumFlag, boolean bFlagValue) {
+	public boolean setFlag(IFlagZUserZZZ.FLAGZ objEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		return this.setFlag(objEnumFlag.name(), bFlagValue);
 	}	
 	
 	@Override
-	public boolean[] setFlag(IFlagZUserZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) {
+	public boolean[] setFlag(IFlagZUserZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		boolean[] baReturn=null;
 		main:{
 			if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
@@ -916,17 +919,15 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	}
 	
 	@Override
-	public boolean proofFlagZExists(IFlagZUserZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
-		return this.proofFlagZExists(objEnumFlag.name());
+	public boolean proofFlagExists(IFlagZUserZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+		return this.proofFlagExists(objEnumFlag.name()); 
 	}
 	
-	
-	
-	
+
 	//######################
-			@Override
-			public boolean getFlag(String sFlagName) {
-				//Version Vor Java 1.6
+//			@Override
+//			public boolean getFlag(String sFlagName) {
+//				//Version Vor Java 1.6
 //				boolean bFunction = false;
 //			main:{
 //				if(StringZZZ.isEmpty(sFlagName)) break main;
@@ -947,13 +948,13 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 //					bFunction = false;
 //				}		
 //			}	// end main:
-		//	
+//	
 //			return bFunction;	
-				return this.getFlagZ(sFlagName);
-			}
-			@Override
-			public boolean setFlag(String sFlagName, boolean bFlagValue) {
-				//Version Vor Java 1.6
+//				return this.getFlag(sFlagName);
+//			}
+//			@Override
+//			public boolean setFlag(String sFlagName, boolean bFlagValue) {
+//				//Version Vor Java 1.6
 //				boolean bFunction = true;
 //				main:{
 //					if(StringZZZ.isEmpty(sFlagName)) break main;
@@ -979,16 +980,16 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 //				}	// end main:
 //				
 //				return bFunction;	
-				try {
-					return this.setFlagZ(sFlagName, bFlagValue);
-				} catch (ExceptionZZZ e) {
-					System.out.println("ExceptionZZZ (aus compatibilitaetgruenden mit Version vor Java 6 nicht weitergereicht) : " + e.getDetailAllLast());
-					return false;
-				}
-			}
+//				try {
+//					return this.setFlag(sFlagName, bFlagValue);
+//				} catch (ExceptionZZZ e) {
+//					System.out.println("ExceptionZZZ (aus compatibilitaetgruenden mit Version vor Java 6 nicht weitergereicht) : " + e.getDetailAllLast());
+//					return false;
+//				}
+//			}
 			
 			@Override
-			public boolean[] setFlag(String[] saFlagName, boolean bFlagValue) {
+			public boolean[] setFlag(String[] saFlagName, boolean bFlagValue) throws ExceptionZZZ {
 				boolean[] baReturn=null;
 				main:{
 					if(!StringArrayZZZ.isEmptyTrimmed(saFlagName)) {
@@ -1012,12 +1013,12 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
 			 * - Innere Klassen m�ssen auch public deklariert werden.(non-Javadoc)
 			 */
-			public boolean getFlagZ(String sFlagName) {
+			public boolean getFlag(String sFlagName) {
 				boolean bFunction = false;
 				main:{
 					if(StringZZZ.isEmpty(sFlagName)) break main;
 												
-					HashMap<String, Boolean> hmFlag = this.getHashMapFlagZ();
+					HashMap<String, Boolean> hmFlag = this.getHashMapFlag();
 					Boolean objBoolean = hmFlag.get(sFlagName.toUpperCase());
 					if(objBoolean==null){
 						bFunction = false;
@@ -1039,7 +1040,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		 * @return
 		 * lindhaueradmin, 23.07.2013
 		 */
-		public boolean setFlagZ(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
+		public boolean setFlag(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
 			boolean bFunction = false;
 			main:{
 				if(StringZZZ.isEmpty(sFlagName)) {
@@ -1047,11 +1048,11 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 					break main;
 				}
 							
-				bFunction = this.proofFlagZExists(sFlagName);															
+				bFunction = this.proofFlagExists(sFlagName);															
 				if(bFunction == true){
 					
 					//Setze das Flag nun in die HashMap
-					HashMap<String, Boolean> hmFlag = this.getHashMapFlagZ();
+					HashMap<String, Boolean> hmFlag = this.getHashMapFlag();
 					hmFlag.put(sFlagName.toUpperCase(), bFlagValue);
 					bFunction = true;								
 				}										
@@ -1061,7 +1062,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		}
 			
 		@Override
-		public HashMap<String, Boolean>getHashMapFlagZ(){
+		public HashMap<String, Boolean>getHashMapFlag(){
 			return this.hmFlag;
 		}
 		
@@ -1097,7 +1098,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				//FALLUNTERSCHEIDUNG: Alle gesetzten FlagZ werden in der HashMap gespeichert. Aber die noch nicht gesetzten FlagZ stehen dort nicht drin.
 				//                                  Diese kann man nur durch Einzelprüfung ermitteln.
 				if(bLookupExplizitInHashMap) {
-					HashMap<String,Boolean>hmFlag=this.getHashMapFlagZ();
+					HashMap<String,Boolean>hmFlag=this.getHashMapFlag();
 					if(hmFlag==null) break main;
 					
 					Set<String> setKey = hmFlag.keySet();
@@ -1116,7 +1117,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 					//         auch wenn sie garnicht gesetzt wurden.
 					//Lösung:  Statt dessen explitzit über die HashMap der gesetzten Werte gehen....						
 					for(String sFlagZ : saFlagZ){
-						boolean btemp = this.getFlagZ(sFlagZ);
+						boolean btemp = this.getFlag(sFlagZ);
 						if(btemp==bValueToSearchFor ){ //also 'true'
 							listasTemp.add(sFlagZ);
 						}
@@ -1135,7 +1136,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		 * lindhaueradmin, 23.07.2013
 		 * @throws ExceptionZZZ 
 		 */
-		public boolean proofFlagZExists(String sFlagName) throws ExceptionZZZ{
+		public boolean proofFlagExists(String sFlagName) throws ExceptionZZZ{
 			boolean bReturn = false;
 			main:{
 				if(StringZZZ.isEmpty(sFlagName))break main;
@@ -1146,17 +1147,19 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 					
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++++
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		//++++++++++++++++++++++++
 		/* @see basic.zBasic.IFlagZZZ#getFlagZ(java.lang.String)
 		 * 	 Weteire Voraussetzungen:
 		 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
 		 * - Innere Klassen m�ssen auch public deklariert werden.(non-Javadoc)
 		 */
-		public boolean getFlagZLocal(String sFlagName) {
+		public boolean getFlagLocal(String sFlagName) {
 			boolean bFunction = false;
 			main:{
 				if(StringZZZ.isEmpty(sFlagName)) break main;
 											
-				HashMap<String, Boolean> hmFlag = this.getHashMapFlagZLocal();
+				HashMap<String, Boolean> hmFlag = this.getHashMapFlagLocal();
 				Boolean objBoolean = hmFlag.get(sFlagName.toUpperCase());
 				if(objBoolean==null){
 					bFunction = false;
@@ -1179,7 +1182,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		 * @return
 		 * lindhaueradmin, 23.07.2013
 		 */
-		public boolean setFlagZLocal(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
+		public boolean setFlagLocal(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
 			boolean bFunction = false;
 			main:{
 				if(StringZZZ.isEmpty(sFlagName)) {
@@ -1187,11 +1190,11 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 					break main;
 				}
 							
-				bFunction = this.proofFlagZLocalExists(sFlagName);															
+				bFunction = this.proofFlagLocalExists(sFlagName);															
 				if(bFunction == true){
 					
 					//Setze das Flag nun in die HashMap
-					HashMap<String, Boolean> hmFlag = this.getHashMapFlagZLocal();
+					HashMap<String, Boolean> hmFlag = this.getHashMapFlagLocal();
 					hmFlag.put(sFlagName.toUpperCase(), bFlagValue);
 					bFunction = true;								
 				}										
@@ -1199,14 +1202,31 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			
 			return bFunction;	
 		}
+		
+		@Override
+		public boolean[] setFlagLocal(String[] saFlag, boolean bValue) throws ExceptionZZZ {
+			boolean[] baReturn=null;
+			main:{
+				if(!StringArrayZZZ.isEmptyTrimmed(saFlag)) {
+					baReturn = new boolean[saFlag.length];
+					int iCounter=-1;
+					for(String sFlag:saFlag) {
+						iCounter++;
+						boolean bReturn = this.setFlag(sFlag, bValue);
+						baReturn[iCounter]=bReturn;
+					}
+				}
+			}//end main:
+			return baReturn;
+		}
 			
 		@Override
-		public HashMap<String, Boolean>getHashMapFlagZLocal(){
+		public HashMap<String, Boolean>getHashMapFlagLocal(){
 			return this.hmFlagLocal;
 		}
 		
 		@Override
-		public void setHashMapFlagZLocal(HashMap<String, Boolean> hmFlagLocal) {
+		public void setHashMapFlagLocal(HashMap<String, Boolean> hmFlagLocal) {
 			this.hmFlagLocal = hmFlagLocal;
 		}
 		
@@ -1242,7 +1262,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				//FALLUNTERSCHEIDUNG: Alle gesetzten FlagZ werden in der HashMap gespeichert. Aber die noch nicht gesetzten FlagZ stehen dort nicht drin.
 				//                                  Diese kann man nur durch Einzelprüfung ermitteln.
 				if(bLookupExplizitInHashMap) {
-					HashMap<String,Boolean>hmFlag=this.getHashMapFlagZLocal();
+					HashMap<String,Boolean>hmFlag=this.getHashMapFlagLocal();
 					if(hmFlag==null) break main;
 					
 					Set<String> setKey = hmFlag.keySet();
@@ -1261,7 +1281,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 					//         auch wenn sie garnicht gesetzt wurden.
 					//Lösung:  Statt dessen explitzit über die HashMap der gesetzten Werte gehen....						
 					for(String sFlagZ : saFlagZ){
-						boolean btemp = this.getFlagZLocal(sFlagZ);
+						boolean btemp = this.getFlagLocal(sFlagZ);
 						if(btemp==bValueToSearchFor ){ //also 'true'
 							listasTemp.add(sFlagZ);
 						}
@@ -1280,24 +1300,25 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		 * lindhaueradmin, 23.07.2013
 		 * @throws ExceptionZZZ 
 		 */
-		public boolean proofFlagZLocalExists(String sFlagName) throws ExceptionZZZ{
+		public boolean proofFlagLocalExists(String sFlagName) throws ExceptionZZZ{
 			boolean bReturn = false;
 			main:{
 				if(StringZZZ.isEmpty(sFlagName))break main;
-				bReturn = FlagZHelperZZZ.proofFlagZLocalExists(this.getClass(), sFlagName);				
+				bReturn = FlagZHelperZZZ.proofFlagZDirectExists(this.getClass(), sFlagName);				
 			}//end main:
 			return bReturn;
 		}
 			
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++++
 		@Override
-		public HashMap<String, Boolean> getHashMapFlagZpassed() {
+		public HashMap<String, Boolean> getHashMapFlagPassed() {
 			return this.hmFlagPassed;
 		}
 		
 		@Override
-		public void setHashMapFlagZpassed(HashMap<String, Boolean> hmFlagPassed) {
+		public void setHashMapFlagPassed(HashMap<String, Boolean> hmFlagPassed) {
 			this.hmFlagPassed = hmFlagPassed;
 		}
 		
@@ -1372,12 +1393,12 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		return this.getFlag(objEnumFlag.name());
 	}
 	@Override
-	public boolean setFlag(IKernelProgramZZZ.FLAGZ objEnumFlag, boolean bFlagValue) {
+	public boolean setFlag(IKernelProgramZZZ.FLAGZ objEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		return this.setFlag(objEnumFlag.name(), bFlagValue);
 	}
 	
 	@Override
-	public boolean[] setFlag(IKernelProgramZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) {
+	public boolean[] setFlag(IKernelProgramZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		boolean[] baReturn=null;
 		main:{
 			if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
@@ -1394,8 +1415,8 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	}		
 	
 	@Override
-	public boolean proofFlagZExists(IKernelProgramZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
-		return this.proofFlagZExists(objEnumFlag.name());
+	public boolean proofFlagExists(IKernelProgramZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+		return this.proofFlagExists(objEnumFlag.name());
 	}
 			
 	//### AUS IKernelModuleUserZZZ
@@ -1418,12 +1439,12 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		return this.getFlag(objEnumFlag.name());
 	}
 	@Override
-	public boolean setFlag(IKernelModuleUserZZZ.FLAGZ objEnumFlag, boolean bFlagValue) {
+	public boolean setFlag(IKernelModuleUserZZZ.FLAGZ objEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		return this.setFlag(objEnumFlag.name(), bFlagValue);
 	}
 	
 	@Override
-	public boolean[] setFlag(IKernelModuleUserZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) {
+	public boolean[] setFlag(IKernelModuleUserZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		boolean[] baReturn=null;
 		main:{
 			if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
@@ -1440,8 +1461,8 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	}
 	
 	@Override
-	public boolean proofFlagZExists(IKernelModuleUserZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
-			return this.proofFlagZExists(objEnumFlag.name());
+	public boolean proofFlagExists(IKernelModuleUserZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+			return this.proofFlagExists(objEnumFlag.name());
 		}
 	
 	//### Aus IKernelModule
@@ -1487,12 +1508,12 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		return this.getFlag(objEnumFlag.name());
 	}
 	@Override
-	public boolean setFlag(IKernelModuleZZZ.FLAGZ objEnumFlag, boolean bFlagValue) {
+	public boolean setFlag(IKernelModuleZZZ.FLAGZ objEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		return this.setFlag(objEnumFlag.name(), bFlagValue);
 	}
 	
 	@Override
-	public boolean[] setFlag(IKernelModuleZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) {
+	public boolean[] setFlag(IKernelModuleZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		boolean[] baReturn=null;
 		main:{
 			if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
@@ -1509,8 +1530,8 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	}
 	
 	@Override
-	public boolean proofFlagZExists(IKernelModuleZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
-		return this.proofFlagZExists(objEnumFlag.name());
+	public boolean proofFlagExists(IKernelModuleZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+		return this.proofFlagExists(objEnumFlag.name());
 	}
 
 	
@@ -1521,7 +1542,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		main:{
 			String stemp;
 					
-			if(this.getFlagZ(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())) {
+			if(this.getFlag(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())) {
 				String sTitle = "Cascaded";
 								
 				//20210419 Bei vielen Zeilen im Label "verwischt" dann das UI

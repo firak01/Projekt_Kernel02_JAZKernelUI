@@ -10,13 +10,18 @@ import javax.swing.JPanel;
 import basic.zBasic.ExceptionZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.component.IKernelProgramZZZ;
+import basic.zKernel.flag.IFlagZLocalUserZZZ;
 import basic.zKernel.flag.IFlagZUserZZZ;
 
 
 /**Interface defines methods for setting and getting handles on other JPanels
  * @author Lindhauer
  */
-public interface IPanelCascadedZZZ extends IComponentCascadedUserZZZ, IKernelModuleZZZ, IKernelProgramZZZ,IFlagZUserZZZ{
+public interface IPanelCascadedZZZ extends IComponentCascadedUserZZZ, IKernelModuleZZZ, IKernelProgramZZZ,IFlagZUserZZZ,IFlagZLocalUserZZZ{
+	public enum FLAGZLOCAL {
+		SKIPDEBUGUI;
+	}
+	
 	public String getAlias();
 	public void setAlias(String sAlias);
 	

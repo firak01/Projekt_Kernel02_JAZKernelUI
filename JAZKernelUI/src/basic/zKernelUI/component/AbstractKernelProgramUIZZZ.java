@@ -18,8 +18,9 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 	private KernelJPanelCascadedZZZ panel = null;
 	private String sTextfield4Update;
 	private String sText2Update;    //Der Wert, der ins Label geschreiben werden soll. Hier als Variable, damit die interne Runner-Klasse darauf zugreifen kann.
-	// Auch: Dieser Wert wird aus dem Web ausgelesen und danach in das Label des Panels geschrieben.
-
+	                                //Merke: Solche Werte duerfen keinen Wert haben. Muessen also "final" sein, damit die interne Runner-Klasse darauf zugreifen kann.
+	//Anwendungsbeispiel: Projekt VIA: Dieser Wert wird aus dem Web ausgelesen und danach in das Label des Panels geschrieben.
+    private boolean bMarked;  //dito: für die interne Runner Klasse bereitstellen
 	
 	
 	/**Z.B. Wg. Reflection immer den Standardkonstruktor zur Verfügung stellen.
@@ -103,16 +104,65 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 	
 	//#### METHIDEN ###############################################	
 	public abstract void updateLabel(String stext);
+	public abstract void updateMessage(String stext);
+	
 	public void reset() {
 		this.sText2Update = ""; 
 	}
 	
-	/**Aus dem Worker-Thread heraus wird ein Thread gestartet (der sich in die EventQueue von Swing einreiht.)
+	public void updateLabel(String sComponentName, String stext){
+		updateLabel_(sComponentName, stext, false);
+	}
+	
+	/**Methode, um das Feld für "das Ergebnis" anzubieten.
+	 * Aus dem Worker-Thread heraus wird ein Thread gestartet (der sich in die EventQueue von Swing einreiht.)
+	 * 
+	 * 
 	* @param stext
 	* 
 	* lindhaueradmin; 17.01.2007 12:09:17
 	 */
-	public void updateLabel(String sComponentName, String stext){
+	public void updateLabelMarked(String sComponentName, String stext){
+			updateLabel_(sComponentName, stext, true);	
+	}
+	
+	private void updateLabel_(String sComponentName, String stext, boolean bMarkedIn) {
+		this.sTextfield4Update = sComponentName;
+		this.sText2Update = stext;
+		this.bMarked = bMarkedIn;
+		
+//		Das Schreiben des Ergebnisses wieder an den EventDispatcher thread uebergeben
+		Runnable runnerUpdateLabel= new Runnable(){
+
+			public void run(){
+//				In das Textfeld den gefundenen Wert eintragen, der Wert ist ganz oben als private Variable deklariert			
+				ReportLogZZZ.write(ReportLogZZZ.DEBUG, "Writing '" + sText2Update + "' to the JTextField '" + sTextfield4Update + "'");				
+				//JTextField textField = (JTextField) getPanelParent().getComponent(sTextfield4Update);
+				
+				//20210707: Hier ggfs. auch in den Nachbarpanels nach dem Feld suchen!!!
+				JTextField textField = (JTextField) getPanelParent().searchComponent(sTextfield4Update);
+				if(textField!=null) {
+					textField.setText(sText2Update);
+					if(bMarked) {
+					JTextFieldHelperZZZ.markAndFocus(getPanelParent(),textField);//Merke: Jetzt den Cursor noch verändern macht dies wieder rückgängig.
+					}
+				}else {
+					ReportLogZZZ.write(ReportLogZZZ.DEBUG, "JTextField '" + sTextfield4Update + "' NOT FOUND in panel '" + getPanelParent().getName() + "' !!!");										
+				}
+			}
+		};
+		
+		SwingUtilities.invokeLater(runnerUpdateLabel);		
+	}
+	
+	
+	/** Methode, um ein anderes Feld für "Nachrichten ans UI" anzubieten.
+	 *  Aus dem Worker-Thread heraus wird ein Thread gestartet (der sich in die EventQueue von Swing einreiht.)
+	 * @param sComponentName
+	 * @param stext
+	 * @author Fritz Lindhauer, 16.04.2023, 17:00:24
+	 */
+	public void updateMessage(String sComponentName, String stext) {
 		this.sTextfield4Update = sComponentName;
 		this.sText2Update = stext;
 		
@@ -135,7 +185,7 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 			}
 		};
 		
-		SwingUtilities.invokeLater(runnerUpdateLabel);				
+		SwingUtilities.invokeLater(runnerUpdateLabel);	
 	}
 	
 }

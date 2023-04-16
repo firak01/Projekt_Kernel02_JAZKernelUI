@@ -55,7 +55,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				throw ez;
 			}
 		
-			if(panelCurrent.getFlagZ(IKernelProgramZZZ.FLAGZ.ISKERNELPROGRAM.name())){
+			if(panelCurrent.getFlag(IKernelProgramZZZ.FLAGZ.ISKERNELPROGRAM.name())){
 				sReturn =  panelCurrent.getClass().getName();
 			}else{				
 				//Suche nach Elternpanel, das dieses Flag gesetzt hat ... als rekursiver Aufruf.
@@ -102,7 +102,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				Object obj = itPanel.next();
 				String sKey = (String) obj;								
 				KernelJPanelCascadedZZZ objPanel = (KernelJPanelCascadedZZZ) htSub.get(sKey);
-				boolean bIsProgram = objPanel.getFlagZ(IKernelProgramZZZ.FLAGZ.ISKERNELPROGRAM.name());
+				boolean bIsProgram = objPanel.getFlag(IKernelProgramZZZ.FLAGZ.ISKERNELPROGRAM.name());
 				if(bIsProgram){
 					objReturn = objPanel;
 					break main;
@@ -127,7 +127,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				Object obj = itPanel.next();
 				String sKey = (String) obj;								
 				KernelJPanelCascadedZZZ objPanel = (KernelJPanelCascadedZZZ) htSub.get(sKey);
-				boolean bIsProgram = objPanel.getFlagZ(IKernelProgramZZZ.FLAGZ.ISKERNELPROGRAM.name());
+				boolean bIsProgram = objPanel.getFlag(IKernelProgramZZZ.FLAGZ.ISKERNELPROGRAM.name());
 				if(bIsProgram){
 					objReturn = objPanel;
 					break main;
@@ -246,7 +246,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 			 * Es ist fraglich, ob das immer das dar�bergeordnete Panel sein muss.
 			 */
 			String stemp = IKernelProgramZZZ.FLAGZ.ISKERNELPROGRAM.name();
-			if(panelCurrent.getFlagZ(stemp)){
+			if(panelCurrent.getFlag(stemp)){
 				//NEIN, das w�re eine endlosschleife: sReturn = panelCurrent.getProgramAlias();
 				
 				//Versuch den Alias direkt aus der Konfiguration auszulesen.
@@ -391,7 +391,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				throw ez;
 			}
 			
-			if(dialog.getFlagZ(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())) {
+			if(dialog.getFlag(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())) {
 				objReturn = (IKernelModuleZZZ) dialog;
 				break main;
 			}
@@ -422,14 +422,14 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				throw ez;
 			}
 												
-			if(frameCascaded.getFlagZ(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())) {
+			if(frameCascaded.getFlag(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())) {
 				objReturn = (IKernelModuleZZZ) frameCascaded;
 				break main;
 			}
 			
 			KernelJFrameCascadedZZZ frameParent = frameCascaded.getFrameParent();
 			if(frameParent!=null) {
-				if(frameParent.getFlagZ(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())) {
+				if(frameParent.getFlag(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())) {
 					objReturn = (IKernelModuleZZZ) frameParent;
 					break main;
 				}
@@ -461,14 +461,14 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 				throw ez;
 			}
 												
-			if(panelCascaded.getFlagZ(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())) {
+			if(panelCascaded.getFlag(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())) {
 				objReturn = (IKernelModuleZZZ) panelCascaded;
 				break main;
 			}
 			
 			IPanelCascadedZZZ panelParent = panelCascaded.getPanelParent();
 			if(panelParent!=null) {
-				if(panelParent.getFlagZ(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())) {
+				if(panelParent.getFlag(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())) {
 					objReturn = (IKernelModuleZZZ) panelParent;
 					break main;
 				}
@@ -477,7 +477,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 			IPanelCascadedZZZ panelRoot = panelCascaded.searchPanelRoot();
 			IPanelCascadedZZZ panelStart=null;
 			if(panelRoot!=null) {
-				if(panelRoot.getFlagZ(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())) {
+				if(panelRoot.getFlag(IKernelModuleZZZ.FLAGZ.ISKERNELMODULE.name())) {
 					objReturn = (IKernelModuleZZZ) panelRoot;
 					break main;
 				}
