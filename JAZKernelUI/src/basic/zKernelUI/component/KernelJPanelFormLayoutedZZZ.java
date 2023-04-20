@@ -240,6 +240,24 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 					if(rowSpecDebug!=null && listaRowSpec!=null) {				
 						objReturn.insertRow(1, rowSpecDebug);//RowIndex beginnt mit 1
 					}
+										
+					//Merke: Untenstehendes klappt irgendwie nicht.
+					//Darum in den Panels jeweils eine Leerzeile als Platzhalter einfügen
+					//in .buildRowSpecs() des jeweiligen panels beginnen mit:
+					//if(!this.getFlag(IDebugUiZZZ.FLAGZ.DEBUGUI_PANELLABEL_ON.name())) {	
+					//	RowSpec rsGap0 = this.buildRowSpecGap();
+					//	listReturn.add(rsGap0);	
+					//}
+					
+					
+					//Klappt nicht: 
+					//Wenn eine Zeile mit debugUI Informationen gewuenscht ist, hier noch eine zusätzliche Leerzeile einfügen.
+					//Sonst verschieben sich die Komponenten in die anderen eingefuegten Leerzeilen und bleiben immer klein.
+//					if(rowSpecDebug!=null && listaRowSpec!=null) {						
+//					RowSpec rsGap0 = this.buildRowSpecGap();
+//					if(rsGap0!=null)
+//						objReturn.insertRow(2, rsGap0);
+//					}
 				}							
 			}//end main;
 			return objReturn;
@@ -365,6 +383,9 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 		public RowSpec buildRowSpecDebug() {
 			RowSpec rs = new RowSpec(Sizes.dluX(14));
 			return rs;
+			
+			
+			
 		}
 		
 		//+++ Von KernelJPanelCascadedZZZ überschrieben. Jetzt müssen die Debug-Komponenten auf ein Startzeile verteilt werden.
@@ -392,7 +413,7 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 				//NEIN: DIE DEBUGZEILE WIRD AM SCHLUSS EH DRAUFGERECHNET in:  .buildFormLayoutUsed(int iNumberOfRows)
 				//int iNumberOfRowsUsed = this.computeContentRowNumberUsed(iNumberOfRows);//Hier wird ggfs. noch eine DebugZeile draufgerechnet.
 				
-				iNumberOfRows = 2; 
+				iNumberOfRows = 1; 
 				//TODOGOON; //20210731 MODELL HER zur Berechnung der Zeilen
 				
 				int iIndexOld = 0; int iIndexNew = 0;
@@ -408,8 +429,11 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 		}
 		
 		//+++ von den eigentlichen Klassen zu implementieren
-		public abstract ArrayList<RowSpec> buildRowSpecs();		
+		public abstract ArrayList<RowSpec> buildRowSpecs();	
+		public abstract RowSpec buildRowSpecGap();
+		
 		public abstract ArrayList<ColumnSpec> buildColumnSpecs();
+		public abstract ColumnSpec buildColumnSpecGap();
 		public abstract boolean fillRowContent(CellConstraints cc, int iRow) throws ExceptionZZZ;
 		
 		//###### 
