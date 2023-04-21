@@ -1303,10 +1303,14 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		public boolean proofFlagLocalExists(String sFlagName) throws ExceptionZZZ{
 			boolean bReturn = false;
 			main:{
+//				Die direkte Vererbung reicht nicht mehr
+//				if(StringZZZ.isEmpty(sFlagName))break main;
+//				bReturn = FlagZHelperZZZ.proofFlagZLocalDirectExists(this.getClass(), sFlagName);
+					
 				if(StringZZZ.isEmpty(sFlagName))break main;
-				bReturn = FlagZHelperZZZ.proofFlagZDirectExists(this.getClass(), sFlagName);				
+				bReturn = FlagZHelperZZZ.proofFlagZLocalExists(this.getClass(), sFlagName);				
 			}//end main:
-			return bReturn;
+			return bReturn;		
 		}
 			
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
