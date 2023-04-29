@@ -787,6 +787,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	 * Merke: Hier�ber wird die JComponent per Aliasname "zugriefbar". Z.B. kann nun ein anderes Panel darauf zugreifen. 
 	 */
 	public void setComponent(String sAlias, JComponent objComponent) {
+		objComponent.setName(sAlias);
 		this.getHashtableComponent().put(sAlias, objComponent);
 	}
 

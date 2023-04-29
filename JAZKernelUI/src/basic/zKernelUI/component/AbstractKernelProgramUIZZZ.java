@@ -1,5 +1,7 @@
 package basic.zKernelUI.component;
 
+import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
@@ -13,12 +15,14 @@ import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.component.IKernelProgramZZZ;
 import basic.zKernel.flag.IFlagZUserZZZ;
 import basic.zKernelUI.util.JTextFieldHelperZZZ;
+import custom.zKernel.LogZZZ;
 
-public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZZ{
+public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZZ implements IProgramUIZZZ{
 	private KernelJPanelCascadedZZZ panel = null;
-	private String sTextfield4Update;
-	private String sText2Update;    //Der Wert, der ins Label geschreiben werden soll. Hier als Variable, damit die interne Runner-Klasse darauf zugreifen kann.
+	private String sComponent4update;
+	private String sText2Update;    //Der Wert, der ins Label geschrieben werden soll. Hier als Variable, damit die interne Runner-Klasse darauf zugreifen kann.
 	                                //Merke: Solche Werte duerfen keinen Wert haben. Muessen also "final" sein, damit die interne Runner-Klasse darauf zugreifen kann.
+	
 	//Anwendungsbeispiel: Projekt VIA: Dieser Wert wird aus dem Web ausgelesen und danach in das Label des Panels geschrieben.
     private boolean bMarked;  //dito: für die interne Runner Klasse bereitstellen
 	
@@ -102,16 +106,98 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 			this.panel = panel;
 		}
 	
-	//#### METHIDEN ###############################################	
-	public abstract void updateLabel(String stext);
-	public abstract void updateMessage(String stext);
+	//#### METHODEN ###############################################	
+    //Die erbenden Klassen sollen darin die Methoden dieser abstrakten Klasse aufrufen 
+    //und den fuer sie vorgesehenen Komponentennamen uebergeben.
+	public abstract void updateLabel(String stext) throws ExceptionZZZ;
+	public abstract void updateValue(String stext) throws ExceptionZZZ;
+	public abstract void updateMessage(String stext) throws ExceptionZZZ;
 	
+	
+	/* (non-Javadoc)
+	 * @see basic.zKernel.component.AbstractKernelProgramZZZ#reset()
+	 */
 	public void reset() {
 		this.sText2Update = ""; 
 	}
+				
+	public final void updateComponent(String sComponent4update, String sValue) throws ExceptionZZZ {
+		main:{
+			JComponent component = getPanelParent().searchComponent(sComponent4update);
+			if(component==null) {
+				String sLog = "Component not found '" + sComponent4update + "'";
+				System.out.println(sLog);
+				
+				LogZZZ objLog = this.getLogObject();
+				objLog.WriteLineDate(sLog);
+				break main;
+			}
+			if(component instanceof JLabel) {
+				updateLabel((JLabel)component, sValue);
+			}else if(component instanceof JTextField) {
+				updateTextField((JTextField)component, sValue);
+			}else {
+				String sLog = ReflectCodeZZZ.getPositionCurrent() + ": Component of type '" + component.getClass() + "' not handled in this update event."; 
+				System.out.println(sLog);
+				
+				LogZZZ objLog = this.getLogObject();
+				objLog.WriteLineDate(sLog);
+			}
+		}//end main
+	}
 	
-	public void updateLabel(String sComponentName, String stext){
-		updateLabel_(sComponentName, stext, false);
+	public final void updateComponentMarked(String sComponent4update, String sValue) throws ExceptionZZZ {
+		main:{
+			JComponent component = getPanelParent().searchComponent(sComponent4update);
+			if(component==null) {
+				String sLog = "Component not found '" + sComponent4update + "'";
+				System.out.println(sLog);
+				
+				LogZZZ objLog = this.getLogObject();
+				objLog.WriteLineDate(sLog);
+				break main;
+			}
+			if(component.getClass().isInstance(JLabel.class)) {
+				updateLabel((JLabel)component, sValue);
+			}else if(component.getClass().isInstance(JTextField.class)) {
+				updateTextFieldMarked((JTextField)component, sValue);
+			}else {
+				String sLog = ReflectCodeZZZ.getPositionCurrent() + ": Component of type '" + component.getClass() + "' not handled in this update event."; 
+				System.out.println(sLog);
+				
+				LogZZZ objLog = this.getLogObject();
+				objLog.WriteLineDate(sLog);
+			}	
+		}//end main:
+	}
+	
+	private void updateMessage(String sComponent4update, String sValue) throws ExceptionZZZ {
+		main:{
+			JComponent component = getPanelParent().searchComponent(sComponent4update);
+			if(component==null) {
+				String sLog = "Component not found '" + sComponent4update + "'";
+				System.out.println(sLog);
+				
+				LogZZZ objLog = this.getLogObject();
+				objLog.WriteLineDate(sLog);
+				break main;
+			}
+			if(component.getClass().isInstance(JLabel.class)) {
+				updateLabel((JLabel)component, sValue);
+			}else if(component.getClass().isInstance(JTextField.class)) {
+				updateTextField((JTextField)component, sValue);
+			}else {
+				String sLog = ReflectCodeZZZ.getPositionCurrent() + ": Component of type '" + component.getClass() + "' not handled in this update event."; 
+				System.out.println(sLog);
+				
+				LogZZZ objLog = this.getLogObject();
+				objLog.WriteLineDate(sLog);
+			}			
+		}//end main:
+	}
+	
+	private void updateTextField(JTextField textfield, String stext){
+		updateTextField_(textfield, stext, false);
 	}
 	
 	/**Methode, um das Feld für "das Ergebnis" anzubieten.
@@ -122,12 +208,49 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 	* 
 	* lindhaueradmin; 17.01.2007 12:09:17
 	 */
-	public void updateLabelMarked(String sComponentName, String stext){
-			updateLabel_(sComponentName, stext, true);	
+	private void updateTextFieldMarked(JTextField textfield, String stext){
+			updateTextField_(textfield, stext, true);	
 	}
 	
-	private void updateLabel_(String sComponentName, String stext, boolean bMarkedIn) {
-		this.sTextfield4Update = sComponentName;
+	private void updateLabel(JLabel label, String stext){
+		updateLabel_(label, stext);
+	}
+	
+	private void updateLabel_(JLabel label, String sText) {
+		main:{
+		if(label==null) {
+			ReportLogZZZ.write(ReportLogZZZ.DEBUG, "JTextField '" + sComponent4update + "' NOT FOUND in panel '" + getPanelParent().getName() + "' !!!");
+			break main;
+		}
+		
+		//Als Property Speichern, damit der interne Runner darauf zugreifen kann		
+		this.sComponent4update = label.getName();		
+		this.sText2Update = sText;		
+				
+//		Das Schreiben des Ergebnisses wieder an den EventDispatcher thread uebergeben
+		Runnable runnerUpdateLabel= new Runnable(){
+
+			public void run(){
+//				In das Textfeld den gefundenen Wert eintragen, der Wert ist ganz oben als private Variable deklariert			
+				ReportLogZZZ.write(ReportLogZZZ.DEBUG, "Writing '" + sText2Update + "' to the JLabel '" + sComponent4update + "'");				
+				
+				//20210707: Hier ggfs. auch in den Nachbarpanels nach dem Feld suchen!!!
+				JLabel label = (JLabel) getPanelParent().searchComponent(sComponent4update);
+				if(label!=null) {
+					label.setText(sText2Update);
+				}else {
+					ReportLogZZZ.write(ReportLogZZZ.DEBUG, "JLabel '" + sComponent4update + "' NOT FOUND in panel '" + getPanelParent().getName() + "' !!!");										
+				}
+			}
+		};
+		
+		SwingUtilities.invokeLater(runnerUpdateLabel);	
+		}//end main:
+	
+	}
+	
+	private void updateTextField_(JTextField textfield, String stext, boolean bMarkedIn) {
+		this.sComponent4update = textfield.getName();
 		this.sText2Update = stext;
 		this.bMarked = bMarkedIn;
 		
@@ -136,56 +259,21 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 
 			public void run(){
 //				In das Textfeld den gefundenen Wert eintragen, der Wert ist ganz oben als private Variable deklariert			
-				ReportLogZZZ.write(ReportLogZZZ.DEBUG, "Writing '" + sText2Update + "' to the JTextField '" + sTextfield4Update + "'");				
-				//JTextField textField = (JTextField) getPanelParent().getComponent(sTextfield4Update);
+				ReportLogZZZ.write(ReportLogZZZ.DEBUG, "Writing '" + sText2Update + "' to the JLabel '" + sComponent4update + "'");				
 				
 				//20210707: Hier ggfs. auch in den Nachbarpanels nach dem Feld suchen!!!
-				JTextField textField = (JTextField) getPanelParent().searchComponent(sTextfield4Update);
-				if(textField!=null) {
-					textField.setText(sText2Update);
+				JTextField textfield = (JTextField) getPanelParent().searchComponent(sComponent4update);
+				if(textfield!=null) {
+					textfield.setText(sText2Update);
 					if(bMarked) {
-					JTextFieldHelperZZZ.markAndFocus(getPanelParent(),textField);//Merke: Jetzt den Cursor noch verändern macht dies wieder rückgängig.
+						JTextFieldHelperZZZ.markAndFocus(getPanelParent(),textfield);//Merke: Jetzt den Cursor noch verändern macht dies wieder rückgängig.
 					}
 				}else {
-					ReportLogZZZ.write(ReportLogZZZ.DEBUG, "JTextField '" + sTextfield4Update + "' NOT FOUND in panel '" + getPanelParent().getName() + "' !!!");										
+					ReportLogZZZ.write(ReportLogZZZ.DEBUG, "JTextField '" + sComponent4update + "' NOT FOUND in panel '" + getPanelParent().getName() + "' !!!");										
 				}
 			}
 		};
 		
 		SwingUtilities.invokeLater(runnerUpdateLabel);		
 	}
-	
-	
-	/** Methode, um ein anderes Feld für "Nachrichten ans UI" anzubieten.
-	 *  Aus dem Worker-Thread heraus wird ein Thread gestartet (der sich in die EventQueue von Swing einreiht.)
-	 * @param sComponentName
-	 * @param stext
-	 * @author Fritz Lindhauer, 16.04.2023, 17:00:24
-	 */
-	public void updateMessage(String sComponentName, String stext) {
-		this.sTextfield4Update = sComponentName;
-		this.sText2Update = stext;
-		
-//		Das Schreiben des Ergebnisses wieder an den EventDispatcher thread uebergeben
-		Runnable runnerUpdateLabel= new Runnable(){
-
-			public void run(){
-//				In das Textfeld den gefundenen Wert eintragen, der Wert ist ganz oben als private Variable deklariert			
-				ReportLogZZZ.write(ReportLogZZZ.DEBUG, "Writing '" + sText2Update + "' to the JTextField '" + sTextfield4Update + "'");				
-				//JTextField textField = (JTextField) getPanelParent().getComponent(sTextfield4Update);
-				
-				//20210707: Hier ggfs. auch in den Nachbarpanels nach dem Feld suchen!!!
-				JTextField textField = (JTextField) getPanelParent().searchComponent(sTextfield4Update);
-				if(textField!=null) {
-					textField.setText(sText2Update);					
-					JTextFieldHelperZZZ.markAndFocus(getPanelParent(),textField);//Merke: Jetzt den Cursor noch verändern macht dies wieder rückgängig.
-				}else {
-					ReportLogZZZ.write(ReportLogZZZ.DEBUG, "JTextField '" + sTextfield4Update + "' NOT FOUND in panel '" + getPanelParent().getName() + "' !!!");										
-				}
-			}
-		};
-		
-		SwingUtilities.invokeLater(runnerUpdateLabel);	
-	}
-	
 }
