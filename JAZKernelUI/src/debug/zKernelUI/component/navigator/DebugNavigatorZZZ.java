@@ -15,7 +15,7 @@ public class DebugNavigatorZZZ {
 			LogZZZ objLog = objKernel.getLogObject();
 			
 			
-			//2. Frame initialisieren und �ffnen. Die Applikation "DebugButtonGroup soll verarbeitet werden		
+			//2. Frame initialisieren und oeffnen. Die Applikation "DebugButtonGroup soll verarbeitet werden		
 			//KernelZZZ objKernelChoosen = new KernelZZZ("DebugButtonGroup",  "01", objKernel, null);
 			//FrameDebugButtonGroupZZZ objFrame = new FrameDebugButtonGroupZZZ(objKernelChoosen);
 			FrameDebugNavigatorZZZ objFrame = new FrameDebugNavigatorZZZ(objKernel);
