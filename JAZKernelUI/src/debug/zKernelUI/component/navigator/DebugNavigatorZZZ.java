@@ -2,6 +2,8 @@ package debug.zKernelUI.component.navigator;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zKernel.KernelZZZ;
+import basic.zKernel.file.ini.IKernelExpressionIniSolverZZZ;
+import basic.zKernel.file.ini.IKernelJsonIniSolverZZZ;
 import custom.zKernel.LogZZZ;
 import custom.zKernelUI.module.config.FrameConfigZZZ;
 
@@ -10,7 +12,7 @@ public class DebugNavigatorZZZ {
 	public static void main(String[] args) {
 		try {
 			//1. Kernel Objekt initialisieren. Dies ist fuer das Logging grundlegend.
-			String[] saFlag= {"DEBUGUI_PANELLABEL_ON","useFormula"};
+			String[] saFlag= {"DEBUGUI_PANELLABEL_ON","useFormula", IKernelExpressionIniSolverZZZ.FLAGZ.USEEXPRESSION.name(), IKernelJsonIniSolverZZZ.FLAGZ.USEJSON.name(), IKernelJsonIniSolverZZZ.FLAGZ.USEJSON_ARRAY.name(), IKernelJsonIniSolverZZZ.FLAGZ.USEJSON_MAP.name()};
 			KernelZZZ objKernel = new KernelZZZ("FGL", "01", "", "ZKernelConfigConfig_default.ini", saFlag);
 			LogZZZ objLog = objKernel.getLogObject();
 			
