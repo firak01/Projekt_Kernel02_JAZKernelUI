@@ -1486,6 +1486,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 					
 					IKernelModuleZZZ objModule = KernelUIZZZ.searchModule(this);
 					if(objModule!=null) {
+						this.setModule(objModule);
 						sReturn = KernelUIZZZ.getModuleUsedName(objModule);					
 					}else {						
 						//"Nicht weiter suchen, sonst Endlosscheifengefahr": undefinierter Modulname als Ergebnis zurückgeben.						
