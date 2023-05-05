@@ -47,5 +47,19 @@
 <!-- 	    <artifactId>jgoodies-forms</artifactId> -->
 <!-- 	    <version>1.6.0</version> -->
 <!-- 	</dependency> -->
+
+
+		<!-- AspectJ fuer Reflection -->
+		<dependency>
+	    	<groupId>org.aspectj</groupId>
+	  	  	<artifactId>aspectjrt</artifactId>
+	    	<version>1.8.9</version>
+	    </dependency>
+	    <dependency>
+    		<groupId>org.aspectj</groupId>
+    		<artifactId>aspectjweaver</artifactId>
+    		<version>1.8.9</version>
+		</dependency>
+
   </dependencies>
 </project>
