@@ -28,7 +28,7 @@
   </build>
   <dependencies>
   	<!-- https://mvnrepository.com/artifact/com.jgoodies/jgoodies-forms -->
-  	<!-- dafuer ist jdoc als jar File downloadbar in der ZKernelFileCollection abgelgt. -->
+  	<!-- dafuer ist jdoc als jar File downloadbar in der ZKernelFileCollection abgelegt. -->
   	<dependency>
 	    <groupId>com.jgoodies</groupId>
 	    <artifactId>jgoodies-forms</artifactId>
