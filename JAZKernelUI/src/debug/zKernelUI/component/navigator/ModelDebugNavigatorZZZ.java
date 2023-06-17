@@ -45,7 +45,7 @@ public class ModelDebugNavigatorZZZ extends AbstractModelNavigatorZZZ{
 			IKernelZZZ objKernel = this.getKernelObject();
 			//Das wäre normalerweise mit | getrennt...., jetzt das JSON-Array hinzunehmen
 			//String[] saReturn = objKernel.getParameterArrayStringByProgramAlias("DebugNavigator", "PanelWest", "NavigatorContentJson");
-			IKernelConfigSectionEntryZZZ[] objaEntry = objKernel.getParameterArrayByProgramAlias("DebugNavigator", "PanelWest", "NavigatorContentJson");
+			IKernelConfigSectionEntryZZZ[] objaEntry = objKernel.getParameterArrayWithEntryByProgramAlias("DebugNavigator", "PanelWest", "NavigatorContentJson");
 			
 			//TODOGOON; ///20210810: Nicht vergessen: Das soll eigentlich aus einer HashMap stammen, wg. Wert für das Label und einen technischen Wert, der für den Zugriff auf das Label verwendet wird.
 			
@@ -81,7 +81,7 @@ public class ModelDebugNavigatorZZZ extends AbstractModelNavigatorZZZ{
 			//HashMap<String,String>hm= objKernel.getParameterHashMapStringByProgramAlias("DebugNavigator", "PanelWest", "NavigatorContentJson");
 			
 			//20210811 also wie in ArrayStringByProgramAlias über Clone einzelne Entry-Objekt erstellen und diese über den Index speichern.
-			IKernelConfigSectionEntryZZZ[] entrya = objKernel.getParameterArrayByProgramAlias("DebugNavigator", "PanelWest", "NavigatorContentJson");
+			IKernelConfigSectionEntryZZZ[] entrya = objKernel.getParameterArrayWithEntryByProgramAlias("DebugNavigator", "PanelWest", "NavigatorContentJson");
 			
 			//2. Aus den Entry-Objekten die Navigator-Objekte machen
 			int iIndexInCollection=-1;
