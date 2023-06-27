@@ -30,8 +30,9 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 	/**Z.B. Wg. Reflection immer den Standardkonstruktor zur Verfügung stellen.
 	 * 
 	 * 31.01.2021, 12:15:10, Fritz Lindhauer
+	 * @throws ExceptionZZZ 
 	 */
-	public AbstractKernelProgramUIZZZ() {
+	public AbstractKernelProgramUIZZZ() throws ExceptionZZZ {
 		super();
 	}
 	

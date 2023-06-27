@@ -105,6 +105,11 @@ public abstract class KernelSwingWorkerZZZ extends SwingWorker  implements IObje
 		}		
 	}
 	
+	//Beim Konstruieren des SwingWorkers werden die notwendigen updateXYZ(...) Methoden aufgerufen.
+	@Override
+	public abstract Object construct();
+	
+	
 	//+++++++++++++++++++++++++++++++++
 	//wenn der Kerneleigene SwingWorker durch javax -Version ersetzt wurde
 //	public void start() {

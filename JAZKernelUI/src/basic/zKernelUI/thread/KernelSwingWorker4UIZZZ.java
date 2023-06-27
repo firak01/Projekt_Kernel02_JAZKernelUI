@@ -76,9 +76,4 @@ public abstract class KernelSwingWorker4UIZZZ extends KernelSwingWorkerZZZ imple
 		
 		SwingUtilities.invokeLater(runnerUpdateMessage);
 	}
-	
-	//Beim Konstruieren des SwingWorkers werden die notwendigen updateXYZ(...) Methoden aufgerufen.
-	@Override
-	public abstract Object construct();
-	
 }
