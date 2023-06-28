@@ -56,12 +56,17 @@ public abstract class KernelMouseListenerCascadedZZZ extends KernelUseObjectZZZ 
 			}
 		} catch (ExceptionZZZ ez) {
 			//Protokolliern des Fehlers an allen moeglichen Stellen
-			this.getLogObject().WriteLineDate(ez.getDetailAllLast());
-			System.out.println(ez.getDetailAllLast());
-			ez.printStackTrace();
+			try {
+				this.getLogObject().WriteLineDate(ez.getDetailAllLast());			
+				System.out.println(ez.getDetailAllLast());
+				ez.printStackTrace();
 			
-			//Das ist z.B. sinnvoll um eine Fehlermeldung in einem Feld eines UIClients sichtbar zu machen
-			this.actionPerformCustomOnError(me, ez);
+				//Das ist z.B. sinnvoll um eine Fehlermeldung in einem Feld eines UIClients sichtbar zu machen
+				this.actionPerformCustomOnError(me, ez);			
+			} catch (ExceptionZZZ e) {
+				System.out.println(ez.getDetailAllLast());
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -75,12 +80,17 @@ public abstract class KernelMouseListenerCascadedZZZ extends KernelUseObjectZZZ 
 			}
 		} catch (ExceptionZZZ ez) {
 			//Protokolliern des Fehlers an allen moeglichen Stellen
-			this.getLogObject().WriteLineDate(ez.getDetailAllLast());
-			System.out.println(ez.getDetailAllLast());
-			ez.printStackTrace();
-			
-			//Das ist z.B. sinnvoll um eine Fehlermeldung in einem Feld eines UIClients sichtbar zu machen
-			this.actionPerformCustomOnError(me, ez);
+			try {
+				this.getLogObject().WriteLineDate(ez.getDetailAllLast());				
+				System.out.println(ez.getDetailAllLast());
+				ez.printStackTrace();
+				
+				//Das ist z.B. sinnvoll um eine Fehlermeldung in einem Feld eines UIClients sichtbar zu machen
+				this.actionPerformCustomOnError(me, ez);
+			} catch (ExceptionZZZ e) {
+				System.out.println(ez.getDetailAllLast());
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -94,12 +104,17 @@ public abstract class KernelMouseListenerCascadedZZZ extends KernelUseObjectZZZ 
 			}
 		} catch (ExceptionZZZ ez) {
 			//Protokolliern des Fehlers an allen moeglichen Stellen
-			this.getLogObject().WriteLineDate(ez.getDetailAllLast());
-			System.out.println(ez.getDetailAllLast());
-			ez.printStackTrace();
-			
-			//Das ist z.B. sinnvoll um eine Fehlermeldung in einem Feld eines UIClients sichtbar zu machen
-			this.actionPerformCustomOnError(me, ez);
+			try {
+				this.getLogObject().WriteLineDate(ez.getDetailAllLast());			
+				System.out.println(ez.getDetailAllLast());
+				ez.printStackTrace();
+				
+				//Das ist z.B. sinnvoll um eine Fehlermeldung in einem Feld eines UIClients sichtbar zu machen
+				this.actionPerformCustomOnError(me, ez);
+			} catch (ExceptionZZZ e) {
+				System.out.println(ez.getDetailAllLast());
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -113,12 +128,17 @@ public abstract class KernelMouseListenerCascadedZZZ extends KernelUseObjectZZZ 
 			}
 		} catch (ExceptionZZZ ez) {
 			//Protokolliern des Fehlers an allen moeglichen Stellen
-			this.getLogObject().WriteLineDate(ez.getDetailAllLast());
-			System.out.println(ez.getDetailAllLast());
-			ez.printStackTrace();
-			
-			//Das ist z.B. sinnvoll um eine Fehlermeldung in einem Feld eines UIClients sichtbar zu machen
-			this.actionPerformCustomOnError(me, ez);
+			try {
+				this.getLogObject().WriteLineDate(ez.getDetailAllLast());			
+				System.out.println(ez.getDetailAllLast());
+				ez.printStackTrace();
+				
+				//Das ist z.B. sinnvoll um eine Fehlermeldung in einem Feld eines UIClients sichtbar zu machen
+				this.actionPerformCustomOnError(me, ez);
+			} catch (ExceptionZZZ e) {
+				System.out.println(ez.getDetailAllLast());
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -132,12 +152,17 @@ public abstract class KernelMouseListenerCascadedZZZ extends KernelUseObjectZZZ 
 			}
 		} catch (ExceptionZZZ ez) {
 			//Protokolliern des Fehlers an allen moeglichen Stellen
-			this.getLogObject().WriteLineDate(ez.getDetailAllLast());
-			System.out.println(ez.getDetailAllLast());
-			ez.printStackTrace();
+			try {
+				this.getLogObject().WriteLineDate(ez.getDetailAllLast());			
+				System.out.println(ez.getDetailAllLast());
+				ez.printStackTrace();
 			
-			//Das ist z.B. sinnvoll um eine Fehlermeldung in einem Feld eines UIClients sichtbar zu machen
-			this.actionPerformCustomOnError(me, ez);
+				//Das ist z.B. sinnvoll um eine Fehlermeldung in einem Feld eines UIClients sichtbar zu machen
+				this.actionPerformCustomOnError(me, ez);
+			} catch (ExceptionZZZ e) {
+				System.out.println(ez.getDetailAllLast());
+				e.printStackTrace();
+			}
 		}
 	}
 

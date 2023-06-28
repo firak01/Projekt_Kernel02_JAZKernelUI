@@ -35,15 +35,16 @@ public abstract class KernelActionCascadedZZZ extends KernelUseObjectZZZ  implem
 				this.actionPerformPostCustom(ae, bQueryResult);
 			}
 		} catch (ExceptionZZZ ez) {
-			//Protokolliern des Fehlers an allen m�glichen Stellen
-			this.getLogObject().WriteLineDate(ez.getDetailAllLast());
-			System.out.println(ez.getDetailAllLast());
-			ez.printStackTrace();
-			
-			//Das ist z.B. sinnvoll um eine Fehlermeldung in einem Feld eines UIClients sichtbar zu machen
 			try {
+				//Protokolliern des Fehlers an allen m�glichen Stellen
+				this.getLogObject().WriteLineDate(ez.getDetailAllLast());
+				System.out.println(ez.getDetailAllLast());
+				ez.printStackTrace();
+				
+				//Das ist z.B. sinnvoll um eine Fehlermeldung in einem Feld eines UIClients sichtbar zu machen			
 				this.actionPerformCustomOnError(ae, ez);
-			} catch (ExceptionZZZ e) {				
+			} catch (ExceptionZZZ e) {	
+				System.out.println(ez.getDetailAllLast());
 				e.printStackTrace();
 			}
 		}
