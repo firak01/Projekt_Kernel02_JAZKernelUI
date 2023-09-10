@@ -892,6 +892,11 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		return this.proofFlagExists(objEnumFlag.name());
 	}
 	
+	@Override
+	public boolean proofFlagSetBefore(IMouseFeatureZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+		return this.proofFlagSetBefore(objEnumFlag.name());
+	}
+	
 	//### Aus IFlagUserZZZ
 	@Override
 	public boolean getFlag(IFlagZUserZZZ.FLAGZ objEnumFlag) {
@@ -922,6 +927,11 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	@Override
 	public boolean proofFlagExists(IFlagZUserZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
 		return this.proofFlagExists(objEnumFlag.name()); 
+	}
+	
+	@Override
+	public boolean proofFlagSetBefore(IFlagZUserZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+		return this.proofFlagSetBefore(objEnumFlag.name()); 
 	}
 	
 
@@ -1145,6 +1155,16 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			}//end main:
 			return bReturn;
 		}
+		
+		@Override
+		public boolean proofFlagSetBefore(String sFlagName) throws ExceptionZZZ{
+			boolean bReturn = false;
+			main:{
+				if(StringZZZ.isEmpty(sFlagName))break main;
+				bReturn = FlagZHelperZZZ.proofFlagZSetBefore(this, sFlagName);
+			}
+			return bReturn;
+		}
 					
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++++
@@ -1313,6 +1333,16 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			}//end main:
 			return bReturn;		
 		}
+		
+		@Override
+		public boolean proofFlagLocalSetBefore(String sFlagName) throws ExceptionZZZ{
+			boolean bReturn = false;
+			main:{
+				if(StringZZZ.isEmpty(sFlagName))break main;
+				bReturn = FlagZHelperZZZ.proofFlagZLocalSetBefore(this, sFlagName);
+			}
+			return bReturn;
+		}
 			
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1423,6 +1453,11 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	public boolean proofFlagExists(IKernelProgramZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
 		return this.proofFlagExists(objEnumFlag.name());
 	}
+	
+	@Override
+	public boolean proofFlagSetBefore(IKernelProgramZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+		return this.proofFlagSetBefore(objEnumFlag.name());
+	}
 			
 	//### AUS IKernelModuleUserZZZ
 	@Override
@@ -1468,6 +1503,11 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	@Override
 	public boolean proofFlagExists(IKernelModuleUserZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
 			return this.proofFlagExists(objEnumFlag.name());
+	}
+	
+	@Override
+	public boolean proofFlagSetBefore(IKernelModuleUserZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+			return this.proofFlagSetBefore(objEnumFlag.name());
 		}
 	
 	//### Aus IKernelModule
@@ -1539,7 +1579,12 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	public boolean proofFlagExists(IKernelModuleZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
 		return this.proofFlagExists(objEnumFlag.name());
 	}
-
+	
+	@Override
+	public boolean proofFlagSetBefore(IKernelModuleZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+		return this.proofFlagSetBefore(objEnumFlag.name());
+	}
+	
 	
 	//#### IComponentCascadedUserZZZ
 	@Override

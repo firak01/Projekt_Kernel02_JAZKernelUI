@@ -1191,6 +1191,27 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 			}//end main:
 			return bReturn;
 		}
+		
+		@Override
+		public boolean proofFlagSetBefore(String sFlagName) throws ExceptionZZZ{
+			boolean bReturn = false;
+			main:{
+				if(StringZZZ.isEmpty(sFlagName))break main;
+				bReturn = FlagZHelperZZZ.proofFlagZSetBefore(this, sFlagName);
+			}
+			return bReturn;
+		}
+		
+		@Override
+		public boolean proofFlagLocalSetBefore(String sFlagName) throws ExceptionZZZ{
+			boolean bReturn = false;
+			main:{
+				if(StringZZZ.isEmpty(sFlagName))break main;
+				bReturn = FlagZHelperZZZ.proofFlagZLocalSetBefore(this, sFlagName);
+			}
+			return bReturn;
+		}
+		
 
 		//### Functions #########################
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1255,6 +1276,11 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 		return this.proofFlagExists(objEnumFlag.name());
 	}
 	
+	@Override
+	public boolean proofFlagSetBefore(IKernelModuleZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+		return this.proofFlagSetBefore(objEnumFlag.name());
+	}
+	
 	//### Aus IFlagUserZZZ
 	@Override
 	public boolean getFlag(IFlagZUserZZZ.FLAGZ objEnumFlag) {
@@ -1287,6 +1313,11 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 		return this.proofFlagExists(objEnumFlag.name());
 	}
 	
+	@Override
+	public boolean proofFlagSetBefore(IFlagZUserZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+		return this.proofFlagSetBefore(objEnumFlag.name());
+	}
+	
 	//### Aus IKernelModuleUserZZZ
 	@Override
 	public boolean getFlag(IKernelModuleUserZZZ.FLAGZ objEnumFlag) {
@@ -1317,7 +1348,12 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 	@Override
 	public boolean proofFlagExists(IKernelModuleUserZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
 			return this.proofFlagExists(objEnumFlag.name());
-		}
+	}
+		
+	@Override
+	public boolean proofFlagSetBefore(IKernelModuleUserZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+		return this.proofFlagSetBefore(objEnumFlag.name());
+	}
 	
 	//### Aus IMouseFeatureZZZ
 	@Override
@@ -1348,5 +1384,10 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 	@Override
 	public boolean proofFlagExists(IMouseFeatureZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
 		return this.proofFlagExists(objEnumFlag.name());
+	}
+	
+	@Override
+	public boolean proofFlagSetBefore(IMouseFeatureZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+		return this.proofFlagSetBefore(objEnumFlag.name());
 	}
 }

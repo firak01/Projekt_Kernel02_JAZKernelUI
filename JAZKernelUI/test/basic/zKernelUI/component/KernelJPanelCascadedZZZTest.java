@@ -134,7 +134,7 @@ public class KernelJPanelCascadedZZZTest  extends TestCase{
 		}
 		public PanelMain(KernelZZZ objKernel) throws ExceptionZZZ{
 			super(objKernel);
-		}			
+		}
 	}
 }//END class KernelUIZZZTest
 

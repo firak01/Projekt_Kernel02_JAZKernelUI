@@ -575,6 +575,16 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 				}//end main:
 				return bReturn;
 			}
+			
+			@Override
+			public boolean proofFlagLocalSetBefore(String sFlagName) throws ExceptionZZZ{
+				boolean bReturn = false;
+				main:{
+					if(StringZZZ.isEmpty(sFlagName))break main;
+					bReturn = FlagZHelperZZZ.proofFlagZLocalSetBefore(this, sFlagName);
+				}
+				return bReturn;
+			}
 				
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			//++++++++++++++++++++++++
@@ -650,6 +660,11 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 				return this.proofFlagZExists(objEnumFlag.name());
 			}
 		
+			@Override
+			public boolean proofFlagSetBefore(IFlagZUserZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+				return this.proofFlagSetBefore(objEnumFlag.name());
+			}
+			
 		/** DIESE METHODE MUSS IN ALLEN KLASSEN VORHANDEN SEIN - über Vererbung ODER Interface Implementierung -, DIE IHRE FLAGS SETZEN WOLLEN
 		 *  SIE WIRD PER METHOD.INVOKE(....) AUFGERUFEN.
 		 * @param name 
@@ -664,6 +679,16 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 				if(StringZZZ.isEmpty(sFlagName))break main;
 				bReturn = FlagZHelperZZZ.proofFlagZExists(this.getClass(), sFlagName);				
 			}//end main:
+			return bReturn;
+		}
+		
+		@Override
+		public boolean proofFlagSetBefore(String sFlagName) throws ExceptionZZZ{
+			boolean bReturn = false;
+			main:{
+				if(StringZZZ.isEmpty(sFlagName))break main;
+				bReturn = FlagZHelperZZZ.proofFlagZSetBefore(this, sFlagName);
+			}
 			return bReturn;
 		}
 
@@ -1051,6 +1076,7 @@ public void setFrameSub(String sAlias, JFrame objFrame){
 		return baReturn;
 	}
 	
+	
 	//### Aus IKernelModule
 	@Override
 	public boolean getFlag(IKernelModuleZZZ.FLAGZ objEnumFlag) {
@@ -1080,6 +1106,11 @@ public void setFrameSub(String sAlias, JFrame objFrame){
 	
 	@Override
 	public boolean proofFlagExists(IKernelModuleZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ{
+		return this.proofFlagZExists(objEnumFlag.name());
+	} 
+	
+	@Override
+	public boolean proofFlagSetBefore(IKernelModuleZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ{
 		return this.proofFlagZExists(objEnumFlag.name());
 	} 
 	
