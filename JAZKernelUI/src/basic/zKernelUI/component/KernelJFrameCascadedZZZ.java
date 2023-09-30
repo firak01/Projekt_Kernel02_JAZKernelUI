@@ -65,11 +65,7 @@ public abstract class KernelJFrameCascadedZZZ extends JFrame  implements IObject
 //private boolean bFlagDebug = false;
 //private boolean bFlagInit = false;
 //private boolean bFlagTerminate = false;
-
-public enum FLAGZ{
-	COMPONENT_DRAGGABLE,TERMINATE; //Merke: DEBUG und INIT aus ObjectZZZ sollen über IObjectZZZ eingebunden werden, weil von ObjectkZZZ kann man ja nicht erben. Es wird schon von File geerbt.
-}
-
+	
 private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 20130721 ersetzt die einzelnen Flags, irgendwann...
 private HashMap<String, Boolean>hmFlagPassed = new HashMap<String, Boolean>();
 private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();

@@ -7,6 +7,9 @@ import javax.swing.JFrame;
 import basic.zKernel.flag.IFlagZUserZZZ;
 
 public interface IFrameCascadedZZZ extends IFlagZUserZZZ{
+	public enum FLAGZ{
+		COMPONENT_DRAGGABLE,TERMINATE;
+	}
 
 	public  abstract KernelJFrameCascadedZZZ getFrameParent();
 

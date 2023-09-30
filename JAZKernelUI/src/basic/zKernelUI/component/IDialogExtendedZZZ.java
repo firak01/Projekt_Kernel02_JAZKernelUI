@@ -5,10 +5,10 @@ import basic.zKernel.flag.IFlagZUserZZZ;
 import basic.zKernel.flag.IFlagZUserZZZ.FLAGZ;
 
 public interface IDialogExtendedZZZ {
-//	public enum FLAGZLOCAL {
-//		SKIPDEBUGUI,HIDE_ON_OK,HIDE_ON_CLOSE,HIDE_ON_CANCEL;
-//	}
-	
+	public enum FLAGZ{
+		TERMINATE,ISDRAGGABLE; //Merke: DEBUG und INIT über IFlagZZZ eingebunden werden, weil von ObjectZZZ kann man ja nicht erben. Es wird schon von anderer Objektklasse geerbt.
+	}
+		
 	//20230416: SKIPDEBUGUI ist doch nur was für die Panels, oder?
 	public enum FLAGZLOCAL {
 		HIDE_ON_OK,HIDE_ON_CLOSE,HIDE_ON_CANCEL;

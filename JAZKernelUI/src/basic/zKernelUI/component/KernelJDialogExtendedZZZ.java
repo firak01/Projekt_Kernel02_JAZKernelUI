@@ -88,9 +88,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 //	private boolean bFlagDebug = false;
 //	private boolean bFlagInit = false;
 //	private boolean bFlagTerminate = false;
-	public enum FLAGZ{
-		TERMINATE,ISDRAGGABLE; //Merke: DEBUG und INIT über IFlagZZZ eingebunden werden, weil von ObjectZZZ kann man ja nicht erben. Es wird schon von anderer Objektklasse geerbt.
-	}
+
 	private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>();
 	private HashMap<String, Boolean>hmFlagPassed = new HashMap<String, Boolean>();
 	private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
@@ -654,14 +652,14 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 	 * @see basic.zKernelUI.component.IMouseFeatureZZZ#isJComponentContentDraggable()
 	 */
 	public boolean isJComponentContentDraggable(){
-		return this.getFlag(KernelJDialogExtendedZZZ.FLAGZ.ISDRAGGABLE.name());
+		return this.getFlag(IDialogExtendedZZZ.FLAGZ.ISDRAGGABLE.name());
 	}
 	
 	/* (non-Javadoc)
 	 * @see basic.zKernelUI.component.IMouseFeatureZZZ#setJComponentContentDraggable(boolean)
 	 */
 	public void setJComponentContentDraggable(boolean bValue) throws ExceptionZZZ{
-		this.setFlag(KernelJDialogExtendedZZZ.FLAGZ.ISDRAGGABLE.name(), bValue);
+		this.setFlag(IDialogExtendedZZZ.FLAGZ.ISDRAGGABLE.name(), bValue);
 	}
 
 	/* (non-Javadoc)
