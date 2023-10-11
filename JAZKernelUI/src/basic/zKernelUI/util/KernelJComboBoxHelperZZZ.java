@@ -7,14 +7,14 @@ import basic.zKernel.KernelZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
-import basic.zKernel.KernelUseObjectZZZ;
+import basic.zKernel.AbstractKernelUseObjectZZZ;
 
 /**Class helps to find out more about a JComboBox.
  * - e.g. returns the items as an array
  * @author Lindhauer
  *
  */
-public class KernelJComboBoxHelperZZZ extends KernelUseObjectZZZ{
+public class KernelJComboBoxHelperZZZ extends AbstractKernelUseObjectZZZ{
 private JComboBox objCombo;
 
 	public KernelJComboBoxHelperZZZ(IKernelZZZ objKernel, JComboBox objCombo) throws ExceptionZZZ{

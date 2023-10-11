@@ -19,7 +19,7 @@ import basic.zBasic.IConstantZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasic.util.log.ReportLogZZZ;
-import basic.zKernel.KernelUseObjectZZZ;
+import basic.zKernel.AbstractKernelUseObjectZZZ;
 import basic.zKernelUI.component.IActionCascadedZZZ;
 import basic.zKernelUI.component.IFrameCascadedZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;

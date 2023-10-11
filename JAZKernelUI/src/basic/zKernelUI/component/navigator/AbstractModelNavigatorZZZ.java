@@ -14,13 +14,13 @@ import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelConfigSectionEntryZZZ;
 import basic.zKernel.IKernelZZZ;
-import basic.zKernel.KernelUseObjectZZZ;
+import basic.zKernel.AbstractKernelUseObjectZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.component.model.ModelComponentHelperZZZ;
 import debug.zKernelUI.component.buttonSwitchLabelGroup.ModelRow2ZZZ;
 
-public abstract class AbstractModelNavigatorZZZ extends KernelUseObjectZZZ  implements IModelNavigatorValueZZZ{
+public abstract class AbstractModelNavigatorZZZ extends AbstractKernelUseObjectZZZ  implements IModelNavigatorValueZZZ{
 	//protected HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>>hmNavigatorElement=null;
 	protected ArrayListExtendedZZZ<INavigatorElementZZZ>alNavigatorElement=null;
 		

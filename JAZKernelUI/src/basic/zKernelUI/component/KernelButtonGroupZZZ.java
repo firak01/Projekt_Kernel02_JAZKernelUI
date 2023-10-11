@@ -13,11 +13,11 @@ import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IObjectZZZ;
 import basic.zBasic.util.abstractList.HashMapExtendedZZZ;
 import basic.zKernel.IKernelUserZZZ;
-import basic.zKernel.KernelUseObjectZZZ;
+import basic.zKernel.AbstractKernelUseObjectZZZ;
 import basic.zKernel.KernelZZZ;
 import basic.zKernel.flag.IFlagZUserZZZ;
 
-public class KernelButtonGroupZZZ<T,X>  extends KernelUseObjectZZZ{
+public class KernelButtonGroupZZZ<T,X>  extends AbstractKernelUseObjectZZZ{
 
 	HashMap<String,AbstractButton>hmButton=null;
 	ArrayList<AbstractButton>listaButtonTemp=null; //Ziel: Vermeide die Verarbeitung doppelt registrierter Buttons.

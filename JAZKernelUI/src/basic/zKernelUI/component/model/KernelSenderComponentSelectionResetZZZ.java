@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import basic.zKernel.IKernelZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ReflectCodeZZZ;
-import basic.zKernel.KernelUseObjectZZZ;
+import basic.zKernel.AbstractKernelUseObjectZZZ;
 
 /** Diese Klasse implementiert alles, was ben�tigt wird, damit die eigenen Events "Auswahl hat sich ge�ndert" abgefeuert werden kann
  *   und auch von den Componenten, die hier registriert sind empfangen wird. Damit fungieren Objekte dieser Klasse als "EventBroker".
@@ -15,7 +15,7 @@ import basic.zKernel.KernelUseObjectZZZ;
  * @author lindhaueradmin
  *
  */
-public class KernelSenderComponentSelectionResetZZZ extends KernelUseObjectZZZ implements ISenderSelectionResetZZZ{
+public class KernelSenderComponentSelectionResetZZZ extends AbstractKernelUseObjectZZZ implements ISenderSelectionResetZZZ{
 	public KernelSenderComponentSelectionResetZZZ(IKernelZZZ objKernel) throws ExceptionZZZ{
 		super(objKernel);
 	}

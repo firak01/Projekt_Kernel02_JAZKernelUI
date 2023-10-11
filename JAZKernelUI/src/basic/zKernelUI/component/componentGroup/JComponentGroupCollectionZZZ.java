@@ -13,11 +13,11 @@ import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 import basic.zBasic.util.abstractList.VectorExtendedZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelZZZ;
-import basic.zKernel.KernelUseObjectZZZ;
+import basic.zKernel.AbstractKernelUseObjectZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 
-public class JComponentGroupCollectionZZZ<T>  extends KernelUseObjectZZZ  implements Iterable<T>,IEventBrokerComponentGroupSwitchUserZZZ {
+public class JComponentGroupCollectionZZZ<T>  extends AbstractKernelUseObjectZZZ  implements Iterable<T>,IEventBrokerComponentGroupSwitchUserZZZ {
 	
 	//++++++++++ Mehrerer Gruppen zu der HashMap zusammenfassen.
 	//Merke: Der Button steuert über den Index die Reihenfolge

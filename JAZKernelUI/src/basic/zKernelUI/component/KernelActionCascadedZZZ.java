@@ -13,9 +13,9 @@ import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasic.util.log.ReportLogZZZ;
-import basic.zKernel.KernelUseObjectZZZ;
+import basic.zKernel.AbstractKernelUseObjectZZZ;
 
-public abstract class KernelActionCascadedZZZ extends KernelUseObjectZZZ  implements ActionListener, IButtonEventZZZ, IActionCascadedZZZ {
+public abstract class KernelActionCascadedZZZ extends AbstractKernelUseObjectZZZ  implements ActionListener, IButtonEventZZZ, IActionCascadedZZZ {
 	private IPanelCascadedZZZ panelParent;
 	
 	

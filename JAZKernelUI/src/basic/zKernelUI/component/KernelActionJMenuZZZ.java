@@ -6,9 +6,9 @@ import java.awt.event.ActionListener;
 import basic.zBasic.ExceptionZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
-import basic.zKernel.KernelUseObjectZZZ;
+import basic.zKernel.AbstractKernelUseObjectZZZ;
 
-public class KernelActionJMenuZZZ extends KernelUseObjectZZZ  implements ActionListener{
+public class KernelActionJMenuZZZ extends AbstractKernelUseObjectZZZ  implements ActionListener{
 	KernelJFrameCascadedZZZ frameParentCascaded = null;
 	
 	public KernelActionJMenuZZZ(IKernelZZZ objKernel, KernelJFrameCascadedZZZ frameParentCascaded ) throws ExceptionZZZ{

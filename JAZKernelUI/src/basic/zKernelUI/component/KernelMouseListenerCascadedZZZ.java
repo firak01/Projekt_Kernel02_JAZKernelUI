@@ -5,9 +5,9 @@ import java.awt.event.MouseListener;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zKernel.IKernelZZZ;
-import basic.zKernel.KernelUseObjectZZZ;
+import basic.zKernel.AbstractKernelUseObjectZZZ;
 
-public abstract class KernelMouseListenerCascadedZZZ extends KernelUseObjectZZZ implements MouseListener, IMouseEventsZZZ,	IActionCascadedZZZ{
+public abstract class KernelMouseListenerCascadedZZZ extends AbstractKernelUseObjectZZZ implements MouseListener, IMouseEventsZZZ,	IActionCascadedZZZ{
 	protected IPanelCascadedZZZ panelParent;
 	
 	public KernelMouseListenerCascadedZZZ() {

@@ -12,13 +12,13 @@ import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelZZZ;
-import basic.zKernel.KernelUseObjectZZZ;
+import basic.zKernel.AbstractKernelUseObjectZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.component.model.ModelComponentHelperZZZ;
 import debug.zKernelUI.component.buttonSwitchLabelGroup.ModelRow2ZZZ;
 
-public abstract class AbstractModelComponentGroupZZZ extends KernelUseObjectZZZ  implements IModelComponentGroupValueZZZ{
+public abstract class AbstractModelComponentGroupZZZ extends AbstractKernelUseObjectZZZ  implements IModelComponentGroupValueZZZ{
 	protected String sTitle=null;
 	protected IPanelCascadedZZZ panelParent;
 	protected int iIndexInCollection=-1;	

@@ -9,7 +9,8 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import junit.framework.TestCase;
 import basic.zBasic.ExceptionZZZ;
-import basic.zBasic.ObjectZZZ;
+import basic.zBasic.AbstractObjectZZZ;
+import basic.zBasic.DummyTestObjectZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import basic.zKernelUI.component.KernelJFrameCascadedZZZ;
@@ -50,7 +51,7 @@ public class KernelJPanelCascadedZZZTest  extends TestCase{
 			PanelMain objPanelMainTest = new PanelMain();
 			//PanelMain objPanelMainInstanceTest = new objPanelMainTest.
 					
-			ObjectZZZ objObjectTest = new ObjectZZZ();
+			DummyTestObjectZZZ objObjectTest = new DummyTestObjectZZZ();
 			Class objClass=null;
 			try {
 				objClass = Class.forName(objObjectTest.getClass().getName());
@@ -59,7 +60,7 @@ public class KernelJPanelCascadedZZZTest  extends TestCase{
 				e.printStackTrace();
 			}
 			try {
-				ObjectZZZ objObjectInstanceTest = (ObjectZZZ) objClass.newInstance();
+				DummyTestObjectZZZ objObjectInstanceTest = (DummyTestObjectZZZ) objClass.newInstance();
 			} catch (InstantiationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -69,7 +70,7 @@ public class KernelJPanelCascadedZZZTest  extends TestCase{
 			}
 		
 			//Test auf Flags aus dem basic-Bereich
-			boolean btemp = panelMainTest.proofFlagExists(ObjectZZZ.FLAGZ.DEBUG);			
+			boolean btemp = panelMainTest.proofFlagExists(DummyTestObjectZZZ.FLAGZ.DEBUG);			
 			assertTrue(btemp);
 			
 			btemp = panelMainTest.proofFlagExists("nixda");			
