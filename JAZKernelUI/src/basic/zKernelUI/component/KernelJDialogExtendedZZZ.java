@@ -1227,6 +1227,12 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 	public void resetModuleUsed() {	
 		this.objModule = null; //Da der Modulename nicht gespeichert wird, sondern nur das Modulobjekt
 	}
+	
+	@Override
+	public void reset() {
+		this.resetModuleUsed();
+	}
+
 	    
 		
 	//### AUS IKernelModuleZZZ

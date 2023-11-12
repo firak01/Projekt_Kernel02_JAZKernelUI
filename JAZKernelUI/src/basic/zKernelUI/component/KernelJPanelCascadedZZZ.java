@@ -1661,5 +1661,11 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			}//end if ... flag gesetzt? DEBUGUI_PANELLABEL_ON
 		}//end main:
 		return bReturn;		
-	}		
+	}	
+	
+	@Override
+	public void reset() {
+		this.resetModuleUsed();
+	}
+
 }

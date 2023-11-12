@@ -769,7 +769,13 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
     @Override
     public void resetModuleUsed() {
     	//Da kein Module - Objekt oder Modulname gespeichert wird, ist hier nix zu tun.
-	   }
+   }
+    
+    @Override
+	public void reset() {
+		this.resetModuleUsed();
+	}
+
     
 	//#######################################
 	//### Getter / Setter
