@@ -9,7 +9,7 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import junit.framework.TestCase;
 import basic.zBasic.ExceptionZZZ;
-import basic.zBasic.AbstractObjectZZZ;
+import basic.zBasic.AbstractObjectWithFlagZZZ;
 import basic.zBasic.DummyTestObjectZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernelUI.KernelUIZZZ;

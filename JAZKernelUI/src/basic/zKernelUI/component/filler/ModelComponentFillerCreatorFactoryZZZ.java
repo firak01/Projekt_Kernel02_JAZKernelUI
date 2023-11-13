@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 
 import basic.zBasic.ExceptionZZZ;
-import basic.zBasic.AbstractObjectZZZ;
+import basic.zBasic.AbstractObjectWithFlagZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasic.util.persistence.jdbc.JdbcDatabaseMappedValueZZZ;
@@ -23,7 +23,7 @@ import basic.zKernel.config.KernelConfigDefaultEntryZZZ;
  * @author Fritz Lindhauer, 28.05.2022, 09:30:51
  * siehe: EnumSetFactoryZZZ als Ideenvorlage
  */
-public class ModelComponentFillerCreatorFactoryZZZ extends AbstractObjectZZZ implements IModelComponentFillerCreatorFactoryZZZ {
+public class ModelComponentFillerCreatorFactoryZZZ extends AbstractObjectWithFlagZZZ implements IModelComponentFillerCreatorFactoryZZZ {
 	private static ModelComponentFillerCreatorFactoryZZZ objComponentFactory = null;  //muss static sein, wg. getInstance()!!!
 	
 	/**Konstruktor ist private, wg. Singleton

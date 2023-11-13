@@ -14,7 +14,7 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IObjectZZZ;
-import basic.zBasic.AbstractObjectZZZ;
+import basic.zBasic.AbstractObjectWithFlagZZZ;
 import basic.zBasic.ReflectClassZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
