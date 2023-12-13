@@ -38,7 +38,7 @@ import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zBasicUI.thread.SwingWorker;
 import basic.zKernelUI.KernelUIZZZ;
-import basic.zKernelUI.component.KernelActionCascadedZZZ;
+import basic.zKernelUI.component.AbstractKernelActionCascadedZZZ;
 import basic.zKernelUI.component.KernelButtonGroupZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.component.componentGroup.ActionSwitchZZZ;

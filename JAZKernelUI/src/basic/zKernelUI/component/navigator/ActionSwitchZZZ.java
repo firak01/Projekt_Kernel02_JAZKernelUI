@@ -15,7 +15,7 @@ import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;
-import basic.zKernelUI.component.KernelActionCascadedZZZ;
+import basic.zKernelUI.component.AbstractKernelActionCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelMouseListenerCascadedZZZ;
 import basic.zKernelUI.thread.KernelSwingWorkerZZZ;

@@ -23,6 +23,7 @@ import basic.zBasic.IConstantZZZ;
 import basic.zBasic.IObjectZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasic.util.abstractArray.ArrayUtilZZZ;
+import basic.zBasic.util.datatype.calling.ReferenceHashMapZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasicUI.adapter.AdapterJComponent4ScreenSnapperZZZ;
@@ -1229,8 +1230,9 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 	}
 	
 	@Override
-	public void reset() {
+	public boolean reset() {
 		this.resetModuleUsed();
+		return true;
 	}
 
 	    
@@ -1394,4 +1396,21 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 	public boolean proofFlagSetBefore(IMouseFeatureZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
 		return this.proofFlagSetBefore(objEnumFlag.name());
 	}
+	
+	@Override
+	public boolean resetFlags() throws ExceptionZZZ{
+		boolean bReturn = false;
+		main:{
+			HashMap<String,Boolean> hm = this.getHashMapFlag();
+			if(hm.isEmpty())break main;
+			
+			ReferenceHashMapZZZ<String,Boolean>objhmReturn=new ReferenceHashMapZZZ<String,Boolean>();
+			objhmReturn.set(hm);
+			
+			bReturn =FlagZHelperZZZ.resetFlags(objhmReturn); 			
+		}//end main:
+		return bReturn;
+	}
+	
+	
 }

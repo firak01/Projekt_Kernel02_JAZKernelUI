@@ -12,11 +12,11 @@ import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;
-import basic.zKernelUI.component.KernelActionCascadedZZZ;
+import basic.zKernelUI.component.AbstractKernelActionCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.thread.KernelSwingWorkerZZZ;
 
-public class ActionSwitchZZZ extends  KernelActionCascadedZZZ implements IEventBrokerComponentGroupSwitchUserZZZ, IComponentGroupCollectionUserZZZ { //KernelUseObjectZZZ implements ActionListener{
+public class ActionSwitchZZZ extends  AbstractKernelActionCascadedZZZ implements IEventBrokerComponentGroupSwitchUserZZZ, IComponentGroupCollectionUserZZZ { //KernelUseObjectZZZ implements ActionListener{
 	private int iIndexCurrent = 0;
 	private JComponentGroupCollectionZZZ groupc = null;;//zur Verwaltung von HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmIndexed
 	ISenderComponentGroupSwitchZZZ objEventBroker = null;; //wird von der inneren SwingWorker Klasse verwendet

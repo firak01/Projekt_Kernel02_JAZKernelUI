@@ -1165,6 +1165,28 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			}
 			return bReturn;
 		}
+		
+		public boolean resetFlags() throws ExceptionZZZ{
+			boolean bReturn = false;
+			main:{
+				HashMap<String,Boolean> hm = this.getHashMapFlag();
+				if(hm.isEmpty())break main;
+				
+				Set<String> setKey = hm.keySet();
+				Iterator<String> itKey = setKey.iterator();
+				while(itKey.hasNext()) {
+					String sKey = itKey.next();
+					Boolean objValue = hm.get(sKey);
+					if(objValue!=null) {
+						if(objValue.booleanValue()) {
+							hm.put(sKey, false); //also nur die true werte auf false setzen und dann gibt diese Methode auch einen "Aenderungsvermerk" zurueck.
+							bReturn = true;
+						}
+					}				
+				}						
+			}//end main:
+			return bReturn;
+		}
 					
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++++
@@ -1664,8 +1686,9 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	}	
 	
 	@Override
-	public void reset() {
+	public boolean reset() {
 		this.resetModuleUsed();
+		return true;
 	}
 
 }

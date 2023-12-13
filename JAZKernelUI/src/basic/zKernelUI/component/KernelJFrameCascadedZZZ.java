@@ -27,6 +27,7 @@ import basic.zBasic.AbstractObjectWithFlagZZZ;
 import basic.zBasic.ReflectClassZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasic.util.abstractArray.ArrayUtilZZZ;
+import basic.zBasic.util.datatype.calling.ReferenceHashMapZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasic.util.log.ReportLogZZZ;
@@ -772,8 +773,9 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
    }
     
     @Override
-	public void reset() {
+	public boolean reset() {
 		this.resetModuleUsed();
+		return true;
 	}
 
     
@@ -1115,6 +1117,21 @@ public void setFrameSub(String sAlias, JFrame objFrame){
 	public boolean proofFlagSetBefore(IKernelModuleZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ{
 		return this.proofFlagZExists(objEnumFlag.name());
 	} 
+	
+	@Override
+	public boolean resetFlags() throws ExceptionZZZ{
+		boolean bReturn = false;
+		main:{
+			HashMap<String,Boolean> hm = this.getHashMapFlag();
+			if(hm.isEmpty())break main;
+			
+			ReferenceHashMapZZZ<String,Boolean>objhmReturn=new ReferenceHashMapZZZ<String,Boolean>();
+			objhmReturn.set(hm);
+			
+			bReturn =FlagZHelperZZZ.resetFlags(objhmReturn); 			
+		}//end main:
+		return bReturn;
+	}
 	
 	//###################################################################################
 	//### Interne Runnable Klasse

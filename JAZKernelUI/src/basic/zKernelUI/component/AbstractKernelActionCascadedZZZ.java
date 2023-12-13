@@ -15,11 +15,11 @@ import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zKernel.AbstractKernelUseObjectZZZ;
 
-public abstract class KernelActionCascadedZZZ extends AbstractKernelUseObjectZZZ  implements ActionListener, IButtonEventZZZ, IActionCascadedZZZ {
-	private IPanelCascadedZZZ panelParent;
+public abstract class AbstractKernelActionCascadedZZZ extends AbstractKernelUseObjectZZZ  implements ActionListener, IButtonEventZZZ, IActionCascadedZZZ {
+	protected IPanelCascadedZZZ panelParent;
 	
 	
-	public KernelActionCascadedZZZ(IKernelZZZ objKernel, IPanelCascadedZZZ panelParent) throws ExceptionZZZ{
+	public AbstractKernelActionCascadedZZZ(IKernelZZZ objKernel, IPanelCascadedZZZ panelParent) throws ExceptionZZZ{
 		super(objKernel);
 		this.panelParent = panelParent;	
 	}
