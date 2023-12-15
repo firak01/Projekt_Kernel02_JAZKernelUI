@@ -113,6 +113,9 @@ public class KernelJPanelDialogButtonDefaultZZZ extends KernelJPanelCascadedZZZ 
 		}
 		return objReturn;
 	}
+	/* (non-Javadoc)
+	 * @see basic.zKernelUI.component.IPanelDialogButtonZZZ#getActionListenerButtonCancel(basic.zKernelUI.component.KernelJPanelCascadedZZZ)
+	 */
 	public AbstractKernelActionCascadedZZZ getActionListenerButtonCancel(KernelJPanelCascadedZZZ panelButton){
 		AbstractKernelActionCascadedZZZ objReturn = null;
 		try {

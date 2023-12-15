@@ -3,25 +3,24 @@ package basic.zKernelUI.component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import basic.zKernel.IKernelZZZ;
-import basic.zKernel.KernelZZZ;
-import basic.zKernelUI.KernelUIZZZ;
 import basic.zBasic.ExceptionZZZ;
-import basic.zBasic.ReflectCodeZZZ;
-import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zKernel.AbstractKernelUseObjectZZZ;
+import basic.zKernel.IKernelZZZ;
+import basic.zKernelUI.KernelUIZZZ;
 
 public abstract class AbstractKernelActionCascadedZZZ extends AbstractKernelUseObjectZZZ  implements ActionListener, IButtonEventZZZ, IActionCascadedZZZ {
-	protected IPanelCascadedZZZ panelParent;
-	
-	
+	protected volatile IPanelCascadedZZZ panelParent;
+	protected volatile ITrayZZZ trayParent;
+
 	public AbstractKernelActionCascadedZZZ(IKernelZZZ objKernel, IPanelCascadedZZZ panelParent) throws ExceptionZZZ{
 		super(objKernel);
 		this.panelParent = panelParent;	
+	}
+	
+	public AbstractKernelActionCascadedZZZ(IKernelZZZ objKernel, ITrayZZZ trayParent) throws ExceptionZZZ{
+		super(objKernel);
+		this.setTrayParent(trayParent);
 	}
 	
 	/* (non-Javadoc)
@@ -57,6 +56,18 @@ public abstract class AbstractKernelActionCascadedZZZ extends AbstractKernelUseO
 	public void setPanelParent(IPanelCascadedZZZ objPanel) {
 		this.panelParent = objPanel;
 	}
+	
+	
+	public void setTrayParent(ITrayZZZ objTray) {
+		this.trayParent = objTray;
+	}
+	
+	public ITrayZZZ getTrayParent() {
+		return this.trayParent;
+	}
+	
+	
+
 	
 	/* Das ist eine Action innerhalb eines Panels. Also ist der Modulname ggfs. die Klasse des Panels.
 	 * (non-Javadoc)

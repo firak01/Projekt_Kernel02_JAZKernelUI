@@ -13,6 +13,7 @@ import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;
+import basic.zKernelUI.component.ITrayZZZ;
 import basic.zKernelUI.component.KernelMouseListenerCascadedZZZ;
 import basic.zKernelUI.thread.KernelSwingWorkerZZZ;
 
@@ -226,5 +227,17 @@ public class NavigatorMouseListenerZZZ extends KernelMouseListenerCascadedZZZ im
 		}
 	
 	} //End Class SwingWorker: SwingWorker4ProgramSWITCH
+
+	@Override
+	public ITrayZZZ getTrayParent() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setTrayParent(ITrayZZZ objTray) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

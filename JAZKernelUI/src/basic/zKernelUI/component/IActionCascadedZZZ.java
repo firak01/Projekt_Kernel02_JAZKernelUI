@@ -14,11 +14,6 @@ public interface IActionCascadedZZZ extends IKernelUserZZZ{
 	public abstract IPanelCascadedZZZ getPanelParent();
 	public abstract void setPanelParent(IPanelCascadedZZZ objPanel);
 	
-	//public  abstract JFrame getFrameSub(String sAlias);
-	//public abstract void setFrameSub(String sAlias, JFrame objFrame);
-	
-	//public abstract KernelJPanelCascadedZZZ getPanelSub(String sAlias);
-	//public abstract void setPanelSub(String sAlias, KernelJPanelCascadedZZZ objJPanel);
-	
-	//public abstract Hashtable getPanelSubAll(); 
+	public abstract ITrayZZZ getTrayParent();
+	public abstract void setTrayParent(ITrayZZZ objTray);
 }
