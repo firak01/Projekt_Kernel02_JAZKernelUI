@@ -6,7 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import basic.zBasic.ExceptionZZZ;
-import basic.zKernelUI.component.AbstractKernelActionCascadedZZZ;
+import basic.zKernelUI.component.AbstractKernelActionListenerCascadedZZZ;
 import basic.zKernelUI.component.KernelJFrameCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernel.IKernelZZZ;
@@ -42,7 +42,7 @@ public class PanelConfig_SOUTHZZZ extends KernelJPanelCascadedZZZ {
 	
 	//#######################################
 	//Innere Klasse, welche eine Action behandelt
-	class ActionEditModule  extends AbstractKernelActionCascadedZZZ{ //KernelUseObjectZZZ  implements ActionListener{
+	class ActionEditModule  extends AbstractKernelActionListenerCascadedZZZ{ //KernelUseObjectZZZ  implements ActionListener{
 		/**
 		 * This class does not extent KernelActionCascadedZZZ, because of the second KernelObject, which has to be passed in the constructor !!!
 		 */

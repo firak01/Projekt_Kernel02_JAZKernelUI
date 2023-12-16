@@ -15,10 +15,10 @@ import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;
-import basic.zKernelUI.component.ITrayZZZ;
-import basic.zKernelUI.component.AbstractKernelActionCascadedZZZ;
+import basic.zKernelUI.component.AbstractKernelActionListenerCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelMouseListenerCascadedZZZ;
+import basic.zKernelUI.component.tray.ITrayZZZ;
 import basic.zKernelUI.thread.KernelSwingWorkerZZZ;
 
 
@@ -237,16 +237,6 @@ public class ActionSwitchZZZ<T> extends  KernelMouseListenerCascadedZZZ implemen
 	}
 	@Override
 	public void actionPerformCustomOnError(MouseEvent me, ExceptionZZZ ez) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public ITrayZZZ getTrayParent() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public void setTrayParent(ITrayZZZ objTray) {
 		// TODO Auto-generated method stub
 		
 	}

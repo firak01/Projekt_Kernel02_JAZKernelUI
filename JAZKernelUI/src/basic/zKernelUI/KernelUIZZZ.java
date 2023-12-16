@@ -26,6 +26,8 @@ import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelJDialogExtendedZZZ;
 import basic.zKernelUI.component.KernelJFrameCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
+import basic.zKernelUI.component.tray.IActionTrayZZZ;
+import basic.zKernelUI.component.tray.ITrayZZZ;
 
 /**Klasse dient zur Ermittlung von Informationen aus der KernelKonfiguration f�r die entsprechenden Komponenten.
  * Merke: Als Modul gilt nur das, was in der KErnel-Applikations-Konfigurations-Datei auch als Modul definiert wurde.
@@ -166,6 +168,26 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 					sReturn = frameRoot.getClass().getName();
 					break main;
 				}		
+			}															
+		}//end main:
+		return sReturn;
+	}
+	
+	public static String getProgramUsedName(IActionTrayZZZ actionCurrent) throws ExceptionZZZ{
+		String sReturn = null;
+		main:{
+			if(actionCurrent==null){
+				ExceptionZZZ ez = new ExceptionZZZ("actionCurrent missing", iERROR_PARAMETER_MISSING, KernelUIZZZ.class,ReflectCodeZZZ.getMethodCurrentName() );
+				throw ez;
+			}
+		
+			ITrayZZZ objParent = actionCurrent.getTrayParent();
+			if(objParent==null){					
+					break main;				
+			}else {
+				if(objParent.getFlag("isKernelProgram")){					
+					sReturn = objParent.getClass().getName();
+				}
 			}															
 		}//end main:
 		return sReturn;
@@ -588,6 +610,20 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 					sReturn = frameRoot.getClass().getName();
 					break main;
 				}		
+			}						
+		}//end main:
+		return sReturn;
+	}
+	
+	public static String getModuleUsedName(IActionTrayZZZ actionTray) throws ExceptionZZZ{
+		String sReturn = new String();
+		main:{
+			ITrayZZZ objParent = actionTray.getTrayParent();
+			if(objParent==null){
+				sReturn = actionTray.getKernelObject().getApplicationKey();
+				break main;								
+			}else {
+				objParent.getClass().getName();
 			}						
 		}//end main:
 		return sReturn;
