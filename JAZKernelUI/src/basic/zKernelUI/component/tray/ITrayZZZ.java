@@ -22,11 +22,11 @@ public interface ITrayZZZ extends IFlagZUserZZZ{
 	public abstract void setSystemTray(SystemTray tray);
 	
 	public abstract ImageIcon getImageIconByStatus(IEnumSetMappedZZZ enumStatusMapped) throws ExceptionZZZ;
+	public abstract String getCaptionByStatus(IEnumSetMappedZZZ enumStatusMapped) throws ExceptionZZZ;
+
 	public abstract TrayIcon getTrayIcon() throws ExceptionZZZ;
 	public abstract void setTrayIcon(TrayIcon objIcon);
-	
-	
-	
+		
 	public abstract IActionTrayZZZ getActionListenerTrayIcon() throws ExceptionZZZ;
 	public abstract void setActionListenerTrayIcon(IActionTrayZZZ objActionListener);
 }

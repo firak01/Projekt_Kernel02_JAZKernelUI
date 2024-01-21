@@ -14,24 +14,25 @@ public interface ITrayStatusMappedValueZZZ {
 	    //Merke2: Das ist kein IEnumSetMappedStatus. Ein einfache IEnumSetMapped reicht, da das hier lediglich als Container für den Icondateipfad dienen soll.
 		//ALIAS("Uniquename","ClientTryMenuTypeZZZ. ...", "Icon-Dateiname","Beschreibung, wird nicht genutzt....",)
 		public enum TrayStatusTypeZZZ implements IEnumSetMappedZZZ{//Folgendes geht nicht, da alle Enums schon von einer Java BasisKlasse erben... extends EnumSetMappedBaseZZZ{
-			NEW("new",ITrayMenuZZZ.TrayMenuTypeZZZ.START, "icons8-networking-64_black_bgGray.png", ""),			
-			STARTING("starting",ITrayMenuZZZ.TrayMenuTypeZZZ.START,"icons8-networking-64_yellow.png",""),	
-			STARTED("started",ITrayMenuZZZ.TrayMenuTypeZZZ.START,"icons8-networking-64_black_bgYellow.png",""),		
-			ERROR("error",null,"pill-button-red_benji_01.png",""),
-			FAILED("failed",null,"pill-button-purple_benji_01.png",""),			
-			PREVIOUSEVENTRTYPE("previouseventrytype",null,"","Ohne Bild. Wird genutzt, um in einem weiteren Lauf das passende rauszusuchen. Z.B. wenn nach dem Stop ein vorheriger Status verwendet werden soll");
+			NEW("new",ITrayMenuZZZ.TrayMenuTypeZZZ.START, "icons8-networking-64_black_bgGray.png", "Caption new", ""),			
+			STARTING("starting",ITrayMenuZZZ.TrayMenuTypeZZZ.START,"icons8-networking-64_yellow.png","Caption starting", ""),	
+			STARTED("started",ITrayMenuZZZ.TrayMenuTypeZZZ.START,"icons8-networking-64_black_bgYellow.png","Caption started", ""),		
+			ERROR("error",null,"pill-button-red_benji_01.png","Caption error", ""),
+			FAILED("failed",null,"pill-button-purple_benji_01.png","Caption failed", ""),			
+			PREVIOUSEVENTRTYPE("previouseventrytype",null,"","","Ohne Bild oder Caption. Wird genutzt, um in einem weiteren Lauf das passende rauszusuchen. Z.B. wenn nach dem Stop ein vorheriger Status verwendet werden soll");
 		
 			private IEnumSetMappedZZZ objEnum;
-			private String sAbbreviation, sIconFileName, sDescription;
+			private String sAbbreviation, sIconFileName, sCaption, sDescription;
 
 		//#############################################
 		//#### Konstruktoren
 		//Merke: Enums haben keinen public Konstruktor, können also nicht intiantiiert werden, z.B. durch Java-Reflektion.
 		//In der Util-Klasse habe ich aber einen Workaround gefunden.
-		TrayStatusTypeZZZ(String sAbbreviation, ITrayMenuZZZ.TrayMenuTypeZZZ objEnum, String sIconFileName, String sDescription) {			
+		TrayStatusTypeZZZ(String sAbbreviation, ITrayMenuZZZ.TrayMenuTypeZZZ objEnum, String sIconFileName, String sCaption, String sDescription) {			
 		    this.sAbbreviation = sAbbreviation;
 		    this.objEnum = objEnum;
 		    this.sIconFileName = sIconFileName;
+		    this.sCaption = sCaption;
 		    this.sDescription = sDescription;
 		}
 
@@ -46,6 +47,10 @@ public interface ITrayStatusMappedValueZZZ {
 			
 		public String getIconFileName() {
 			return this.sIconFileName;
+		}
+		
+		public String getCaption() {
+			return this.sCaption;
 		}
 		
 		public EnumSet<?>getEnumSetUsed(){

@@ -17,6 +17,7 @@ import basic.zBasic.util.abstractEnum.IEnumSetMappedStatusZZZ;
 import basic.zBasic.util.abstractEnum.IEnumSetMappedZZZ;
 import basic.zBasic.util.file.FileEasyZZZ;
 import basic.zBasic.util.file.ResourceEasyZZZ;
+import basic.zKernel.AbstractKernelUseObjectListeningZZZ;
 import basic.zKernel.AbstractKernelUseObjectZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.flag.IEventObjectFlagZsetZZZ;
@@ -27,26 +28,14 @@ import basic.zKernel.status.IStatusLocalMapForStatusLocalUserZZZ;
 import basic.zKernelUI.component.tray.ITrayMenuZZZ.TrayMenuTypeZZZ;
 import basic.zKernelUI.component.tray.ITrayStatusMappedValueZZZ.TrayStatusTypeZZZ;
 
-public class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectZZZ implements ITrayZZZ, IListenerObjectFlagZsetZZZ, IListenerObjectStatusLocalSetZZZ, IStatusLocalMapForStatusLocalUserZZZ {		
+public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectListeningZZZ implements ITrayZZZ {		
 	private static final long serialVersionUID = 4170579821557468353L;
 		
-	protected SystemTray objTray = null;                                    //Das gesamte SystemTray von Windows
-	protected TrayIcon objTrayIcon = null; //Das TrayIcon dieser Application
-	protected JPopupMenu objMenu = null;
-	protected IActionTrayZZZ objActionListener = null;
-	//private volatile ServerMainOVPN objMain = null;                            //Ein Thread, der die OpenVPN.exe mit der gew�nschten Konfiguration startet.
-	
-	//Merke: Der Tray selbst hat keinen Status. Er nimmt aber Statusaenderungen vom Main-Objekt entgegen und mapped diese auf sein "Aussehen"
-	//       Wie in AbstractObjectWithStatusListeningZZZ wird für das Mappen des reinkommenden Status auf ein Enum eine Hashmap benötigt.
-	private HashMap<IEnumSetMappedStatusZZZ,IEnumSetMappedZZZ> hmEnumSet =null; //Hier wird ggfs. der Eigene Status mit dem Status einer anderen Klasse (definiert durch das Interface) gemappt.
-	
-	//TODOGOON 20210210: Realisiere die Idee
-	//Idee: In ClientMainUI eine/verschiedene HashMaps anbieten, in die dann diese Container-Objekte kommen.
-	//      Dadurch muss man sie nicht als Variable deklarieren und kann dynamischer neue Dialogboxen, etc. hinzufügen.
-	//Ziel diese hier als Variable zu deklarieren ist: Die Dialogbox muss nicht immer wieder neu erstellt werden.
-	//private KernelJDialogExtendedZZZ dlgIPExternal=null;
-	//private KernelJDialogExtendedZZZ dlgFTPCredentials=null;
-	
+	protected volatile SystemTray objTray = null;                                    //Das gesamte SystemTray von Windows
+	protected volatile TrayIcon objTrayIcon = null; //Das TrayIcon dieser Application
+	protected volatile JPopupMenu objMenu = null;
+	protected volatile IActionTrayZZZ objActionListener = null;
+		
 	public AbstractKernelTrayUIZZZ(IKernelZZZ objKernel, String[] saFlagControl) throws ExceptionZZZ{
 		super(objKernel, saFlagControl);
 		TrayUINew_();
@@ -82,9 +71,16 @@ public class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectZZZ implemen
 		}//END main
 	}
 		
+	@Override
 	public ImageIcon getImageIconByStatus(IEnumSetMappedZZZ enumMappedStatus)throws ExceptionZZZ{
 		ITrayStatusMappedValueZZZ.TrayStatusTypeZZZ enumSTATUS = (TrayStatusTypeZZZ) enumMappedStatus;
 		return AbstractKernelTrayUIZZZ.getImageIconByStatus(enumSTATUS);
+	}
+	
+	@Override
+	public String getCaptionByStatus(IEnumSetMappedZZZ enumMappedStatus)throws ExceptionZZZ{
+		ITrayStatusMappedValueZZZ.TrayStatusTypeZZZ enumSTATUS = (TrayStatusTypeZZZ) enumMappedStatus;
+		return AbstractKernelTrayUIZZZ.getCaptionByStatus(enumSTATUS);
 	}
 	
 	public static ImageIcon getImageIconByStatus(ITrayStatusMappedValueZZZ.TrayStatusTypeZZZ enumSTATUS) throws ExceptionZZZ {
@@ -116,17 +112,29 @@ public class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectZZZ implemen
 		}//END main:
 		return objReturn;
 	}
+	
+	public static String getCaptionByStatus(ITrayStatusMappedValueZZZ.TrayStatusTypeZZZ enumSTATUS) throws ExceptionZZZ {
+		String sReturn = null;
+		main:{
+						
+			String sCaption = enumSTATUS.getCaption();
+			sReturn = sCaption;
+		}//END main:
+		return sReturn;
+	}
 			
 	@Override
-	public boolean switchStatus(IEnumSetMappedZZZ enumSTATUS) throws ExceptionZZZ {
+	public boolean switchStatus(IEnumSetMappedZZZ objEnumStatusMappedIn) throws ExceptionZZZ {
 		boolean bReturn = false;
 		main:{
+			//Merke: In den nutzenden Klassen dies Methode ueberschreiben und hier 
+			//       einen TypCast auf das konkrete Enum verwenden
+			IEnumSetMappedZZZ enumSTATUS = objEnumStatusMappedIn;
+			
 			//ImageIcon aendern
 			ImageIcon objIcon = this.getImageIconByStatus(enumSTATUS);
 			if(objIcon==null)break main;
-			
-			
-			
+						
 			//+++++ Test: Logge den Menüpunkt			
 			TrayStatusTypeZZZ objEnumStatus = (TrayStatusTypeZZZ) enumSTATUS;
 			TrayMenuTypeZZZ objEnumMenu = (TrayMenuTypeZZZ) objEnumStatus.getAccordingTrayMenuType();
@@ -142,7 +150,10 @@ public class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectZZZ implemen
 			//++++++++++++++++++++++++++++++++
 				
 			this.getTrayIcon().setIcon(objIcon);
-
+			
+			String sLabel = this.getCaptionByStatus(enumSTATUS);
+			this.getTrayIcon().setCaption(sLabel);
+			
 			bReturn = true;
 		}//END main:
 		return bReturn;
@@ -231,7 +242,8 @@ public class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectZZZ implemen
 		if(this.objTrayIcon==null) {
 			JPopupMenu menu = this.getMenu();
 			ImageIcon objIcon = AbstractKernelTrayUIZZZ.getImageIconByStatus(TrayStatusTypeZZZ.NEW);
-			this.objTrayIcon = new TrayIcon(objIcon, "DUMMYLISTENER", menu);
+			String sLabelTray = AbstractKernelTrayUIZZZ.getCaptionByStatus(TrayStatusTypeZZZ.NEW);
+			this.objTrayIcon = new TrayIcon(objIcon, sLabelTray, menu);
 		}
 		return this.objTrayIcon;
 	}
@@ -240,7 +252,7 @@ public class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectZZZ implemen
 	public void setTrayIcon(TrayIcon objTrayIcon) {
 		this.objTrayIcon = objTrayIcon;
 	}
-
+	
 	//+++ Aus IListenerObjectFlagZsetZZZ
 	@Override
 	public boolean flagChanged(IEventObjectFlagZsetZZZ eventFlagZset) throws ExceptionZZZ {
@@ -269,7 +281,7 @@ public class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectZZZ implemen
 					System.out.println(sLog);
 					this.logLineDate(sLog);
 					
-					boolean bRelevant = this.isEventRelevant(eventStatusLocalSet); 
+					boolean bRelevant = this.isEventRelevant2ChangeStatusLocal(eventStatusLocalSet); 
 					if(!bRelevant) {
 						sLog = 	ReflectCodeZZZ.getPositionCurrent() + ": Event / Status nicht relevant. Breche ab.";
 						System.out.println(sLog);
@@ -320,7 +332,7 @@ public class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectZZZ implemen
 	
 
 	@Override
-	public boolean isEventRelevant(IEventObjectStatusLocalSetZZZ eventStatusLocalSet) throws ExceptionZZZ {
+	public boolean isEventRelevant2ChangeStatusLocal(IEventObjectStatusLocalSetZZZ eventStatusLocalSet) throws ExceptionZZZ {
 		boolean bReturn = false;
 		main:{
 			if(eventStatusLocalSet==null)break main;
@@ -374,7 +386,7 @@ public class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectZZZ implemen
 			}
 			
 			//+++ Pruefungen
-			bReturn = this.isEventRelevantByClass(eventStatusLocalSet);
+			bReturn = this.isEventRelevantByClass2ChangeStatusLocal(eventStatusLocalSet);
 			if(!bReturn) {
 				sLog = ReflectCodeZZZ.getPositionCurrent()+": Event werfenden Klasse ist fuer diese Klasse hinsichtlich eines Status nicht relevant. Breche ab.";
 				System.out.println(sLog);
@@ -398,7 +410,7 @@ public class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectZZZ implemen
 			//dito gibt es auch die Methode isStatusLocalRelevant(...) nicht, da der Tray kein AbstractObjectWithStatus ist, er verwaltet halt selbst keinen Status.
 			
 						
-			bReturn = this.isEventRelevantByStatusLocalValue(eventStatusLocalSet);
+			bReturn = this.isEventRelevantByStatusLocalValue2ChangeStatusLocal(eventStatusLocalSet);
 			if(!bReturn) {
 				sLog = ReflectCodeZZZ.getPositionCurrent()+": Statuswert nicht relevant. Breche ab.";
 				System.out.println(sLog);
@@ -406,7 +418,7 @@ public class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectZZZ implemen
 				break main;
 			}
 			
-			bReturn = this.isEventRelevantByStatusLocal(eventStatusLocalSet);
+			bReturn = this.isEventRelevantByStatusLocal2ChangeStatusLocal(eventStatusLocalSet);
 			if(!bReturn) {
 				sLog = ReflectCodeZZZ.getPositionCurrent()+": Status an sich aus dem Event ist fuer diese Klasse nicht relevant. Breche ab.";
 				System.out.println(sLog);
@@ -414,7 +426,7 @@ public class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectZZZ implemen
 				break main;
 			}
 			
-			bReturn = this.isEventRelevantByStatusLocalValue(eventStatusLocalSet);
+			bReturn = this.isEventRelevantByStatusLocalValue2ChangeStatusLocal(eventStatusLocalSet);
 			if(!bReturn) {
 				sLog = ReflectCodeZZZ.getPositionCurrent()+": Statuswert nicht relevant. Breche ab.";
 				System.out.println(sLog);
@@ -430,17 +442,17 @@ public class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectZZZ implemen
 	}
 
 	@Override
-	public boolean isEventRelevantByClass(IEventObjectStatusLocalSetZZZ eventStatusLocalSet) throws ExceptionZZZ {
+	public boolean isEventRelevantByClass2ChangeStatusLocal(IEventObjectStatusLocalSetZZZ eventStatusLocalSet) throws ExceptionZZZ {
 		return true;
 	}
 
 	@Override
-	public boolean isEventRelevantByStatusLocal(IEventObjectStatusLocalSetZZZ eventStatusLocalSet) throws ExceptionZZZ {
+	public boolean isEventRelevantByStatusLocal2ChangeStatusLocal(IEventObjectStatusLocalSetZZZ eventStatusLocalSet) throws ExceptionZZZ {
 		return true;
 	}
 
 	@Override
-	public boolean isEventRelevantByStatusLocalValue(IEventObjectStatusLocalSetZZZ eventStatusLocalSet) throws ExceptionZZZ {
+	public boolean isEventRelevantByStatusLocalValue2ChangeStatusLocal(IEventObjectStatusLocalSetZZZ eventStatusLocalSet) throws ExceptionZZZ {
 		boolean bReturn = false;
 		main:{
 			if(eventStatusLocalSet==null)break main;
@@ -464,50 +476,7 @@ public class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectZZZ implemen
 	}
 	
 	
-	@Override
-	public HashMap<IEnumSetMappedStatusZZZ, IEnumSetMappedZZZ> getHashMapEnumSetForStatusLocal() {
-		if(this.hmEnumSet==null) {
-			this.hmEnumSet = this.createHashMapEnumSetForStatusLocalCustom();
-		}
-		return this.hmEnumSet;
-	}
-
-	@Override
-	public void setHashMapEnumSetForStatusLocal(HashMap<IEnumSetMappedStatusZZZ, IEnumSetMappedZZZ> hmEnumSet) {
-		this.hmEnumSet = hmEnumSet;
-	}
 	
-	@Override
-	public HashMap<IEnumSetMappedStatusZZZ, IEnumSetMappedZZZ> createHashMapEnumSetForStatusLocalCustom() {
-		HashMap<IEnumSetMappedStatusZZZ,IEnumSetMappedZZZ>hmReturn = new HashMap<IEnumSetMappedStatusZZZ,IEnumSetMappedZZZ>();
-		main:{
-			
-			//Beispiel
-			//Reine Lokale Statuswerte kommen nicht aus einem Event und werden daher nicht gemapped. 
-//			hmReturn.put(IServerMainOVPN.STATUSLOCAL.ISSTARTNEW, ServerTrayStatusTypeZZZ.NEW);
-//			hmReturn.put(IServerMainOVPN.STATUSLOCAL.ISSTARTING, ServerTrayStatusTypeZZZ.STARTING);
-//			hmReturn.put(IServerMainOVPN.STATUSLOCAL.ISSTARTED, ServerTrayStatusTypeZZZ.STARTED);
-//			
-//			hmReturn.put(IServerMainOVPN.STATUSLOCAL.ISLISTENERSTARTNEW, ServerTrayStatusTypeZZZ.STARTED);
-//			hmReturn.put(IServerMainOVPN.STATUSLOCAL.ISLISTENERSTARTING, ServerTrayStatusTypeZZZ.LISTENERSTARTING);
-//			hmReturn.put(IServerMainOVPN.STATUSLOCAL.ISLISTENERSTARTED, ServerTrayStatusTypeZZZ.LISTENERSTARTED);
-//			hmReturn.put(IServerMainOVPN.STATUSLOCAL.ISLISTENERSTARTNO, ServerTrayStatusTypeZZZ.PREVIOUSEVENTRTYPE);//Wieder einen Status im Menue zurueckgehen
-//			
-//			hmReturn.put(IServerMainOVPN.STATUSLOCAL.ISLISTENERCONNECTED, ServerTrayStatusTypeZZZ.CONNECTED);
-//			hmReturn.put(IServerMainOVPN.STATUSLOCAL.ISLISTENERINTERRUPTED, ServerTrayStatusTypeZZZ.INTERRUPTED);
-//			
-//			
-//			//++++++++++++++++++++++++
-//			//Berechne den wirklichen Typen anschliessend, dynamisch. Es wird auf auf einen vorherigen Event zugegriffen durch eine zweite Abfrage
-//			hmReturn.put(IClientMainOVPN.STATUSLOCAL.ISPINGSTOPPED, ClientTrayStatusTypeZZZ.PREVIOUSEVENTRTYPE);
-//			
-//			//+++++++++++++++++++++++
-//			
-//			hmReturn.put(IClientMainOVPN.STATUSLOCAL.HASPINGERROR, ClientTrayStatusTypeZZZ.FAILED);
-//			hmReturn.put(IClientMainOVPN.STATUSLOCAL.HASERROR, ClientTrayStatusTypeZZZ.ERROR);
-		}//end main:
-		return hmReturn;
-	}
 
 	@Override
 	public JPopupMenu getMenu() throws ExceptionZZZ {
@@ -591,26 +560,6 @@ public class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectZZZ implemen
 		}//end main:
 		return objReturn;
 	}
-
-	@Override
-	public HashMap<IEnumSetMappedStatusZZZ, IEnumSetMappedStatusZZZ> getHashMapEnumSetForCascadingStatusLocal() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setHashMapEnumSetForCascadingStatusLocal(
-			HashMap<IEnumSetMappedStatusZZZ, IEnumSetMappedStatusZZZ> hmEnumSet) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public HashMap<IEnumSetMappedStatusZZZ, IEnumSetMappedStatusZZZ> createHashMapEnumSetForCascadingStatusLocalCustom() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	
 }//END Class
 
