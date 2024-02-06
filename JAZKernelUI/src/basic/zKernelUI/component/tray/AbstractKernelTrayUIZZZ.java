@@ -270,7 +270,7 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectLis
 
 	//+++ Aus IListenerObjectStatusLocalSetOVPN	
 	@Override
-	public boolean changeStatusLocal(IEventObjectStatusLocalSetZZZ eventStatusLocalSet) throws ExceptionZZZ {
+	public boolean reactOnStatusLocalEvent(IEventObjectStatusLocalSetZZZ eventStatusLocalSet) throws ExceptionZZZ {
 		//Der Tray ist am MainObjekt registriert.
 				//Wenn ein Event geworfen wird, dann reagiert er darauf, hiermit....
 				boolean bReturn=false;
