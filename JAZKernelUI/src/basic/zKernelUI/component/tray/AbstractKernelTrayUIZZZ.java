@@ -22,8 +22,9 @@ import basic.zKernel.AbstractKernelUseObjectZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.flag.IEventObjectFlagZsetZZZ;
 import basic.zKernel.flag.IListenerObjectFlagZsetZZZ;
-import basic.zKernel.status.IEventObjectStatusLocalSetZZZ;
-import basic.zKernel.status.IListenerObjectStatusLocalSetZZZ;
+import basic.zKernel.status.IEventObjectStatusBasicZZZ;
+import basic.zKernel.status.IEventObjectStatusLocalZZZ;
+import basic.zKernel.status.IListenerObjectStatusLocalZZZ;
 import basic.zKernel.status.IStatusLocalMapForStatusLocalUserZZZ;
 import basic.zKernelUI.component.tray.ITrayMenuZZZ.TrayMenuTypeZZZ;
 import basic.zKernelUI.component.tray.ITrayStatusMappedValueZZZ.TrayStatusTypeZZZ;
@@ -270,18 +271,18 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectLis
 
 	//+++ Aus IListenerObjectStatusLocalSetOVPN	
 	@Override
-	public boolean reactOnStatusLocalEvent(IEventObjectStatusLocalSetZZZ eventStatusLocalSet) throws ExceptionZZZ {
-		//Der Tray ist am MainObjekt registriert.
+	public boolean reactOnStatusLocalEvent(IEventObjectStatusLocalZZZ eventStatusLocal) throws ExceptionZZZ {
+				//Der Tray ist am MainObjekt registriert.
 				//Wenn ein Event geworfen wird, dann reagiert er darauf, hiermit....
 				boolean bReturn=false;
 				main:{	
-					if(eventStatusLocalSet==null)break main;
+					if(eventStatusLocal==null)break main;
 					
 					String sLog = ReflectCodeZZZ.getPositionCurrent() + ": Event gefangen.";
 					System.out.println(sLog);
 					this.logLineDate(sLog);
 					
-					boolean bRelevant = this.isEventRelevant2ChangeStatusLocal(eventStatusLocalSet); 
+					boolean bRelevant = this.isEventRelevant2ChangeStatusLocal(eventStatusLocal); 
 					if(!bRelevant) {
 						sLog = 	ReflectCodeZZZ.getPositionCurrent() + ": Event / Status nicht relevant. Breche ab.";
 						System.out.println(sLog);
@@ -332,108 +333,109 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectLis
 	
 
 	@Override
-	public boolean isEventRelevant2ChangeStatusLocal(IEventObjectStatusLocalSetZZZ eventStatusLocalSet) throws ExceptionZZZ {
+	public boolean isEventRelevant2ChangeStatusLocal(IEventObjectStatusLocalZZZ eventStatusLocal) throws ExceptionZZZ {
 		boolean bReturn = false;
 		main:{
-			if(eventStatusLocalSet==null)break main;
+			if(eventStatusLocal==null)break main;
 			
 			String sLog = ReflectCodeZZZ.getPositionCurrent()+": Pruefe Relevanz des Events.";
 			System.out.println(sLog);
 			this.logLineDate(sLog);
 			
-			IEnumSetMappedZZZ enumStatusFromEvent = eventStatusLocalSet.getStatusEnum();				
-			if(enumStatusFromEvent==null) {
-				sLog = ReflectCodeZZZ.getPositionCurrent()+": KEINEN enumStatus empfangen. Beende.";
-				System.out.println(sLog);
-				this.logLineDate(sLog);							
-				break main;
-			}
-			
-			boolean bStatusValue = eventStatusLocalSet.getStatusValue();
-			sLog = ReflectCodeZZZ.getPositionCurrent()+": Einen enumStatus empfangen. Wert: " + bStatusValue;
-			System.out.println(sLog);
-			this.logLineDate(sLog);
+			if(eventStatusLocal instanceof IEventObjectStatusLocalZZZ) {				
+				IEnumSetMappedZZZ enumStatusFromEvent = ((IEventObjectStatusLocalZZZ) eventStatusLocal).getStatusLocal();				
+				if(enumStatusFromEvent==null) {
+					sLog = ReflectCodeZZZ.getPositionCurrent()+": KEINEN enumStatus empfangen. Beende.";
+					System.out.println(sLog);
+					this.logLineDate(sLog);							
+					break main;
+				}
 				
-			sLog = ReflectCodeZZZ.getPositionCurrent()+": enumFromEventStatus hat class='"+enumStatusFromEvent.getClass()+"'";
-			System.out.println(sLog);
-			this.logLineDate(sLog);	
-				
-			sLog = ReflectCodeZZZ.getPositionCurrent()+": enumFromEventStatus='" + enumStatusFromEvent.getAbbreviation()+"'";
-			System.out.println(sLog);
-			this.logLineDate(sLog);
-			
-			
-			//#### Problemansatz: Mappen des Lokalen Status auf einen Status aus dem Event, verschiedener Klassen.
-			String sStatusAbbreviationLocal = null;
-			IEnumSetMappedZZZ objEnumStatusLocal = null;
-
-			HashMap<IEnumSetMappedStatusZZZ,IEnumSetMappedZZZ>hm=this.createHashMapEnumSetForStatusLocalCustom();
-			objEnumStatusLocal = hm.get(enumStatusFromEvent);					
-			//###############################
-			
-			if(objEnumStatusLocal==null) {
-				sLog = ReflectCodeZZZ.getPositionCurrent()+": Klasse '" + enumStatusFromEvent.getClass() + "' ist im Mapping nicht mit Wert vorhanden. Damit nicht relevant.";
+				boolean bStatusValue = eventStatusLocal.getStatusValue();
+				sLog = ReflectCodeZZZ.getPositionCurrent()+": Einen enumStatus empfangen. Wert: " + bStatusValue;
 				System.out.println(sLog);
 				this.logLineDate(sLog);
-				break main;
-				//sStatusAbbreviationLocal = enumStatusFromEvent.getAbbreviation();
-			}else {
-				sLog = ReflectCodeZZZ.getPositionCurrent()+": Klasse '" + enumStatusFromEvent.getClass() + "' ist im Mapping mit Wert vorhanden. Damit relevant.";
+					
+				sLog = ReflectCodeZZZ.getPositionCurrent()+": enumFromEventStatus hat class='"+enumStatusFromEvent.getClass()+"'";
+				System.out.println(sLog);
+				this.logLineDate(sLog);	
+					
+				sLog = ReflectCodeZZZ.getPositionCurrent()+": enumFromEventStatus='" + enumStatusFromEvent.getAbbreviation()+"'";
 				System.out.println(sLog);
 				this.logLineDate(sLog);
 				
-				sStatusAbbreviationLocal = objEnumStatusLocal.getAbbreviation();
-			}
-			
-			//+++ Pruefungen
-			bReturn = this.isEventRelevantByClass2ChangeStatusLocal(eventStatusLocalSet);
-			if(!bReturn) {
-				sLog = ReflectCodeZZZ.getPositionCurrent()+": Event werfenden Klasse ist fuer diese Klasse hinsichtlich eines Status nicht relevant. Breche ab.";
-				System.out.println(sLog);
-				this.logLineDate(sLog);				
-				break main;
-			}
-			
-//für den Tray nicht relevant
-//			bReturn = this.isStatusLocalChanged(sStatusAbbreviationLocal, bStatusValue);
-//			if(!bReturn) {
-//				sLog = ReflectCodeZZZ.getPositionCurrent()+": Status nicht geaendert. Breche ab.";
-//				System.out.println(sLog);
-//				this.getMainObject().logProtocolString(sLog);
-//				break main;
-//			}else {
-//				sLog = ReflectCodeZZZ.getPositionCurrent()+": Status geaendert. Mache weiter.";
-//				System.out.println(sLog);
-//				this.getMainObject().logProtocolString(sLog);
-//			}
-			
-			//dito gibt es auch die Methode isStatusLocalRelevant(...) nicht, da der Tray kein AbstractObjectWithStatus ist, er verwaltet halt selbst keinen Status.
-			
-						
-			bReturn = this.isEventRelevantByStatusLocalValue2ChangeStatusLocal(eventStatusLocalSet);
-			if(!bReturn) {
-				sLog = ReflectCodeZZZ.getPositionCurrent()+": Statuswert nicht relevant. Breche ab.";
-				System.out.println(sLog);
-				this.logLineDate(sLog);				
-				break main;
-			}
-			
-			bReturn = this.isEventRelevantByStatusLocal2ChangeStatusLocal(eventStatusLocalSet);
-			if(!bReturn) {
-				sLog = ReflectCodeZZZ.getPositionCurrent()+": Status an sich aus dem Event ist fuer diese Klasse nicht relevant. Breche ab.";
-				System.out.println(sLog);
-				this.logLineDate(sLog);				
-				break main;
-			}
-			
-			bReturn = this.isEventRelevantByStatusLocalValue2ChangeStatusLocal(eventStatusLocalSet);
-			if(!bReturn) {
-				sLog = ReflectCodeZZZ.getPositionCurrent()+": Statuswert nicht relevant. Breche ab.";
-				System.out.println(sLog);
-				this.logLineDate(sLog);				
-				break main;
-			}
-
+				
+				//#### Problemansatz: Mappen des Lokalen Status auf einen Status aus dem Event, verschiedener Klassen.
+				String sStatusAbbreviationLocal = null;
+				IEnumSetMappedZZZ objEnumStatusLocal = null;
+	
+				HashMap<IEnumSetMappedStatusZZZ,IEnumSetMappedZZZ>hm=this.createHashMapEnumSetForStatusLocalCustom();
+				objEnumStatusLocal = hm.get(enumStatusFromEvent);					
+				//###############################
+				
+				if(objEnumStatusLocal==null) {
+					sLog = ReflectCodeZZZ.getPositionCurrent()+": Klasse '" + enumStatusFromEvent.getClass() + "' ist im Mapping nicht mit Wert vorhanden. Damit nicht relevant.";
+					System.out.println(sLog);
+					this.logLineDate(sLog);
+					break main;
+					//sStatusAbbreviationLocal = enumStatusFromEvent.getAbbreviation();
+				}else {
+					sLog = ReflectCodeZZZ.getPositionCurrent()+": Klasse '" + enumStatusFromEvent.getClass() + "' ist im Mapping mit Wert vorhanden. Damit relevant.";
+					System.out.println(sLog);
+					this.logLineDate(sLog);
+					
+					sStatusAbbreviationLocal = objEnumStatusLocal.getAbbreviation();
+				}
+				
+				//+++ Pruefungen
+				bReturn = this.isEventRelevantByClass2ChangeStatusLocal(eventStatusLocal);
+				if(!bReturn) {
+					sLog = ReflectCodeZZZ.getPositionCurrent()+": Event werfenden Klasse ist fuer diese Klasse hinsichtlich eines Status nicht relevant. Breche ab.";
+					System.out.println(sLog);
+					this.logLineDate(sLog);				
+					break main;
+				}
+				
+	//für den Tray nicht relevant
+	//			bReturn = this.isStatusLocalChanged(sStatusAbbreviationLocal, bStatusValue);
+	//			if(!bReturn) {
+	//				sLog = ReflectCodeZZZ.getPositionCurrent()+": Status nicht geaendert. Breche ab.";
+	//				System.out.println(sLog);
+	//				this.getMainObject().logProtocolString(sLog);
+	//				break main;
+	//			}else {
+	//				sLog = ReflectCodeZZZ.getPositionCurrent()+": Status geaendert. Mache weiter.";
+	//				System.out.println(sLog);
+	//				this.getMainObject().logProtocolString(sLog);
+	//			}
+				
+				//dito gibt es auch die Methode isStatusLocalRelevant(...) nicht, da der Tray kein AbstractObjectWithStatus ist, er verwaltet halt selbst keinen Status.
+				
+							
+				bReturn = this.isEventRelevantByStatusLocalValue2ChangeStatusLocal(eventStatusLocal);
+				if(!bReturn) {
+					sLog = ReflectCodeZZZ.getPositionCurrent()+": Statuswert nicht relevant. Breche ab.";
+					System.out.println(sLog);
+					this.logLineDate(sLog);				
+					break main;
+				}
+				
+				bReturn = this.isEventRelevantByStatusLocal2ChangeStatusLocal(eventStatusLocal);
+				if(!bReturn) {
+					sLog = ReflectCodeZZZ.getPositionCurrent()+": Status an sich aus dem Event ist fuer diese Klasse nicht relevant. Breche ab.";
+					System.out.println(sLog);
+					this.logLineDate(sLog);				
+					break main;
+				}
+				
+				bReturn = this.isEventRelevantByStatusLocalValue2ChangeStatusLocal(eventStatusLocal);
+				if(!bReturn) {
+					sLog = ReflectCodeZZZ.getPositionCurrent()+": Statuswert nicht relevant. Breche ab.";
+					System.out.println(sLog);
+					this.logLineDate(sLog);				
+					break main;
+				}
+			}//end if instanceof
 						
 			bReturn = true;
 		}//end main:
@@ -442,22 +444,22 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectLis
 	}
 
 	@Override
-	public boolean isEventRelevantByClass2ChangeStatusLocal(IEventObjectStatusLocalSetZZZ eventStatusLocalSet) throws ExceptionZZZ {
+	public boolean isEventRelevantByClass2ChangeStatusLocal(IEventObjectStatusLocalZZZ eventStatusLocal) throws ExceptionZZZ {
 		return true;
 	}
 
 	@Override
-	public boolean isEventRelevantByStatusLocal2ChangeStatusLocal(IEventObjectStatusLocalSetZZZ eventStatusLocalSet) throws ExceptionZZZ {
+	public boolean isEventRelevantByStatusLocal2ChangeStatusLocal(IEventObjectStatusLocalZZZ eventStatusLocal) throws ExceptionZZZ {
 		return true;
 	}
 
 	@Override
-	public boolean isEventRelevantByStatusLocalValue2ChangeStatusLocal(IEventObjectStatusLocalSetZZZ eventStatusLocalSet) throws ExceptionZZZ {
+	public boolean isEventRelevantByStatusLocalValue2ChangeStatusLocal(IEventObjectStatusLocalZZZ eventStatusLocal) throws ExceptionZZZ {
 		boolean bReturn = false;
 		main:{
-			if(eventStatusLocalSet==null)break main;
+			if(eventStatusLocal==null)break main;
 			
-			boolean bStatusValue = eventStatusLocalSet.getStatusValue();
+			boolean bStatusValue = eventStatusLocal.getStatusValue();
 			String sLog = ReflectCodeZZZ.getPositionCurrent()+": Einen enumStatus empfangen. Wert: " + bStatusValue;
 			System.out.println(sLog);
 			this.logLineDate(sLog);	
