@@ -472,15 +472,6 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectLis
 	}
 	
 	@Override
-	public boolean isStatusLocalDifferent(String sStatusString, boolean bStatusValue) throws ExceptionZZZ {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	
-	
-
-	@Override
 	public JPopupMenu getMenu() throws ExceptionZZZ {
 		if(this.objMenu==null) {
 			this.objMenu = this.createMenuCustom();
@@ -562,6 +553,7 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectLis
 		}//end main:
 		return objReturn;
 	}
+	
 	
 }//END Class
 
