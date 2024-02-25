@@ -17,19 +17,14 @@ import basic.zBasic.util.abstractEnum.IEnumSetMappedStatusZZZ;
 import basic.zBasic.util.abstractEnum.IEnumSetMappedZZZ;
 import basic.zBasic.util.file.FileEasyZZZ;
 import basic.zBasic.util.file.ResourceEasyZZZ;
-import basic.zKernel.AbstractKernelUseObjectListeningZZZ;
-import basic.zKernel.AbstractKernelUseObjectZZZ;
+import basic.zKernel.AbstractKernelUseObjectOnStatusListeningZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.flag.IEventObjectFlagZsetZZZ;
-import basic.zKernel.flag.IListenerObjectFlagZsetZZZ;
-import basic.zKernel.status.IEventObjectStatusBasicZZZ;
 import basic.zKernel.status.IEventObjectStatusLocalZZZ;
-import basic.zKernel.status.IListenerObjectStatusLocalZZZ;
-import basic.zKernel.status.IStatusLocalMapForStatusLocalUserZZZ;
 import basic.zKernelUI.component.tray.ITrayMenuZZZ.TrayMenuTypeZZZ;
 import basic.zKernelUI.component.tray.ITrayStatusMappedValueZZZ.TrayStatusTypeZZZ;
 
-public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectListeningZZZ implements ITrayZZZ {		
+public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnStatusListeningZZZ implements ITrayZZZ {		
 	private static final long serialVersionUID = 4170579821557468353L;
 		
 	protected volatile SystemTray objTray = null;                                    //Das gesamte SystemTray von Windows

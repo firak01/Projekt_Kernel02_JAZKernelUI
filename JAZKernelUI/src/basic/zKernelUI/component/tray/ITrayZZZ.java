@@ -9,8 +9,12 @@ import javax.swing.JPopupMenu;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.util.abstractEnum.IEnumSetMappedZZZ;
 import basic.zKernel.flag.IFlagZUserZZZ;
+import basic.zKernel.flag.IListenerObjectFlagZsetZZZ;
+import basic.zKernel.status.IStatusLocalMapForStatusLocalUserZZZ;
 
-public interface ITrayZZZ extends IFlagZUserZZZ{	
+//Der Tray soll also sowhol selbst Flags benutzen, als auch auf die Flag-Aenderung anderer Objekte reagieren koennen.
+//Ausserdem soll er einkommende StatusÄaenderungen empfangen und darauf reagieren. Daher die StatusHashMap.
+public interface ITrayZZZ extends IFlagZUserZZZ, IListenerObjectFlagZsetZZZ, IStatusLocalMapForStatusLocalUserZZZ {	
 	public abstract boolean switchStatus(IEnumSetMappedZZZ objEnum)throws ExceptionZZZ;
 	public abstract boolean unload() throws ExceptionZZZ;
 	
