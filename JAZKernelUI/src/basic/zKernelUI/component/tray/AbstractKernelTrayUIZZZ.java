@@ -420,7 +420,7 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectLis
 					break main;
 				}
 				
-				bReturn = this.isEventRelevantByStatusLocal2ChangeStatusLocal(eventStatusLocal);
+				bReturn = this.isEventRelevantByReactionHashMap2ChangeStatusLocal(eventStatusLocal);
 				if(!bReturn) {
 					sLog = ReflectCodeZZZ.getPositionCurrent()+": Status an sich aus dem Event ist fuer diese Klasse nicht relevant. Breche ab.";
 					System.out.println(sLog);
@@ -449,7 +449,7 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectLis
 	}
 
 	@Override
-	public boolean isEventRelevantByStatusLocal2ChangeStatusLocal(IEventObjectStatusLocalZZZ eventStatusLocal) throws ExceptionZZZ {
+	public boolean isEventRelevantByReactionHashMap2ChangeStatusLocal(IEventObjectStatusLocalZZZ eventStatusLocal) throws ExceptionZZZ {
 		return true;
 	}
 
