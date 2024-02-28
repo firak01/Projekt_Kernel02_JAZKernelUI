@@ -325,8 +325,23 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 				return bReturn;
 	}
 	
+	@Override
+	public boolean isEventRelevantAny(IEventObjectStatusLocalZZZ eventStatusLocal) throws ExceptionZZZ {
+		boolean bReturn = false;
+		main:{
+			if(eventStatusLocal==null)break main;
+			
+			bReturn = this.isEventRelevant2ChangeStatusLocal(eventStatusLocal);
+			if(bReturn) break main;
+			
+			bReturn = this.isEventRelevant4ReactionOnStatusLocal(eventStatusLocal);
+			if(bReturn) break main;
+			
+		}//end main:
+		return bReturn;
+	}
 	
-
+	
 	@Override
 	public boolean isEventRelevant2ChangeStatusLocal(IEventObjectStatusLocalZZZ eventStatusLocal) throws ExceptionZZZ {
 		boolean bReturn = false;
@@ -383,7 +398,7 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 				}
 				
 				//+++ Pruefungen
-				bReturn = this.isEventRelevantByClass2ChangeStatusLocal(eventStatusLocal);
+				bReturn = this.isEventRelevant2ChangeStatusLocalByClass(eventStatusLocal);
 				if(!bReturn) {
 					sLog = ReflectCodeZZZ.getPositionCurrent()+": Event werfenden Klasse ist fuer diese Klasse hinsichtlich eines Status nicht relevant. Breche ab.";
 					System.out.println(sLog);
@@ -407,7 +422,7 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 				//dito gibt es auch die Methode isStatusLocalRelevant(...) nicht, da der Tray kein AbstractObjectWithStatus ist, er verwaltet halt selbst keinen Status.
 				
 							
-				bReturn = this.isEventRelevantByStatusLocalValue2ChangeStatusLocal(eventStatusLocal);
+				bReturn = this.isEventRelevant2ChangeStatusLocalByStatusLocalValue(eventStatusLocal);
 				if(!bReturn) {
 					sLog = ReflectCodeZZZ.getPositionCurrent()+": Statuswert nicht relevant. Breche ab.";
 					System.out.println(sLog);
@@ -415,21 +430,6 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 					break main;
 				}
 				
-				bReturn = this.isEventRelevantByReactionHashMap2ChangeStatusLocal(eventStatusLocal);
-				if(!bReturn) {
-					sLog = ReflectCodeZZZ.getPositionCurrent()+": Status an sich aus dem Event ist fuer diese Klasse nicht relevant. Breche ab.";
-					System.out.println(sLog);
-					this.logLineDate(sLog);				
-					break main;
-				}
-				
-				bReturn = this.isEventRelevantByStatusLocalValue2ChangeStatusLocal(eventStatusLocal);
-				if(!bReturn) {
-					sLog = ReflectCodeZZZ.getPositionCurrent()+": Statuswert nicht relevant. Breche ab.";
-					System.out.println(sLog);
-					this.logLineDate(sLog);				
-					break main;
-				}
 			}//end if instanceof
 						
 			bReturn = true;
@@ -439,17 +439,12 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 	}
 
 	@Override
-	public boolean isEventRelevantByClass2ChangeStatusLocal(IEventObjectStatusLocalZZZ eventStatusLocal) throws ExceptionZZZ {
+	public boolean isEventRelevant2ChangeStatusLocalByClass(IEventObjectStatusLocalZZZ eventStatusLocal) throws ExceptionZZZ {
 		return true;
 	}
 
 	@Override
-	public boolean isEventRelevantByReactionHashMap2ChangeStatusLocal(IEventObjectStatusLocalZZZ eventStatusLocal) throws ExceptionZZZ {
-		return true;
-	}
-
-	@Override
-	public boolean isEventRelevantByStatusLocalValue2ChangeStatusLocal(IEventObjectStatusLocalZZZ eventStatusLocal) throws ExceptionZZZ {
+	public boolean isEventRelevant2ChangeStatusLocalByStatusLocalValue(IEventObjectStatusLocalZZZ eventStatusLocal) throws ExceptionZZZ {
 		boolean bReturn = false;
 		main:{
 			if(eventStatusLocal==null)break main;
