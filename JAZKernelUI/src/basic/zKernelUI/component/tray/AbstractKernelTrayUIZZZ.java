@@ -269,21 +269,58 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 	public boolean reactOnStatusLocalEvent(IEventObjectStatusLocalZZZ eventStatusLocal) throws ExceptionZZZ {
 				//Der Tray ist am MainObjekt registriert.
 				//Wenn ein Event geworfen wird, dann reagiert er darauf, hiermit....
-				boolean bReturn=false;
-				main:{	
-					if(eventStatusLocal==null)break main;
-					
-					String sLog = ReflectCodeZZZ.getPositionCurrent() + ": Event gefangen.";
-					System.out.println(sLog);
-					this.logLineDate(sLog);
-					
-					boolean bRelevant = this.isEventRelevant2ChangeStatusLocal(eventStatusLocal); 
-					if(!bRelevant) {
-						sLog = 	ReflectCodeZZZ.getPositionCurrent() + ": Event / Status nicht relevant. Breche ab.";
-						System.out.println(sLog);
-						this.logLineDate(sLog);
-						break main;
-					}
+		boolean bReturn=false;
+		main:{
+		//Falls nicht zuständig, mache nix
+	    boolean bProof = this.isEventRelevant2ChangeStatusLocal(eventStatusLocal);
+		if(!bProof) break main;
+		
+		String sLog=null;
+		
+		//+++ Mappe nun die eingehenden Status-Enums auf die eigenen.
+		IEnumSetMappedZZZ enumStatus = eventStatusLocal.getStatusLocal();
+		if(enumStatus==null) {
+			sLog = ReflectCodeZZZ.getPositionCurrent()+": Keinen Status aus dem Event-Objekt erhalten. Breche ab";
+			System.out.println(sLog);
+			this.logLineDate(sLog);
+			break main;
+		}
+		
+		//+++++++++++++++++++++
+		HashMap<IEnumSetMappedStatusZZZ,IEnumSetMappedStatusZZZ>hmEnum = this.getHashMapEnumSetForCascadingStatusLocal();				
+		if(hmEnum==null) {
+			sLog = ReflectCodeZZZ.getPositionCurrent()+": Keine Mapping Hashmap fuer das StatusMapping vorhanden. Breche ab";
+			System.out.println(sLog);
+			this.logLineDate(sLog);
+			break main;
+		}
+		
+		//+++++++++++++++++++++
+		
+		IEnumSetMappedStatusZZZ objEnum = hmEnum.get(enumStatus);							
+		if(objEnum==null) {
+			sLog = ReflectCodeZZZ.getPositionCurrent()+": Keinen gemappten Status für en Status aus dem Event-Objekt erhalten. Breche ab";					
+			this.logProtocolString(sLog);
+			break main;
+		}
+		
+		
+		
+		//Nur so als Beispiel, muss ueberschrieben werden:
+		//Lies den Status (geworfen vom Backend aus)
+		if(eventStatusLocal instanceof IEventObjectStatusLocalZZZ) {
+			IEventObjectStatusLocalZZZ eventStatusLocalReact = (IEventObjectStatusLocalZZZ) eventStatusLocal;					
+			String sStatus = eventStatusLocalReact.getStatusMessage();
+			System.out.println(ReflectCodeZZZ.getPositionCurrent() + ": Methode muss ueberschrieben werden.");
+			System.out.println(ReflectCodeZZZ.getPositionCurrent() + ": sStatus='"+sStatus+"'");
+		}else {
+			sLog = ReflectCodeZZZ.getPositionCurrent()+": Event ist kein instanceof IEventObjectStatusLocalZZZ. Breche ab.";					
+			this.logProtocolString(sLog);
+		}
+		
+	}//end main:
+	return bReturn;		
+		
 					
 					
 					/* Loesung: DOWNCASTING mit instanceof , s.: https://www.positioniseverything.net/typeof-java/
@@ -315,14 +352,7 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 //						bReturn = this.statusLocalChangedMonitorEvent_(eventStatusLocalSet);
 //						break main;
 //					}
-					else {	
-						sLog = ReflectCodeZZZ.getPositionCurrent() +" : Status-Enum wird von der Klasse her nicht betrachtet.";
-						System.out.println(sLog);	
-						this.logLineDate(sLog);
-					}											
-					bReturn = true;
-				}//end main:
-				return bReturn;
+					
 	}
 	
 	@Override
@@ -544,6 +574,7 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 		return objReturn;
 	}
 	
+	public abstract HashMap<IEnumSetMappedStatusZZZ,IEnumSetMappedStatusZZZ> getHashMapEnumSetForCascadingStatusLocal();
 	
 }//END Class
 
