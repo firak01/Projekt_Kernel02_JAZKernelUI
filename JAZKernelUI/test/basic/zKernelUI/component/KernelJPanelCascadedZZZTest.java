@@ -10,7 +10,7 @@ import com.jgoodies.forms.layout.RowSpec;
 import junit.framework.TestCase;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.AbstractObjectWithFlagZZZ;
-import basic.zBasic.DummyTestObjectZZZ;
+import basic.zBasic.DummyTestObjectWithFlagZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import basic.zKernelUI.component.KernelJFrameCascadedZZZ;
@@ -51,7 +51,7 @@ public class KernelJPanelCascadedZZZTest  extends TestCase{
 			PanelMain objPanelMainTest = new PanelMain();
 			//PanelMain objPanelMainInstanceTest = new objPanelMainTest.
 					
-			DummyTestObjectZZZ objObjectTest = new DummyTestObjectZZZ();
+			DummyTestObjectWithFlagZZZ objObjectTest = new DummyTestObjectWithFlagZZZ();
 			Class objClass=null;
 			try {
 				objClass = Class.forName(objObjectTest.getClass().getName());
@@ -60,7 +60,7 @@ public class KernelJPanelCascadedZZZTest  extends TestCase{
 				e.printStackTrace();
 			}
 			try {
-				DummyTestObjectZZZ objObjectInstanceTest = (DummyTestObjectZZZ) objClass.newInstance();
+				DummyTestObjectWithFlagZZZ objObjectInstanceTest = (DummyTestObjectWithFlagZZZ) objClass.newInstance();
 			} catch (InstantiationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
