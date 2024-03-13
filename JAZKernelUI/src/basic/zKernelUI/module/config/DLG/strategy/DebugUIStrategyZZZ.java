@@ -184,6 +184,7 @@ public class DebugUIStrategyZZZ extends KeyImmutable implements IEnumDebugUIStra
 		//iDegreeOfCoverMax
  
 			
+	   /* Die in dieser Methode verwendete Klasse für den ...TypeZZZ muss immer angepasst werden. */
 		   @SuppressWarnings("rawtypes")
 		   public static <E> EnumSet getEnumSet() {
 		   	
@@ -196,7 +197,8 @@ public class DebugUIStrategyZZZ extends KeyImmutable implements IEnumDebugUIStra
 		   	Class<EnumDebugUIStrategy> enumClass = EnumDebugUIStrategy.class;
 		   	EnumSet<EnumDebugUIStrategy> set = EnumSet.noneOf(enumClass);//Erstelle ein leeres EnumSet
 		   	
-		   	for(Object obj : EnumDebugUIStrategy.class.getEnumConstants()){
+			Enum[]objaEnum = (Enum[]) enumClass.getEnumConstants();
+			for(Object obj : objaEnum){
 		   		//System.out.println(obj + "; "+obj.getClass().getName());
 		   		set.add((EnumDebugUIStrategy) obj);
 		   	}

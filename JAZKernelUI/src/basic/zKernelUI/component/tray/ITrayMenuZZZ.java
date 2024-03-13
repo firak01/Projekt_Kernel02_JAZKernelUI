@@ -47,7 +47,8 @@ public interface ITrayMenuZZZ {
 			Class<TrayMenuTypeZZZ> enumClass = TrayMenuTypeZZZ.class;
 			EnumSet<TrayMenuTypeZZZ> set = EnumSet.noneOf(enumClass);//Erstelle ein leeres EnumSet
 			
-			for(Object obj : TrayMenuTypeZZZ.class.getEnumConstants()){		
+			Enum[]objaEnum = (Enum[]) enumClass.getEnumConstants();
+			for(Object obj : objaEnum){		
 				set.add((TrayMenuTypeZZZ) obj);
 			}
 			return set;
