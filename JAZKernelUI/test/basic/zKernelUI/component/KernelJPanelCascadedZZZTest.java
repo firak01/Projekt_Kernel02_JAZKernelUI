@@ -9,8 +9,9 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import junit.framework.TestCase;
 import basic.zBasic.ExceptionZZZ;
-import basic.zBasic.AbstractObjectWithFlagZZZ;
+import basic.zBasic.IDummyTestObjectWithFlagZZZ;
 import basic.zBasic.DummyTestObjectWithFlagZZZ;
+import basic.zBasic.DummyTestObjectZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import basic.zKernelUI.component.KernelJFrameCascadedZZZ;
@@ -18,6 +19,7 @@ import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.util.JFrameHelperZZZ;
 import basic.zKernel.KernelZZZ;
 import basic.zKernel.component.IKernelProgramZZZ;
+import basic.zKernel.flag.IFlagZUserZZZ;
 
 /**
  * @author 0823
@@ -70,7 +72,7 @@ public class KernelJPanelCascadedZZZTest  extends TestCase{
 			}
 		
 			//Test auf Flags aus dem basic-Bereich
-			boolean btemp = panelMainTest.proofFlagExists(DummyTestObjectZZZ.FLAGZ.DEBUG);			
+			boolean btemp = panelMainTest.proofFlagExists(IFlagZUserZZZ.FLAGZ.DEBUG);			
 			assertTrue(btemp);
 			
 			btemp = panelMainTest.proofFlagExists("nixda");			
