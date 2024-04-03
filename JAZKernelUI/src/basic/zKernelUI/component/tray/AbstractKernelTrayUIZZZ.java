@@ -19,7 +19,7 @@ import basic.zBasic.util.file.FileEasyZZZ;
 import basic.zBasic.util.file.ResourceEasyZZZ;
 import basic.zKernel.AbstractKernelUseObjectOnStatusListeningZZZ;
 import basic.zKernel.IKernelZZZ;
-import basic.zKernel.flag.IEventObjectFlagZsetZZZ;
+import basic.zKernel.flag.event.IEventObjectFlagZsetZZZ;
 import basic.zKernel.status.IEventObjectStatusLocalZZZ;
 import basic.zKernelUI.component.tray.ITrayMenuZZZ.TrayMenuTypeZZZ;
 import basic.zKernelUI.component.tray.ITrayStatusMappedValueZZZ.TrayStatusTypeZZZ;
