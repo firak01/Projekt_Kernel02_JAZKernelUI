@@ -28,7 +28,7 @@ public class DLGBOX4INIZZZ  extends KernelJFrameCascadedZZZ  implements IJNILotu
 	/* (non-Javadoc)
 	 * @see basic.zzzKernel.KernelAssetJNILotusscriptCallableZZZ#lsimain(java.lang.String[])
 	 */
-	public boolean lsimain(String[] argv) {
+	public boolean lsimain(String[] argv) throws ExceptionZZZ {
 		//!!! Diese Funktion soll von LotusScript aus aufgerufen werden, darum keinen Error in Funktionssignatur throwen !!!
 		try {
 

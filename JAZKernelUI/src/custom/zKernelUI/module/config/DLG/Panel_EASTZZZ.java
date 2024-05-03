@@ -298,7 +298,7 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 			Runnable runnerUpdatePanel= new Runnable(){
 
 				public void run(){
-//					try {							
+					try {							
 						
 						System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#INI SAVE DURCHGEFUEHRT");
 						logLineDate("INI SAVE DURCHGEFUEHRT");					
@@ -306,9 +306,10 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 						((JComponent) panel).revalidate();
 						((Component) panel).repaint();
 												 							
-//					} catch (ExceptionZZZ e) {
-//						e.printStackTrace();
-//					}
+					} catch (ExceptionZZZ e) {
+						e.printStackTrace();
+						System.out.println(e.getDetailAllLast());
+					}
 				}
 			};
 			

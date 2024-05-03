@@ -148,7 +148,7 @@ final class SwingWorker4IniSAVE extends KernelSwingWorkerZZZ{
 		Runnable runnerUpdatePanel= new Runnable(){
 
 			public void run(){
-//				try {							
+				try {							
 					
 					System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#INI SAVE DURCHGEFUEHRT");
 					logLineDate("INI SAVE DURCHGEFUEHRT");					
@@ -156,9 +156,10 @@ final class SwingWorker4IniSAVE extends KernelSwingWorkerZZZ{
 					((JComponent) panel).revalidate();
 					((Component) panel).repaint();
 											 							
-//				} catch (ExceptionZZZ e) {
-//					e.printStackTrace();
-//				}
+				} catch (ExceptionZZZ e) {
+					e.printStackTrace();
+					System.out.println(e.getDetailAllLast());
+				}
 			}
 		};
 		

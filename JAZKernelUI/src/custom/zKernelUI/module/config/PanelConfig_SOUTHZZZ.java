@@ -113,7 +113,13 @@ public class PanelConfig_SOUTHZZZ extends KernelJPanelCascadedZZZ {
 					
 				
 				 } catch (ExceptionZZZ ez) {				
-					this.getLogObject().WriteLineDate(ez.getDetailAllLast());
+					try {
+						this.getLogObject().WriteLineDate(ez.getDetailAllLast());
+					} catch (ExceptionZZZ e) {						
+						e.printStackTrace();
+						System.out.println(e.getDetailAllLast());
+					}
+					
 				}
 			}//end main
 		return bReturn;

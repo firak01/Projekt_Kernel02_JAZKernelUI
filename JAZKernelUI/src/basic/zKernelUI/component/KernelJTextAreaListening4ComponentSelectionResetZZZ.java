@@ -272,7 +272,7 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 	
 	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
 	@Override
-	public void logLineDate(String sLog) {
+	public void logLineDate(String sLog) throws ExceptionZZZ {
 		LogZZZ objLog = this.getLogObject();
 		if(objLog==null) {
 			String sTemp = KernelLogZZZ.computeLineDate(sLog);

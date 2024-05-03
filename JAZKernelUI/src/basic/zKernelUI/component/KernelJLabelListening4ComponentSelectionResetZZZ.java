@@ -52,7 +52,7 @@ public abstract class KernelJLabelListening4ComponentSelectionResetZZZ extends J
 	
 	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
 	@Override
-	public void logLineDate(String sLog) {
+	public void logLineDate(String sLog) throws ExceptionZZZ {
 		LogZZZ objLog = this.getLogObject();
 		if(objLog==null) {
 			String sTemp = KernelLogZZZ.computeLineDate(sLog);

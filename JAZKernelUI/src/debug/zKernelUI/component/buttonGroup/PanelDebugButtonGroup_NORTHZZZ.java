@@ -277,7 +277,7 @@ class SwingWorker4ProgramPLUS extends KernelSwingWorkerZZZ{
 		Runnable runnerUpdatePanel= new Runnable(){
 
 			public void run(){
-//				try {							
+				try {							
 					
 					System.out.println("PLUS GECLICKT");
 					logLineDate("PLUS GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ					
@@ -289,9 +289,10 @@ class SwingWorker4ProgramPLUS extends KernelSwingWorkerZZZ{
 					panel.validate();
 					panel.repaint();	
 					 							
-//				} catch (ExceptionZZZ e) {
-//					e.printStackTrace();
-//				}
+				} catch (ExceptionZZZ e) {
+					e.printStackTrace();
+					System.out.println(e.getDetailAllLast());
+				}
 			}
 		};
 		
@@ -389,7 +390,7 @@ class SwingWorker4ProgramMINUS extends KernelSwingWorkerZZZ{
 		Runnable runnerUpdatePanel= new Runnable(){
 
 			public void run(){
-//				try {							
+				try {							
 					
 					System.out.println("MINUS GECLICKT");
 					logLineDate("MINUS GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ
@@ -404,9 +405,10 @@ class SwingWorker4ProgramMINUS extends KernelSwingWorkerZZZ{
 																									
 					
 					 							
-//				} catch (ExceptionZZZ e) {
-//					e.printStackTrace();
-//				}
+				} catch (ExceptionZZZ e) {
+					e.printStackTrace();
+					System.out.println(e.getDetailAllLast());
+				}
 			}
 		};
 		
@@ -503,7 +505,7 @@ class SwingWorker4ProgramENABLE extends KernelSwingWorkerZZZ{
 		Runnable runnerUpdatePanel= new Runnable(){
 
 			public void run(){
-//				try {							
+				try {							
 					
 					System.out.println("ENABLE ALL GECLICKT");
 					logLineDate("ENABLE ALL GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ
@@ -522,9 +524,10 @@ class SwingWorker4ProgramENABLE extends KernelSwingWorkerZZZ{
 																									
 					
 					 							
-//				} catch (ExceptionZZZ e) {
-//					e.printStackTrace();
-//				}
+				} catch (ExceptionZZZ e) {
+					e.printStackTrace();
+					System.out.println(e.getDetailAllLast());
+				}
 			}
 		};
 		
@@ -620,7 +623,7 @@ class SwingWorker4ProgramDISABLE extends KernelSwingWorkerZZZ {
 		Runnable runnerUpdatePanel= new Runnable(){
 
 			public void run(){
-//				try {							
+				try {							
 					
 					System.out.println("DISABLE GECLICKT");
 					logLineDate("DISABLE GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ
@@ -633,9 +636,10 @@ class SwingWorker4ProgramDISABLE extends KernelSwingWorkerZZZ {
 					panel.validate();
 					panel.repaint();	
 						 							
-//				} catch (ExceptionZZZ e) {
-//					e.printStackTrace();
-//				}
+				} catch (ExceptionZZZ e) {
+					e.printStackTrace();
+					System.out.println(e.getDetailAllLast());
+				}
 			}
 		};
 		
@@ -731,7 +735,7 @@ class SwingWorker4ProgramTOGGLE_ALL extends KernelSwingWorkerZZZ implements IObj
 		Runnable runnerUpdatePanel= new Runnable(){
 
 			public void run(){
-//				try {							
+				try {							
 					
 					System.out.println("TOGGLE ALL GECLICKT");
 					logLineDate("TOGGLE ALL GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ
@@ -743,9 +747,10 @@ class SwingWorker4ProgramTOGGLE_ALL extends KernelSwingWorkerZZZ implements IObj
 					panel.validate();
 					panel.repaint();	
 						 							
-//				} catch (ExceptionZZZ e) {
-//					e.printStackTrace();
-//				}
+				} catch (ExceptionZZZ e) {
+					e.printStackTrace();
+					System.out.println(e.getDetailAllLast());
+				}
 			}
 		};
 		
@@ -841,7 +846,7 @@ class SwingWorker4ProgramDIFFER_ALL extends KernelSwingWorkerZZZ {
 		Runnable runnerUpdatePanel= new Runnable(){
 
 			public void run(){
-//				try {							
+				try {							
 					
 					System.out.println("DIFFER ALL GECLICKT");
 					logLineDate("DIFFER ALL GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ
@@ -853,9 +858,10 @@ class SwingWorker4ProgramDIFFER_ALL extends KernelSwingWorkerZZZ {
 					panel.validate();
 					panel.repaint();	
 						 							
-//				} catch (ExceptionZZZ e) {
-//					e.printStackTrace();
-//				}
+				} catch (ExceptionZZZ e) {
+					e.printStackTrace();
+					System.out.println(e.getDetailAllLast());
+				}
 			}
 		};
 		
@@ -951,7 +957,7 @@ class SwingWorker4ProgramSAME_ALL extends KernelSwingWorkerZZZ implements IObjec
 		Runnable runnerUpdatePanel= new Runnable(){
 
 			public void run(){
-//				try {							
+				try {							
 					
 					System.out.println("SAME ALL GECLICKT");
 					logLineDate("SAME ALL GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ
@@ -963,9 +969,10 @@ class SwingWorker4ProgramSAME_ALL extends KernelSwingWorkerZZZ implements IObjec
 					panel.validate();
 					panel.repaint();	
 						 							
-//				} catch (ExceptionZZZ e) {
-//					e.printStackTrace();
-//				}
+				} catch (ExceptionZZZ e) {
+					e.printStackTrace();
+					System.out.println(e.getDetailAllLast());
+				}
 			}
 		};
 		

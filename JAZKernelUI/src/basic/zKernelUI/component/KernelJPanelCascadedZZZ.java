@@ -751,7 +751,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	
 	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
 	@Override
-	public void logLineDate(String sLog) {
+	public void logLineDate(String sLog) throws ExceptionZZZ {
 		LogZZZ objLog = this.getLogObject();
 		if(objLog==null) {
 			String sTemp = KernelLogZZZ.computeLineDate(sLog);

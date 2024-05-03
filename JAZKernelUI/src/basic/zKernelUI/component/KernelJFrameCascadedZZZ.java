@@ -709,7 +709,7 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 	
 	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
 	@Override
-	public void logLineDate(String sLog) {
+	public void logLineDate(String sLog) throws ExceptionZZZ {
 		LogZZZ objLog = this.getLogObject();
 		if(objLog==null) {
 			String sTemp = KernelLogZZZ.computeLineDate(sLog);
