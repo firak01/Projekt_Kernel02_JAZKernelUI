@@ -198,7 +198,7 @@ public class NavigatorMouseListenerZZZ extends KernelMouseListenerCascadedZZZ im
 			Runnable runnerUpdatePanel= new Runnable(){
 	
 				public void run(){
-	//				try {							
+					try {							
 						
 						System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#NAVIGATOR ELEMENT GECLICKT");
 						logLineDate("NAVIGATOR ELEMENT GECLICKT");					
@@ -206,9 +206,9 @@ public class NavigatorMouseListenerZZZ extends KernelMouseListenerCascadedZZZ im
 						((JComponent) panel).revalidate();
 						((Component) panel).repaint();
 												 							
-	//				} catch (ExceptionZZZ e) {
-	//					e.printStackTrace();
-	//				}
+					} catch (ExceptionZZZ e) {
+						e.printStackTrace();
+					}
 				}
 			};
 			

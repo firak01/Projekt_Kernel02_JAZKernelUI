@@ -160,7 +160,7 @@ public class ActionSwitchZZZ<T> extends  KernelMouseListenerCascadedZZZ implemen
 			Runnable runnerUpdatePanel= new Runnable(){
 	
 				public void run(){
-	//				try {							
+					try {							
 						
 						System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#SWITCH GECLICKT");
 						logLineDate("SWITCH GECLICKT");					
@@ -168,9 +168,9 @@ public class ActionSwitchZZZ<T> extends  KernelMouseListenerCascadedZZZ implemen
 						panel.revalidate();
 						panel.repaint();
 												 							
-	//				} catch (ExceptionZZZ e) {
-	//					e.printStackTrace();
-	//				}
+					} catch (ExceptionZZZ e) {
+						e.printStackTrace();
+					}
 				}
 			};
 			

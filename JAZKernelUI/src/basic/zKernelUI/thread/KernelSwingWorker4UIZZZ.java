@@ -28,9 +28,9 @@ public abstract class KernelSwingWorker4UIZZZ extends KernelSwingWorkerZZZ imple
 //		Das Schreiben des Ergebnisses wieder an den EventDispatcher thread uebergeben
 		Runnable runnerUpdateLabel= new Runnable(){
 
-			public void run(){
-				logLineDate("Program for label update started with '" + sValue + "'");								
+			public void run(){											
 				try {
+					logLineDate("Program for label update started with '" + sValue + "'");
 					objProgram.updateLabel(sValue);
 				} catch (ExceptionZZZ e) {
 					e.printStackTrace();
@@ -46,9 +46,9 @@ public abstract class KernelSwingWorker4UIZZZ extends KernelSwingWorkerZZZ imple
 //		Das Schreiben des Ergebnisses wieder an den EventDispatcher thread uebergeben
 		Runnable runnerUpdateValue= new Runnable(){
 
-			public void run(){
-				logLineDate("Program for label update started with '" + sValue + "'");								
+			public void run(){											
 				try {
+					logLineDate("Program for label update started with '" + sValue + "'");
 					objProgram.updateValue(sValue);
 				} catch (ExceptionZZZ e) {
 					e.printStackTrace();
@@ -64,9 +64,9 @@ public abstract class KernelSwingWorker4UIZZZ extends KernelSwingWorkerZZZ imple
 //		Das Schreiben des Ergebnisses wieder an den EventDispatcher thread uebergeben
 		Runnable runnerUpdateMessage= new Runnable(){
 
-			public void run(){
-				logLineDate("Program for message update started with '" + sValue + "'");								
+			public void run(){												
 				try {
+					logLineDate("Program for message update started with '" + sValue + "'");
 					objProgram.updateMessage(sValue);
 				} catch (ExceptionZZZ e) {
 					e.printStackTrace();
