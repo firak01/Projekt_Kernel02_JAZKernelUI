@@ -1067,7 +1067,7 @@ public void setFrameSub(String sAlias, JFrame objFrame){
 	public boolean[] setFlag(IFlagZUserZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		boolean[] baReturn=null;
 		main:{
-			if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
+			if(!ArrayUtilZZZ.isNull(objaEnumFlag)) {
 				baReturn = new boolean[objaEnumFlag.length];
 				int iCounter=-1;
 				for(IFlagZUserZZZ.FLAGZ objEnumFlag:objaEnumFlag) {
@@ -1095,7 +1095,7 @@ public void setFrameSub(String sAlias, JFrame objFrame){
 	public boolean[] setFlag(IKernelModuleZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		boolean[] baReturn=null;
 		main:{
-			if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
+			if(!ArrayUtilZZZ.isNull(objaEnumFlag)) {
 				baReturn = new boolean[objaEnumFlag.length];
 				int iCounter=-1;
 				for(IKernelModuleZZZ.FLAGZ objEnumFlag:objaEnumFlag) {

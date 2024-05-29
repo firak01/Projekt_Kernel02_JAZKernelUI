@@ -945,7 +945,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 			public boolean[] setFlagLocal(IDialogExtendedZZZ.FLAGZLOCAL[] objaEnumFlag, boolean bValue) throws ExceptionZZZ {
 				boolean[] baReturn=null;
 				main:{
-					if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
+					if(!ArrayUtilZZZ.isNull(objaEnumFlag)) {
 						baReturn = new boolean[objaEnumFlag.length];
 						int iCounter=-1;
 						for(IDialogExtendedZZZ.FLAGZLOCAL objEnumFlag:objaEnumFlag) {
@@ -1264,7 +1264,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 	public boolean[] setFlag(IKernelModuleZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		boolean[] baReturn=null;
 		main:{
-			if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
+			if(!ArrayUtilZZZ.isNull(objaEnumFlag)) {
 				baReturn = new boolean[objaEnumFlag.length];
 				int iCounter=-1;
 				for(IKernelModuleZZZ.FLAGZ objEnumFlag:objaEnumFlag) {
@@ -1301,7 +1301,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 	public boolean[] setFlag(IFlagZUserZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		boolean[] baReturn=null;
 		main:{
-			if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
+			if(!ArrayUtilZZZ.isNull(objaEnumFlag)) {
 				baReturn = new boolean[objaEnumFlag.length];
 				int iCounter=-1;
 				for(IFlagZUserZZZ.FLAGZ objEnumFlag:objaEnumFlag) {
@@ -1338,7 +1338,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 	public boolean[] setFlag(IKernelModuleUserZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		boolean[] baReturn=null;
 		main:{
-			if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
+			if(!ArrayUtilZZZ.isNull(objaEnumFlag)) {
 				baReturn = new boolean[objaEnumFlag.length];
 				int iCounter=-1;
 				for(IKernelModuleUserZZZ.FLAGZ objEnumFlag:objaEnumFlag) {
@@ -1374,7 +1374,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 	public boolean[] setFlag(IMouseFeatureZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) throws ExceptionZZZ {
 		boolean[] baReturn=null;
 		main:{
-			if(!ArrayUtilZZZ.isEmpty(objaEnumFlag)) {
+			if(!ArrayUtilZZZ.isNull(objaEnumFlag)) {
 				baReturn = new boolean[objaEnumFlag.length];
 				int iCounter=-1;
 				for(IMouseFeatureZZZ.FLAGZ objEnumFlag:objaEnumFlag) {
