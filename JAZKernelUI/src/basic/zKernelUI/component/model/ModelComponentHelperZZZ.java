@@ -41,9 +41,12 @@ public class ModelComponentHelperZZZ {
 						
 			if(hmTextValues!=null) {
 				listaReturn = new ArrayList<JLabel>();
-				Iterator<ArrayList<String>> itValues = hmTextValues.iterator();
-				while(itValues.hasNext()) {						
-					ArrayList<String> listaText = (ArrayList<String>) itValues.next();
+				//Iterator<ArrayList<String>> itValues = hmTextValues.iterator();
+				Iterator<Integer> itValues = hmTextValues.iterator();
+				while(itValues.hasNext()) {
+					Integer intKey = itValues.next();
+					
+					ArrayList<String> listaText = (ArrayList<String>) hmTextValues.get(intKey);//(ArrayList<String>) itValues.next();
 					labelDebug = ModelComponentHelperZZZ.createLabel(listaText);
 					if(labelDebug!=null) listaReturn.add(labelDebug);
 				}
