@@ -12,7 +12,7 @@ import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zKernel.IKernelZZZ;
-import basic.zKernel.KernelKernelZZZ;
+import basic.zKernel.AbstractKernelObjectZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;
@@ -92,7 +92,7 @@ final class SwingWorker4IniSAVE extends KernelSwingWorkerZZZ{
 				objFileIni.deleteSection(sSection);
 				
 				//Ggfs. sind im Dialog Einträge über mehrere, verschiedene Sections hinweg. Diese auch löschen. 
-				String sSectionNew = KernelKernelZZZ.computeSectionFromSystemSection(sSection);
+				String sSectionNew = AbstractKernelObjectZZZ.computeSectionFromSystemSection(sSection);
 				if(sSectionNew!=null) {
 					if(sSection!=sSectionNew) {
 						objFileIni.deleteSection(sSection);							
