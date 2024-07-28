@@ -17,8 +17,9 @@ import basic.zKernel.AbstractKernelUseObjectZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 
-public class JComponentGroupCollectionZZZ<T>  extends AbstractKernelUseObjectZZZ  implements Iterable<T>,IEventBrokerComponentGroupSwitchUserZZZ {
-	
+public class JComponentGroupCollectionZZZ<T>  extends AbstractKernelUseObjectZZZ<T>  implements Iterable<T>,IEventBrokerComponentGroupSwitchUserZZZ {
+	private static final long serialVersionUID = 1813161603148465148L;
+
 	//++++++++++ Mehrerer Gruppen zu der HashMap zusammenfassen.
 	//Merke: Der Button steuert über den Index die Reihenfolge
 	HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmIndexed = null;
@@ -127,7 +128,7 @@ public class JComponentGroupCollectionZZZ<T>  extends AbstractKernelUseObjectZZZ
 	private VectorExtendedZZZ<Integer>getVectorIndex() throws ExceptionZZZ{
 		return this.getHashMapIndexed().getVectorIndex();
 	}
-	private HashMap<Integer,Object> getHashMap() throws ExceptionZZZ{		
+	private HashMap<Integer, JComponentGroupZZZ> getHashMap() throws ExceptionZZZ{		
 		return this.getHashMapIndexed().getHashMap();		
 	}		
 	
