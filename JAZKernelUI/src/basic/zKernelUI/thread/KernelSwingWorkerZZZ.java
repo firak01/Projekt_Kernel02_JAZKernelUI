@@ -93,6 +93,17 @@ public abstract class KernelSwingWorkerZZZ extends SwingWorker  implements IObje
 		this.objException = objException;
 	}
 	
+	@Override
+	public Object clonez() throws ExceptionZZZ {
+		try {
+			return this.clone();
+		}catch(CloneNotSupportedException e) {
+			ExceptionZZZ ez = new ExceptionZZZ(e);
+			throw ez;
+				
+		}
+	}
+	
 	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
 	@Override
 	public void logLineDate(String sLog) throws ExceptionZZZ {

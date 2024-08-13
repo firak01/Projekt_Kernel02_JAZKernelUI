@@ -820,6 +820,17 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		this.panelParent = objPanel;
 	}
 	
+	@Override
+	public Object clonez() throws ExceptionZZZ {
+		try {
+			return this.clone();
+		}catch(CloneNotSupportedException e) {
+			ExceptionZZZ ez = new ExceptionZZZ(e);
+			throw ez;
+				
+		}
+	}
+	
 	//#################### Interface IMouseFeature
 	/* (non-Javadoc)
 	 * @see basic.zKernelUI.IMouseFeatureZZZ#isJComponentContentDraggable()

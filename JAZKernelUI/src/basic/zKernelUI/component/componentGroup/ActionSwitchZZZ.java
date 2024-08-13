@@ -200,6 +200,8 @@ public class ActionSwitchZZZ extends  AbstractKernelActionListenerCascadedZZZ im
 			sReturn = ReflectionToStringBuilder.toString(this);
 			return sReturn;
 		}
+
+		
 	
 	} //End Class SwingWorker: SwingWorker4ProgramSWITCH	
 }

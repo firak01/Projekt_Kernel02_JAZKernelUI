@@ -1052,6 +1052,19 @@ public void setFrameSub(String sAlias, JFrame objFrame){
 		return null;
 	}
 	
+	@Override
+	public Object clonez() throws ExceptionZZZ {
+		try {
+			return this.clone();
+		}catch(CloneNotSupportedException e) {
+			ExceptionZZZ ez = new ExceptionZZZ(e);
+			throw ez;
+				
+		}
+	}
+	
+	//################################################################
+	//### FLAG Handling
 	
 	//### Aus IFlagUserZZZ
 	@Override
