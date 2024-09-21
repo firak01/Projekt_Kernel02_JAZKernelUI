@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
-import basic.zBasic.util.abstractList.VectorExtendedZZZ;
+import basic.zBasic.util.abstractList.VectorZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.AbstractKernelUseObjectZZZ;
@@ -125,7 +125,7 @@ public class JComponentGroupCollectionZZZ<T>  extends AbstractKernelUseObjectZZZ
 	private void setHashMapIndexed(HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmIndexed) {
 		this.hmIndexed = hmIndexed;
 	}
-	private VectorExtendedZZZ<Integer>getVectorIndex() throws ExceptionZZZ{
+	private VectorZZZ<Integer>getVectorIndex() throws ExceptionZZZ{
 		return this.getHashMapIndexed().getVectorIndex();
 	}
 	private HashMap<Integer, JComponentGroupZZZ> getHashMap() throws ExceptionZZZ{		
@@ -280,7 +280,7 @@ public class JComponentGroupCollectionZZZ<T>  extends AbstractKernelUseObjectZZZ
             	boolean bReturn = false;
             	main:{
             		try {
-	            	VectorExtendedZZZ<Integer> vec = getVectorIndex();
+	            	VectorZZZ<Integer> vec = getVectorIndex();
 					
 	            	if(vec==null)break main;
 	            	if(!vec.hasAnyElement())break main;
@@ -303,7 +303,7 @@ public class JComponentGroupCollectionZZZ<T>  extends AbstractKernelUseObjectZZZ
                 T objReturn = null;
                 main:{
                 	try {
-	                	VectorExtendedZZZ<Integer> vec = getVectorIndex();
+	                	VectorZZZ<Integer> vec = getVectorIndex();
 		            	if(vec==null)break main;
 		            	if(!vec.hasAnyElement())break main;
 		            	

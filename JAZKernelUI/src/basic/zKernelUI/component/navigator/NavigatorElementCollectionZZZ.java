@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
-import basic.zBasic.util.abstractList.VectorExtendedZZZ;
+import basic.zBasic.util.abstractList.VectorZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.AbstractKernelUseObjectZZZ;
 import basic.zKernel.IKernelZZZ;
@@ -133,10 +133,10 @@ public class NavigatorElementCollectionZZZ<T>  extends AbstractKernelUseObjectZZ
 	private void setHashMapIndexed(HashMapIndexedZZZ<Integer, ArrayList<INavigatorElementZZZ>> hmElement) {
 		this.hmIndexed = hmElement;
 	}
-	private VectorExtendedZZZ<Integer>getVectorIndex() throws ExceptionZZZ{
+	private VectorZZZ<Integer>getVectorIndex() throws ExceptionZZZ{
 		return this.getHashMapIndexed().getVectorIndex();
 	}
-	private HashMap<Integer,Object> getHashMap() throws ExceptionZZZ{		
+	private HashMap<Integer, ArrayList<INavigatorElementZZZ>> getHashMap() throws ExceptionZZZ{		
 		return this.getHashMapIndexed().getHashMap();		
 	}		
 	
@@ -280,7 +280,7 @@ public class NavigatorElementCollectionZZZ<T>  extends AbstractKernelUseObjectZZ
             	boolean bReturn = false;
             	main:{
             		try {
-	            	VectorExtendedZZZ<Integer> vec = getVectorIndex();
+	            	VectorZZZ<Integer> vec = getVectorIndex();
 					
 	            	if(vec==null)break main;
 	            	if(!vec.hasAnyElement())break main;
@@ -303,7 +303,7 @@ public class NavigatorElementCollectionZZZ<T>  extends AbstractKernelUseObjectZZ
                 T objReturn = null;
                 main:{
                 	try {
-	                	VectorExtendedZZZ<Integer> vec = getVectorIndex();
+	                	VectorZZZ<Integer> vec = getVectorIndex();
 		            	if(vec==null)break main;
 		            	if(!vec.hasAnyElement())break main;
 		            	
