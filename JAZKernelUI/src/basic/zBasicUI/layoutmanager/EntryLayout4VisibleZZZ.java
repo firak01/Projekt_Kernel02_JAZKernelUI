@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ReflectCodeZZZ;
-import basic.zBasic.util.abstractList.ArrayListZZZ;
+import basic.zBasic.util.abstractList.ArrayListUtilZZZ;
 import basic.zBasic.util.math.MathZZZ;
 
 
@@ -110,7 +110,7 @@ public class EntryLayout4VisibleZZZ implements LayoutManager {
 				listaComponent.add(c);
 			}
 		}
-		Component[] componentsVisible = ArrayListZZZ.toComponentArray(listaComponent);
+		Component[] componentsVisible = ArrayListUtilZZZ.toComponentArray(listaComponent);
 		
 		
 		//FGL 20211104: Wenn aber eine ungerade Zahl der Componenten da ist - wie z.B. in der DebugUI-Zeile - gibt es einen Fehler: heights = new int[(components.length / COLUMNS];
@@ -217,7 +217,7 @@ public class EntryLayout4VisibleZZZ implements LayoutManager {
 			return;
 		}
 		
-		Component[] componentsVisible = ArrayListZZZ.toComponentArray(listaComponent);
+		Component[] componentsVisible = ArrayListUtilZZZ.toComponentArray(listaComponent);
 		
 		//####### HOEHE ##########################################
 		//FGL: Arbeite mit Arrays, die dann feste Werte haben und sich auf die "Row" beziehen.

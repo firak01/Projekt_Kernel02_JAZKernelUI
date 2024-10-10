@@ -7,7 +7,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 
 import basic.zBasic.ExceptionZZZ;
-import basic.zBasic.util.abstractList.ArrayListZZZ;
+import basic.zBasic.util.abstractList.ArrayListUtilZZZ;
 import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zKernel.IKernelZZZ;
@@ -140,7 +140,7 @@ public class JComponentGroupZZZ extends AbstractKernelUseObjectZZZ implements IL
 				if(component instanceof JLabel) {					
 					ArrayList<String> listaText = (ArrayList<String>) hmValues.getValue(iIndex);		
 					
-					String[]saParent=ArrayListZZZ.toStringArray(listaText);				
+					String[]saParent=ArrayListUtilZZZ.toStringArray(listaText);				
 					String sHtml = StringArrayZZZ.asHtml(saParent);
 					
 					JLabel label = (JLabel)component;
