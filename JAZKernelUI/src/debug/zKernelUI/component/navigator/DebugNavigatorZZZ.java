@@ -1,8 +1,8 @@
 package debug.zKernelUI.component.navigator;
 
 import basic.zBasic.ExceptionZZZ;
+import basic.zBasic.IObjectWithExpressionZZZ;
 import basic.zKernel.KernelZZZ;
-import basic.zKernel.file.ini.IIniTagWithExpressionZZZ;
 import basic.zKernel.file.ini.IKernelExpressionIniSolverZZZ;
 import basic.zKernel.file.ini.IKernelJsonArrayIniSolverZZZ;
 import basic.zKernel.file.ini.IKernelJsonIniSolverZZZ;
@@ -17,7 +17,7 @@ public class DebugNavigatorZZZ {
 	public static void main(String[] args) {
 		try {
 			//1. Kernel Objekt initialisieren. Dies ist fuer das Logging grundlegend.
-			String[] saFlag= {"DEBUGUI_PANELLABEL_ON","useFormula", IKernelZFormulaIni_PathZZZ.FLAGZ.USEEXPRESSION_PATH.name(), IKernelZFormulaIni_VariableZZZ.FLAGZ.USEEXPRESSION_VARIABLE.name(), IIniTagWithExpressionZZZ.FLAGZ.USEEXPRESSION.name(), IKernelExpressionIniSolverZZZ.FLAGZ.USEEXPRESSION_SOLVER.name(), IKernelJsonIniSolverZZZ.FLAGZ.USEJSON.name(), IKernelJsonArrayIniSolverZZZ.FLAGZ.USEJSON_ARRAY.name(), IKernelJsonMapIniSolverZZZ.FLAGZ.USEJSON_MAP.name()};
+			String[] saFlag= {"DEBUGUI_PANELLABEL_ON","useFormula", IKernelZFormulaIni_PathZZZ.FLAGZ.USEEXPRESSION_PATH.name(), IKernelZFormulaIni_VariableZZZ.FLAGZ.USEEXPRESSION_VARIABLE.name(), IObjectWithExpressionZZZ.FLAGZ.USEEXPRESSION.name(), IKernelExpressionIniSolverZZZ.FLAGZ.USEEXPRESSION_SOLVER.name(), IKernelJsonIniSolverZZZ.FLAGZ.USEJSON.name(), IKernelJsonArrayIniSolverZZZ.FLAGZ.USEJSON_ARRAY.name(), IKernelJsonMapIniSolverZZZ.FLAGZ.USEJSON_MAP.name()};
 			KernelZZZ objKernel = new KernelZZZ("FGL", "01", "", "ZKernelConfigConfig_default.ini", saFlag);
 			LogZZZ objLog = objKernel.getLogObject();
 			
