@@ -99,6 +99,19 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 		
 	}
 	
+	//### Aus IResettableValuesZZZ
+	@Override
+	public boolean reset() throws ExceptionZZZ{
+		return super.reset();
+	}
+	
+	@Override
+	public boolean resetValues() throws ExceptionZZZ{
+		//super.resetValues();//gibt es nicht
+		this.sText2Update = "";
+		return true;
+	}
+	
 	//### Getter / Setter
 		public KernelJPanelCascadedZZZ getPanelParent(){
 			return this.panel;
@@ -115,12 +128,7 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 	public abstract void updateMessage(String stext) throws ExceptionZZZ;
 	
 	
-	/* (non-Javadoc)
-	 * @see basic.zKernel.component.AbstractKernelProgramZZZ#reset()
-	 */
-	public void reset() {
-		this.sText2Update = ""; 
-	}
+	
 				
 	public final void updateComponent(String sComponent4update, String sValue) throws ExceptionZZZ {
 		main:{
