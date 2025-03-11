@@ -14,7 +14,7 @@ import basic.zKernelUI.util.JFrameHelperZZZ;
 import custom.zKernelUI.module.config.PanelConfigZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
-import basic.zKernel.flag.IFlagZUserZZZ;
+import basic.zKernel.flag.IFlagZEnabledZZZ;
 
 public class DLGBOX4INIZZZ  extends KernelJFrameCascadedZZZ  implements IJNILotusscriptCallableZZZ {
 	protected IKernelZZZ objKernelChoosen;  //Merke: Das wird erst im launch() mitgegeben !!!

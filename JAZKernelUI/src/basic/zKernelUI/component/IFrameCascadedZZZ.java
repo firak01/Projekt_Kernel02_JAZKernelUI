@@ -4,9 +4,9 @@ import java.util.Hashtable;
 
 import javax.swing.JFrame;
 
-import basic.zKernel.flag.IFlagZUserZZZ;
+import basic.zKernel.flag.IFlagZEnabledZZZ;
 
-public interface IFrameCascadedZZZ extends IFlagZUserZZZ{
+public interface IFrameCascadedZZZ extends IFlagZEnabledZZZ{
 	public enum FLAGZ{
 		COMPONENT_DRAGGABLE,TERMINATE;
 	}

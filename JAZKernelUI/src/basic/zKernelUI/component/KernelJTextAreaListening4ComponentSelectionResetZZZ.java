@@ -21,12 +21,12 @@ import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelLogZZZ;
-import basic.zKernel.flag.IFlagZUserZZZ;
+import basic.zKernel.flag.IFlagZEnabledZZZ;
 import basic.zKernelUI.component.model.EventComponentSelectionResetZZZ;
 import basic.zKernelUI.component.model.IListenerSelectionResetZZZ;
 import custom.zKernel.LogZZZ;
 
-public abstract class KernelJTextAreaListening4ComponentSelectionResetZZZ extends JTextArea implements ITextAreaListening4ComponentSelectionResetZZZ, IObjectZZZ, IFlagZUserZZZ, IKernelUserZZZ, IListenerSelectionResetZZZ{
+public abstract class KernelJTextAreaListening4ComponentSelectionResetZZZ extends JTextArea implements ITextAreaListening4ComponentSelectionResetZZZ, IObjectZZZ, IFlagZEnabledZZZ, IKernelUserZZZ, IListenerSelectionResetZZZ{
 	private IKernelZZZ objKernel;
 	private LogZZZ objLog;
 	
@@ -328,12 +328,12 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 	}
 	@Override
 	public String[] getFlagZ_passable(boolean bValueToSearchFor,
-			IFlagZUserZZZ objUsingFlagZ) throws ExceptionZZZ {
+			IFlagZEnabledZZZ objUsingFlagZ) throws ExceptionZZZ {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public String[] getFlagZ_passable(IFlagZUserZZZ objUsingFlagZ)
+	public String[] getFlagZ_passable(IFlagZEnabledZZZ objUsingFlagZ)
 			throws ExceptionZZZ {
 		// TODO Auto-generated method stub
 		return null;

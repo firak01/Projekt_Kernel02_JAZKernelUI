@@ -19,7 +19,7 @@ import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.util.JFrameHelperZZZ;
 import basic.zKernel.KernelZZZ;
 import basic.zKernel.component.IKernelProgramZZZ;
-import basic.zKernel.flag.IFlagZUserZZZ;
+import basic.zKernel.flag.IFlagZEnabledZZZ;
 
 /**
  * @author 0823
@@ -72,7 +72,7 @@ public class KernelJPanelCascadedZZZTest  extends TestCase{
 			}
 		
 			//Test auf Flags aus dem basic-Bereich
-			boolean btemp = panelMainTest.proofFlagExists(IFlagZUserZZZ.FLAGZ.DEBUG);			
+			boolean btemp = panelMainTest.proofFlagExists(IFlagZEnabledZZZ.FLAGZ.DEBUG);			
 			assertTrue(btemp);
 			
 			btemp = panelMainTest.proofFlagExists("nixda");			

@@ -13,7 +13,7 @@ import basic.zKernel.IKernelZZZ;
 import basic.zKernel.component.AbstractKernelProgramZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.component.IKernelProgramZZZ;
-import basic.zKernel.flag.IFlagZUserZZZ;
+import basic.zKernel.flag.IFlagZEnabledZZZ;
 import basic.zKernelUI.util.JTextFieldHelperZZZ;
 import custom.zKernel.LogZZZ;
 
