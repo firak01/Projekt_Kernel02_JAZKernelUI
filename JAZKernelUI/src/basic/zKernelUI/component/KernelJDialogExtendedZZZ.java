@@ -49,7 +49,6 @@ import custom.zKernel.LogZZZ;
 public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialogExtendedZZZ, IConstantZZZ, IObjectZZZ, IKernelUserZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IScreenFeatureZZZ, IMouseFeatureZZZ, IFlagZEnabledZZZ, IFlagZLocalEnabledZZZ{
 	protected IKernelZZZ objKernel;
 	protected LogZZZ objLog;
-	protected ExceptionZZZ objException;
 	protected IKernelModuleZZZ objModule=null; //Das Modul, z.B. für die Dialogbox
 	
 	protected IPanelCascadedZZZ panelContent = null;
@@ -585,61 +584,52 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 
 	//######## aus interfaces #################
 	//#################### Interface IObjectZZZ
-		@Override
-		public ExceptionZZZ getExceptionObject() {
-			return this.objException;
-		}
+				
+	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
+	@Override
+	public void logLineDate(String sLog) throws ExceptionZZZ {
+		LogZZZ objLog = this.getLogObject();
+		if(objLog==null) {
+			String sTemp = KernelLogZZZ.computeLineDate(sLog);
+			System.out.println(sTemp);
+		}else {
+			objLog.WriteLineDate(sLog);
+		}		
+	}	
 
-		@Override
-		public void setExceptionObject(ExceptionZZZ objException) {
-			 this.objException = objException;
-		}
-		
-		//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
-		@Override
-		public void logLineDate(String sLog) throws ExceptionZZZ {
-			LogZZZ objLog = this.getLogObject();
-			if(objLog==null) {
-				String sTemp = KernelLogZZZ.computeLineDate(sLog);
-				System.out.println(sTemp);
-			}else {
-				objLog.WriteLineDate(sLog);
-			}		
-		}	
+	//#################### Interface IKernelUserZZZ
+	/* (non-Javadoc)
+	 * @see basic.zKernel.IKernelUserZZZ#getKernelObject()
+	 */
+	@Override
+	public IKernelZZZ getKernelObject() {
+		return objKernel;
+	}
 
-		//#################### Interface IKernelUserZZZ
-		/* (non-Javadoc)
-		 * @see basic.zKernel.IKernelUserZZZ#getKernelObject()
-		 */
-		@Override
-		public IKernelZZZ getKernelObject() {
-			return objKernel;
-		}
+	/* (non-Javadoc)
+	 * @see basic.zKernel.IKernelUserZZZ#setKernelObject(basic.zKernel.IKernelZZZ)
+	 */
+	@Override
+	public void setKernelObject(IKernelZZZ objKernel) {
+		this.objKernel = objKernel;
+	}
 
-		/* (non-Javadoc)
-		 * @see basic.zKernel.IKernelUserZZZ#setKernelObject(basic.zKernel.IKernelZZZ)
-		 */
-		@Override
-		public void setKernelObject(IKernelZZZ objKernel) {
-			this.objKernel = objKernel;
-		}
+	/* (non-Javadoc)
+	 * @see basic.zKernel.IKernelLogUserZZZ#getLogObject()
+	 */
+	@Override
+	public LogZZZ getLogObject() {
+		return this.objLog;
+	}
 
-		/* (non-Javadoc)
-		 * @see basic.zKernel.IKernelLogUserZZZ#getLogObject()
-		 */
-		@Override
-		public LogZZZ getLogObject() {
-			return this.objLog;
-		}
+	/* (non-Javadoc)
+	 * @see basic.zKernel.IKernelLogUserZZZ#setLogObject(custom.zKernel.LogZZZ)
+	 */
+	@Override
+	public void setLogObject(LogZZZ objLog) {
+		this.objLog = objLog;
+	}
 
-		/* (non-Javadoc)
-		 * @see basic.zKernel.IKernelLogUserZZZ#setLogObject(custom.zKernel.LogZZZ)
-		 */
-		@Override
-		public void setLogObject(LogZZZ objLog) {
-			this.objLog = objLog;
-		}
-	
 		
 	//#####################################
 	/* (non-Javadoc)

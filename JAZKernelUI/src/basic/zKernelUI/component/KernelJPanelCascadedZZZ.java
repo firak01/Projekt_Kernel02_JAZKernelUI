@@ -55,7 +55,6 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		
 	protected IKernelZZZ objKernel;   //das "protected" erlaubt es hiervon erbende Klassen mit XYXErbendeKlasse.objKernel zu arbeiten.
 	protected LogZZZ objLog;
-	protected ExceptionZZZ objException;
 	protected IKernelModuleZZZ objModule=null; //Das Modul, z.B. die Dialogbox, in der das Program gestartet wird.
 
 	//Zum Suchen das Panels einen Alias vergeben.
@@ -739,16 +738,6 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 
 
 	//#################### Interface IObjectZZZ
-	@Override
-	public ExceptionZZZ getExceptionObject() {
-		return this.objException;
-	}
-
-	@Override
-	public void setExceptionObject(ExceptionZZZ objException) {
-		 this.objException = objException;
-	}
-	
 	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
 	@Override
 	public void logLineDate(String sLog) throws ExceptionZZZ {

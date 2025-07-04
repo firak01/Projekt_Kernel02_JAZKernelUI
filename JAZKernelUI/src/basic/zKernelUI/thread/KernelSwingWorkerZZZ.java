@@ -41,8 +41,7 @@ import custom.zKernel.LogZZZ;
 public abstract class KernelSwingWorkerZZZ extends SwingWorker  implements IObjectZZZ, IKernelUserZZZ{
 	protected IKernelZZZ objKernel = null;
 	protected LogZZZ objLog = null;
-	protected ExceptionZZZ objException = null;    // diese Exception hat jedes Objekt
-		
+			
 	public KernelSwingWorkerZZZ() {
 		super();
 	}
@@ -83,16 +82,9 @@ public abstract class KernelSwingWorkerZZZ extends SwingWorker  implements IObje
 		this.objKernel = objKernel;
 	}
 
-	@Override
-	public ExceptionZZZ getExceptionObject() {
-		return this.objException;
-	}
-
-	@Override
-	public void setExceptionObject(ExceptionZZZ objException) {
-		this.objException = objException;
-	}
 	
+	//+++ aus IObjectZZZ
+	//Meine Variante Objekte zu clonen
 	@Override
 	public Object clonez() throws ExceptionZZZ {
 		try {
