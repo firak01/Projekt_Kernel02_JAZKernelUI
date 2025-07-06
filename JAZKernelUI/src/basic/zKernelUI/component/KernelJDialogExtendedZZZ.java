@@ -583,21 +583,22 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 		
 
 	//######## aus interfaces #################
-	//#################### Interface IObjectZZZ
-				
-	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
+	
+	//### aus IObjectZZZ
+	//Meine Variante Objekte zu clonen, aber erzeugt nur einen "Shallow Clone".
 	@Override
-	public void logLineDate(String sLog) throws ExceptionZZZ {
-		LogZZZ objLog = this.getLogObject();
-		if(objLog==null) {
-			String sTemp = KernelLogZZZ.computeLineDate(sLog);
-			System.out.println(sTemp);
-		}else {
-			objLog.WriteLineDate(sLog);
-		}		
-	}	
+	public Object clonez() throws ExceptionZZZ {
+		try {
+			return this.clone();
+		}catch(CloneNotSupportedException e) {
+			ExceptionZZZ ez = new ExceptionZZZ(e);
+			throw ez;
+				
+		}
+	}
+   
 
-	//#################### Interface IKernelUserZZZ
+	//### Interface IKernelUserZZZ
 	/* (non-Javadoc)
 	 * @see basic.zKernel.IKernelUserZZZ#getKernelObject()
 	 */
@@ -613,6 +614,19 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 	public void setKernelObject(IKernelZZZ objKernel) {
 		this.objKernel = objKernel;
 	}
+	
+	//### aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
+	@Override
+	public void logLineDate(String sLog) throws ExceptionZZZ {
+		LogZZZ objLog = this.getLogObject();
+		if(objLog==null) {
+			String sTemp = KernelLogZZZ.computeLineDate(sLog);
+			System.out.println(sTemp);
+		}else {
+			objLog.WriteLineDate(sLog);
+		}		
+	}	
+		
 
 	/* (non-Javadoc)
 	 * @see basic.zKernel.IKernelLogUserZZZ#getLogObject()
@@ -1224,8 +1238,6 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 		this.resetModuleUsed();
 		return true;
 	}
-
-	    
 		
 	//### AUS IKernelModuleZZZ
 	@Override
