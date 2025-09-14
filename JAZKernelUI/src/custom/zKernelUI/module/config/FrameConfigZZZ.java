@@ -3,6 +3,7 @@ import javax.swing.JComponent;
 
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
+import basic.zKernel.flag.IFlagZEnabledZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelJFrameCascadedZZZ;
@@ -93,4 +94,5 @@ public IPanelCascadedZZZ createPanelContent() throws ExceptionZZZ {
 	PanelConfigZZZ objReturn = new PanelConfigZZZ(this.getKernelObject(), this, this.objKernelChoosen);//, this.getKernelConfigObject());
 	return objReturn;
 }
+
 }//END class

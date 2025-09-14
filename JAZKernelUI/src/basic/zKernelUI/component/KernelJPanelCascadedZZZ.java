@@ -37,6 +37,7 @@ import basic.zKernel.component.IKernelProgramZZZ;
 import basic.zKernelUI.component.IMouseFeatureZZZ;
 import basic.zKernel.flag.FlagZHelperZZZ;
 import basic.zKernel.flag.IFlagZLocalEnabledZZZ;
+import basic.zKernel.flag.util.FlagZFassadeZZZ;
 import basic.zKernel.flag.IFlagZEnabledZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import basic.zKernelUI.component.componentGroup.JComponentGroupCollectionZZZ;
@@ -861,6 +862,8 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		}
 	}
 	
+	
+	//### aus IFlagEnabledZZZ
 	@Override
 	public boolean getFlag(IMouseFeatureZZZ.FLAGZ objEnumFlag) {
 		return this.getFlag(objEnumFlag.name());
@@ -1186,6 +1189,24 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				}						
 			}//end main:
 			return bReturn;
+		}
+		
+		/* (non-Javadoc)
+		 * @see basic.zKernel.flag.IFlagZEnabledZZZ#adoptFlagZrelevantFrom(basic.zKernel.flag.IFlagZEnabledZZZ, boolean)
+		 */
+		@Override
+		public int adoptFlagZrelevantFrom(IFlagZEnabledZZZ objUsingFlagZ, boolean bValueToSearchFor) throws ExceptionZZZ{
+			int iReturn = 0;		
+			main:{
+				String[] saFlagZpassed = FlagZFassadeZZZ.seekFlagZrelevantForObject(this, objUsingFlagZ, bValueToSearchFor);
+				if(StringArrayZZZ.isEmpty(saFlagZpassed)) break main;
+				
+				for(String sFlag: saFlagZpassed) {
+					boolean btemp = this.setFlag(sFlag, bValueToSearchFor);
+					if(btemp) iReturn++;
+				}
+			}//end main:
+			return iReturn;
 		}
 					
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
