@@ -37,6 +37,7 @@ import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.file.ini.IKernelEncryptionIniSolverZZZ;
 import basic.zKernel.flag.FlagZHelperZZZ;
 import basic.zKernel.flag.IFlagZLocalEnabledZZZ;
+import basic.zKernel.flag.util.FlagZFassadeZZZ;
 import basic.zKernel.flag.IFlagZEnabledZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import basic.zKernelUI.util.JTextFieldHelperZZZ;
@@ -904,6 +905,22 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 				}//end main:
 				return saReturn;
 			}
+			
+			@Override
+			public int adoptFlagZrelevantFrom(IFlagZEnabledZZZ objUsingFlagZ, boolean bValueToSearchFor) throws ExceptionZZZ{
+				int iReturn = 0;		
+				main:{
+					String[] saFlagZpassed = FlagZFassadeZZZ.seekFlagZrelevantForObject(this, objUsingFlagZ, bValueToSearchFor);
+					if(StringArrayZZZ.isEmpty(saFlagZpassed)) break main;
+					
+					for(String sFlag: saFlagZpassed) {
+						boolean btemp = this.setFlag(sFlag, bValueToSearchFor);
+						if(btemp) iReturn++;
+					}
+				}//end main:
+				return iReturn;
+			}
+			
 			
 			
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
