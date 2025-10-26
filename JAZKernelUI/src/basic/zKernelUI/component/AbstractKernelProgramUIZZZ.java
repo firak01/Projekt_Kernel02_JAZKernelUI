@@ -108,8 +108,25 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 	@Override
 	public boolean resetValues() throws ExceptionZZZ{
 		//super.resetValues();//gibt es nicht
-		this.sText2Update = "";
-		return true;
+		
+		boolean bReturn = false;
+		
+		//Wenn irgendetwas gesetzt war true zurueckgeben
+		if(this.sText2Update!=null) bReturn = true;
+
+		this.sText2Update = null;
+		return bReturn;
+	}
+	
+	@Override
+	public boolean resetValues(Object objDefault) throws ExceptionZZZ {
+		boolean bReturn = false;
+		
+		//Wenn irgendetwas gesetzt war true zurueckgeben
+		if(this.sText2Update!=null) bReturn = true;
+
+		this.sText2Update=objDefault.toString();		
+		return bReturn;		
 	}
 	
 	//### Getter / Setter

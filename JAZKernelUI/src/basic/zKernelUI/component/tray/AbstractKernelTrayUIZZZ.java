@@ -264,7 +264,7 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 		return bReturn;
 	}
 
-	//+++ Aus IListenerObjectStatusLocalSetOVPN	
+	//+++ Aus IListenerObjectStatusLocalOVPN	
 	@Override
 	public boolean reactOnStatusLocalEvent(IEventObjectStatusLocalZZZ eventStatusLocal) throws ExceptionZZZ {
 				//Der Tray ist am MainObjekt registriert.
@@ -287,7 +287,8 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 		}
 		
 		//+++++++++++++++++++++
-		HashMap<IEnumSetMappedStatusZZZ,IEnumSetMappedStatusZZZ>hmEnum = this.getHashMapEnumSetForCascadingStatusLocal();				
+		//HashMap<IEnumSetMappedStatusZZZ,IEnumSetMappedStatusZZZ>hmEnum = this.getHashMapEnumSetForCascadingStatusLocal();				
+		HashMap<IEnumSetMappedStatusZZZ,IEnumSetMappedStatusZZZ>hmEnum = this.getHashMapStatusLocal4Reaction_EnumStatus();
 		if(hmEnum==null) {
 			sLog = ReflectCodeZZZ.getPositionCurrent()+": Keine Mapping Hashmap fuer das StatusMapping vorhanden. Breche ab";
 			System.out.println(sLog);
@@ -308,6 +309,22 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 		
 		//Nur so als Beispiel, muss ueberschrieben werden:
 		//Lies den Status (geworfen vom Backend aus)
+		
+		/* Loesung: DOWNCASTING mit instanceof , s.: https://www.positioniseverything.net/typeof-java/
+	 	class Animal { }
+		class Dog2 extends Animal {
+			static void method(Animal j) {
+			if(j instanceof Dog2){
+			Dog2 d=(Dog2)j;//downcasting
+			System.out.println(“downcasting done”);
+			}
+			}
+			public static void main (String [] args) {
+			Animal j=new Dog2();
+			Dog2.method(j);
+			}
+		}
+		*/
 		if(eventStatusLocal instanceof IEventObjectStatusLocalZZZ) {
 			IEventObjectStatusLocalZZZ eventStatusLocalReact = (IEventObjectStatusLocalZZZ) eventStatusLocal;					
 			String sStatus = eventStatusLocalReact.getStatusMessage();
@@ -409,7 +426,7 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 				String sStatusAbbreviationLocal = null;
 				IEnumSetMappedZZZ objEnumStatusLocal = null;
 	
-				HashMap<IEnumSetMappedStatusZZZ,IEnumSetMappedZZZ>hm=this.createHashMapEnumSetForStatusLocalCustom();
+				HashMap<IEnumSetMappedStatusZZZ,IEnumSetMappedZZZ>hm=this.createHashMapStatusLocal4ReactionCustom_Enum();
 				objEnumStatusLocal = hm.get(enumStatusFromEvent);					
 				//###############################
 				
@@ -574,7 +591,17 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 		return objReturn;
 	}
 	
-	public abstract HashMap<IEnumSetMappedStatusZZZ,IEnumSetMappedStatusZZZ> getHashMapEnumSetForCascadingStatusLocal();
+
+	//public abstract HashMap<IEnumSetMappedStatusZZZ,IEnumSetMappedStatusZZZ> getHashMapEnumSetForCascadingStatusLocal();
+	/* (non-Javadoc)
+	 * @see basic.zKernel.status.IListenerObjectStatusLocalZZZ#createHashMapStatusLocal4ReactionCustom_EnumStatus()
+	 */
+	@Override
+	public abstract HashMap<IEnumSetMappedStatusZZZ,IEnumSetMappedStatusZZZ> createHashMapStatusLocal4ReactionCustom_EnumStatus();
+	
+	@Override
+	public abstract HashMap<IEnumSetMappedStatusZZZ,IEnumSetMappedStatusZZZ> getHashMapStatusLocal4Reaction_EnumStatus();
+
 	
 }//END Class
 
