@@ -599,9 +599,5 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 	@Override
 	public abstract HashMap<IEnumSetMappedStatusZZZ,IEnumSetMappedStatusZZZ> createHashMapStatusLocal4ReactionCustom_EnumStatus();
 	
-	@Override
-	public abstract HashMap<IEnumSetMappedStatusZZZ,IEnumSetMappedStatusZZZ> getHashMapStatusLocal4Reaction_EnumStatus();
-
-	
 }//END Class
 
