@@ -156,6 +156,9 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 		return sReturn;
 	}
 	
+	
+	
+	
 	//### Den Font über alle vorhandenen Einträge einer Menubar ändern
 	public int updateMenuBarFontAll(Font font) throws ExceptionZZZ{
 		int iReturn = 0;
@@ -729,12 +732,23 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 	public void logLineDate(String sLog) throws ExceptionZZZ {
 		LogZZZ objLog = this.getLogObject();
 		if(objLog==null) {
-			String sTemp = KernelLogZZZ.computeLineDate(sLog);
+			String sTemp = KernelLogZZZ.computeLineDate(this, sLog);
 			System.out.println(sTemp);
 		}else {
 			objLog.WriteLineDate(sLog);
 		}		
 	}	
+	
+	@Override
+	public void logLineDateWithPosition(String sLog) throws ExceptionZZZ {
+		LogZZZ objLog = this.getLogObject();
+		if(objLog==null) {
+			String sTemp = KernelLogZZZ.computeLineDateWithPosition(this, sLog);
+			System.out.println(sTemp);
+		}else {
+			objLog.WriteLineDateWithPosition(this, sLog);
+		}	
+	}
 	
 	public abstract boolean setSizeDefault() throws ExceptionZZZ;
 	

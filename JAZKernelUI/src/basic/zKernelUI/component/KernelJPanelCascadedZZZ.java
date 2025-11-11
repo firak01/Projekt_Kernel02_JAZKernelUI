@@ -744,12 +744,23 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	public void logLineDate(String sLog) throws ExceptionZZZ {
 		LogZZZ objLog = this.getLogObject();
 		if(objLog==null) {
-			String sTemp = KernelLogZZZ.computeLineDate(sLog);
+			String sTemp = KernelLogZZZ.computeLineDate(this, sLog);
 			System.out.println(sTemp);
 		}else {
 			objLog.WriteLineDate(sLog);
 		}		
 	}	
+	
+	@Override
+	public void logLineDateWithPosition(String sLog) throws ExceptionZZZ {
+		LogZZZ objLog = this.getLogObject();
+		if(objLog==null) {
+			String sTemp = KernelLogZZZ.computeLineDateWithPosition(this, sLog);
+			System.out.println(sTemp);
+		}else {
+			objLog.WriteLineDateWithPosition(this, sLog);
+		}	
+	}
 	
 	
 	public JComponent getComponent(String sAlias) {

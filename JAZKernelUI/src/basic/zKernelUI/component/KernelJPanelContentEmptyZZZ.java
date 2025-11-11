@@ -51,6 +51,8 @@ public class KernelJPanelContentEmptyZZZ extends KernelJPanelCascadedZZZ{
 		}
 		return bReturn;
 	}
+
+	
 	
 	//#### Getter / Setter ##########################
 
