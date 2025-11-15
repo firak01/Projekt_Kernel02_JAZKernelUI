@@ -301,7 +301,7 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 		IEnumSetMappedStatusZZZ objEnum = hmEnum.get(enumStatus);							
 		if(objEnum==null) {
 			sLog = ReflectCodeZZZ.getPositionCurrent()+": Keinen gemappten Status für en Status aus dem Event-Objekt erhalten. Breche ab";					
-			this.logProtocolString(sLog);
+			this.logProtocol(sLog);
 			break main;
 		}
 		
@@ -332,7 +332,7 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 			System.out.println(ReflectCodeZZZ.getPositionCurrent() + ": sStatus='"+sStatus+"'");
 		}else {
 			sLog = ReflectCodeZZZ.getPositionCurrent()+": Event ist kein instanceof IEventObjectStatusLocalZZZ. Breche ab.";					
-			this.logProtocolString(sLog);
+			this.logProtocol(sLog);
 		}
 		
 	}//end main:
