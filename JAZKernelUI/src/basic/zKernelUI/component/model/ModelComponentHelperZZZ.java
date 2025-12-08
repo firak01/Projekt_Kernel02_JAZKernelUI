@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.util.abstractList.ArrayListUtilZZZ;
-import basic.zBasic.util.abstractList.HashMapIndexedObjektZZZ;
+import basic.zBasic.util.abstractList.HashMapIndexedObjectZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.component.componentGroup.ModelPanelDebugZZZ;
@@ -33,7 +33,7 @@ public class ModelComponentHelperZZZ {
 		return objReturn;
 	}	
 	
-	public static ArrayList<JLabel>createLabelArrayList(HashMapIndexedObjektZZZ<Integer,ArrayList<String>> hmTextValues) throws ExceptionZZZ {
+	public static ArrayList<JLabel>createLabelArrayList(HashMapIndexedObjectZZZ<Integer,ArrayList<String>> hmTextValues) throws ExceptionZZZ {
 		ArrayList<JLabel>listaReturn=null;//Auch wenn eine Indexposition nix füllen sollte, leere Liste zurückgeben.
 		main:{
 			JLabel labelDebug;									
@@ -56,7 +56,7 @@ public class ModelComponentHelperZZZ {
 		return listaReturn;
 	}	
 	
-	public static ArrayList<JComponent>createComponentArrayList(HashMapIndexedObjektZZZ<Integer,ArrayList<String>> hmTextValues) throws ExceptionZZZ {
+	public static ArrayList<JComponent>createComponentArrayList(HashMapIndexedObjectZZZ<Integer,ArrayList<String>> hmTextValues) throws ExceptionZZZ {
 		ArrayList<JComponent>listaReturn=null;//Auch wenn eine Indexposition nix füllen sollte, leere Liste zurückgeben.
 		main:{
 			JComponent componentDebug;									
@@ -79,7 +79,7 @@ public class ModelComponentHelperZZZ {
 		return listaReturn;
 	}	
 	
-	public static boolean fillComponentHashMap(HashMapIndexedObjektZZZ<Integer,ArrayList<JComponent>> hmComponentsIndexed, HashMapIndexedObjektZZZ<Integer,ArrayList<String>> hmValuesText, int iIndexInCollection) throws ExceptionZZZ {
+	public static boolean fillComponentHashMap(HashMapIndexedObjectZZZ<Integer,ArrayList<JComponent>> hmComponentsIndexed, HashMapIndexedObjectZZZ<Integer,ArrayList<String>> hmValuesText, int iIndexInCollection) throws ExceptionZZZ {
 		boolean bReturn = false;
 		main:{
 			if(hmComponentsIndexed==null) break main;
@@ -97,7 +97,7 @@ public class ModelComponentHelperZZZ {
 		return bReturn;
 	}
 	
-	public static boolean fillLabelHashMap(HashMapIndexedObjektZZZ<Integer,ArrayList<JLabel>> hmComponentsIndexed, HashMapIndexedObjektZZZ<Integer,ArrayList<String>> hmValuesText, int iIndexInCollection) throws ExceptionZZZ {
+	public static boolean fillLabelHashMap(HashMapIndexedObjectZZZ<Integer,ArrayList<JLabel>> hmComponentsIndexed, HashMapIndexedObjectZZZ<Integer,ArrayList<String>> hmValuesText, int iIndexInCollection) throws ExceptionZZZ {
 		boolean bReturn = false;
 		main:{
 			if(hmComponentsIndexed==null) break main;

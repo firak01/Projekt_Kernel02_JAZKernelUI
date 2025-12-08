@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ReflectCodeZZZ;
+import basic.zBasic.util.abstractList.HashMapIndexedObjectZZZ;
 import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
 import basic.zBasic.util.abstractList.VectorZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
@@ -24,7 +25,7 @@ public class NavigatorElementCollectionZZZ<T>  extends AbstractKernelUseObjectZZ
 	//++++++++++ Mehrerer Gruppen zu der HashMap zusammenfassen.
 	//Merke1: Über den Index wird die Reihenfolge festgelegt.
 	//Merke2: Im Nomralfall ist nur 1 Element in der Arraylist... aber schon mal als Erweiterung gedacht.
-	HashMapIndexedZZZ<Integer, ArrayList<INavigatorElementZZZ>> hmIndexed = null;
+	HashMapIndexedObjectZZZ<Integer, ArrayList<INavigatorElementZZZ>> hmIndexed = null;
 	
 	//+++ Den EventBroker DER GRUPPE hinzufügen, damit darueber der Event abgefeuert werden kann
 	//Merke: Dem EventBroker ist eine Reihefolge (über den Index) egal
@@ -88,13 +89,13 @@ public class NavigatorElementCollectionZZZ<T>  extends AbstractKernelUseObjectZZ
 			this.setModel(model);
 			if(model!=null) {       ///Für eine GroupCollection MIT Modell
 				
-				HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>>hmElement = model.createNavigatorElementHashMap();
+				HashMapIndexedObjectZZZ<Integer,ArrayList<INavigatorElementZZZ>>hmElement = model.createNavigatorElementHashMap();
 				this.setHashMapIndexed(hmElement);				
 	
 			}	
 			
 			//Nun erst die Elemente Clickbar machen, man braucht das panel
-			HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>>hmElement = this.getHashMapIndexed();
+			HashMapIndexedObjectZZZ<Integer,ArrayList<INavigatorElementZZZ>>hmElement = this.getHashMapIndexed();
 			if(hmElement!=null) {
 				Iterator<ArrayList<INavigatorElementZZZ>> it = hmElement.iterator();
 				while(it.hasNext()) {
@@ -124,13 +125,13 @@ public class NavigatorElementCollectionZZZ<T>  extends AbstractKernelUseObjectZZ
 		return this.panelParent;
 	}
 	
-	public HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>>getHashMapIndexed() throws ExceptionZZZ{
+	public HashMapIndexedObjectZZZ<Integer,ArrayList<INavigatorElementZZZ>>getHashMapIndexed() throws ExceptionZZZ{
 		if(this.hmIndexed==null) {
-			this.hmIndexed = new HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>>();
+			this.hmIndexed = new HashMapIndexedObjectZZZ<Integer,ArrayList<INavigatorElementZZZ>>();
 		}
 		return this.hmIndexed;		
 	}
-	private void setHashMapIndexed(HashMapIndexedZZZ<Integer, ArrayList<INavigatorElementZZZ>> hmElement) {
+	private void setHashMapIndexed(HashMapIndexedObjectZZZ<Integer, ArrayList<INavigatorElementZZZ>> hmElement) {
 		this.hmIndexed = hmElement;
 	}
 	private VectorZZZ<Integer>getVectorIndex() throws ExceptionZZZ{
@@ -164,7 +165,7 @@ public class NavigatorElementCollectionZZZ<T>  extends AbstractKernelUseObjectZZ
 			if(iIndexToFind<0) break main;
 
 //			//+++ Hole aus der HashMap die Gruppe mit dem Index, setzte sie sichtbar.			
-			HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>>hmIndexed = this.getHashMapIndexed();		
+			HashMapIndexedObjectZZZ<Integer,ArrayList<INavigatorElementZZZ>>hmIndexed = this.getHashMapIndexed();		
 			ArrayList<INavigatorElementZZZ> groupToFind = (ArrayList<INavigatorElementZZZ>) hmIndexed.getValue(iIndexToFind);
 			if(groupToFind==null) break main;	
 			if(groupToFind.isEmpty()) break main;
@@ -386,7 +387,7 @@ public class NavigatorElementCollectionZZZ<T>  extends AbstractKernelUseObjectZZ
 		
 		
 		//Die anderen Elemente alle passiv schalten
-		HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>> hmElement = this.getHashMapIndexed();
+		HashMapIndexedObjectZZZ<Integer,ArrayList<INavigatorElementZZZ>> hmElement = this.getHashMapIndexed();
 		Iterator<ArrayList<INavigatorElementZZZ>> itElement = hmElement.iterator();
 		
 		while(itElement.hasNext()) {

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.EventListener;
 
 import basic.zBasic.ExceptionZZZ;
-import basic.zBasic.util.abstractList.HashMapIndexedObjektZZZ;
+import basic.zBasic.util.abstractList.HashMapIndexedObjectZZZ;
 
 /** Komponenten, sollen sich an andere Komponenten (, die als Sender auftreten, s. ISenderSelectionResetZZZ) anmelden k�nnen.
  *   Falls dann die Sender-Komponente einen event "abfeuert", dann wird doReset(...) durchgef�hrt.
@@ -52,6 +52,6 @@ public interface IListenerComponentGroupSwitchZZZ extends EventListener{
 	
 	public IModelComponentGroupValueZZZ getComponentValueProvider();
 	public void setComponentValueProvider(IModelComponentGroupValueZZZ objComponentValueProvider);
-	public HashMapIndexedObjektZZZ<Integer,ArrayList<String>> getComponentValuesCustom() throws ExceptionZZZ; 
+	public HashMapIndexedObjectZZZ<Integer,ArrayList<String>> getComponentValuesCustom() throws ExceptionZZZ; 
 	
 }

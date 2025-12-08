@@ -8,7 +8,7 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ReflectCodeZZZ;
-import basic.zBasic.util.abstractList.HashMapIndexedObjektZZZ;
+import basic.zBasic.util.abstractList.HashMapIndexedObjectZZZ;
 import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;
@@ -33,7 +33,7 @@ public class ActionSwitchZZZ extends  AbstractKernelActionListenerCascadedZZZ im
 				throw ez;
 			}
 								
-			HashMapIndexedObjektZZZ<Integer,JComponentGroupZZZ>hmIndexed = groupc.getHashMapIndexed();	
+			HashMapIndexedObjectZZZ<Integer,JComponentGroupZZZ>hmIndexed = groupc.getHashMapIndexed();	
 			if(hmIndexed==null) {
 				ExceptionZZZ ez = new ExceptionZZZ( "HashMapIndexedZZZ-Object in GroupCollection missing. Fill GroupCollection first.", iERROR_PARAMETER_MISSING, this, ReflectCodeZZZ.getMethodCurrentName()); 
 				throw ez;
@@ -59,7 +59,7 @@ public class ActionSwitchZZZ extends  AbstractKernelActionListenerCascadedZZZ im
 		int iIndexCurrent = this.getIndexCurrent();		
 		int iIndexNext = iIndexCurrent+1;
 		
-		HashMapIndexedObjektZZZ<Integer,JComponentGroupZZZ>hmIndexed = this.groupc.getHashMapIndexed();
+		HashMapIndexedObjectZZZ<Integer,JComponentGroupZZZ>hmIndexed = this.groupc.getHashMapIndexed();
 		if(hmIndexed.size() < iIndexNext+1) {//+1 wg. Index mit Grüße vergleichen und Index beginnt immer bei 0
 			iIndexNext=0;		
 		}
@@ -119,11 +119,11 @@ public class ActionSwitchZZZ extends  AbstractKernelActionListenerCascadedZZZ im
 		private String sText2Update;    //Der Wert, der ins Label geschreiben werden soll. Jier als Variable, damit die intene Runner-Klasse darauf zugreifen kann.
 													// Auch: Dieser Wert wird aus dem Web ausgelesen und danach in das Label des Panels geschrieben.
 						
-		private HashMapIndexedObjektZZZ<Integer,JComponentGroupZZZ> hmIndexed;
+		private HashMapIndexedObjectZZZ<Integer,JComponentGroupZZZ> hmIndexed;
 		private int iIndexUsed;
 		private boolean bActiveState;
 		
-		public SwingWorker4ProgramSWITCH(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panel, HashMapIndexedObjektZZZ<Integer,JComponentGroupZZZ> hmIndexed, int iIndexCurrent, boolean bActiveState, String[] saFlag4Program){
+		public SwingWorker4ProgramSWITCH(IKernelZZZ objKernel, KernelJPanelCascadedZZZ panel, HashMapIndexedObjectZZZ<Integer,JComponentGroupZZZ> hmIndexed, int iIndexCurrent, boolean bActiveState, String[] saFlag4Program){
 			super(objKernel);
 			this.panel = panel;
 			this.saFlag4Program = saFlag4Program;	
@@ -143,7 +143,7 @@ public class ActionSwitchZZZ extends  AbstractKernelActionListenerCascadedZZZ im
 				
 				//### Den Event starten,
 				System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#EVENTEVENT !!!!!!!!");
-				HashMapIndexedObjektZZZ<Integer, JComponentGroupZZZ> hmIndexed = this.hmIndexed;
+				HashMapIndexedObjectZZZ<Integer, JComponentGroupZZZ> hmIndexed = this.hmIndexed;
 				JComponentGroupZZZ group = (JComponentGroupZZZ) hmIndexed.getValue(this.iIndexUsed);
 				EventComponentGroupSwitchZZZ eventNew= new EventComponentGroupSwitchZZZ(panel, 10002, group, this.iIndexUsed, true);				
 				objEventBroker.fireEvent(eventNew);	

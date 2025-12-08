@@ -23,7 +23,7 @@ import basic.zBasic.IObjectZZZ;
 import basic.zBasic.ReflectClassZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasic.util.abstractArray.ArrayUtilZZZ;
-import basic.zBasic.util.abstractList.HashMapIndexedObjektZZZ;
+import basic.zBasic.util.abstractList.HashMapIndexedObjectZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasicUI.listener.ListenerMouseMove4DragableWindowZZZ;
@@ -1687,7 +1687,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 				
 				//+++ Nun erst die Label dem Panel hinzufuegen	
 				//Merke: Die auszutauschenden Komponenten müssen in die gleichen Zellen hinzugefügt werden. Sonst entstehen Leerzellen
-				HashMapIndexedObjektZZZ<Integer,JComponentGroupZZZ> hmComponent = groupc.getHashMapIndexed();
+				HashMapIndexedObjectZZZ<Integer,JComponentGroupZZZ> hmComponent = groupc.getHashMapIndexed();
 				Iterator it = hmComponent.iterator();				
 				int iIndexOuterMax = hmComponent.size() -1;
 				for(int iIndexOuter=0; iIndexOuter <= iIndexOuterMax; iIndexOuter++) {
