@@ -7,7 +7,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 
 import basic.zBasic.ExceptionZZZ;
-import basic.zBasic.util.abstractList.ArrayListExtendedZZZ;
+import basic.zBasic.util.abstractList.ArrayListZZZ;
 import basic.zBasic.util.abstractList.ArrayListUtilZZZ;
 import basic.zBasic.util.abstractList.HashMapIndexedObjektZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
@@ -28,7 +28,7 @@ public class ModelAdjustmentNavigatorZZZ extends AbstractModelNavigatorZZZ{
 	}
 
 	@Override
-	public ArrayListExtendedZZZ<INavigatorElementZZZ> createNavigatorElementArrayList() {
+	public ArrayListZZZ<INavigatorElementZZZ> createNavigatorElementArrayList() {
 		// TODO Auto-generated method stub
 		return null;
 	}

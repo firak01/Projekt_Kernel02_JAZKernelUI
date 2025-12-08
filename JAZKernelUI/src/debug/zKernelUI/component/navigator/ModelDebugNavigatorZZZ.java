@@ -8,7 +8,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 
 import basic.zBasic.ExceptionZZZ;
-import basic.zBasic.util.abstractList.ArrayListExtendedZZZ;
+import basic.zBasic.util.abstractList.ArrayListZZZ;
 import basic.zBasic.util.abstractList.ArrayListUtilZZZ;
 import basic.zBasic.util.abstractList.HashMapIndexedObjektZZZ;
 import basic.zBasic.util.abstractList.HashMapZZZ;
@@ -38,8 +38,8 @@ public class ModelDebugNavigatorZZZ extends AbstractModelNavigatorZZZ{
 	}
 
 	@Override
-	public ArrayListExtendedZZZ<INavigatorElementZZZ> createNavigatorElementArrayList() throws ExceptionZZZ {
-		ArrayListExtendedZZZ<INavigatorElementZZZ> alReturn = new ArrayListExtendedZZZ<INavigatorElementZZZ>();
+	public ArrayListZZZ<INavigatorElementZZZ> createNavigatorElementArrayList() throws ExceptionZZZ {
+		ArrayListZZZ<INavigatorElementZZZ> alReturn = new ArrayListZZZ<INavigatorElementZZZ>();
 		main:{
 			//1. Auslesen des wertes aus der Ini-Konfiguration
 			IKernelZZZ objKernel = this.getKernelObject();

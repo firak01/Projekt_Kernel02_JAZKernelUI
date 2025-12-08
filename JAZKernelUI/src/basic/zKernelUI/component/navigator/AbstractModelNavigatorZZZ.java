@@ -7,7 +7,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 
 import basic.zBasic.ExceptionZZZ;
-import basic.zBasic.util.abstractList.ArrayListExtendedZZZ;
+import basic.zBasic.util.abstractList.ArrayListZZZ;
 import basic.zBasic.util.abstractList.ArrayListUtilZZZ;
 import basic.zBasic.util.abstractList.HashMapIndexedObjektZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
@@ -22,7 +22,7 @@ import debug.zKernelUI.component.buttonSwitchLabelGroup.ModelRow2ZZZ;
 
 public abstract class AbstractModelNavigatorZZZ extends AbstractKernelUseObjectZZZ  implements IModelNavigatorValueZZZ{
 	//protected HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>>hmNavigatorElement=null;
-	protected ArrayListExtendedZZZ<INavigatorElementZZZ>alNavigatorElement=null;
+	protected ArrayListZZZ<INavigatorElementZZZ>alNavigatorElement=null;
 		
 	public AbstractModelNavigatorZZZ() {		
 		super();
@@ -52,18 +52,18 @@ public abstract class AbstractModelNavigatorZZZ extends AbstractKernelUseObjectZ
 //		this.hmNavigatorElement = hmNavigatorElement;
 //	}
 	
-	public ArrayListExtendedZZZ<INavigatorElementZZZ>getNavigatorElementArrayList() throws ExceptionZZZ{
+	public ArrayListZZZ<INavigatorElementZZZ>getNavigatorElementArrayList() throws ExceptionZZZ{
 		if(this.alNavigatorElement==null) {
 			this.alNavigatorElement = createNavigatorElementArrayList();			
 		}
 		return this.alNavigatorElement;
 	}
 	
-	public void setNavigatorElementArrayList(ArrayListExtendedZZZ<INavigatorElementZZZ>alNavigatorElement) {
+	public void setNavigatorElementArrayList(ArrayListZZZ<INavigatorElementZZZ>alNavigatorElement) {
 		this.alNavigatorElement = alNavigatorElement;
 	}
 	
 	//public abstract HashMapIndexedZZZ<Integer,ArrayList<INavigatorElementZZZ>>createNavigatorElementHashMap() throws ExceptionZZZ;
-	public abstract ArrayListExtendedZZZ<INavigatorElementZZZ>createNavigatorElementArrayList() throws ExceptionZZZ;
+	public abstract ArrayListZZZ<INavigatorElementZZZ>createNavigatorElementArrayList() throws ExceptionZZZ;
 	public abstract INavigatorElementZZZ createNavigatorElement(IKernelConfigSectionEntryZZZ objEntry) throws ExceptionZZZ;
 }
