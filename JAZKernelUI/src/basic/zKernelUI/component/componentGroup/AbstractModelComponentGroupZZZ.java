@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.util.abstractList.ArrayListUtilZZZ;
-import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
+import basic.zBasic.util.abstractList.HashMapIndexedObjektZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelZZZ;
@@ -22,7 +22,7 @@ public abstract class AbstractModelComponentGroupZZZ extends AbstractKernelUseOb
 	protected String sTitle=null;
 	protected IPanelCascadedZZZ panelParent;
 	protected int iIndexInCollection=-1;	
-	protected HashMapIndexedZZZ<Integer,ArrayList<JComponent>>hmComponent=null; //Die HashMap mit dem Index für die Gruppe und der ArrayList der Komponenten der Gruppe
+	protected HashMapIndexedObjektZZZ<Integer,ArrayList<JComponent>>hmComponent=null; //Die HashMap mit dem Index für die Gruppe und der ArrayList der Komponenten der Gruppe
 		
 	public AbstractModelComponentGroupZZZ() {		
 		super();
@@ -99,7 +99,7 @@ public abstract class AbstractModelComponentGroupZZZ extends AbstractKernelUseOb
 	
 	
 	@Override
-	public HashMapIndexedZZZ<Integer, ArrayList<String>> getComponentValues()  throws ExceptionZZZ{
+	public HashMapIndexedObjektZZZ<Integer, ArrayList<String>> getComponentValues()  throws ExceptionZZZ{
 		String sTitle = this.getTitle();
 		IPanelCascadedZZZ panelParent = this.getPanelParent();
 		int iIndexInCollection = this.getIndexInCollection();
@@ -110,7 +110,7 @@ public abstract class AbstractModelComponentGroupZZZ extends AbstractKernelUseOb
 	//Im Fall einer GroupCollection, die auf einem Modell basiert, wird ggfs. die HashMap erst erzeugt.
 	//Im Fall einer GroupCollection, die nicht auf einem Modell basiert wird die HashMap beim erstmaligen Hinzufügen einer Gruppe zur Collection erzeugt.
 	//                               und dann bei jeder neu hinzugefuegten Gruppe erweitert.
-	public HashMapIndexedZZZ<Integer,ArrayList<JComponent>> getComponentHashMap() throws ExceptionZZZ{
+	public HashMapIndexedObjektZZZ<Integer,ArrayList<JComponent>> getComponentHashMap() throws ExceptionZZZ{
 		if(this.hmComponent==null) {
 			String sTitle = this.getTitle();
 			IPanelCascadedZZZ panel = this.getPanelParent();
@@ -123,7 +123,7 @@ public abstract class AbstractModelComponentGroupZZZ extends AbstractKernelUseOb
 	public ArrayList<JComponentGroupZZZ>createComponentGroupArrayList() throws ModelComponentGroupExceptionZZZ, ExceptionZZZ{
 		ArrayList<JComponentGroupZZZ>listaReturn = null;
 		main:{
-			HashMapIndexedZZZ<Integer,ArrayList<JComponent>>hmComponent = this.getComponentHashMap();
+			HashMapIndexedObjektZZZ<Integer,ArrayList<JComponent>>hmComponent = this.getComponentHashMap();
 		
 			//+++ Die Components/Labels auf die Gruppen verteilen		 		
 			int iIndexInGroupCollection=-1;		
@@ -150,15 +150,15 @@ public abstract class AbstractModelComponentGroupZZZ extends AbstractKernelUseOb
 	}
 	
 	//Im Fall einer GroupCollection, die auf einem Modell basiert, wird hier über alle Groups die jeweilige Liste der Components geholt und an die definierte Indexposition der Collection gestellt.
-	public HashMapIndexedZZZ<Integer,ArrayList<JComponent>>createComponentHashMap(String sTitle, IPanelCascadedZZZ panel) throws ExceptionZZZ {
-		HashMapIndexedZZZ<Integer,ArrayList<JComponent>> hmReturn = new HashMapIndexedZZZ<Integer,ArrayList<JComponent>>();
+	public HashMapIndexedObjektZZZ<Integer,ArrayList<JComponent>>createComponentHashMap(String sTitle, IPanelCascadedZZZ panel) throws ExceptionZZZ {
+		HashMapIndexedObjektZZZ<Integer,ArrayList<JComponent>> hmReturn = new HashMapIndexedObjektZZZ<Integer,ArrayList<JComponent>>();
 		main:{
 			int iIndexInCollection=0;
-			HashMapIndexedZZZ<Integer,ArrayList<String>> hmValuesText0 = this.createValuesText(sTitle, panel, iIndexInCollection);
+			HashMapIndexedObjektZZZ<Integer,ArrayList<String>> hmValuesText0 = this.createValuesText(sTitle, panel, iIndexInCollection);
 			boolean bComponentsForIndexFilled = ModelComponentHelperZZZ.fillComponentHashMap(hmReturn, hmValuesText0, iIndexInCollection);
 			while(bComponentsForIndexFilled) {
 				iIndexInCollection++;
-				HashMapIndexedZZZ<Integer,ArrayList<String>> hmValuesText = this.createValuesText(sTitle, panel, iIndexInCollection);
+				HashMapIndexedObjektZZZ<Integer,ArrayList<String>> hmValuesText = this.createValuesText(sTitle, panel, iIndexInCollection);
 				bComponentsForIndexFilled = ModelComponentHelperZZZ.fillComponentHashMap(hmReturn, hmValuesText, iIndexInCollection);
 			}			
 		}//end main
@@ -166,7 +166,7 @@ public abstract class AbstractModelComponentGroupZZZ extends AbstractKernelUseOb
 	}	
 	
 	@Override
-	public HashMapIndexedZZZ<Integer,ArrayList<JComponent>>createComponentHashMap() throws ExceptionZZZ {
+	public HashMapIndexedObjektZZZ<Integer,ArrayList<JComponent>>createComponentHashMap() throws ExceptionZZZ {
 		return this.createComponentHashMap(this.getTitle(), this.getPanelParent());
 	}	
 	
@@ -179,7 +179,7 @@ public abstract class AbstractModelComponentGroupZZZ extends AbstractKernelUseOb
 //	}
 			
 	//Darin ist das Modell enthalten, also welche Componenten/welches Label zu welcher Gruppe gehört.
-	public abstract HashMapIndexedZZZ<Integer,ArrayList<String>>createValuesText(String sTitle, IPanelCascadedZZZ panel, int iIndexInCollection) throws ModelComponentGroupExceptionZZZ;			
+	public abstract HashMapIndexedObjektZZZ<Integer,ArrayList<String>>createValuesText(String sTitle, IPanelCascadedZZZ panel, int iIndexInCollection) throws ModelComponentGroupExceptionZZZ;			
 	
 	//Diese Modell wird bei jedem "Click" in dem refresh() aufgerufen.
 	public abstract IModelComponentGroupValueZZZ createModelForGroup(String sTitle, IPanelCascadedZZZ panelParent, int iIndexInGroupCollection) throws ModelComponentGroupExceptionZZZ, ExceptionZZZ; 

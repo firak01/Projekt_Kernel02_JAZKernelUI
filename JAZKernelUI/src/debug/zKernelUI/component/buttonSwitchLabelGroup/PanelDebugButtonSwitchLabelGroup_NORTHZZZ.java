@@ -32,7 +32,7 @@ import custom.zKernel.LogZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IObjectZZZ;
 import basic.zBasic.ReflectCodeZZZ;
-import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
+import basic.zBasic.util.abstractList.HashMapIndexedObjektZZZ;
 import basic.zBasic.util.abstractList.HashMapMultiZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasic.util.log.ReportLogZZZ;
@@ -234,7 +234,7 @@ public class PanelDebugButtonSwitchLabelGroup_NORTHZZZ extends KernelJPanelCasca
 					
 		//+++ Nun erst die Label dem Panel hinzufuegen	
 		//Merke: Die auszutauschenden Komponenten müssen in die gleichen Zellen hinzugefügt werden. Sonst entstehen Leerzellen
-		HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmComponent = groupc.getHashMapIndexed();
+		HashMapIndexedObjektZZZ<Integer,JComponentGroupZZZ> hmComponent = groupc.getHashMapIndexed();
 		Iterator it = hmComponent.iterator();
 		int iIndexOuter=-1;
 		while(it.hasNext()) {
@@ -299,7 +299,7 @@ public class PanelDebugButtonSwitchLabelGroup_NORTHZZZ extends KernelJPanelCasca
 					
 		//+++ Nun erst die Label dem Panel hinzufuegen	
 		//Merke: Die auszutauschenden Komponenten müssen in die gleichen Zellen hinzugefügt werden. Sonst entstehen Leerzellen
-		HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmComponent = groupc.getHashMapIndexed();
+		HashMapIndexedObjektZZZ<Integer,JComponentGroupZZZ> hmComponent = groupc.getHashMapIndexed();
 		Iterator it = hmComponent.iterator();
 		int iIndexOuter=-1;
 		while(it.hasNext()) {

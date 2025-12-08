@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.util.abstractList.ArrayListUtilZZZ;
-import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
+import basic.zBasic.util.abstractList.HashMapIndexedObjektZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelZZZ;
@@ -41,7 +41,7 @@ public class ModelPanelDebugZZZ extends AbstractModelComponentGroupZZZ{
 	}
 	
 	@Override
-	public HashMapIndexedZZZ<Integer,ArrayList<String>>createValuesText(String sTitle, IPanelCascadedZZZ panel, int iIndexInCollection) throws ModelComponentGroupExceptionZZZ{
+	public HashMapIndexedObjektZZZ<Integer,ArrayList<String>>createValuesText(String sTitle, IPanelCascadedZZZ panel, int iIndexInCollection) throws ModelComponentGroupExceptionZZZ{
 		/* 20210702 WICHTIG, MERKE:
 		 * Hier unbeding einen Eintrag in der Liste erzeugen, auch für die "nicht gefunden" Fälle.
 		 *  
@@ -57,12 +57,12 @@ public class ModelPanelDebugZZZ extends AbstractModelComponentGroupZZZ{
 		 * Hier ist dann ggfs. das Flag ISKERNELPROGRAM schon gesetzt. 
 		 * Damit würde der korrekte Programname/Alias verwendet und der zuvor gesetzte Dummy-Eintrag aktualisiert.
 		 */
-		HashMapIndexedZZZ<Integer,ArrayList<String>> hmReturn = null; 
+		HashMapIndexedObjektZZZ<Integer,ArrayList<String>> hmReturn = null; 
 			
 		String stemp;
 		main:{	
 			try {
-			hmReturn = new HashMapIndexedZZZ<Integer, ArrayList<String>>();
+			hmReturn = new HashMapIndexedObjektZZZ<Integer, ArrayList<String>>();
 			ArrayList<String>listaTitle = new ArrayList<String>();
 			listaTitle.add("Title:" + sTitle);
 			

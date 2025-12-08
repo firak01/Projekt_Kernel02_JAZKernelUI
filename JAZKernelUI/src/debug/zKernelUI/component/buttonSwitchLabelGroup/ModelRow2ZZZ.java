@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.util.abstractList.ArrayListUtilZZZ;
-import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
+import basic.zBasic.util.abstractList.HashMapIndexedObjektZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelZZZ;
@@ -39,13 +39,13 @@ public class ModelRow2ZZZ extends AbstractModelComponentGroupZZZ{
 	}
 	
 	@Override
-	public HashMapIndexedZZZ<Integer,ArrayList<String>>createValuesText(String sTitle, IPanelCascadedZZZ panel, int iIndexInCollection) throws ModelComponentGroupExceptionZZZ{
-		HashMapIndexedZZZ<Integer,ArrayList<String>> hmReturn = null; 
+	public HashMapIndexedObjektZZZ<Integer,ArrayList<String>>createValuesText(String sTitle, IPanelCascadedZZZ panel, int iIndexInCollection) throws ModelComponentGroupExceptionZZZ{
+		HashMapIndexedObjektZZZ<Integer,ArrayList<String>> hmReturn = null; 
 				
 		String stemp;
 		main:{	
 			try {
-			hmReturn = new HashMapIndexedZZZ<Integer, ArrayList<String>>();
+			hmReturn = new HashMapIndexedObjektZZZ<Integer, ArrayList<String>>();
 			
 			ArrayList<String>listaTitle = new ArrayList<String>();
 			listaTitle.add("Title:" + sTitle);

@@ -11,7 +11,7 @@ import javax.swing.JToggleButton;
 import custom.zKernel.LogZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IObjectZZZ;
-import basic.zBasic.util.abstractList.HashMapExtendedZZZ;
+import basic.zBasic.util.abstractList.HashMapZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.AbstractKernelUseObjectZZZ;
 import basic.zKernel.KernelZZZ;
@@ -58,7 +58,7 @@ public class KernelButtonGroupZZZ<T,X>  extends AbstractKernelUseObjectZZZ{
 	public String getKey(JButton button){
 		String sReturn = null;
 		HashMap<String,AbstractButton>hm=this.getHashMapButton();
-		Object obj = HashMapExtendedZZZ.getKeyFromValueFirst(hm, button);//Note that there is no single corresponding key - there may well be multiple keys mapping to the same value. 
+		Object obj = HashMapZZZ.getKeyFromValueFirst(hm, button);//Note that there is no single corresponding key - there may well be multiple keys mapping to the same value. 
 		if(obj!=null){
 			sReturn = obj.toString();
 		}		

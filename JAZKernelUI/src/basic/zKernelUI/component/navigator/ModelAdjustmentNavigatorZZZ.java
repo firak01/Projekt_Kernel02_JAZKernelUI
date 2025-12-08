@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.util.abstractList.ArrayListExtendedZZZ;
 import basic.zBasic.util.abstractList.ArrayListUtilZZZ;
-import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
+import basic.zBasic.util.abstractList.HashMapIndexedObjektZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelConfigSectionEntryZZZ;
@@ -40,7 +40,7 @@ public class ModelAdjustmentNavigatorZZZ extends AbstractModelNavigatorZZZ{
 	}
 
 	@Override
-	public HashMapIndexedZZZ<Integer, ArrayList<INavigatorElementZZZ>> createNavigatorElementHashMap()
+	public HashMapIndexedObjektZZZ<Integer, ArrayList<INavigatorElementZZZ>> createNavigatorElementHashMap()
 			throws ExceptionZZZ {
 		// TODO Auto-generated method stub
 		return null;

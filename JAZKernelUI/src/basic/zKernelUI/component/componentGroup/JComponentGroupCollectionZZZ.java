@@ -9,7 +9,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import basic.zBasic.ExceptionZZZ;
-import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
+import basic.zBasic.util.abstractList.HashMapIndexedObjektZZZ;
 import basic.zBasic.util.abstractList.VectorZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelZZZ;
@@ -22,7 +22,7 @@ public class JComponentGroupCollectionZZZ<T>  extends AbstractKernelUseObjectZZZ
 
 	//++++++++++ Mehrerer Gruppen zu der HashMap zusammenfassen.
 	//Merke: Der Button steuert über den Index die Reihenfolge
-	HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmIndexed = null;
+	HashMapIndexedObjektZZZ<Integer,JComponentGroupZZZ> hmIndexed = null;
 	
 	//+++ Den EventBroker DER GRUPPE hinzufügen, damit darueber der Event abgefeuert werden kann
 	//Merke: Dem EventBroker ist eine Reihefolge (über den Index) egal
@@ -68,7 +68,7 @@ public class JComponentGroupCollectionZZZ<T>  extends AbstractKernelUseObjectZZZ
 			
 			this.setModel(model);
 			if(model!=null) {       ///Für eine GroupCollection MIT Modell
-				HashMapIndexedZZZ<Integer,ArrayList<JComponent>>hmComponent = model.createComponentHashMap();
+				HashMapIndexedObjektZZZ<Integer,ArrayList<JComponent>>hmComponent = model.createComponentHashMap();
 				
 				//+++ Die Labels auf die Gruppen verteilen
 				ArrayList<JComponentGroupZZZ>listaGroup2 = new ArrayList<JComponentGroupZZZ>();				
@@ -116,13 +116,13 @@ public class JComponentGroupCollectionZZZ<T>  extends AbstractKernelUseObjectZZZ
 		this.model = model;
 	}
 	
-	public HashMapIndexedZZZ<Integer,JComponentGroupZZZ>getHashMapIndexed() throws ExceptionZZZ{
+	public HashMapIndexedObjektZZZ<Integer,JComponentGroupZZZ>getHashMapIndexed() throws ExceptionZZZ{
 		if(this.hmIndexed==null) {
-			this.hmIndexed = new HashMapIndexedZZZ<Integer,JComponentGroupZZZ>();
+			this.hmIndexed = new HashMapIndexedObjektZZZ<Integer,JComponentGroupZZZ>();
 		}
 		return this.hmIndexed;		
 	}
-	private void setHashMapIndexed(HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmIndexed) {
+	private void setHashMapIndexed(HashMapIndexedObjektZZZ<Integer,JComponentGroupZZZ> hmIndexed) {
 		this.hmIndexed = hmIndexed;
 	}
 	private VectorZZZ<Integer>getVectorIndex() throws ExceptionZZZ{
@@ -143,7 +143,7 @@ public class JComponentGroupCollectionZZZ<T>  extends AbstractKernelUseObjectZZZ
 			objEventBroker.addListenerComponentGroupSwitch(group);
 			
 			//+++ Letztendlich die Gruppe der HashMap hinzufügen
-			HashMapIndexedZZZ<Integer,JComponentGroupZZZ>hmIndexed = this.getHashMapIndexed();
+			HashMapIndexedObjektZZZ<Integer,JComponentGroupZZZ>hmIndexed = this.getHashMapIndexed();
 			hmIndexed.put(group);
 						
 			bReturn = true;
@@ -157,7 +157,7 @@ public class JComponentGroupCollectionZZZ<T>  extends AbstractKernelUseObjectZZZ
 			if(iIndexToFind<0) break main;
 
 //			//+++ Hole aus der HashMap die Gruppe mit dem Index, setzte sie sichtbar.			
-			HashMapIndexedZZZ<Integer,JComponentGroupZZZ>hmIndexed = this.getHashMapIndexed();		
+			HashMapIndexedObjektZZZ<Integer,JComponentGroupZZZ>hmIndexed = this.getHashMapIndexed();		
 			JComponentGroupZZZ groupToFind = (JComponentGroupZZZ) hmIndexed.getValue(iIndexToFind);
 			if(groupToFind==null) break main;			
 			groupToFind.setVisible(true);
@@ -198,7 +198,7 @@ public class JComponentGroupCollectionZZZ<T>  extends AbstractKernelUseObjectZZZ
 			if(group==null)break main;
 			
 			//+++ Hole aus der HashMap die anderen Gruppen, ohne dem Alias, setzte sie unsichtbar.
-			HashMapIndexedZZZ<Integer,JComponentGroupZZZ>hmIndexed = this.getHashMapIndexed();
+			HashMapIndexedObjektZZZ<Integer,JComponentGroupZZZ>hmIndexed = this.getHashMapIndexed();
 			if(hmIndexed!=null) {
 				Iterator it = hmIndexed.iterator();
 				while(it.hasNext()) {

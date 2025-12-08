@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.util.abstractList.ArrayListUtilZZZ;
-import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
+import basic.zBasic.util.abstractList.HashMapIndexedObjektZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.AbstractKernelUseObjectZZZ;
@@ -129,7 +129,7 @@ public class JComponentGroupZZZ extends AbstractKernelUseObjectZZZ implements IL
 	public boolean refreshValues(int iIndexUsedInCollection) throws ExceptionZZZ {
 		boolean bReturn = false;
 		main:{
-			HashMapIndexedZZZ<Integer,ArrayList<String>> hmValues = this.getComponentValuesCustom(); 
+			HashMapIndexedObjektZZZ<Integer,ArrayList<String>> hmValues = this.getComponentValuesCustom(); 
 			if(hmValues==null) break main;
 			if(hmValues.size()==0) break main;
 									
@@ -208,10 +208,10 @@ public class JComponentGroupZZZ extends AbstractKernelUseObjectZZZ implements IL
 		// TODO Auto-generated method stub		
 	}
 	@Override
-	public HashMapIndexedZZZ<Integer, ArrayList<String>> getComponentValuesCustom() throws ExceptionZZZ {
+	public HashMapIndexedObjektZZZ<Integer, ArrayList<String>> getComponentValuesCustom() throws ExceptionZZZ {
 		IModelComponentGroupValueZZZ objValueProvider = this.getComponentValueProvider();
 		if(objValueProvider!=null) {
-			HashMapIndexedZZZ<Integer, ArrayList<String>> hmValuesCustom = objValueProvider.getComponentValues();
+			HashMapIndexedObjektZZZ<Integer, ArrayList<String>> hmValuesCustom = objValueProvider.getComponentValues();
 			return hmValuesCustom;
 		}else {
 			return null;

@@ -22,7 +22,7 @@ import com.jgoodies.forms.layout.Sizes;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.util.abstractList.ArrayListUtilZZZ;
-import basic.zBasic.util.abstractList.HashMapIndexedZZZ;
+import basic.zBasic.util.abstractList.HashMapIndexedObjektZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasicUI.component.UIHelper;
 import basic.zKernel.IKernelZZZ;
@@ -339,7 +339,7 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 				
 				//### Die Componenten aus dem Modell im UI "Verteilen"
 				//Merke: Die auszutauschenden Komponenten müssen in die gleichen Zellen hinzugefügt werden. Sonst entstehen Leerzellen
-				HashMapIndexedZZZ<Integer,JComponentGroupZZZ> hmComponent = groupc.getHashMapIndexed();
+				HashMapIndexedObjektZZZ<Integer,JComponentGroupZZZ> hmComponent = groupc.getHashMapIndexed();
 				Iterator it = hmComponent.iterator();
 				int iIndexOuter=-1;//Dient nicht zur Bestimmung einer Spaltenposition, sondern lediglich zur Benennung einer Componente.
 				                   //Merke: Pro Gruppe werden die Components beginnend mit der gleichen Spalten hinzugefügt.
