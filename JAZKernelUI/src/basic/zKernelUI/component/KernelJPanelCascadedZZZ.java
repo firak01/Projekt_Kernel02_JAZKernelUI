@@ -30,7 +30,7 @@ import basic.zBasicUI.listener.ListenerMouseMove4DragableWindowZZZ;
 import basic.zKernel.IKernelConfigZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
-import basic.zKernel.KernelLogZZZ;
+import basic.zKernel.AbstractKernelLogZZZ;
 import basic.zKernel.component.IKernelModuleUserZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.component.IKernelProgramZZZ;
@@ -744,7 +744,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	public void logLineDate(String sLog) throws ExceptionZZZ {
 		LogZZZ objLog = this.getLogObject();
 		if(objLog==null) {
-			String sTemp = KernelLogZZZ.computeLineDate(this, sLog);
+			String sTemp = AbstractKernelLogZZZ.computeLineDate(this, sLog);
 			System.out.println(sTemp);
 		}else {
 			objLog.WriteLineDate(sLog);
@@ -755,7 +755,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	public void logLineDateWithPosition(String sLog) throws ExceptionZZZ {
 		LogZZZ objLog = this.getLogObject();
 		if(objLog==null) {
-			String sTemp = KernelLogZZZ.computeLineDateWithPosition(this, sLog);
+			String sTemp = AbstractKernelLogZZZ.computeLineDateWithPosition(this, sLog);
 			System.out.println(sTemp);
 		}else {
 			objLog.WriteLineDateWithPosition(this, sLog);

@@ -10,7 +10,7 @@ import basic.zBasicUI.thread.SwingWorker;
 
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
-import basic.zKernel.KernelLogZZZ;
+import basic.zKernel.AbstractKernelLogZZZ;
 import custom.zKernel.LogZZZ;
 
 
@@ -101,7 +101,7 @@ public abstract class KernelSwingWorkerZZZ extends SwingWorker  implements IObje
 	public void logLineDate(String sLog) throws ExceptionZZZ {
 		LogZZZ objLog = this.getLogObject();
 		if(objLog==null) {
-			String sTemp = KernelLogZZZ.computeLineDate(this, sLog);
+			String sTemp = AbstractKernelLogZZZ.computeLineDate(this, sLog);
 			System.out.println(sTemp);
 		}else {
 			objLog.WriteLineDate(sLog);
@@ -112,7 +112,7 @@ public abstract class KernelSwingWorkerZZZ extends SwingWorker  implements IObje
 	public void logLineDateWithPosition(String sLog) throws ExceptionZZZ {
 		LogZZZ objLog = this.getLogObject();
 		if(objLog==null) {
-			String sTemp = KernelLogZZZ.computeLineDateWithPosition(this, sLog);
+			String sTemp = AbstractKernelLogZZZ.computeLineDateWithPosition(this, sLog);
 			System.out.println(sTemp);
 		}else {
 			objLog.WriteLineDateWithPosition(this, sLog);

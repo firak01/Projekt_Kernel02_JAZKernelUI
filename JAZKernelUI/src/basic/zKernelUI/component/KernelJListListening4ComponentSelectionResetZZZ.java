@@ -7,7 +7,7 @@ import javax.swing.JList;
 import javax.swing.ListModel;
 
 import basic.zKernel.IKernelZZZ;
-import basic.zKernel.KernelLogZZZ;
+import basic.zKernel.AbstractKernelLogZZZ;
 import custom.zKernel.LogZZZ;
 
 
@@ -61,7 +61,7 @@ public abstract class KernelJListListening4ComponentSelectionResetZZZ extends JL
 	public void logLineDate(String sLog) throws ExceptionZZZ {
 		LogZZZ objLog = this.getLogObject();
 		if(objLog==null) {
-			String sTemp = KernelLogZZZ.computeLineDate(sLog);
+			String sTemp = AbstractKernelLogZZZ.computeLineDate(sLog);
 			System.out.println(sTemp);
 		}else {
 			objLog.WriteLineDate(sLog);

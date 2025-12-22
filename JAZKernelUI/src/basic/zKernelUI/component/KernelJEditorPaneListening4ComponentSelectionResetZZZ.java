@@ -3,7 +3,7 @@ package basic.zKernelUI.component;
 import javax.swing.JEditorPane;
 
 import basic.zKernel.IKernelZZZ;
-import basic.zKernel.KernelLogZZZ;
+import basic.zKernel.AbstractKernelLogZZZ;
 import custom.zKernel.LogZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IConstantZZZ;
@@ -43,7 +43,7 @@ public abstract class KernelJEditorPaneListening4ComponentSelectionResetZZZ exte
 	public void logLineDate(String sLog) throws ExceptionZZZ {
 		LogZZZ objLog = this.getLogObject();
 		if(objLog==null) {
-			String sTemp = KernelLogZZZ.computeLineDate(sLog);
+			String sTemp = AbstractKernelLogZZZ.computeLineDate(sLog);
 			System.out.println(sTemp);
 		}else {
 			objLog.WriteLineDate(sLog);

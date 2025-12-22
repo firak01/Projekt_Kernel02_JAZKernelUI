@@ -34,7 +34,7 @@ import basic.zBasic.util.log.ReportLogZZZ;
 import basic.zBasicUI.adapter.AdapterJComponent4ScreenSnapperZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
-import basic.zKernel.KernelLogZZZ;
+import basic.zKernel.AbstractKernelLogZZZ;
 import basic.zKernel.KernelZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.flag.FlagZHelperZZZ;
@@ -732,7 +732,7 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 	public void logLineDate(String sLog) throws ExceptionZZZ {
 		LogZZZ objLog = this.getLogObject();
 		if(objLog==null) {
-			String sTemp = KernelLogZZZ.computeLineDate(this, sLog);
+			String sTemp = AbstractKernelLogZZZ.computeLineDate(this, sLog);
 			System.out.println(sTemp);
 		}else {
 			objLog.WriteLineDate(sLog);
@@ -743,7 +743,7 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 	public void logLineDateWithPosition(String sLog) throws ExceptionZZZ {
 		LogZZZ objLog = this.getLogObject();
 		if(objLog==null) {
-			String sTemp = KernelLogZZZ.computeLineDateWithPosition(this, sLog);
+			String sTemp = AbstractKernelLogZZZ.computeLineDateWithPosition(this, sLog);
 			System.out.println(sTemp);
 		}else {
 			objLog.WriteLineDateWithPosition(this, sLog);
