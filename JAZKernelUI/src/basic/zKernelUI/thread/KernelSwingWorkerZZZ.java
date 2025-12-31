@@ -2,7 +2,9 @@ package basic.zKernelUI.thread;
 
 
 import basic.zBasic.ExceptionZZZ;
+import basic.zBasic.IObjectLogZZZ;
 import basic.zBasic.IObjectZZZ;
+import basic.zBasic.ObjectZZZ;
 import basic.zBasicUI.thread.SwingWorker;
 
 //TODO: Mal auf den anderen, neueren umstellen.
@@ -38,7 +40,7 @@ import custom.zKernel.LogZZZ;
  * @author Fritz Lindhauer, 18.04.2021, 09:33:38
  * 
  */
-public abstract class KernelSwingWorkerZZZ extends SwingWorker  implements IObjectZZZ, IKernelUserZZZ{
+public abstract class KernelSwingWorkerZZZ extends SwingWorker  implements IObjectZZZ, IObjectLogZZZ, IKernelUserZZZ{
 	protected IKernelZZZ objKernel = null;
 	protected LogZZZ objLog = null;
 			
@@ -97,26 +99,47 @@ public abstract class KernelSwingWorkerZZZ extends SwingWorker  implements IObje
 	}
 	
 	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
+//	@Override
+//	public void logLineDate(String sLog) throws ExceptionZZZ {
+//		LogZZZ objLog = this.getLogObject();
+//		if(objLog==null) {
+//			String sTemp = AbstractKernelLogZZZ.computeLineDate(this, sLog);
+//			System.out.println(sTemp);
+//		}else {
+//			objLog.WriteLineDate(sLog);
+//		}		
+//	}
+//	
+//	@Override
+//	public void logLineDateWithPosition(String sLog) throws ExceptionZZZ {
+//		LogZZZ objLog = this.getLogObject();
+//		if(objLog==null) {
+//			String sTemp = AbstractKernelLogZZZ.computeLineDateWithPosition(this, sLog);
+//			System.out.println(sTemp);
+//		}else {
+//			objLog.WriteLineDateWithPosition(this, sLog);
+//		}		
+//	}
+	
 	@Override
-	public void logLineDate(String sLog) throws ExceptionZZZ {
-		LogZZZ objLog = this.getLogObject();
-		if(objLog==null) {
-			String sTemp = AbstractKernelLogZZZ.computeLineDate(this, sLog);
-			System.out.println(sTemp);
-		}else {
-			objLog.WriteLineDate(sLog);
-		}		
+	public synchronized void logLineDate(String sLog) throws ExceptionZZZ {
+		ObjectZZZ.logLineDate(this, sLog);
 	}
 	
 	@Override
-	public void logLineDateWithPosition(String sLog) throws ExceptionZZZ {
-		LogZZZ objLog = this.getLogObject();
-		if(objLog==null) {
-			String sTemp = AbstractKernelLogZZZ.computeLineDateWithPosition(this, sLog);
-			System.out.println(sTemp);
-		}else {
-			objLog.WriteLineDateWithPosition(this, sLog);
-		}		
+	public void logLineDate(String... sLogs) throws ExceptionZZZ {
+		ObjectZZZ.logLineDate(this, sLogs);
+	}
+	
+	@Override
+	public synchronized void logLineDateWithPosition(String sLog) throws ExceptionZZZ {
+		ObjectZZZ.logLineDateWithPosition(this, sLog);
+	}
+	
+	
+	@Override
+	public synchronized void logLineDateWithPosition(String... sLogs) throws ExceptionZZZ {
+		ObjectZZZ.logLineDateWithPosition(this, sLogs);
 	}
 	
 	//Beim Konstruieren des SwingWorkers werden die notwendigen updateXYZ(...) Methoden aufgerufen.

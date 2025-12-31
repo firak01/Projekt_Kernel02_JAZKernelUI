@@ -20,7 +20,9 @@ import javax.swing.SwingUtilities;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IConstantZZZ;
+import basic.zBasic.IObjectLogZZZ;
 import basic.zBasic.IObjectZZZ;
+import basic.zBasic.ObjectZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasic.util.abstractArray.ArrayUtilZZZ;
 import basic.zBasic.util.datatype.calling.ReferenceHashMapZZZ;
@@ -47,7 +49,7 @@ import custom.zKernel.LogZZZ;
  * @author 0823
  *
  */
-public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialogExtendedZZZ, IConstantZZZ, IObjectZZZ, IKernelUserZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IScreenFeatureZZZ, IMouseFeatureZZZ, IFlagZEnabledZZZ, IFlagZLocalEnabledZZZ{
+public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialogExtendedZZZ, IConstantZZZ, IObjectZZZ, IObjectLogZZZ, IKernelUserZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IScreenFeatureZZZ, IMouseFeatureZZZ, IFlagZEnabledZZZ, IFlagZLocalEnabledZZZ{
 	protected IKernelZZZ objKernel;
 	protected LogZZZ objLog;
 	protected IKernelModuleZZZ objModule=null; //Das Modul, z.B. für die Dialogbox
@@ -617,26 +619,47 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 	}
 	
 	//### aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
-	@Override
-	public void logLineDate(String sLog) throws ExceptionZZZ {
-		LogZZZ objLog = this.getLogObject();
-		if(objLog==null) {
-			String sTemp = AbstractKernelLogZZZ.computeLineDate(this, sLog);
-			System.out.println(sTemp);
-		}else {
-			objLog.WriteLineDate(sLog);
-		}		
-	}	
+//	@Override
+//	public void logLineDate(String sLog) throws ExceptionZZZ {
+//		LogZZZ objLog = this.getLogObject();
+//		if(objLog==null) {
+//			String sTemp = AbstractKernelLogZZZ.computeLineDate(this, sLog);
+//			System.out.println(sTemp);
+//		}else {
+//			objLog.WriteLineDate(sLog);
+//		}		
+//	}	
+//	
+//	@Override
+//	public void logLineDateWithPosition(String sLog) throws ExceptionZZZ {
+//		LogZZZ objLog = this.getLogObject();
+//		if(objLog==null) {
+//			String sTemp = AbstractKernelLogZZZ.computeLineDateWithPosition(this, sLog);
+//			System.out.println(sTemp);
+//		}else {
+//			objLog.WriteLineDateWithPosition(this, sLog);
+//		}
+//	}
 	
 	@Override
-	public void logLineDateWithPosition(String sLog) throws ExceptionZZZ {
-		LogZZZ objLog = this.getLogObject();
-		if(objLog==null) {
-			String sTemp = AbstractKernelLogZZZ.computeLineDateWithPosition(this, sLog);
-			System.out.println(sTemp);
-		}else {
-			objLog.WriteLineDateWithPosition(this, sLog);
-		}
+	public synchronized void logLineDate(String sLog) throws ExceptionZZZ {
+		ObjectZZZ.logLineDate(this, sLog);
+	}
+	
+	@Override
+	public void logLineDate(String... sLogs) throws ExceptionZZZ {
+		ObjectZZZ.logLineDate(this, sLogs);
+	}
+	
+	@Override
+	public synchronized void logLineDateWithPosition(String sLog) throws ExceptionZZZ {
+		ObjectZZZ.logLineDateWithPosition(this, sLog);
+	}
+	
+	
+	@Override
+	public synchronized void logLineDateWithPosition(String... sLogs) throws ExceptionZZZ {
+		ObjectZZZ.logLineDateWithPosition(this, sLogs);
 	}
 		
 

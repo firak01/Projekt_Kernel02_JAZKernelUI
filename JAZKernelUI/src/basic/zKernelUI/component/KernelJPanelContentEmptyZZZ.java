@@ -12,6 +12,8 @@ import javax.swing.SwingUtilities;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IConstantZZZ;
 import basic.zBasic.IObjectZZZ;
+import basic.zBasic.ObjectZZZ;
+import basic.zKernel.AbstractKernelLogZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
@@ -52,8 +54,6 @@ public class KernelJPanelContentEmptyZZZ extends KernelJPanelCascadedZZZ{
 		return bReturn;
 	}
 
-	
-	
 	//#### Getter / Setter ##########################
 
 
