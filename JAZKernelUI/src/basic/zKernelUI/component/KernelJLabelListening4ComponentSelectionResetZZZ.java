@@ -29,7 +29,7 @@ public abstract class KernelJLabelListening4ComponentSelectionResetZZZ extends J
 		this.objLog = objKernel.getLogObject();
 	}
 	
-	public final void doReset(EventComponentSelectionResetZZZ eventNew) {
+	public final void doReset(EventComponentSelectionResetZZZ eventNew) throws ExceptionZZZ {
 		if(! eventNew.equals(this.getEventPrevious())){
 			if(this.getFlag("useEventResetDefault")==true){
 				String stemp = eventNew.getComponentText();
@@ -92,7 +92,7 @@ public abstract class KernelJLabelListening4ComponentSelectionResetZZZ extends J
 	/* (non-Javadoc)
 	 * @see basic.zBasic.IFunctionZZZ#getFlag(java.lang.String)
 	 */
-	public boolean getFlag(String sFlagName) {
+	public boolean getFlag(String sFlagName) throws ExceptionZZZ {
 		boolean bFunction = false;
 	main:{
 			if(StringZZZ.isEmpty(sFlagName)) break main;
@@ -123,9 +123,10 @@ public abstract class KernelJLabelListening4ComponentSelectionResetZZZ extends J
 	/** Function can set the flags of this class or the super-class.
 	 * The following new flags are supported:
 	 * --- debug
+	 * @throws ExceptionZZZ 
  * @see basic.zBasic.IFunctionZZZ_loesch#setFlag(java.lang.String, boolean)
  */
-public boolean setFlag(String sFlagName, boolean bFlagValue){
+public boolean setFlag(String sFlagName, boolean bFlagValue) throws ExceptionZZZ{
 	boolean bFunction = false;
 	main:{
 		if(StringZZZ.isEmpty(sFlagName)) break main;

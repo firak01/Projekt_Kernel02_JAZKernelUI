@@ -222,8 +222,9 @@ public class NavigatorElementCollectionZZZ<T>  extends AbstractKernelUseObjectZZ
 	 * @param sGroupAlias
 	 * @return
 	 * @author Fritz Lindhauer, 09.05.2021, 10:20:52
+	 * @throws ExceptionZZZ 
 	 */
-	public ArrayList<INavigatorElementZZZ>  getGroupByAlias(String sGroupAlias) {
+	public ArrayList<INavigatorElementZZZ>  getGroupByAlias(String sGroupAlias) throws ExceptionZZZ {
 		ArrayList<INavigatorElementZZZ> objaReturn = null;
 		main:{
 			if(StringZZZ.isEmpty(sGroupAlias)) break main;

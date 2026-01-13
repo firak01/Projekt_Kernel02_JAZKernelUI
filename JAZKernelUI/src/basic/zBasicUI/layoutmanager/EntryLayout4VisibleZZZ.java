@@ -97,6 +97,7 @@ public class EntryLayout4VisibleZZZ implements LayoutManager {
 	 * preferredLayoutSize() and minimumLayoutSize().
 	 */
 	protected Dimension computeLayoutSize(Container parent, int hpad, int vpad) {
+		try {
 		if (!validWidths)
 			return null;
 		Component[] components = parent.getComponents();
@@ -111,6 +112,7 @@ public class EntryLayout4VisibleZZZ implements LayoutManager {
 			}
 		}
 		Component[] componentsVisible = ArrayListUtilZZZ.toComponentArray(listaComponent);
+		
 		
 		
 		//FGL 20211104: Wenn aber eine ungerade Zahl der Componenten da ist - wie z.B. in der DebugUI-Zeile - gibt es einen Fehler: heights = new int[(components.length / COLUMNS];
@@ -148,6 +150,10 @@ public class EntryLayout4VisibleZZZ implements LayoutManager {
 		
 		// Finally, pass the sums back as the actual size.
 		return new Dimension(preferredWidth, preferredHeight);
+		} catch (ExceptionZZZ e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	//ORIGINAL, Variante beschränkt auf die nur sichtbaren:
@@ -191,6 +197,7 @@ public class EntryLayout4VisibleZZZ implements LayoutManager {
 	 * - Restricted to 2 Columns
 	 * - Alows different row heights*/
 	public void layoutContainer(Container parent) {
+		try {
 		// System.out.println("layoutContainer:");
 		if (!validWidths) return;
 		Component[] components = parent.getComponents();
@@ -321,6 +328,9 @@ public class EntryLayout4VisibleZZZ implements LayoutManager {
 			//Merke: 
 			c.setBounds(r);
 			
+		}
+		}catch(ExceptionZZZ ez) {
+			ez.printStackTrace();
 		}
 	}
 }

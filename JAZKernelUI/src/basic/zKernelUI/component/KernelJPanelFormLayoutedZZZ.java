@@ -125,7 +125,7 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 		this.iNumberOfRows = iNumberOfRows;
 	}
 		
-	public int computeContentRowNumberUsed(int iRow) {
+	public int computeContentRowNumberUsed(int iRow) throws ExceptionZZZ {
 		int iReturn=0;
 		main:{
 			int iRowOffset=0;
@@ -205,7 +205,7 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 		}
 		
 		@Override
-		public FormLayout buildFormLayoutUsed() {
+		public FormLayout buildFormLayoutUsed() throws ExceptionZZZ {
 			FormLayout objReturn = new FormLayout();
 			main:{
 				objReturn = this.buildFormLayoutUsed(this.getNumberOfRows());
@@ -215,7 +215,7 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 		
 
 		@Override
-		public FormLayout buildFormLayoutUsed(int iNumberOfRows) {
+		public FormLayout buildFormLayoutUsed(int iNumberOfRows) throws ExceptionZZZ {
 			FormLayout objReturn = new FormLayout();
 			main:{
 				//+++ Spalten

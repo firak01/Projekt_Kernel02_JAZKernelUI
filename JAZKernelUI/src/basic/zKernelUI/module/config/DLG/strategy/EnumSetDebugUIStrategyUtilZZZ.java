@@ -40,7 +40,7 @@ public class EnumSetDebugUIStrategyUtilZZZ extends EnumSetUtilZZZ{
 
 	//###############	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static int computeEnumConstant_StrategyValueForFlagUser(IFlagZEnabledZZZ obj) {
+	public static int computeEnumConstant_StrategyValueForFlagUser(IFlagZEnabledZZZ obj) throws ExceptionZZZ {
 		int iReturn = 0;
 		main:{
 			if(obj==null)break main;
@@ -67,7 +67,7 @@ public class EnumSetDebugUIStrategyUtilZZZ extends EnumSetUtilZZZ{
 	
 	//###############	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static Long readEnumConstant_ThiskeyValue(Class<IEnumSetDebugUIStrategyZZZ> clazz, String name) {
+	public static Long readEnumConstant_ThiskeyValue(Class<IEnumSetDebugUIStrategyZZZ> clazz, String name) throws ExceptionZZZ {
 		Long lngReturn = new Long(-1);
 		main:{
 	    if (clazz==null || name==null || name.isEmpty()) break main;
@@ -95,7 +95,7 @@ public class EnumSetDebugUIStrategyUtilZZZ extends EnumSetUtilZZZ{
 		return lngReturn;
 	}
 	
-	public static String readEnumConstant_UniquetextValue(Class<IEnumSetDebugUIStrategyZZZ> clazz, String name) {
+	public static String readEnumConstant_UniquetextValue(Class<IEnumSetDebugUIStrategyZZZ> clazz, String name) throws ExceptionZZZ {
 		String sReturn = new String("");
 		main:{
 	    if (clazz==null || name==null || name.isEmpty()) break main;
@@ -121,7 +121,7 @@ public class EnumSetDebugUIStrategyUtilZZZ extends EnumSetUtilZZZ{
 		return sReturn;
 	}
 	
-	public static int readEnumConstant_StrategyValueByFlagName(Class<IEnumSetDebugUIStrategyZZZ> clazz, String sStrategyFlagName) {
+	public static int readEnumConstant_StrategyValueByFlagName(Class<IEnumSetDebugUIStrategyZZZ> clazz, String sStrategyFlagName) throws ExceptionZZZ {
 		int iReturn = 0;
 		main:{
 	    if (clazz==null || sStrategyFlagName==null || sStrategyFlagName.isEmpty()) break main;
@@ -147,7 +147,7 @@ public class EnumSetDebugUIStrategyUtilZZZ extends EnumSetUtilZZZ{
 		return iReturn;
 	}
 	
-	public static String readEnumConstant_CategorytextValue(Class<IEnumSetDebugUIStrategyZZZ> clazz, String name) {
+	public static String readEnumConstant_CategorytextValue(Class<IEnumSetDebugUIStrategyZZZ> clazz, String name) throws ExceptionZZZ {
 		String sReturn = new String("");
 		main:{
 	    if (clazz==null || name==null || name.isEmpty()) break main;

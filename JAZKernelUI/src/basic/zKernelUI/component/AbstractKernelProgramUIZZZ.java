@@ -244,6 +244,7 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 	
 	private void updateLabel_(JLabel label, String sText) {
 		main:{
+		try {
 		if(label==null) {
 			ReportLogZZZ.write(ReportLogZZZ.DEBUG, "JTextField '" + sComponent4update + "' NOT FOUND in panel '" + getPanelParent().getName() + "' !!!");
 			break main;
@@ -258,19 +259,26 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 
 			public void run(){
 //				In das Textfeld den gefundenen Wert eintragen, der Wert ist ganz oben als private Variable deklariert			
-				ReportLogZZZ.write(ReportLogZZZ.DEBUG, "Writing '" + sText2Update + "' to the JLabel '" + sComponent4update + "'");				
-				
-				//20210707: Hier ggfs. auch in den Nachbarpanels nach dem Feld suchen!!!
-				JLabel label = (JLabel) getPanelParent().searchComponent(sComponent4update);
-				if(label!=null) {
-					label.setText(sText2Update);
-				}else {
-					ReportLogZZZ.write(ReportLogZZZ.DEBUG, "JLabel '" + sComponent4update + "' NOT FOUND in panel '" + getPanelParent().getName() + "' !!!");										
+				try {
+					ReportLogZZZ.write(ReportLogZZZ.DEBUG, "Writing '" + sText2Update + "' to the JLabel '" + sComponent4update + "'");
+								
+					//20210707: Hier ggfs. auch in den Nachbarpanels nach dem Feld suchen!!!
+					JLabel label = (JLabel) getPanelParent().searchComponent(sComponent4update);
+					if(label!=null) {
+						label.setText(sText2Update);
+					}else {
+						ReportLogZZZ.write(ReportLogZZZ.DEBUG, "JLabel '" + sComponent4update + "' NOT FOUND in panel '" + getPanelParent().getName() + "' !!!");										
+					}
+				} catch (ExceptionZZZ e) {
+					e.printStackTrace();
 				}
 			}
 		};
 		
 		SwingUtilities.invokeLater(runnerUpdateLabel);	
+		}catch(ExceptionZZZ ez) {
+			ez.printStackTrace();
+		}
 		}//end main:
 	
 	}
@@ -284,7 +292,8 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 		Runnable runnerUpdateLabel= new Runnable(){
 
 			public void run(){
-//				In das Textfeld den gefundenen Wert eintragen, der Wert ist ganz oben als private Variable deklariert			
+//				In das Textfeld den gefundenen Wert eintragen, der Wert ist ganz oben als private Variable deklariert
+				try {
 				ReportLogZZZ.write(ReportLogZZZ.DEBUG, "Writing '" + sText2Update + "' to the JLabel '" + sComponent4update + "'");				
 				
 				//20210707: Hier ggfs. auch in den Nachbarpanels nach dem Feld suchen!!!
@@ -296,6 +305,9 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 					}
 				}else {
 					ReportLogZZZ.write(ReportLogZZZ.DEBUG, "JTextField '" + sComponent4update + "' NOT FOUND in panel '" + getPanelParent().getName() + "' !!!");										
+				}
+				}catch(ExceptionZZZ ez) {
+					ez.printStackTrace();
 				}
 			}
 		};

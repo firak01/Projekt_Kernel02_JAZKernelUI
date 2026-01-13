@@ -297,7 +297,7 @@ public abstract class KernelJTextFieldListening4ComponentSelectionResetZZZ exten
 	 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
 	 * - Innere Klassen müssen auch public deklariert werden.(non-Javadoc)
 	 */
-	public boolean getFlag(String sFlagName) {
+	public boolean getFlag(String sFlagName) throws ExceptionZZZ {
 		boolean bFunction = false;
 		main:{
 			if(StringZZZ.isEmpty(sFlagName)) break main;

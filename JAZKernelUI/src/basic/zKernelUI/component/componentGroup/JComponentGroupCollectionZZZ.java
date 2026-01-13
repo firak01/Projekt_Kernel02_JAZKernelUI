@@ -230,8 +230,9 @@ public class JComponentGroupCollectionZZZ<T>  extends AbstractKernelUseObjectZZZ
 	 * @param sGroupAlias
 	 * @return
 	 * @author Fritz Lindhauer, 09.05.2021, 10:20:52
+	 * @throws ExceptionZZZ 
 	 */
-	public JComponentGroupZZZ getGroupByAlias(String sGroupAlias) {
+	public JComponentGroupZZZ getGroupByAlias(String sGroupAlias) throws ExceptionZZZ {
 		JComponentGroupZZZ objReturn = null;
 		main:{
 			if(StringZZZ.isEmpty(sGroupAlias)) break main;

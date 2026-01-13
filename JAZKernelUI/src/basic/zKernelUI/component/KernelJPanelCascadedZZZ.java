@@ -376,7 +376,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		return listaReturn;
 	}
 	
-	public JComponent searchComponent(String sKeyComponent){
+	public JComponent searchComponent(String sKeyComponent) throws ExceptionZZZ{
 		JComponent objReturn = null;
 		main:{
 			objReturn = searchComponent(sKeyComponent, false);
@@ -387,7 +387,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		return objReturn;
 	}
 			
-	public JComponent searchComponent(String sKeyComponent, boolean bInNeighbours){
+	public JComponent searchComponent(String sKeyComponent, boolean bInNeighbours) throws ExceptionZZZ{
 		JComponent objReturn = null;
 		main:{
 			if(StringZZZ.isEmpty(sKeyComponent)) break main;
@@ -421,7 +421,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		return objReturn;
 	}
 	
-	public ArrayList<IPanelCascadedZZZ> getPanelNeighbours() {
+	public ArrayList<IPanelCascadedZZZ> getPanelNeighbours() throws ExceptionZZZ {
 		ArrayList<IPanelCascadedZZZ> listaReturn=new ArrayList<IPanelCascadedZZZ>();
 		main:{
 			IPanelCascadedZZZ panelParent = this.getPanelParent();
@@ -862,7 +862,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	/* (non-Javadoc)
 	 * @see basic.zKernelUI.IMouseFeatureZZZ#isJComponentContentDraggable()
 	 */
-	public boolean isJComponentContentDraggable() {			
+	public boolean isJComponentContentDraggable() throws ExceptionZZZ {			
 		return this.getFlag(IMouseFeatureZZZ.FLAGZ.COMPONENT_DRAGGABLE);
 	}
 
@@ -902,7 +902,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	
 	//### aus IFlagEnabledZZZ
 	@Override
-	public boolean getFlag(IMouseFeatureZZZ.FLAGZ objEnumFlag) {
+	public boolean getFlag(IMouseFeatureZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
 		return this.getFlag(objEnumFlag.name());
 	}
 	@Override
@@ -939,7 +939,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	
 	//### Aus IFlagUserZZZ
 	@Override
-	public boolean getFlag(IFlagZEnabledZZZ.FLAGZ objEnumFlag) {
+	public boolean getFlag(IFlagZEnabledZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
 		return this.getFlag(objEnumFlag.name());
 	}
 	@Override
@@ -1064,7 +1064,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
 			 * - Innere Klassen m�ssen auch public deklariert werden.(non-Javadoc)
 			 */
-			public boolean getFlag(String sFlagName) {
+			public boolean getFlag(String sFlagName) throws ExceptionZZZ {
 				boolean bFunction = false;
 				main:{
 					if(StringZZZ.isEmpty(sFlagName)) break main;
@@ -1255,7 +1255,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
 		 * - Innere Klassen m�ssen auch public deklariert werden.(non-Javadoc)
 		 */
-		public boolean getFlagLocal(String sFlagName) {
+		public boolean getFlagLocal(String sFlagName) throws ExceptionZZZ {
 			boolean bFunction = false;
 			main:{
 				if(StringZZZ.isEmpty(sFlagName)) break main;
@@ -1504,7 +1504,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//###Aus IKernelProgramZZZ
 	@Override
-	public boolean getFlag(IKernelProgramZZZ.FLAGZ objEnumFlag) {
+	public boolean getFlag(IKernelProgramZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
 		return this.getFlag(objEnumFlag.name());
 	}
 	@Override
@@ -1555,7 +1555,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	
 	
 	@Override
-	public boolean getFlag(IKernelModuleUserZZZ.FLAGZ objEnumFlag) {
+	public boolean getFlag(IKernelModuleUserZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
 		return this.getFlag(objEnumFlag.name());
 	}
 	@Override
@@ -1630,7 +1630,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	
 	
 	@Override
-	public boolean getFlag(IKernelModuleZZZ.FLAGZ objEnumFlag) {
+	public boolean getFlag(IKernelModuleZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
 		return this.getFlag(objEnumFlag.name());
 	}
 	@Override

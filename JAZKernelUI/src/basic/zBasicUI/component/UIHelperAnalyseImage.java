@@ -107,7 +107,7 @@ public class UIHelperAnalyseImage {
 		return iaaReturn;		
 	}
 	
-	public static int[] getPixelDataRGBWithTransparency(BufferedImage img, int x, int y) {
+	public static int[] getPixelDataRGBWithTransparency(BufferedImage img, int x, int y) throws ExceptionZZZ {
 		int argb = img.getRGB(x, y);
 
 

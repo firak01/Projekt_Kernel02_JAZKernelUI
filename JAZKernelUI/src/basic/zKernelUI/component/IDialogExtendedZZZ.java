@@ -15,7 +15,7 @@ public interface IDialogExtendedZZZ {
 	}
 	
 	//damit muss man nicht mehr tippen hinter dem enum .name()
-	public abstract boolean getFlagLocal(IDialogExtendedZZZ.FLAGZLOCAL objEnumFlag);
+	public abstract boolean getFlagLocal(IDialogExtendedZZZ.FLAGZLOCAL objEnumFlag) throws ExceptionZZZ;
 	public abstract boolean setFlagLocal(IDialogExtendedZZZ.FLAGZLOCAL objEnumFlag, boolean bFlagValue) throws ExceptionZZZ;
 	public abstract boolean[] setFlagLocal(IDialogExtendedZZZ.FLAGZLOCAL[] objaEnumFlag, boolean bFlagValue) throws ExceptionZZZ;
 	public abstract boolean proofFlagLocalExists(IDialogExtendedZZZ.FLAGZLOCAL objEnumFlag) throws ExceptionZZZ;

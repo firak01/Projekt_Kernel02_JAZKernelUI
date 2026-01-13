@@ -22,27 +22,27 @@ public interface IPanelCascadedZZZ extends IComponentCascadedUserZZZ, IKernelMod
 		SKIPDEBUGUI;
 	}
 	
-	public String getAlias();
-	public void setAlias(String sAlias);
+	public String getAlias() throws ExceptionZZZ;
+	public void setAlias(String sAlias) throws ExceptionZZZ;
 	
-	public abstract IPanelCascadedZZZ getPanelParent();
-	public abstract void setPanelParent(IPanelCascadedZZZ objPanel);
+	public abstract IPanelCascadedZZZ getPanelParent() throws ExceptionZZZ;
+	public abstract void setPanelParent(IPanelCascadedZZZ objPanel) throws ExceptionZZZ;
 	
 	public abstract IPanelCascadedZZZ searchPanel(String string) throws ExceptionZZZ;
 	public abstract IPanelCascadedZZZ searchPanelRoot() throws ExceptionZZZ;
 	public abstract IPanelCascadedZZZ searchPanelSub(String sAlias) throws ExceptionZZZ;
 	
-	public abstract IPanelCascadedZZZ getPanelSub(String sAlias);
-	public abstract void setPanelSub(String sAlias, IPanelCascadedZZZ objJPanel);
+	public abstract IPanelCascadedZZZ getPanelSub(String sAlias) throws ExceptionZZZ;
+	public abstract void setPanelSub(String sAlias, IPanelCascadedZZZ objJPanel) throws ExceptionZZZ;
 	
 	
-	public abstract KernelJFrameCascadedZZZ getFrameParent();
-	public abstract KernelJDialogExtendedZZZ getDialogParent();
+	public abstract KernelJFrameCascadedZZZ getFrameParent() throws ExceptionZZZ;
+	public abstract KernelJDialogExtendedZZZ getDialogParent() throws ExceptionZZZ;
 	
-	public abstract JComponent searchComponent(String sKeyComponent);
-	public abstract JComponent searchComponent(String sKeyComponent, boolean bInNeighbours);
+	public abstract JComponent searchComponent(String sKeyComponent) throws ExceptionZZZ;
+	public abstract JComponent searchComponent(String sKeyComponent, boolean bInNeighbours) throws ExceptionZZZ;
 	
-	public Hashtable<String,IPanelCascadedZZZ> getHashtablePanel();
+	public Hashtable<String,IPanelCascadedZZZ> getHashtablePanel() throws ExceptionZZZ;
 	
 	
 }

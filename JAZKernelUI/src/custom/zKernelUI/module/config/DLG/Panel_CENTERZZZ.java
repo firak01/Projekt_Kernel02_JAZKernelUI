@@ -582,7 +582,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 			protected <T, IEnumDebugUIStrategyZZZ> void _fillValueImmutableByEnumAlias(IEnumDebugUIStrategyZZZ objValue,String sEnumAlias, ReferenceZZZ<Long> objlngThiskey, 
 				ReferenceZZZ<String> objsName, ReferenceZZZ<String> objsUniquetext, ReferenceZZZ<String> objsCategorytext, 
 				ReferenceZZZ<Integer> objintStrategyValue
-				){
+				) throws ExceptionZZZ{
 
 				//Merke: Direktes Reinschreiben geht wieder nicht wg. "bound exception"
 				//EnumSetDefaulttextUtilZZZ.getEnumConstant_DescriptionValue(EnumSetDefaulttextTestTypeTHM.class, sEnumAlias);

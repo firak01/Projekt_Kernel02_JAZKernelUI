@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
 
+import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasicUI.component.UIHelper;
 import basic.zKernel.KernelZZZ;
@@ -52,8 +53,9 @@ public class GhostPictureAdapter extends GhostDropAdapter
 	 * @param picture
 	 * @param iWidth
 	 * @param iHeight
+	 * @throws ExceptionZZZ 
 	 */
-	public GhostPictureAdapter(GhostGlassPane glassPane, String action, String picture, int iWidth, int iHeight) {
+	public GhostPictureAdapter(GhostGlassPane glassPane, String action, String picture, int iWidth, int iHeight) throws ExceptionZZZ {
 		   super(glassPane, action);
 		   GhostPictureAdapterNew_(glassPane, action, null, picture, iWidth, iHeight);
 		   
@@ -86,8 +88,9 @@ public class GhostPictureAdapter extends GhostDropAdapter
 	 * @param picture
 	 * @param iWidth
 	 * @param iHeight
+	 * @throws ExceptionZZZ 
 	 */
-	public GhostPictureAdapter(GhostGlassPane glassPane, String action, byte[] imageInByte, int iWidth, int iHeight) {
+	public GhostPictureAdapter(GhostGlassPane glassPane, String action, byte[] imageInByte, int iWidth, int iHeight) throws ExceptionZZZ {
 		   super(glassPane, action);
 		   GhostPictureAdapterNew_(glassPane, action, imageInByte, null, iWidth, iHeight);		   
 		}
@@ -98,13 +101,14 @@ public class GhostPictureAdapter extends GhostDropAdapter
 	 * @param glassPane
 	 * @param action
 	 * @param picture
+	 * @throws ExceptionZZZ 
 	 */
-	public GhostPictureAdapter(GhostGlassPane glassPane, String action, byte[] imageInByte) {
+	public GhostPictureAdapter(GhostGlassPane glassPane, String action, byte[] imageInByte) throws ExceptionZZZ {
 		   super(glassPane, action);
 		   GhostPictureAdapterNew_(glassPane, action, imageInByte, null, 0, 0);
 	}
 	
-	private boolean GhostPictureAdapterNew_(GhostGlassPane glassPane, String action, byte[] imageInByte, String sImagePath, int iWidth, int iHeight){
+	private boolean GhostPictureAdapterNew_(GhostGlassPane glassPane, String action, byte[] imageInByte, String sImagePath, int iWidth, int iHeight) throws ExceptionZZZ{
 		boolean bReturn = false;
 		String sImagePathUsed = null;
 		try {

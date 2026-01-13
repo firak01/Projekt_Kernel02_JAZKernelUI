@@ -26,12 +26,15 @@ public class KernelSenderComponentSelectionResetZZZ extends AbstractKernelUseObj
 	private ArrayList listaLISTENER_REGISTERED = new ArrayList();  //Das ist die Arrayliste, in welche  die registrierten Komponenten eingetragen werden 
 																							  //wichtig: Sie muss private sein und kann nicht im Interace global definiert werden, weil es sonst nicht m�glich ist 
 	                                                                                          //             mehrere Events, an verschiedenen Komponenten, unabh�ngig voneinander zu verwalten.
-	public final void fireEvent(EventComponentSelectionResetZZZ event){	
+	public final void fireEvent(EventComponentSelectionResetZZZ event){
+		try {
 		if(event.getSource() instanceof ISenderSelectionResetZZZ){
 			ISenderSelectionResetZZZ sender = (ISenderSelectionResetZZZ) event.getSource();
 			for(int i = 0 ; i < sender.getListenerRegisteredAll().size(); i++){
 				IListenerSelectionResetZZZ l = (IListenerSelectionResetZZZ) sender.getListenerRegisteredAll().get(i);
-				System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# EventComponentSelectionResetZZZ by " + event.getSource().getClass().getName() + " fired: " + i);
+				
+					System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# EventComponentSelectionResetZZZ by " + event.getSource().getClass().getName() + " fired: " + i);
+				
 				l.doReset(event);
 			}
 		}else{
@@ -40,6 +43,9 @@ public class KernelSenderComponentSelectionResetZZZ extends AbstractKernelUseObj
 				System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "# EventComponentSelectionResetZZZ by " + this.getClass().getName() + " - object (d.h. this - object) fired: " + i);
 				l.doReset(event);
 			}
+		}
+		} catch (ExceptionZZZ e) {					
+			e.printStackTrace();
 		}
 	}
 	

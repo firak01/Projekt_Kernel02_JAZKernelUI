@@ -13,20 +13,20 @@ public interface IFormLayoutZZZ {
 	public abstract boolean initFormLayoutDebug() throws ExceptionZZZ;
 	public abstract boolean initFormLayoutContent() throws ExceptionZZZ;
 	
-	public abstract int getNumberOfRows();
-	public abstract void setNumberOfRows(int iNumberOfRows);
+	public abstract int getNumberOfRows() throws ExceptionZZZ;
+	public abstract void setNumberOfRows(int iNumberOfRows) throws ExceptionZZZ;
 	
-	public abstract FormLayout buildFormLayoutUsed();
-	public abstract FormLayout buildFormLayoutUsed(int iNumberOfRows);
+	public abstract FormLayout buildFormLayoutUsed() throws ExceptionZZZ;
+	public abstract FormLayout buildFormLayoutUsed(int iNumberOfRows) throws ExceptionZZZ;
 	
-	public abstract ArrayList<RowSpec> getRowSpecs();
-	public abstract void setRowSpecs(ArrayList<RowSpec> listaRowSpec);
-	public abstract ArrayList<RowSpec> buildRowSpecs();	
-	public abstract ArrayList<RowSpec> buildRowSpecs(int iNumberOfRows);
-	public abstract RowSpec buildRowSpecDebug();	
+	public abstract ArrayList<RowSpec> getRowSpecs() throws ExceptionZZZ;
+	public abstract void setRowSpecs(ArrayList<RowSpec> listaRowSpec) throws ExceptionZZZ;
+	public abstract ArrayList<RowSpec> buildRowSpecs() throws ExceptionZZZ;	
+	public abstract ArrayList<RowSpec> buildRowSpecs(int iNumberOfRows) throws ExceptionZZZ;
+	public abstract RowSpec buildRowSpecDebug() throws ExceptionZZZ;	
 	
-	public abstract ArrayList<ColumnSpec> getColumnSpecs();
-	public abstract ArrayList<ColumnSpec> buildColumnSpecs();
+	public abstract ArrayList<ColumnSpec> getColumnSpecs() throws ExceptionZZZ;
+	public abstract ArrayList<ColumnSpec> buildColumnSpecs() throws ExceptionZZZ;
 		
 	public abstract boolean fillRowDebug(CellConstraints cc) throws ExceptionZZZ;
 	public abstract boolean fillRowContent(CellConstraints cc, int iRow) throws ExceptionZZZ;

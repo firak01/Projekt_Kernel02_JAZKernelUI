@@ -40,7 +40,7 @@ public class KernelJPanelContentEmptyZZZ extends KernelJPanelCascadedZZZ{
 		KernelJPanelContentEmptyNew_();		
 	}
 	
-	private boolean KernelJPanelContentEmptyNew_() {
+	private boolean KernelJPanelContentEmptyNew_() throws ExceptionZZZ {
 		boolean bReturn = false;
 		main:{			
 			//if(this.getFlag(IFlagUserZZZ.FLAGZ.DEBUG.name())) {

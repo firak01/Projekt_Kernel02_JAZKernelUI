@@ -67,7 +67,11 @@ public abstract class AbstractKernelActionListenerCascadedZZZ extends AbstractKe
 					sReturn = this.getContextUsed().getProgramName();
 				}
 			} catch (ExceptionZZZ ez) {				
-				ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());
+				try {
+					ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());
+				} catch (ExceptionZZZ e) {
+					e.printStackTrace();
+				}
 			}
 		}//end main
 	return sReturn;
@@ -83,7 +87,11 @@ public abstract class AbstractKernelActionListenerCascadedZZZ extends AbstractKe
 			try{
 				sReturn = KernelUIZZZ.getProgramUsedName(this);				
 			} catch (ExceptionZZZ ez) {				
-				ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());
+				try {
+					ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());
+				} catch (ExceptionZZZ e) {					
+					e.printStackTrace();
+				}
 			}
 		}//end main
 	return sReturn;

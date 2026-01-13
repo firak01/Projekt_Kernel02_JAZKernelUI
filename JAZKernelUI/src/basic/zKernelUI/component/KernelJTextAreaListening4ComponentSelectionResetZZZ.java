@@ -51,7 +51,7 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 		this.objLog = objKernel.getLogObject();
 	}
 	
-	public final void doReset(EventComponentSelectionResetZZZ eventNew) {
+	public final void doReset(EventComponentSelectionResetZZZ eventNew) throws ExceptionZZZ {
 		if(! eventNew.equals(this.getEventPrevious())){
 			if(this.getFlag("useEventResetDefault")==true){
 				String stemp = eventNew.getComponentText();
@@ -299,7 +299,7 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 	 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
 	 * - Innere Klassen m�ssen auch public deklariert werden.(non-Javadoc)
 	 */
-	public boolean getFlag(String sFlagName) {
+	public boolean getFlag(String sFlagName) throws ExceptionZZZ {
 		boolean bFunction = false;
 		main:{
 			if(StringZZZ.isEmpty(sFlagName)) break main;

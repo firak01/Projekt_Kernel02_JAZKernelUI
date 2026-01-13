@@ -15,12 +15,12 @@ public interface IMouseFeatureZZZ {
 	}
 	
 	//damit muss man nicht mehr tippen hinter dem enum .name()
-	public boolean getFlag(IMouseFeatureZZZ.FLAGZ objEnumFlag);
+	public boolean getFlag(IMouseFeatureZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ;
 	public boolean setFlag(IMouseFeatureZZZ.FLAGZ objEnumFlag, boolean bFlagValue) throws ExceptionZZZ;
 	public boolean[] setFlag(IMouseFeatureZZZ.FLAGZ[] objaEnumFlag, boolean bFlagValue) throws ExceptionZZZ;
 	public boolean proofFlagExists(IMouseFeatureZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ;
 	public boolean proofFlagSetBefore(IMouseFeatureZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ;
 	
-	public abstract boolean isJComponentContentDraggable();
+	public abstract boolean isJComponentContentDraggable() throws ExceptionZZZ;
 	public abstract void setJComponentContentDraggable(boolean bValue) throws ExceptionZZZ;
 }

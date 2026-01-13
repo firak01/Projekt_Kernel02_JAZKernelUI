@@ -28,6 +28,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
+import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 
 /**
@@ -375,8 +376,9 @@ public final class UIHelper
          * @param sFileEnding
          * @return
          * @throws IOException 
+         * @throws ExceptionZZZ 
          */
-        public static byte[] getByteArrayFromBufferedImage(BufferedImage objBufferdImage, String sFileEnding) throws IOException{
+        public static byte[] getByteArrayFromBufferedImage(BufferedImage objBufferdImage, String sFileEnding) throws IOException, ExceptionZZZ{
 			        	
 			/*Ansatz, direkt aus dem BufferedImage eine byte[] machen... Ein BufferedImage bekommt man z.B so:*/
 			//BufferedImage originalImage = ImageIO.read(new File("c:\\image\\mypic.jpg"));

@@ -53,7 +53,7 @@ public class KernelJPanelDialogButtonDefaultZZZ extends KernelJPanelCascadedZZZ 
 		KernelJPanelDialogButtonDefaultNew_(objKernel, dialogExtended, bIsButtonOkAvailable, bIsButtonCancelAvailable, bIsButtonCloseAvailable);
 	}
 	
-	private boolean KernelJPanelDialogButtonDefaultNew_(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended, boolean bIsButtonOkAvailable, boolean bIsButtonCancelAvailable, boolean bIsButtonCloseAvailable){
+	private boolean KernelJPanelDialogButtonDefaultNew_(IKernelZZZ objKernel, KernelJDialogExtendedZZZ dialogExtended, boolean bIsButtonOkAvailable, boolean bIsButtonCancelAvailable, boolean bIsButtonCloseAvailable) throws ExceptionZZZ{
 		boolean bReturn = false;
 		main:{
 

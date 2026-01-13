@@ -282,7 +282,7 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 			 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
 			 * - Innere Klassen m�ssen auch public deklariert werden.(non-Javadoc)
 			 */
-			public boolean getFlag(String sFlagName) {
+			public boolean getFlag(String sFlagName) throws ExceptionZZZ {
 				boolean bFunction = false;
 				main:{
 					if(StringZZZ.isEmpty(sFlagName)) break main;
@@ -457,7 +457,7 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 			 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
 			 * - Innere Klassen m�ssen auch public deklariert werden.(non-Javadoc)
 			 */
-			public boolean getFlagLocal(String sFlagName) {
+			public boolean getFlagLocal(String sFlagName) throws ExceptionZZZ {
 				boolean bFunction = false;
 				main:{
 					if(StringZZZ.isEmpty(sFlagName)) break main;
@@ -1122,7 +1122,7 @@ public void setFrameSub(String sAlias, JFrame objFrame){
 	
 	//### Aus IFlagUserZZZ
 	@Override
-	public boolean getFlag(IFlagZEnabledZZZ.FLAGZ objEnumFlag) {
+	public boolean getFlag(IFlagZEnabledZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
 		return this.getFlag(objEnumFlag.name());
 	}
 	@Override
@@ -1150,7 +1150,7 @@ public void setFrameSub(String sAlias, JFrame objFrame){
 	
 	//### Aus IKernelModule
 	@Override
-	public boolean getFlag(IKernelModuleZZZ.FLAGZ objEnumFlag) {
+	public boolean getFlag(IKernelModuleZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
 		return this.getFlag(objEnumFlag.name());
 	}
 	@Override
@@ -1245,7 +1245,11 @@ public void setFrameSub(String sAlias, JFrame objFrame){
 			} catch (ExceptionZZZ ez) {
 				System.out.println(ez.getDetailAllLast()+"\n");
 				ez.printStackTrace();
-				ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());	
+				try {
+					ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());
+				} catch (ExceptionZZZ e) {
+					e.printStackTrace();
+				}	
 			}
 		}//END run()
 				

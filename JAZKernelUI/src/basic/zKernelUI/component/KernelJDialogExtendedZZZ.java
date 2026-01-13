@@ -461,7 +461,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 		this.isDisposed(false);
 	}
 			
-	public String getText4ButtonOk(){
+	public String getText4ButtonOk() throws ExceptionZZZ{
 		String sReturn = this.sText4ButtonOk;
 		if(StringZZZ.isEmpty(sReturn)) {
 			sReturn = KernelJDialogExtendedZZZ.sTEXT_USEIT;
@@ -472,7 +472,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 		this.sText4ButtonOk = sText;
 	}
 	
-	public String getText4ButtonClose(){
+	public String getText4ButtonClose() throws ExceptionZZZ{
 		String sReturn = this.sText4ButtonClose;
 		if(StringZZZ.isEmpty(sReturn)) {
 			sReturn = KernelJDialogExtendedZZZ.sTEXT_CLOSE;
@@ -483,7 +483,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 		this.sText4ButtonClose = sText;
 	}
 	
-	public String getText4ButtonCancel(){
+	public String getText4ButtonCancel() throws ExceptionZZZ{
 		String sReturn = this.sText4ButtonCancel;
 		if(StringZZZ.isEmpty(sReturn)) {
 			sReturn = KernelJDialogExtendedZZZ.sTEXT_ABORT;
@@ -691,7 +691,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 	/* (non-Javadoc)
 	 * @see basic.zKernelUI.component.IMouseFeatureZZZ#isJComponentContentDraggable()
 	 */
-	public boolean isJComponentContentDraggable(){
+	public boolean isJComponentContentDraggable() throws ExceptionZZZ{
 		return this.getFlag(IDialogExtendedZZZ.FLAGZ.ISDRAGGABLE.name());
 	}
 	
@@ -816,7 +816,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 			 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
 			 * - Innere Klassen m�ssen auch public deklariert werden.(non-Javadoc)
 			 */
-			public boolean getFlag(String sFlagName) {
+			public boolean getFlag(String sFlagName) throws ExceptionZZZ {
 				boolean bFunction = false;
 				main:{
 					if(StringZZZ.isEmpty(sFlagName)) break main;
@@ -966,7 +966,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 			 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
 			 * - Innere Klassen m�ssen auch public deklariert werden.(non-Javadoc)
 			 */
-			public boolean getFlagLocal(String sFlagName) {
+			public boolean getFlagLocal(String sFlagName) throws ExceptionZZZ {
 				boolean bFunction = false;
 				main:{
 					if(StringZZZ.isEmpty(sFlagName)) break main;
@@ -987,7 +987,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 			
 			//### Aus IDialogExtendedZZZ
 			@Override
-			public boolean getFlagLocal(IDialogExtendedZZZ.FLAGZLOCAL objEnumFlag) {
+			public boolean getFlagLocal(IDialogExtendedZZZ.FLAGZLOCAL objEnumFlag) throws ExceptionZZZ {
 				return this.getFlagLocal(objEnumFlag.name());
 			}
 			
@@ -1305,7 +1305,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 	}
 	
 	@Override
-	public boolean getFlag(IKernelModuleZZZ.FLAGZ objEnumFlag) {
+	public boolean getFlag(IKernelModuleZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
 		return this.getFlag(objEnumFlag.name());
 	}
 	@Override
@@ -1342,7 +1342,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 	
 	//### Aus IFlagUserZZZ
 	@Override
-	public boolean getFlag(IFlagZEnabledZZZ.FLAGZ objEnumFlag) {
+	public boolean getFlag(IFlagZEnabledZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
 		return this.getFlag(objEnumFlag.name());
 	}
 	@Override
@@ -1379,7 +1379,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 	
 	//### Aus IKernelModuleUserZZZ
 	@Override
-	public boolean getFlag(IKernelModuleUserZZZ.FLAGZ objEnumFlag) {
+	public boolean getFlag(IKernelModuleUserZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
 		return this.getFlag(objEnumFlag.name());
 	}
 	@Override
@@ -1416,7 +1416,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 	
 	//### Aus IMouseFeatureZZZ
 	@Override
-	public boolean getFlag(IMouseFeatureZZZ.FLAGZ objEnumFlag) {
+	public boolean getFlag(IMouseFeatureZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
 		return this.getFlag(objEnumFlag.name());
 	}
 	@Override

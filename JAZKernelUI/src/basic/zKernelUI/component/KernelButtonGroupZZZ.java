@@ -54,8 +54,9 @@ public class KernelButtonGroupZZZ<T,X>  extends AbstractKernelUseObjectZZZ{
 	/**Den Button aus der HashMap holen und dann den Key dazu holen, um diesen, z.B. in anderen Methoden dieser Klasse zu nutzen.
 	 * @param button
 	 * @return
+	 * @throws ExceptionZZZ 
 	 */
-	public String getKey(JButton button){
+	public String getKey(JButton button) throws ExceptionZZZ{
 		String sReturn = null;
 		HashMap<String,AbstractButton>hm=this.getHashMapButton();
 		Object obj = HashMapZZZ.getKeyFromValueFirst(hm, button);//Note that there is no single corresponding key - there may well be multiple keys mapping to the same value. 
@@ -88,7 +89,7 @@ public class KernelButtonGroupZZZ<T,X>  extends AbstractKernelUseObjectZZZ{
 		}				
 	}
 	
-	public void enable(JButton button){
+	public void enable(JButton button) throws ExceptionZZZ{
 		String sKey = this.getKey(button);
 		this.enable(sKey);
 	}
@@ -96,7 +97,7 @@ public class KernelButtonGroupZZZ<T,X>  extends AbstractKernelUseObjectZZZ{
 		this.setEnabled(sKey, true);
 	}
 	
-	public void disable(JButton button){
+	public void disable(JButton button) throws ExceptionZZZ{
 		String sKey = this.getKey(button);
 		this.disable(sKey);
 	}
@@ -112,7 +113,7 @@ public class KernelButtonGroupZZZ<T,X>  extends AbstractKernelUseObjectZZZ{
 		}
 	}
 	
-	public void enableOther(JButton button){
+	public void enableOther(JButton button) throws ExceptionZZZ{
 		String sKey = this.getKey(button);
 		this.enableOther(sKey);
 	}
@@ -120,7 +121,7 @@ public class KernelButtonGroupZZZ<T,X>  extends AbstractKernelUseObjectZZZ{
 		this.setEnabledOther(sKey, true);
 	}
 	
-	public void disableOther(JButton button){
+	public void disableOther(JButton button) throws ExceptionZZZ{
 		String sKey = this.getKey(button);
 		this.disableOther(sKey);
 	}	
@@ -156,7 +157,7 @@ public class KernelButtonGroupZZZ<T,X>  extends AbstractKernelUseObjectZZZ{
 		}				
 	}
 	
-	public void toggle(JButton button){
+	public void toggle(JButton button) throws ExceptionZZZ{
 		String sKey = this.getKey(button);
 		this.toggle(sKey);
 	}
@@ -176,8 +177,9 @@ public class KernelButtonGroupZZZ<T,X>  extends AbstractKernelUseObjectZZZ{
 	/**Ausgehend von dem angegebenen Button, wird dessen Status geändert.
 	 *  Alle anderen Buttons bekommen einen anderen Status als der Ausgangsbutton.
 	 * @param sKey
+	 * @throws ExceptionZZZ 
 	 */
-	public void differAll(JButton button){
+	public void differAll(JButton button) throws ExceptionZZZ{
 		String sKey = this.getKey(button);
 		this.differAll(sKey);
 	}

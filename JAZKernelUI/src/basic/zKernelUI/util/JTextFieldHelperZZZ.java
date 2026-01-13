@@ -3,6 +3,7 @@ package basic.zKernelUI.util;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import basic.zBasic.ExceptionZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelJDialogExtendedZZZ;
 
@@ -61,8 +62,9 @@ public class JTextFieldHelperZZZ {
 	 * @param textfield
 	 * @return
 	 * @author Fritz Lindhauer, 13.04.2023, 19:53:33
+	 * @throws ExceptionZZZ 
 	 */
-	public static boolean markAndFocus(IPanelCascadedZZZ panelOfTextfield, JTextField textfield){
+	public static boolean markAndFocus(IPanelCascadedZZZ panelOfTextfield, JTextField textfield) throws ExceptionZZZ{
 		boolean bReturn = false;
 		main:{
 			bReturn = JTextFieldHelperZZZ.markAndFocus(textfield);
@@ -97,8 +99,9 @@ public class JTextFieldHelperZZZ {
 	 * @param iEndCharacterPositions
 	 * @return
 	 * @author Fritz Lindhauer, 13.04.2023, 19:53:29
+	 * @throws ExceptionZZZ 
 	 */
-	public static boolean markAndFocus(IPanelCascadedZZZ panelOfTextfield, JTextField textfield, int iStartCharacterPosition, int iEndCharacterPositions){
+	public static boolean markAndFocus(IPanelCascadedZZZ panelOfTextfield, JTextField textfield, int iStartCharacterPosition, int iEndCharacterPositions) throws ExceptionZZZ{
 		boolean bReturn = false;
 		main:{
 			bReturn = JTextFieldHelperZZZ.markAndFocus(textfield, iStartCharacterPosition, iEndCharacterPositions);

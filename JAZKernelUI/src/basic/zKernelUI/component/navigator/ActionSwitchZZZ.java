@@ -142,7 +142,11 @@ public class ActionSwitchZZZ<T> extends  KernelMouseListenerCascadedZZZ implemen
 				updatePanel(objPanelParent);									
 			}catch(ExceptionZZZ ez){
 				System.out.println(ez.getDetailAllLast());
-				ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());					
+				try {
+					ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());
+				} catch (ExceptionZZZ e) {					
+					e.printStackTrace();
+				}					
 			}
 			return "all done";
 		}

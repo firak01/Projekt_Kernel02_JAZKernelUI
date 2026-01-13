@@ -68,7 +68,11 @@ public abstract class AbstractKernelActionTrayZZZ extends AbstractKernelUseObjec
 					sReturn = this.getContextUsed().getProgramName();
 				}
 			} catch (ExceptionZZZ ez) {				
-				ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());
+				try {
+					ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());
+				} catch (ExceptionZZZ e) {					
+					e.printStackTrace();
+				}
 			}
 		}//end main
 	return sReturn;
@@ -84,7 +88,11 @@ public abstract class AbstractKernelActionTrayZZZ extends AbstractKernelUseObjec
 			try{
 				sReturn = KernelUIZZZ.getProgramUsedName(this);				
 			} catch (ExceptionZZZ ez) {				
-				ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());
+				try {
+					ReportLogZZZ.write(ReportLogZZZ.ERROR, ez.getDetailAllLast());
+				} catch (ExceptionZZZ e) {					
+					e.printStackTrace();
+				}
 			}
 		}//end main
 	return sReturn;
