@@ -186,7 +186,7 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 		}
 		
 		@Override
-		public FormLayout getFormLayoutUsed() {
+		public FormLayout getFormLayoutUsed() throws ExceptionZZZ {
 			//Wenn man das rein im Konstruktor erstellt, z.B.:
 			//Erste Zeile sind die Spalten
 			//Zweite Zeile sind die Zeilen (hier immer mit einer "Zwischenzeile",zum Abstand halten)
@@ -264,7 +264,7 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 		}
 		
 		@Override
-		public ArrayList<ColumnSpec> getColumnSpecs(){
+		public ArrayList<ColumnSpec> getColumnSpecs() throws ExceptionZZZ{
 			if(this.listFormLayoutColumnSpec==null) {
 				this.listFormLayoutColumnSpec = this.buildColumnSpecs();
 			}
@@ -272,7 +272,7 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 		}
 		
 		@Override
-		public ArrayList<RowSpec> getRowSpecs(){
+		public ArrayList<RowSpec> getRowSpecs() throws ExceptionZZZ{
 			if(this.listFormLayoutRowSpec==null) {
 				this.listFormLayoutRowSpec = this.buildRowSpecs();
 			}
@@ -407,7 +407,7 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 		 * @see basic.zKernelUI.component.IFormLayoutZZZ#buildRowSpecs(int)
 		 */
 		@Override
-		public ArrayList<RowSpec> buildRowSpecs(int iNumberOfRows) {
+		public ArrayList<RowSpec> buildRowSpecs(int iNumberOfRows) throws ExceptionZZZ {
 			ArrayList<RowSpec>listReturn=new ArrayList<RowSpec>();
 			main:{
 				//NEIN: DIE DEBUGZEILE WIRD AM SCHLUSS EH DRAUFGERECHNET in:  .buildFormLayoutUsed(int iNumberOfRows)
@@ -429,11 +429,11 @@ public abstract class KernelJPanelFormLayoutedZZZ extends KernelJPanelCascadedZZ
 		}
 		
 		//+++ von den eigentlichen Klassen zu implementieren
-		public abstract ArrayList<RowSpec> buildRowSpecs();	
-		public abstract RowSpec buildRowSpecGap();
+		public abstract ArrayList<RowSpec> buildRowSpecs() throws ExceptionZZZ;	
+		public abstract RowSpec buildRowSpecGap() throws ExceptionZZZ;
 		
-		public abstract ArrayList<ColumnSpec> buildColumnSpecs();
-		public abstract ColumnSpec buildColumnSpecGap();
+		public abstract ArrayList<ColumnSpec> buildColumnSpecs() throws ExceptionZZZ;
+		public abstract ColumnSpec buildColumnSpecGap() throws ExceptionZZZ;
 		public abstract boolean fillRowContent(CellConstraints cc, int iRow) throws ExceptionZZZ;
 		
 		//###### 

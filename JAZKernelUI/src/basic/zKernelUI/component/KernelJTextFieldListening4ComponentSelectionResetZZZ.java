@@ -46,7 +46,7 @@ public abstract class KernelJTextFieldListening4ComponentSelectionResetZZZ exten
 		this.objLog = objKernel.getLogObject();			
 	}
 	
-	public final void doReset(EventComponentSelectionResetZZZ eventNew) {
+	public final void doReset(EventComponentSelectionResetZZZ eventNew) throws ExceptionZZZ {
 		if(! eventNew.equals(this.getEventPrevious())){
 			if(this.getFlag("useEventResetDefault")==true){
 				String stemp = eventNew.getComponentText();

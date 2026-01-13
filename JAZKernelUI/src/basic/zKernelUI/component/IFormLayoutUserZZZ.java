@@ -10,6 +10,6 @@ import com.jgoodies.forms.layout.RowSpec;
 import basic.zBasic.ExceptionZZZ;
 
 public interface IFormLayoutUserZZZ {	
-	public abstract FormLayout getFormLayoutUsed();
-	public abstract void setFormLayoutUsed(FormLayout formLayout);
+	public abstract FormLayout getFormLayoutUsed() throws ExceptionZZZ;
+	public abstract void setFormLayoutUsed(FormLayout formLayout) throws ExceptionZZZ;
 }

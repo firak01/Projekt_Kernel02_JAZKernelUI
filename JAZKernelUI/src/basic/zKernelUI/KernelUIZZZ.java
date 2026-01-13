@@ -90,7 +90,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 		return sReturn;
 	}
 	
-	public static KernelJPanelCascadedZZZ searchProgramKernelComponentPanelFrom(KernelJDialogExtendedZZZ dialogParent){
+	public static KernelJPanelCascadedZZZ searchProgramKernelComponentPanelFrom(KernelJDialogExtendedZZZ dialogParent) throws ExceptionZZZ{
 		KernelJPanelCascadedZZZ objReturn = null;
 		main:{
 			if(dialogParent==null) break main;
@@ -115,7 +115,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 		return objReturn;
 	}
 	
-	public static KernelJPanelCascadedZZZ searchProgramKernelComponentPanelFrom(KernelJFrameCascadedZZZ frameParent){
+	public static KernelJPanelCascadedZZZ searchProgramKernelComponentPanelFrom(KernelJFrameCascadedZZZ frameParent) throws ExceptionZZZ{
 		KernelJPanelCascadedZZZ objReturn = null;
 		main:{
 			if(frameParent==null) break main;
@@ -286,7 +286,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 	}
 	
 	
-	public static boolean isChildOfDialog(IPanelCascadedZZZ panel){
+	public static boolean isChildOfDialog(IPanelCascadedZZZ panel) throws ExceptionZZZ{
 		boolean bReturn = false;
 		main:{
 			if(panel==null)break main;
@@ -296,7 +296,7 @@ public class KernelUIZZZ implements IConstantZZZ{  //extends KernelUseObjectZZZ 
 		return bReturn;
 	}
 	
-	public static boolean isChildOfFrame(IPanelCascadedZZZ panel){
+	public static boolean isChildOfFrame(IPanelCascadedZZZ panel) throws ExceptionZZZ{
 		boolean bReturn = false;
 		main:{
 			if(panel==null)break main;
