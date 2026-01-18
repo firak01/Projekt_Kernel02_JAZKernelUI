@@ -13,18 +13,18 @@ import org.jdesktop.jdic.tray.TrayIcon;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.ReflectCodeZZZ;
-import basic.zBasic.util.abstractEnum.IEnumSetMappedStatusZZZ;
+import basic.zBasic.util.abstractEnum.IEnumSetMappedStatusLocalZZZ;
 import basic.zBasic.util.abstractEnum.IEnumSetMappedZZZ;
 import basic.zBasic.util.file.FileEasyZZZ;
 import basic.zBasic.util.file.ResourceEasyZZZ;
-import basic.zKernel.AbstractKernelUseObjectOnStatusListeningZZZ;
+import basic.zKernel.AbstractKernelUseObjectOnStatusLocalListeningZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.flag.event.IEventObjectFlagZsetZZZ;
 import basic.zKernel.status.IEventObjectStatusLocalZZZ;
 import basic.zKernelUI.component.tray.ITrayMenuZZZ.TrayMenuTypeZZZ;
 import basic.zKernelUI.component.tray.ITrayStatusMappedValueZZZ.TrayStatusTypeZZZ;
 
-public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnStatusListeningZZZ implements ITrayZZZ {		
+public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnStatusLocalListeningZZZ implements ITrayZZZ {		
 	private static final long serialVersionUID = 4170579821557468353L;
 		
 	protected volatile SystemTray objTray = null;                                    //Das gesamte SystemTray von Windows
@@ -288,7 +288,7 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 		
 		//+++++++++++++++++++++
 		//HashMap<IEnumSetMappedStatusZZZ,IEnumSetMappedStatusZZZ>hmEnum = this.getHashMapEnumSetForCascadingStatusLocal();				
-		HashMap<IEnumSetMappedStatusZZZ,IEnumSetMappedStatusZZZ>hmEnum = this.getHashMapStatusLocal4Reaction_EnumStatus();
+		HashMap<IEnumSetMappedStatusLocalZZZ,IEnumSetMappedStatusLocalZZZ>hmEnum = this.getHashMapStatusLocal4Reaction_EnumStatus();
 		if(hmEnum==null) {
 			sLog = ReflectCodeZZZ.getPositionCurrent()+": Keine Mapping Hashmap fuer das StatusMapping vorhanden. Breche ab";
 			System.out.println(sLog);
@@ -298,7 +298,7 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 		
 		//+++++++++++++++++++++
 		
-		IEnumSetMappedStatusZZZ objEnum = hmEnum.get(enumStatus);							
+		IEnumSetMappedStatusLocalZZZ objEnum = hmEnum.get(enumStatus);							
 		if(objEnum==null) {
 			sLog = ReflectCodeZZZ.getPositionCurrent()+": Keinen gemappten Status für en Status aus dem Event-Objekt erhalten. Breche ab";					
 			this.logProtocol(sLog);
@@ -426,7 +426,7 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 				String sStatusAbbreviationLocal = null;
 				IEnumSetMappedZZZ objEnumStatusLocal = null;
 	
-				HashMap<IEnumSetMappedStatusZZZ,IEnumSetMappedZZZ>hm=this.createHashMapStatusLocal4ReactionCustom_Enum();
+				HashMap<IEnumSetMappedStatusLocalZZZ,IEnumSetMappedZZZ>hm=this.createHashMapStatusLocal4ReactionCustom_Enum();
 				objEnumStatusLocal = hm.get(enumStatusFromEvent);					
 				//###############################
 				
@@ -597,7 +597,7 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 	 * @see basic.zKernel.status.IListenerObjectStatusLocalZZZ#createHashMapStatusLocal4ReactionCustom_EnumStatus()
 	 */
 	@Override
-	public abstract HashMap<IEnumSetMappedStatusZZZ,IEnumSetMappedStatusZZZ> createHashMapStatusLocal4ReactionCustom_EnumStatus();
+	public abstract HashMap<IEnumSetMappedStatusLocalZZZ,IEnumSetMappedStatusLocalZZZ> createHashMapStatusLocal4ReactionCustom_EnumStatus();
 	
 }//END Class
 
