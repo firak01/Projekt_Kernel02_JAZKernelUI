@@ -114,7 +114,7 @@ public class Panel_NORTHZZZ extends KernelJPanelCascadedZZZ {
 			this.setLayout(new GridLayout4VisibleZZZ(iRows,iColumns));		
 			
 			} catch (ExceptionZZZ ez) {
-				this.getLogObject().WriteLineDate(ez.getDetailAllLast());
+				this.getLogObject().writeLineDate(ez.getDetailAllLast());
 			}
 		}//END main:
 	}

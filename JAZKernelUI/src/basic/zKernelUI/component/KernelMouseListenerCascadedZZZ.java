@@ -58,7 +58,7 @@ public abstract class KernelMouseListenerCascadedZZZ extends AbstractKernelUseOb
 		} catch (ExceptionZZZ ez) {
 			//Protokolliern des Fehlers an allen moeglichen Stellen
 			try {
-				this.getLogObject().WriteLineDate(ez.getDetailAllLast());			
+				this.getLogObject().writeLineDate(ez.getDetailAllLast());			
 				System.out.println(ez.getDetailAllLast());
 				ez.printStackTrace();
 			
@@ -82,7 +82,7 @@ public abstract class KernelMouseListenerCascadedZZZ extends AbstractKernelUseOb
 		} catch (ExceptionZZZ ez) {
 			//Protokolliern des Fehlers an allen moeglichen Stellen
 			try {
-				this.getLogObject().WriteLineDate(ez.getDetailAllLast());				
+				this.getLogObject().writeLineDate(ez.getDetailAllLast());				
 				System.out.println(ez.getDetailAllLast());
 				ez.printStackTrace();
 				
@@ -106,7 +106,7 @@ public abstract class KernelMouseListenerCascadedZZZ extends AbstractKernelUseOb
 		} catch (ExceptionZZZ ez) {
 			//Protokolliern des Fehlers an allen moeglichen Stellen
 			try {
-				this.getLogObject().WriteLineDate(ez.getDetailAllLast());			
+				this.getLogObject().writeLineDate(ez.getDetailAllLast());			
 				System.out.println(ez.getDetailAllLast());
 				ez.printStackTrace();
 				
@@ -130,7 +130,7 @@ public abstract class KernelMouseListenerCascadedZZZ extends AbstractKernelUseOb
 		} catch (ExceptionZZZ ez) {
 			//Protokolliern des Fehlers an allen moeglichen Stellen
 			try {
-				this.getLogObject().WriteLineDate(ez.getDetailAllLast());			
+				this.getLogObject().writeLineDate(ez.getDetailAllLast());			
 				System.out.println(ez.getDetailAllLast());
 				ez.printStackTrace();
 				
@@ -154,7 +154,7 @@ public abstract class KernelMouseListenerCascadedZZZ extends AbstractKernelUseOb
 		} catch (ExceptionZZZ ez) {
 			//Protokolliern des Fehlers an allen moeglichen Stellen
 			try {
-				this.getLogObject().WriteLineDate(ez.getDetailAllLast());			
+				this.getLogObject().writeLineDate(ez.getDetailAllLast());			
 				System.out.println(ez.getDetailAllLast());
 				ez.printStackTrace();
 			

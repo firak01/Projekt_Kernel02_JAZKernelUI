@@ -92,7 +92,7 @@ public class ActionTrayUIZZZ extends AbstractKernelActionTrayZZZ {
 			//Merke: diese Exception hier abhandeln. Damit das ImageIcon wieder zur�ckgesetzt werden kann.				
 			ez.printStackTrace();
 			String stemp = ez.getDetailAllLast();
-			this.getKernelObject().getLogObject().WriteLineDate(stemp);
+			this.getKernelObject().getLogObject().writeLineDate(stemp);
 			System.out.println(stemp);
 			this.getTrayParent().switchStatus(TrayStatusMappedValueZZZ.TrayStatusTypeZZZ.ERROR);			
 		}

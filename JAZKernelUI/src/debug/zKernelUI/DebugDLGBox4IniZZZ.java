@@ -24,7 +24,7 @@ public class DebugDLGBox4IniZZZ {
 	
 		//Einige Test- /Protokollausgaben					
 		//System.out.println("Anzahl der Componenten im Parent-Panel: " + panelSubSouth.getComponentCount());
-		objLog.WriteLineDate("Action Edit Config to perform on module: " + sModule);
+		objLog.writeLineDate("Action Edit Config to perform on module: " + sModule);
 	
 		DLGBOX4INIZZZ frameDLG = new DLGBOX4INIZZZ(objKernel, null);
 	

@@ -137,7 +137,7 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 //			try {
 			
 				//+++ Protokolll Eintrag
-				this.getLogObject().WriteLineDate("Performing Action: 'Save Section'");
+				this.getLogObject().writeLineDate("Performing Action: 'Save Section'");
 					
 				//+++ Zugriff auf das Panel, in dem die Informationen stehen 
 				KernelJPanelCascadedZZZ objPanelSubEast = (KernelJPanelCascadedZZZ)this.getPanelParent();
@@ -223,7 +223,7 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 				
 				//+++ Den Namen der zu verarbeitenden Section auslesen
 				String sSection = objPanelCenter.getTableAlias();
-				this.getLogObject().WriteLineDate("Performing Action: ... on module '" + sModule + "' and section '" + sSection + "'");
+				this.getLogObject().writeLineDate("Performing Action: ... on module '" + sModule + "' and section '" + sSection + "'");
 							
 				//+++ Fuellen einer Tabelle mit den Werten der JLabel und JTextfield Components
 				Hashtable objHtValue = objPanelCenter.getTable(false);
@@ -266,10 +266,10 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 				//TODO: Das mit einer Dialogbox machen
 				if(bSuccess==true){
 					//System.out.println("Configuration file for module '" + sModule + "' successfully updated.");
-					this.getLogObject().WriteLineDate("Performing Action: Successfully completed.");
+					this.getLogObject().writeLineDate("Performing Action: Successfully completed.");
 				}else{
 					//System.out.println("Configuration file for module '" + sModule + "' NOT updated.");
-					this.getLogObject().WriteLineDate("Performing Action: NOT ended as expected.");
+					this.getLogObject().writeLineDate("Performing Action: NOT ended as expected.");
 				}
 				
 				

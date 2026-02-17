@@ -148,7 +148,7 @@ public class PanelDebugNavigator_WESTZZZ extends KernelJPanelCascadedZZZ impleme
 			} catch (ExceptionZZZ ez) {
 				String sError = ReflectCodeZZZ.getMethodCurrentName() + ": " + ez.getDetailAllLast();
 				System.out.println(sError);
-				this.getLogObject().WriteLineDate(sError);
+				this.getLogObject().writeLineDate(sError);
 			}
 		}//END main:
 	}	

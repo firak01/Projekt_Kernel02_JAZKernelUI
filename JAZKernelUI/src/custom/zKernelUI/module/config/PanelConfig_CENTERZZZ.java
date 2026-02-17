@@ -36,7 +36,7 @@ public class PanelConfig_CENTERZZZ extends KernelJPanelCascadedZZZ{
 			for(int icount = 0; icount < listaModule.size(); icount++){
 				
 				//Die beruecksichtigten Module 
-				this.getLogObject().WriteLineDate(ReflectCodeZZZ.getMethodCurrentName() + "#Modul fuer den Key '" + objKernel2Config.getSystemKey() + "' --- '"  + (String) listaModule.get(icount) + "'");
+				this.getLogObject().writeLineDate(ReflectCodeZZZ.getMethodCurrentName() + "#Modul fuer den Key '" + objKernel2Config.getSystemKey() + "' --- '"  + (String) listaModule.get(icount) + "'");
 				
 				comboModule.addItem((String) listaModule.get(icount));
 			}			
@@ -50,7 +50,7 @@ public class PanelConfig_CENTERZZZ extends KernelJPanelCascadedZZZ{
 		}
 		
 		}catch(ExceptionZZZ ez){
-		   objKernel.getLogObject().WriteLineDate(ez.getDetailAllLast());
+		   objKernel.getLogObject().writeLineDate(ez.getDetailAllLast());
 		}
 		
 	}

@@ -30,7 +30,7 @@ public abstract class AbstractKernelActionTrayZZZ extends AbstractKernelUseObjec
 		} catch (ExceptionZZZ ez) {
 			try {
 				//Protokolliern des Fehlers an allen moeglichen Stellen
-				this.getLogObject().WriteLineDate(ez.getDetailAllLast());
+				this.getLogObject().writeLineDate(ez.getDetailAllLast());
 				System.out.println(ez.getDetailAllLast());
 				ez.printStackTrace();
 				

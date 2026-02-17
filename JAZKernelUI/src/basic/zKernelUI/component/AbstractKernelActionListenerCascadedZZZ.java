@@ -30,7 +30,7 @@ public abstract class AbstractKernelActionListenerCascadedZZZ extends AbstractKe
 		} catch (ExceptionZZZ ez) {
 			try {
 				//Protokolliern des Fehlers an allen m�glichen Stellen
-				this.getLogObject().WriteLineDate(ez.getDetailAllLast());
+				this.getLogObject().writeLineDate(ez.getDetailAllLast());
 				System.out.println(ez.getDetailAllLast());
 				ez.printStackTrace();
 				

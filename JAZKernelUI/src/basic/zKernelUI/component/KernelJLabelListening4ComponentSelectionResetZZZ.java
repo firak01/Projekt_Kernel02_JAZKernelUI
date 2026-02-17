@@ -56,10 +56,10 @@ public abstract class KernelJLabelListening4ComponentSelectionResetZZZ extends J
 	public void logLineDate(String sLog) throws ExceptionZZZ {
 		LogZZZ objLog = this.getLogObject();
 		if(objLog==null) {
-			String sTemp = AbstractKernelLogZZZ.computeLineDate(sLog);
+			String sTemp = LogZZZ.computeLineDate(this, sLog);
 			System.out.println(sTemp);
 		}else {
-			objLog.WriteLineDate(sLog);
+			objLog.writeLineDate(sLog);
 		}		
 	}	
 

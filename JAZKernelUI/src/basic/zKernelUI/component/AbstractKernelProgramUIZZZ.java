@@ -155,7 +155,7 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 				System.out.println(sLog);
 				
 				LogZZZ objLog = this.getLogObject();
-				objLog.WriteLineDate(sLog);
+				objLog.writeLineDate(sLog);
 				break main;
 			}
 			if(component instanceof JLabel) {
@@ -167,7 +167,7 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 				System.out.println(sLog);
 				
 				LogZZZ objLog = this.getLogObject();
-				objLog.WriteLineDate(sLog);
+				objLog.writeLineDate(sLog);
 			}
 		}//end main
 	}
@@ -180,7 +180,7 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 				System.out.println(sLog);
 				
 				LogZZZ objLog = this.getLogObject();
-				objLog.WriteLineDate(sLog);
+				objLog.writeLineDate(sLog);
 				break main;
 			}
 			if(component.getClass().isInstance(JLabel.class)) {
@@ -192,7 +192,7 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 				System.out.println(sLog);
 				
 				LogZZZ objLog = this.getLogObject();
-				objLog.WriteLineDate(sLog);
+				objLog.writeLineDate(sLog);
 			}	
 		}//end main:
 	}
@@ -205,7 +205,7 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 				System.out.println(sLog);
 				
 				LogZZZ objLog = this.getLogObject();
-				objLog.WriteLineDate(sLog);
+				objLog.writeLineDate(sLog);
 				break main;
 			}
 			if(component.getClass().isInstance(JLabel.class)) {
@@ -217,7 +217,7 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 				System.out.println(sLog);
 				
 				LogZZZ objLog = this.getLogObject();
-				objLog.WriteLineDate(sLog);
+				objLog.writeLineDate(sLog);
 			}			
 		}//end main:
 	}

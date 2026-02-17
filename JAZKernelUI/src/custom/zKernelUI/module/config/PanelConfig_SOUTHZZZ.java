@@ -98,7 +98,7 @@ public class PanelConfig_SOUTHZZZ extends KernelJPanelCascadedZZZ {
 					
 					//Einige Test- /Protokollausgaben					
 					//System.out.println("Anzahl der Componenten im Parent-Panel: " + panelSubSouth.getComponentCount());
-					this.getLogObject().WriteLineDate("Action Edit Config to perform on module: " + sModule);
+					this.getLogObject().writeLineDate("Action Edit Config to perform on module: " + sModule);
 					
 					
 					
@@ -114,7 +114,7 @@ public class PanelConfig_SOUTHZZZ extends KernelJPanelCascadedZZZ {
 				
 				 } catch (ExceptionZZZ ez) {				
 					try {
-						this.getLogObject().WriteLineDate(ez.getDetailAllLast());
+						this.getLogObject().writeLineDate(ez.getDetailAllLast());
 					} catch (ExceptionZZZ e) {						
 						e.printStackTrace();
 						System.out.println(e.getDetailAllLast());

@@ -73,7 +73,7 @@ final class SwingWorker4IniSAVE extends KernelSwingWorkerZZZ{
 			
 			//+++ Den Namen der zu verarbeitenden Section auslesen
 			String sSection = objPanelCenter.getTableAlias();
-			this.getLogObject().WriteLineDate("Performing Action: ... on module '" + sModule + "' and section '" + sSection + "'");
+			this.getLogObject().writeLineDate("Performing Action: ... on module '" + sModule + "' and section '" + sSection + "'");
 						
 			//+++ Fuellen einer Tabelle mit den Werten der JLabel und JTextfield Components
 			Hashtable objHtValue = objPanelCenter.getTable(false);
@@ -116,10 +116,10 @@ final class SwingWorker4IniSAVE extends KernelSwingWorkerZZZ{
 			//TODO: Das mit einer Dialogbox machen
 			if(bSuccess==true){
 				//System.out.println("Configuration file for module '" + sModule + "' successfully updated.");
-				this.getLogObject().WriteLineDate("Performing Action: Successfully completed.");
+				this.getLogObject().writeLineDate("Performing Action: Successfully completed.");
 			}else{
 				//System.out.println("Configuration file for module '" + sModule + "' NOT updated.");
-				this.getLogObject().WriteLineDate("Performing Action: NOT ended as expected.");
+				this.getLogObject().writeLineDate("Performing Action: NOT ended as expected.");
 			}
 			
 			

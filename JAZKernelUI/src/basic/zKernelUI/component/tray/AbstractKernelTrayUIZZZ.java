@@ -56,7 +56,7 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 			//Er wird später auch am Backend-Objekt registriert, um dort Änderungen mitzubekommen.
 			String sLog = ReflectCodeZZZ.getPositionCurrent() + ": Creating ServerMonitorRunner-Object";
 			System.out.println(sLog);
-			this.getLogObject().WriteLineDate(sLog);
+			this.getLogObject().writeLineDate(sLog);
 			
 			//### Registriere das Tray-Objekt selbst an ein mögliches Main-Objekt ##############
 			//a) Fuer Aenderungen an den Main-Objekt-Flags. Das garantiert, das der Tray auch auf Änderungen der Flags reagiert, wenn ServerMain in einem anderen Thread ausgeführt wird.			

@@ -30,9 +30,9 @@ public class DebugNavigatorZZZ {
 			
 			//3. Erfolgreichen Start protokollieren
 			if (btemp==true){
-				objLog.WriteLineDate("Main frame of configuration module successfully launched.");
+				objLog.writeLineDate("Main frame of configuration module successfully launched.");
 			}else{
-				objLog.WriteLineDate("Main frame of configuration module can not  launch successfully.");
+				objLog.writeLineDate("Main frame of configuration module can not  launch successfully.");
 			}
 			
 }catch (ExceptionZZZ ez){

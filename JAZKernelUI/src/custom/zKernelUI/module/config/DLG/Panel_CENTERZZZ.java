@@ -460,7 +460,7 @@ public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelM
 				*/
 			
 				} catch (ExceptionZZZ ez) {
-					this.getLogObject().WriteLineDate(ez.getDetailAllLast());
+					this.getLogObject().writeLineDate(ez.getDetailAllLast());
 				}
 		}
 		

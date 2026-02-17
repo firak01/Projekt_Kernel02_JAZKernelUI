@@ -41,7 +41,7 @@ public class DLGBOX4INIZZZ  extends KernelJFrameCascadedZZZ  implements IJNILotu
 			launch(argv);
 	
 		} catch (ExceptionZZZ ez) {
-			this.getLogObject().WriteLineDate(ez.getMessageLast());
+			this.getLogObject().writeLineDate(ez.getMessageLast());
 			return false;
 		}		
 		return true;
