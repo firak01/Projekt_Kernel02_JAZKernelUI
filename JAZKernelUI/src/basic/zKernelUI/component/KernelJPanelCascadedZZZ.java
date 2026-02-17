@@ -751,7 +751,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 //			String sTemp = AbstractKernelLogZZZ.computeLineDate(this, sLog);
 //			System.out.println(sTemp);
 //		}else {
-//			objLog.WriteLineDate(sLog);
+//			objLog.writeLineDate(sLog);
 //		}		
 //	}	
 //	

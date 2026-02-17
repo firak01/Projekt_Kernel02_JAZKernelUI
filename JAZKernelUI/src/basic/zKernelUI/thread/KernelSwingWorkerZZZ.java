@@ -106,7 +106,7 @@ public abstract class KernelSwingWorkerZZZ extends SwingWorker  implements IObje
 //			String sTemp = AbstractKernelLogZZZ.computeLineDate(this, sLog);
 //			System.out.println(sTemp);
 //		}else {
-//			objLog.WriteLineDate(sLog);
+//			objLog.writeLineDate(sLog);
 //		}		
 //	}
 //	

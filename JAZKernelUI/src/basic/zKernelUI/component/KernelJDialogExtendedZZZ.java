@@ -626,7 +626,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 //			String sTemp = AbstractKernelLogZZZ.computeLineDate(this, sLog);
 //			System.out.println(sTemp);
 //		}else {
-//			objLog.WriteLineDate(sLog);
+//			objLog.writeLineDate(sLog);
 //		}		
 //	}	
 //	

@@ -737,7 +737,7 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 //			String sTemp = AbstractKernelLogZZZ.computeLineDate(this, sLog);
 //			System.out.println(sTemp);
 //		}else {
-//			objLog.WriteLineDate(sLog);
+//			objLog.writeLineDate(sLog);
 //		}		
 //	}	
 //	
