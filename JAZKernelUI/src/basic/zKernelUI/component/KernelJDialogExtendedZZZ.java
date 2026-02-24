@@ -730,7 +730,46 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 		return true;
 	}
 		
-	//### FlagMethods ##########################		
+	//##########################################
+	//### Flag Handling ##########################	
+	//##########################################
+	
+	//### aus IFlagEnabledZZZ
+	@Override
+	public int adoptFlagZrelevantFrom(IFlagZEnabledZZZ objUsingFlagZ) throws ExceptionZZZ{
+		int iReturn = 0;		
+		main:{
+			String[] saFlagZpassed = FlagZFassadeZZZ.seekFlagZrelevantForObject(this, objUsingFlagZ);
+			if(StringArrayZZZ.isEmpty(saFlagZpassed)) break main;
+			
+			for(String sFlag: saFlagZpassed) {
+				boolean bValue = objUsingFlagZ.getFlag(sFlag);
+				boolean btemp = this.setFlag(sFlag, bValue);
+				if(btemp) iReturn++;
+			}
+		}//end main:
+		return iReturn;
+	}
+
+	@Override
+	public int adoptFlagZrelevantFrom(IFlagZEnabledZZZ objUsingFlagZ, boolean bValueToSearchFor) throws ExceptionZZZ{
+		int iReturn = 0;		
+		main:{
+			String[] saFlagZpassed = FlagZFassadeZZZ.seekFlagZrelevantForObject(this, objUsingFlagZ, bValueToSearchFor);
+			if(StringArrayZZZ.isEmpty(saFlagZpassed)) break main;
+			
+			for(String sFlag: saFlagZpassed) {
+				boolean btemp = this.setFlag(sFlag, bValueToSearchFor);
+				if(btemp) iReturn++;
+			}
+		}//end main:
+		return iReturn;
+	}
+	
+	
+	//#######
+	
+	
 //			@Override
 //			public boolean getFlag(String sFlagName) {
 				//Version Vor Java 1.6
@@ -939,24 +978,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 				}//end main:
 				return saReturn;
 			}
-			
-			@Override
-			public int adoptFlagZrelevantFrom(IFlagZEnabledZZZ objUsingFlagZ, boolean bValueToSearchFor) throws ExceptionZZZ{
-				int iReturn = 0;		
-				main:{
-					String[] saFlagZpassed = FlagZFassadeZZZ.seekFlagZrelevantForObject(this, objUsingFlagZ, bValueToSearchFor);
-					if(StringArrayZZZ.isEmpty(saFlagZpassed)) break main;
-					
-					for(String sFlag: saFlagZpassed) {
-						boolean btemp = this.setFlag(sFlag, bValueToSearchFor);
-						if(btemp) iReturn++;
-					}
-				}//end main:
-				return iReturn;
-			}
-			
-			
-			
+				
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			//++++++++++++++++++++++++
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

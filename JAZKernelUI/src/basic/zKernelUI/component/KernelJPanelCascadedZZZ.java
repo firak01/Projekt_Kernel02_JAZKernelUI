@@ -900,7 +900,44 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	}
 	
 	
+	//####################################### 
+	//### Flag Handling 
+	//#######################################
+	 
 	//### aus IFlagEnabledZZZ
+	@Override
+	public int adoptFlagZrelevantFrom(IFlagZEnabledZZZ objUsingFlagZ) throws ExceptionZZZ{
+		int iReturn = 0;		
+		main:{
+			String[] saFlagZpassed = FlagZFassadeZZZ.seekFlagZrelevantForObject(this, objUsingFlagZ);
+			if(StringArrayZZZ.isEmpty(saFlagZpassed)) break main;
+			
+			for(String sFlag: saFlagZpassed) {
+				boolean bValue = objUsingFlagZ.getFlag(sFlag);
+				boolean btemp = this.setFlag(sFlag, bValue);
+				if(btemp) iReturn++;
+			}
+		}//end main:
+		return iReturn;
+	}
+	
+	
+	@Override
+	public int adoptFlagZrelevantFrom(IFlagZEnabledZZZ objUsingFlagZ, boolean bValueToSearchFor) throws ExceptionZZZ{
+		int iReturn = 0;		
+		main:{
+			String[] saFlagZpassed = FlagZFassadeZZZ.seekFlagZrelevantForObject(this, objUsingFlagZ, bValueToSearchFor);
+			if(StringArrayZZZ.isEmpty(saFlagZpassed)) break main;
+			
+			for(String sFlag: saFlagZpassed) {
+				boolean btemp = this.setFlag(sFlag, bValueToSearchFor);
+				if(btemp) iReturn++;
+			}
+		}//end main:
+		return iReturn;
+	}
+
+	//### aus IMouseFeatureZZZ
 	@Override
 	public boolean getFlag(IMouseFeatureZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
 		return this.getFlag(objEnumFlag.name());
@@ -1228,23 +1265,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			return bReturn;
 		}
 		
-		/* (non-Javadoc)
-		 * @see basic.zKernel.flag.IFlagZEnabledZZZ#adoptFlagZrelevantFrom(basic.zKernel.flag.IFlagZEnabledZZZ, boolean)
-		 */
-		@Override
-		public int adoptFlagZrelevantFrom(IFlagZEnabledZZZ objUsingFlagZ, boolean bValueToSearchFor) throws ExceptionZZZ{
-			int iReturn = 0;		
-			main:{
-				String[] saFlagZpassed = FlagZFassadeZZZ.seekFlagZrelevantForObject(this, objUsingFlagZ, bValueToSearchFor);
-				if(StringArrayZZZ.isEmpty(saFlagZpassed)) break main;
-				
-				for(String sFlag: saFlagZpassed) {
-					boolean btemp = this.setFlag(sFlag, bValueToSearchFor);
-					if(btemp) iReturn++;
-				}
-			}//end main:
-			return iReturn;
-		}
+		
 					
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++++
