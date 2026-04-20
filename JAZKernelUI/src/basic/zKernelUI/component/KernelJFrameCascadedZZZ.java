@@ -40,7 +40,7 @@ import basic.zKernel.AbstractKernelLogZZZ;
 import basic.zKernel.KernelZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.flag.FlagZHelperZZZ;
-import basic.zKernel.flag.IFlagZLocalEnabledZZZ;
+import basic.zKernel.flag.IFlagZCustomEnabledZZZ;
 import basic.zKernel.flag.IFlagZEnabledZZZ;
 import basic.zKernel.flag.IFlagZEnabledZZZ.FLAGZ;
 import basic.zKernel.flag.util.FlagZFassadeZZZ;
@@ -50,7 +50,7 @@ import custom.zKernel.LogZZZ;
 /** Class is base for all frames used by the configuration module
  * @author Lindhauer
  */
-public abstract class KernelJFrameCascadedZZZ extends JFrame  implements IObjectZZZ, IObjectLogZZZ, IFlagZEnabledZZZ, IFlagZLocalEnabledZZZ, IKernelUserZZZ, IKernelModuleZZZ, IComponentCascadedUserZZZ, IFrameCascadedZZZ, IFrameLaunchableZZZ, IScreenFeatureZZZ{
+public abstract class KernelJFrameCascadedZZZ extends JFrame  implements IObjectZZZ, IObjectLogZZZ, IFlagZEnabledZZZ, IFlagZCustomEnabledZZZ, IKernelUserZZZ, IKernelModuleZZZ, IComponentCascadedUserZZZ, IFrameCascadedZZZ, IFrameLaunchableZZZ, IScreenFeatureZZZ{
 	private IKernelZZZ objKernel;
 	private LogZZZ objLog; 
 	private KernelJFrameCascadedZZZ frameParent=null;
@@ -341,7 +341,7 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 		}
 		
 		@Override
-		public boolean[] setFlagLocal(String[] saFlag, boolean bValue) throws ExceptionZZZ {
+		public boolean[] setFlagCustom(String[] saFlag, boolean bValue) throws ExceptionZZZ {
 			boolean[] baReturn=null;
 			main:{
 				if(!StringArrayZZZ.isEmptyTrimmed(saFlag)) {
@@ -444,12 +444,12 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 			 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
 			 * - Innere Klassen m�ssen auch public deklariert werden.(non-Javadoc)
 			 */
-			public boolean getFlagLocal(String sFlagName) throws ExceptionZZZ {
+			public boolean getFlagCustom(String sFlagName) throws ExceptionZZZ {
 				boolean bFunction = false;
 				main:{
 					if(StringZZZ.isEmpty(sFlagName)) break main;
 												
-					HashMap<String, Boolean> hmFlag = this.getHashMapFlagLocal();
+					HashMap<String, Boolean> hmFlag = this.getHashMapFlagCustom();
 					Boolean objBoolean = hmFlag.get(sFlagName.toUpperCase());
 					if(objBoolean==null){
 						bFunction = false;
@@ -472,7 +472,7 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 			 * @return
 			 * lindhaueradmin, 23.07.2013
 			 */
-			public boolean setFlagLocal(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
+			public boolean setFlagCustom(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
 				boolean bFunction = false;
 				main:{
 					if(StringZZZ.isEmpty(sFlagName)) {
@@ -480,11 +480,11 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 						break main;
 					}
 								
-					bFunction = this.proofFlagLocalExists(sFlagName);															
+					bFunction = this.proofFlagCustomExists(sFlagName);															
 					if(bFunction == true){
 						
 						//Setze das Flag nun in die HashMap
-						HashMap<String, Boolean> hmFlag = this.getHashMapFlagLocal();
+						HashMap<String, Boolean> hmFlag = this.getHashMapFlagCustom();
 						hmFlag.put(sFlagName.toUpperCase(), bFlagValue);
 						bFunction = true;								
 					}										
@@ -494,12 +494,12 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 			}
 				
 			@Override
-			public HashMap<String, Boolean>getHashMapFlagLocal(){
+			public HashMap<String, Boolean>getHashMapFlagCustom(){
 				return this.hmFlagLocal;
 			}
 			
 			@Override
-			public void setHashMapFlagLocal(HashMap<String, Boolean> hmFlagLocal) {
+			public void setHashMapFlagCustom(HashMap<String, Boolean> hmFlagLocal) {
 				this.hmFlagLocal = hmFlagLocal;
 			}
 			
@@ -507,7 +507,7 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 			 * @return
 			 * @throws ExceptionZZZ 
 			 */
-			public String[] getFlagZLocal() throws ExceptionZZZ{
+			public String[] getFlagZCustom() throws ExceptionZZZ{
 				String[] saReturn = null;
 				main:{	
 					saReturn = FlagZHelperZZZ.getFlagsZDirectAvailable(this.getClass());				
@@ -519,11 +519,11 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 			 * @return
 			 * @throws ExceptionZZZ 
 			 */
-			public String[] getFlagZLocal(boolean bValueToSearchFor) throws ExceptionZZZ{
+			public String[] getFlagZCustom(boolean bValueToSearchFor) throws ExceptionZZZ{
 				return this.getFlagZLocal_(bValueToSearchFor, false);
 			}
 			
-			public String[] getFlagZLocal(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap) throws ExceptionZZZ{
+			public String[] getFlagZCustom(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap) throws ExceptionZZZ{
 				return this.getFlagZLocal_(bValueToSearchFor, bLookupExplizitInHashMap);
 			}
 			
@@ -535,7 +535,7 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 					//FALLUNTERSCHEIDUNG: Alle gesetzten FlagZ werden in der HashMap gespeichert. Aber die noch nicht gesetzten FlagZ stehen dort nicht drin.
 					//                                  Diese kann man nur durch Einzelprüfung ermitteln.
 					if(bLookupExplizitInHashMap) {
-						HashMap<String,Boolean>hmFlag=this.getHashMapFlagLocal();
+						HashMap<String,Boolean>hmFlag=this.getHashMapFlagCustom();
 						if(hmFlag==null) break main;
 						
 						Set<String> setKey = hmFlag.keySet();
@@ -547,14 +547,14 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 						}
 					}else {
 						//So bekommt man alle Flags zurück, also auch die, die nicht explizit true oder false gesetzt wurden.						
-						String[]saFlagZ = this.getFlagZLocal();
+						String[]saFlagZ = this.getFlagZCustom();
 						
 						//20211201:
 						//Problem: Bei der Suche nach true ist das egal... aber bei der Suche nach false bekommt man jedes der Flags zurück,
 						//         auch wenn sie garnicht gesetzt wurden.
 						//Lösung:  Statt dessen explitzit über die HashMap der gesetzten Werte gehen....						
 						for(String sFlagZ : saFlagZ){
-							boolean btemp = this.getFlagLocal(sFlagZ);
+							boolean btemp = this.getFlagCustom(sFlagZ);
 							if(btemp==bValueToSearchFor ){ //also 'true'
 								listasTemp.add(sFlagZ);
 							}
@@ -573,7 +573,7 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 			 * lindhaueradmin, 23.07.2013
 			 * @throws ExceptionZZZ 
 			 */
-			public boolean proofFlagLocalExists(String sFlagName) throws ExceptionZZZ{
+			public boolean proofFlagCustomExists(String sFlagName) throws ExceptionZZZ{
 				boolean bReturn = false;
 				main:{
 					if(StringZZZ.isEmpty(sFlagName))break main;
@@ -583,7 +583,7 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 			}
 			
 			@Override
-			public boolean proofFlagLocalSetBefore(String sFlagName) throws ExceptionZZZ{
+			public boolean proofFlagCustomSetBefore(String sFlagName) throws ExceptionZZZ{
 				boolean bReturn = false;
 				main:{
 					if(StringZZZ.isEmpty(sFlagName))break main;
