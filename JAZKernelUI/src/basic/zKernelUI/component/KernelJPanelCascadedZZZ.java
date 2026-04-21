@@ -324,7 +324,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		//Ggfs. die DebugUI-Angaben hinzufügen, das kann z.B. nur das Label mit dem Klassennamen sein.
 		//Gesteuert werde soll das durch Flags, die auch über die Kommandozeile übergeben werden können.
 		//Merke: Beispielsweise für FormLayoutete Panels - die aus PanelCascaded erben - macht das einfache Hinzufügen keinen Sinn. Das Layout wird dann eh ersetzt. Also überspringen.
-		if(this.getFlagCustom(FLAGZLOCAL.SKIPDEBUGUI.name())==false) {
+		if(this.getFlagCustom(IPanelCascadedZZZ.FLAGZLOCAL.SKIPDEBUGUI.name())==false) {
 			boolean bDebugUI = this.createDebugUi();
 		}
 		

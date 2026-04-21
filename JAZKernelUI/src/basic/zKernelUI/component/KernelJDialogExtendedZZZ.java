@@ -541,7 +541,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 	
 	//Defaultverhalten der Dialogbox beim OK, CLOSE, CANCEL
 	public void onClose() throws ExceptionZZZ{
-		if(this.getFlagLocal(KernelJDialogExtendedZZZ.FLAGZLOCAL.HIDE_ON_CLOSE)){
+		if(this.getFlagLocal(IDialogExtendedZZZ.FLAGZLOCAL.HIDE_ON_CLOSE)){
 			this.setHidden(); 
 		}else {
 			this.setDisposed();
@@ -549,7 +549,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 	}
 	
 	public void onOk() throws ExceptionZZZ{
-		if(this.getFlagLocal(KernelJDialogExtendedZZZ.FLAGZLOCAL.HIDE_ON_OK)){
+		if(this.getFlagLocal(IDialogExtendedZZZ.FLAGZLOCAL.HIDE_ON_OK)){
 			this.setHidden(); 
 		}else {
 			this.setDisposed();
@@ -558,7 +558,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 	}
 	
 	public void onCancel() throws ExceptionZZZ{
-		if(this.getFlagLocal(KernelJDialogExtendedZZZ.FLAGZLOCAL.HIDE_ON_CANCEL)){
+		if(this.getFlagLocal(IDialogExtendedZZZ.FLAGZLOCAL.HIDE_ON_CANCEL)){
 			this.setHidden(); 
 		}else {
 			this.setDisposed();
