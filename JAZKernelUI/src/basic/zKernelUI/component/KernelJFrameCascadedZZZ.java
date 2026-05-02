@@ -72,7 +72,7 @@ public abstract class KernelJFrameCascadedZZZ extends JFrame  implements IObject
 	
 private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 20130721 ersetzt die einzelnen Flags, irgendwann...
 private HashMap<String, Boolean>hmFlagPassed = new HashMap<String, Boolean>();
-private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
+private HashMap<String, Boolean>hmFlagCustom = new HashMap<String, Boolean>();
 
 	public KernelJFrameCascadedZZZ(){
 		super();
@@ -195,508 +195,479 @@ private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
 		return iReturn;
 	}
 		
-	//### FlagMethods ##########################		
-//			@Override
-//			public boolean getFlag(String sFlagName) {
-				//Version Vor Java 1.6
-//				boolean bFunction = false;
-//			main:{
-//				if(StringZZZ.isEmpty(sFlagName)) break main;
-//				
-//				// hier keine Superclass aufrufen, ist ja schon ObjectZZZ
-//				// bFunction = super.getFlag(sFlagName);
-//				// if(bFunction == true) break main;
-//				
-//				// Die Flags dieser Klasse setzen
-//				String stemp = sFlagName.toLowerCase();
-//				if(stemp.equals("debug")){
-//					bFunction = this.bFlagDebug;
-//					break main;
-//				}else if(stemp.equals("init")){
-//					bFunction = this.bFlagInit;
-//					break main;
-//				}else{
-//					bFunction = false;
-//				}		
-//			}	// end main:
-		//	
-//			return bFunction;	
-//				return this.getFlag(sFlagName);
-//			}
-//			@Override
-//			public boolean setFlag(String sFlagName, boolean bFlagValue) {
-				//Version Vor Java 1.6
-//				boolean bFunction = true;
-//				main:{
-//					if(StringZZZ.isEmpty(sFlagName)) break main;
-//					
-//					// hier keine Superclass aufrufen, ist ja schon ObjectZZZ
-//					// bFunction = super.setFlag(sFlagName, bFlagValue);
-//					// if(bFunction == true) break main;
-//					
-//					// Die Flags dieser Klasse setzen
-//					String stemp = sFlagName.toLowerCase();
-//					if(stemp.equals("debug")){
-//						this.bFlagDebug = bFlagValue;
-//						bFunction = true;                            //durch diesen return wert kann man "reflexiv" ermitteln, ob es in dem ganzen hierarchie-strang das flag �berhaupt gibt !!!
-//						break main;
-//					}else if(stemp.equals("init")){
-//						this.bFlagInit = bFlagValue;
-//						bFunction = true;
-//						break main;
-//					}else{
-//						bFunction = false;
-//					}	
-//					
-//				}	// end main:
-//				
-//				return bFunction;	
-//				try {
-//					return this.setFlag(sFlagName, bFlagValue);
-//				} catch (ExceptionZZZ e) {
-//					System.out.println("ExceptionZZZ (aus compatibilitaetgruenden mit Version vor Java 6 nicht weitergereicht) : " + e.getDetailAllLast());
-//					return false;
-//				}
-//			}
+	//###############################################
+	//### FLAG HANDLING
+	//###############################################
+	
 			
-			//### Aus IFlagZEnabledZZZ
-			@Override
-			public boolean[] setFlag(String[] saFlagName, boolean bFlagValue) throws ExceptionZZZ {
-				boolean[] baReturn=null;
-				main:{
-					if(!StringArrayZZZ.isEmptyTrimmed(saFlagName)) {
-						baReturn = new boolean[saFlagName.length];
-						int iCounter=-1;
-						for(String sFlagName:saFlagName) {
-							iCounter++;
-							boolean bReturn = this.setFlag(sFlagName, bFlagValue);
-							baReturn[iCounter]=bReturn;
-						}
-					}
-				}//end main:
-				return baReturn;
-			}
-			
-			/* @see basic.zBasic.IFlagZZZ#getFlagZ(java.lang.String)
-			 * 	 Weteire Voraussetzungen:
-			 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
-			 * - Innere Klassen m�ssen auch public deklariert werden.(non-Javadoc)
-			 */
-			public boolean getFlag(String sFlagName) throws ExceptionZZZ {
-				boolean bFunction = false;
-				main:{
-					if(StringZZZ.isEmpty(sFlagName)) break main;
-												
-					HashMap<String, Boolean> hmFlag = this.getHashMapFlag();
-					Boolean objBoolean = hmFlag.get(sFlagName.toUpperCase());
-					if(objBoolean==null){
-						bFunction = false;
-					}else{
-						bFunction = objBoolean.booleanValue();
-					}
-									
-				}	// end main:
-				
-				return bFunction;	
-			}
-		/** DIESE METHODE MUSS IN ALLEN KLASSEN VORHANDEN SEIN - über Vererbung -, DIE IHRE FLAGS SETZEN WOLLEN
-		 * Weteire Voraussetzungen:
-		 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
-		 * - Innere Klassen müssen auch public deklariert werden.
-		 * @param objClassParent
-		 * @param sFlagName
-		 * @param bFlagValue
-		 * @return
-		 * lindhaueradmin, 23.07.2013
-		 */
-		public boolean setFlag(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
-			boolean bFunction = false;
-			main:{
-				if(StringZZZ.isEmpty(sFlagName)) {
-					bFunction = true;
-					break main;
+	//### Aus IFlagZEnabledZZZ
+	@Override
+	public boolean[] setFlag(String[] saFlagName, boolean bFlagValue) throws ExceptionZZZ {
+		boolean[] baReturn=null;
+		main:{
+			if(!StringArrayZZZ.isEmptyTrimmed(saFlagName)) {
+				baReturn = new boolean[saFlagName.length];
+				int iCounter=-1;
+				for(String sFlagName:saFlagName) {
+					iCounter++;
+					boolean bReturn = this.setFlag(sFlagName, bFlagValue);
+					baReturn[iCounter]=bReturn;
 				}
+			}
+		}//end main:
+		return baReturn;
+	}
+	
+	/* @see basic.zBasic.IFlagZZZ#getFlagZ(java.lang.String)
+	 * 	 Weteire Voraussetzungen:
+	 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
+	 * - Innere Klassen m�ssen auch public deklariert werden.(non-Javadoc)
+	 */
+	public boolean getFlag(String sFlagName) throws ExceptionZZZ {
+		boolean bFunction = false;
+		main:{
+			if(StringZZZ.isEmpty(sFlagName)) break main;
+										
+			HashMap<String, Boolean> hmFlag = this.getHashMapFlag();
+			Boolean objBoolean = hmFlag.get(sFlagName.toUpperCase());
+			if(objBoolean==null){
+				bFunction = false;
+			}else{
+				bFunction = objBoolean.booleanValue();
+			}
 							
-				bFunction = this.proofFlagZExists(sFlagName);															
-				if(bFunction == true){
-					
-					//Setze das Flag nun in die HashMap
-					HashMap<String, Boolean> hmFlag = this.getHashMapFlag();
-					hmFlag.put(sFlagName.toUpperCase(), bFlagValue);
-					bFunction = true;								
-				}										
-			}	// end main:
-			
-			return bFunction;	
-		}
-			
-		@Override
-		public boolean proofFlagExists(String sFlag) throws ExceptionZZZ {
-			boolean bReturn = false;
-			main:{
-				if(StringZZZ.isEmpty(sFlag))break main;
-				bReturn = FlagZHelperZZZ.proofFlagZExists(this.getClass(), sFlag);				
-			}//end main:
-			return bReturn;
-		}
+		}	// end main:
 		
-		@Override
-		public boolean[] setFlagCustom(String[] saFlag, boolean bValue) throws ExceptionZZZ {
-			boolean[] baReturn=null;
-			main:{
-				if(!StringArrayZZZ.isEmptyTrimmed(saFlag)) {
-					baReturn = new boolean[saFlag.length];
-					int iCounter=-1;
-					for(String sFlagName:saFlag) {
-						iCounter++;
-						boolean bReturn = this.setFlag(sFlagName, bValue);
-						baReturn[iCounter]=bReturn;
+		return bFunction;	
+	}
+	/** DIESE METHODE MUSS IN ALLEN KLASSEN VORHANDEN SEIN - über Vererbung -, DIE IHRE FLAGS SETZEN WOLLEN
+	 * Weteire Voraussetzungen:
+	 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
+	 * - Innere Klassen müssen auch public deklariert werden.
+	 * @param objClassParent
+	 * @param sFlagName
+	 * @param bFlagValue
+	 * @return
+	 * lindhaueradmin, 23.07.2013
+	 */
+	public boolean setFlag(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
+		boolean bFunction = false;
+		main:{
+			if(StringZZZ.isEmpty(sFlagName)) {
+				bFunction = true;
+				break main;
+			}
+						
+			bFunction = this.proofFlagZExists(sFlagName);															
+			if(bFunction == true){
+				
+				//Setze das Flag nun in die HashMap
+				HashMap<String, Boolean> hmFlag = this.getHashMapFlag();
+				hmFlag.put(sFlagName.toUpperCase(), bFlagValue);
+				bFunction = true;								
+			}										
+		}	// end main:
+		
+		return bFunction;	
+	}
+		
+	@Override
+	public boolean proofFlagExists(String sFlag) throws ExceptionZZZ {
+		boolean bReturn = false;
+		main:{
+			if(StringZZZ.isEmpty(sFlag))break main;
+			bReturn = FlagZHelperZZZ.proofFlagZExists(this.getClass(), sFlag);				
+		}//end main:
+		return bReturn;
+	}
+	
+	@Override
+	public boolean[] setFlagCustom(String[] saFlag, boolean bValue) throws ExceptionZZZ {
+		boolean[] baReturn=null;
+		main:{
+			if(!StringArrayZZZ.isEmptyTrimmed(saFlag)) {
+				baReturn = new boolean[saFlag.length];
+				int iCounter=-1;
+				for(String sFlagName:saFlag) {
+					iCounter++;
+					boolean bReturn = this.setFlag(sFlagName, bValue);
+					baReturn[iCounter]=bReturn;
+				}
+			}
+		}//end main:
+		return baReturn;
+	}
+	
+	
+	@Override
+	public HashMap<String, Boolean>getHashMapFlag(){
+		return this.hmFlag;
+	}
+	
+	@Override
+	public void setHashMapFlag(HashMap<String, Boolean> hmFlag) {
+		this.hmFlag = hmFlag;
+	}
+		
+	@Override
+	public HashMap<String, Boolean> getHashMapFlagPassed() {
+		return this.hmFlagPassed;
+	}
+	@Override
+	public void setHashMapFlagPassed(HashMap<String, Boolean> hmFlagPassed) {
+		this.hmFlagPassed = hmFlagPassed;
+	}
+	
+	/**Gibt alle möglichen FlagZ Werte als Array zurück. 
+	 * @return
+	 * @throws ExceptionZZZ 
+	 */
+	public String[] getFlagZ() throws ExceptionZZZ{
+		String[] saReturn = null;
+		main:{	
+			saReturn = FlagZHelperZZZ.getFlagsZ(this.getClass());				
+		}//end main:
+		return saReturn;
+	}
+
+	/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück. 
+	 * @return
+	 * @throws ExceptionZZZ 
+	 */
+	public String[] getFlagZ(boolean bValueToSearchFor) throws ExceptionZZZ{
+		return this.getFlagZ_(bValueToSearchFor, false);
+	}
+	
+	public String[] getFlagZ(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap) throws ExceptionZZZ{
+		return this.getFlagZ_(bValueToSearchFor, bLookupExplizitInHashMap);
+	}
+	
+	private String[]getFlagZ_(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap) throws ExceptionZZZ{
+		String[] saReturn = null;
+		main:{
+			ArrayList<String>listasTemp=new ArrayList<String>();
+			
+			//FALLUNTERSCHEIDUNG: Alle gesetzten FlagZ werden in der HashMap gespeichert. Aber die noch nicht gesetzten FlagZ stehen dort nicht drin.
+			//                                  Diese kann man nur durch Einzelprüfung ermitteln.
+			if(bLookupExplizitInHashMap) {
+				HashMap<String,Boolean>hmFlag=this.getHashMapFlag();
+				if(hmFlag==null) break main;
+				
+				Set<String> setKey = hmFlag.keySet();
+				for(String sKey : setKey){
+					boolean btemp = hmFlag.get(sKey);
+					if(btemp==bValueToSearchFor){
+						listasTemp.add(sKey);
 					}
 				}
-			}//end main:
-			return baReturn;
-		}
-		
-		
-		@Override
-		public HashMap<String, Boolean>getHashMapFlag(){
-			return this.hmFlag;
-		}
-			
-		@Override
-		public HashMap<String, Boolean> getHashMapFlagPassed() {
-			return this.hmFlagPassed;
-		}
-		@Override
-		public void setHashMapFlagPassed(HashMap<String, Boolean> hmFlagPassed) {
-			this.hmFlagPassed = hmFlagPassed;
-		}
-		
-			/**Gibt alle möglichen FlagZ Werte als Array zurück. 
-			 * @return
-			 * @throws ExceptionZZZ 
-			 */
-			public String[] getFlagZ() throws ExceptionZZZ{
-				String[] saReturn = null;
-				main:{	
-					saReturn = FlagZHelperZZZ.getFlagsZ(this.getClass());				
-				}//end main:
-				return saReturn;
-			}
-		
-			/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück. 
-			 * @return
-			 * @throws ExceptionZZZ 
-			 */
-			public String[] getFlagZ(boolean bValueToSearchFor) throws ExceptionZZZ{
-				return this.getFlagZ_(bValueToSearchFor, false);
-			}
-			
-			public String[] getFlagZ(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap) throws ExceptionZZZ{
-				return this.getFlagZ_(bValueToSearchFor, bLookupExplizitInHashMap);
-			}
-			
-			private String[]getFlagZ_(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap) throws ExceptionZZZ{
-				String[] saReturn = null;
-				main:{
-					ArrayList<String>listasTemp=new ArrayList<String>();
-					
-					//FALLUNTERSCHEIDUNG: Alle gesetzten FlagZ werden in der HashMap gespeichert. Aber die noch nicht gesetzten FlagZ stehen dort nicht drin.
-					//                                  Diese kann man nur durch Einzelprüfung ermitteln.
-					if(bLookupExplizitInHashMap) {
-						HashMap<String,Boolean>hmFlag=this.getHashMapFlag();
-						if(hmFlag==null) break main;
-						
-						Set<String> setKey = hmFlag.keySet();
-						for(String sKey : setKey){
-							boolean btemp = hmFlag.get(sKey);
-							if(btemp==bValueToSearchFor){
-								listasTemp.add(sKey);
-							}
-						}
-					}else {
-						//So bekommt man alle Flags zurück, also auch die, die nicht explizit true oder false gesetzt wurden.						
-						String[]saFlagZ = this.getFlagZ();
-						
-						//20211201:
-						//Problem: Bei der Suche nach true ist das egal... aber bei der Suche nach false bekommt man jedes der Flags zurück,
-						//         auch wenn sie garnicht gesetzt wurden.
-						//Lösung:  Statt dessen explitzit über die HashMap der gesetzten Werte gehen....						
-						for(String sFlagZ : saFlagZ){
-							boolean btemp = this.getFlag(sFlagZ);
-							if(btemp==bValueToSearchFor ){ //also 'true'
-								listasTemp.add(sFlagZ);
-							}
-						}
-					}
-					saReturn = listasTemp.toArray(new String[listasTemp.size()]);
-				}//end main:
-				return saReturn;
-			}
-			
-		
-			
-			
-			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-			//++++++++++++++++++++++++
-			/* @see basic.zBasic.IFlagZZZ#getFlagZ(java.lang.String)
-			 * 	 Weteire Voraussetzungen:
-			 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
-			 * - Innere Klassen m�ssen auch public deklariert werden.(non-Javadoc)
-			 */
-			public boolean getFlagCustom(String sFlagName) throws ExceptionZZZ {
-				boolean bFunction = false;
-				main:{
-					if(StringZZZ.isEmpty(sFlagName)) break main;
-												
-					HashMap<String, Boolean> hmFlag = this.getHashMapFlagCustom();
-					Boolean objBoolean = hmFlag.get(sFlagName.toUpperCase());
-					if(objBoolean==null){
-						bFunction = false;
-					}else{
-						bFunction = objBoolean.booleanValue();
-					}
-									
-				}	// end main:
+			}else {
+				//So bekommt man alle Flags zurück, also auch die, die nicht explizit true oder false gesetzt wurden.						
+				String[]saFlagZ = this.getFlagZ();
 				
-				return bFunction;	
-			}
-			
-			/** DIESE METHODEN MUSS IN ALLEN KLASSEN VORHANDEN SEIN - über Vererbung -, DIE IHRE FLAGS SETZEN WOLLEN
-			 * Weitere Voraussetzungen:
-			 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
-			 * - Innere Klassen müssen auch public deklariert werden.
-			 * @param objClassParent
-			 * @param sFlagName
-			 * @param bFlagValue
-			 * @return
-			 * lindhaueradmin, 23.07.2013
-			 */
-			public boolean setFlagCustom(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
-				boolean bFunction = false;
-				main:{
-					if(StringZZZ.isEmpty(sFlagName)) {
-						bFunction = true;
-						break main;
+				//20211201:
+				//Problem: Bei der Suche nach true ist das egal... aber bei der Suche nach false bekommt man jedes der Flags zurück,
+				//         auch wenn sie garnicht gesetzt wurden.
+				//Lösung:  Statt dessen explitzit über die HashMap der gesetzten Werte gehen....						
+				for(String sFlagZ : saFlagZ){
+					boolean btemp = this.getFlag(sFlagZ);
+					if(btemp==bValueToSearchFor ){ //also 'true'
+						listasTemp.add(sFlagZ);
 					}
-								
-					bFunction = this.proofFlagCustomExists(sFlagName);															
-					if(bFunction == true){
-						
-						//Setze das Flag nun in die HashMap
-						HashMap<String, Boolean> hmFlag = this.getHashMapFlagCustom();
-						hmFlag.put(sFlagName.toUpperCase(), bFlagValue);
-						bFunction = true;								
-					}										
-				}	// end main:
-				
-				return bFunction;	
-			}
-				
-			@Override
-			public HashMap<String, Boolean>getHashMapFlagCustom(){
-				return this.hmFlagLocal;
-			}
-			
-			@Override
-			public void setHashMapFlagCustom(HashMap<String, Boolean> hmFlagLocal) {
-				this.hmFlagLocal = hmFlagLocal;
-			}
-			
-			/**Gibt alle möglichen FlagZ Werte als Array zurück. 
-			 * @return
-			 * @throws ExceptionZZZ 
-			 */
-			public String[] getFlagZCustom() throws ExceptionZZZ{
-				String[] saReturn = null;
-				main:{	
-					saReturn = FlagZHelperZZZ.getFlagsZDirectAvailable(this.getClass());				
-				}//end main:
-				return saReturn;
-			}
-		
-			/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück. 
-			 * @return
-			 * @throws ExceptionZZZ 
-			 */
-			public String[] getFlagZCustom(boolean bValueToSearchFor) throws ExceptionZZZ{
-				return this.getFlagZLocal_(bValueToSearchFor, false);
-			}
-			
-			public String[] getFlagZCustom(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap) throws ExceptionZZZ{
-				return this.getFlagZLocal_(bValueToSearchFor, bLookupExplizitInHashMap);
-			}
-			
-			private String[]getFlagZLocal_(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap) throws ExceptionZZZ{
-				String[] saReturn = null;
-				main:{
-					ArrayList<String>listasTemp=new ArrayList<String>();
-					
-					//FALLUNTERSCHEIDUNG: Alle gesetzten FlagZ werden in der HashMap gespeichert. Aber die noch nicht gesetzten FlagZ stehen dort nicht drin.
-					//                                  Diese kann man nur durch Einzelprüfung ermitteln.
-					if(bLookupExplizitInHashMap) {
-						HashMap<String,Boolean>hmFlag=this.getHashMapFlagCustom();
-						if(hmFlag==null) break main;
-						
-						Set<String> setKey = hmFlag.keySet();
-						for(String sKey : setKey){
-							boolean btemp = hmFlag.get(sKey);
-							if(btemp==bValueToSearchFor){
-								listasTemp.add(sKey);
-							}
-						}
-					}else {
-						//So bekommt man alle Flags zurück, also auch die, die nicht explizit true oder false gesetzt wurden.						
-						String[]saFlagZ = this.getFlagZCustom();
-						
-						//20211201:
-						//Problem: Bei der Suche nach true ist das egal... aber bei der Suche nach false bekommt man jedes der Flags zurück,
-						//         auch wenn sie garnicht gesetzt wurden.
-						//Lösung:  Statt dessen explitzit über die HashMap der gesetzten Werte gehen....						
-						for(String sFlagZ : saFlagZ){
-							boolean btemp = this.getFlagCustom(sFlagZ);
-							if(btemp==bValueToSearchFor ){ //also 'true'
-								listasTemp.add(sFlagZ);
-							}
-						}
-					}
-					saReturn = listasTemp.toArray(new String[listasTemp.size()]);
-				}//end main:
-				return saReturn;
-			}
-			
-			/** DIESE METHODE MUSS IN ALLEN KLASSEN VORHANDEN SEIN - über Vererbung ODER Interface Implementierung -, DIE IHRE FLAGS SETZEN WOLLEN
-			 *  SIE WIRD PER METHOD.INVOKE(....) AUFGERUFEN.
-			 * @param name 
-			 * @param sFlagName
-			 * @return
-			 * lindhaueradmin, 23.07.2013
-			 * @throws ExceptionZZZ 
-			 */
-			public boolean proofFlagCustomExists(String sFlagName) throws ExceptionZZZ{
-				boolean bReturn = false;
-				main:{
-					if(StringZZZ.isEmpty(sFlagName))break main;
-					bReturn = FlagZHelperZZZ.proofFlagZDirectExists(this.getClass(), sFlagName);				
-				}//end main:
-				return bReturn;
-			}
-			
-			@Override
-			public boolean proofFlagCustomSetBefore(String sFlagName) throws ExceptionZZZ{
-				boolean bReturn = false;
-				main:{
-					if(StringZZZ.isEmpty(sFlagName))break main;
-					bReturn = FlagZHelperZZZ.proofFlagZLocalSetBefore(this, sFlagName);
 				}
-				return bReturn;
 			}
+			saReturn = listasTemp.toArray(new String[listasTemp.size()]);
+		}//end main:
+		return saReturn;
+	}
+	
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	//++++++++++++++++++++++++
+
+	
+	/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück, die auch als FLAGZ in dem anderen Objekt überhaupt vorhanden sind.
+	 *  Merke: Diese Methode ist dazu gedacht FlagZ-Werte von einem Objekt auf ein anderes zu übertragen.	
+	 *    
+	 * @return
+	 * @throws ExceptionZZZ 
+	 */
+	@Override
+	public String[] getFlagZ_passable(boolean bValueToSearchFor, IFlagZEnabledZZZ objUsingFlagZ) throws ExceptionZZZ{
+		return this.getFlagZ_passable_(bValueToSearchFor, false, objUsingFlagZ);
+	}
+	
+	/* (non-Javadoc)
+	 * @see basic.zKernel.flag.IFlagUserZZZ#getFlagZ_passable(boolean, boolean, basic.zKernel.flag.IFlagUserZZZ)
+	 */
+	@Override
+	public String[] getFlagZ_passable(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap, IFlagZEnabledZZZ objUsingFlagZ) throws ExceptionZZZ{
+		return this.getFlagZ_passable_(bValueToSearchFor, bLookupExplizitInHashMap, objUsingFlagZ);
+	}
+	
+	private String[] getFlagZ_passable_(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap, IFlagZEnabledZZZ objUsingFlagZ) throws ExceptionZZZ{
+		String[] saReturn = null;
+		main:{
+			
+			//1. Hole alle FlagZ, DIESER Klasse, mit dem gewünschten Wert.
+			String[] saFlag = this.getFlagZ(bValueToSearchFor,bLookupExplizitInHashMap);
+			
+			//2. Hole alle FlagZ der Zielklasse
+			String[] saFlagTarget = objUsingFlagZ.getFlagZ();
+			
+			//ArrayList<String>listasFlagPassable=new ArrayList<String>();
+			//Nun nur die Schnittmenge der beiden StringÄrrays hiolen.
+			
+			saReturn = StringArrayZZZ.intersect(saFlag, saFlagTarget);
+		}//end main:
+		return saReturn;
+	}
+	
+	/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück, die auch als FLAGZ in dem anderen Objekt überhaupt vorhanden sind.
+	 *  Merke: Diese Methode ist dazu gedacht FlagZ-Werte von einem Objekt auf ein anderes zu übertragen.	
+	 *    
+	 * @return
+	 * @throws ExceptionZZZ 
+	 */
+	public String[] getFlagZ_passable(IFlagZEnabledZZZ objUsingFlagZ) throws ExceptionZZZ{
+		return this.getFlagZ_passable_(objUsingFlagZ);
+	}
+	
+	private String[] getFlagZ_passable_(IFlagZEnabledZZZ objUsingFlagZ) throws ExceptionZZZ{
+		String[] saReturn = null;
+		main:{
+			
+			//1. Hole alle FlagZ, DIESER Klasse, mit dem gewünschten Wert.
+			String[] saFlag = this.getFlagZ();
+			
+			//2. Hole alle FlagZ der Zielklasse
+			String[] saFlagTarget = objUsingFlagZ.getFlagZ();
+			
+			ArrayList<String>listasFlagPassable=new ArrayList<String>();
+			//Nun nur die Schnittmenge der beiden StringÄrrays hiolen.
+			
+			saReturn = StringArrayZZZ.intersect(saFlag, saFlagTarget);
+		}//end main:
+		return saReturn;
+	}
+	
+	@Override
+	public boolean proofFlagExists(IFlagZEnabledZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+		return this.proofFlagZExists(objEnumFlag.name());
+	}
+
+	@Override
+	public boolean proofFlagSetBefore(IFlagZEnabledZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
+		return this.proofFlagSetBefore(objEnumFlag.name());
+	}
+	
+	/** DIESE METHODE MUSS IN ALLEN KLASSEN VORHANDEN SEIN - über Vererbung ODER Interface Implementierung -, DIE IHRE FLAGS SETZEN WOLLEN
+	 *  SIE WIRD PER METHOD.INVOKE(....) AUFGERUFEN.
+	 * @param name 
+	 * @param sFlagName
+	 * @return
+	 * lindhaueradmin, 23.07.2013
+	 * @throws ExceptionZZZ 
+	 */
+	public boolean proofFlagZExists(String sFlagName) throws ExceptionZZZ{
+		boolean bReturn = false;
+		main:{
+			if(StringZZZ.isEmpty(sFlagName))break main;
+			bReturn = FlagZHelperZZZ.proofFlagZExists(this.getClass(), sFlagName);				
+		}//end main:
+		return bReturn;
+	}
+	
+	@Override
+	public boolean proofFlagSetBefore(String sFlagName) throws ExceptionZZZ{
+		boolean bReturn = false;
+		main:{
+			if(StringZZZ.isEmpty(sFlagName))break main;
+			bReturn = FlagZHelperZZZ.proofFlagZSetBefore(this, sFlagName);
+		}
+		return bReturn;
+	}		
+			
+			
+	//##################################################	
+	//### CUSTOM FLAGS
+	//##################################################
+	/* @see basic.zBasic.IFlagZZZ#getFlagZ(java.lang.String)
+	 * 	 Weteire Voraussetzungen:
+	 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
+	 * - Innere Klassen m�ssen auch public deklariert werden.(non-Javadoc)
+	 */
+	public boolean getFlagCustom(String sFlagName) throws ExceptionZZZ {
+		boolean bFunction = false;
+		main:{
+			if(StringZZZ.isEmpty(sFlagName)) break main;
+										
+			HashMap<String, Boolean> hmFlag = this.getHashMapFlagCustom();
+			Boolean objBoolean = hmFlag.get(sFlagName.toUpperCase());
+			if(objBoolean==null){
+				bFunction = false;
+			}else{
+				bFunction = objBoolean.booleanValue();
+			}
+							
+		}	// end main:
+		
+		return bFunction;	
+	}
+	
+	/** DIESE METHODEN MUSS IN ALLEN KLASSEN VORHANDEN SEIN - über Vererbung -, DIE IHRE FLAGS SETZEN WOLLEN
+	 * Weitere Voraussetzungen:
+	 * - Public Default Konstruktor der Klasse, damit die Klasse instanziiert werden kann.
+	 * - Innere Klassen müssen auch public deklariert werden.
+	 * @param objClassParent
+	 * @param sFlagName
+	 * @param bFlagValue
+	 * @return
+	 * lindhaueradmin, 23.07.2013
+	 */
+	public boolean setFlagCustom(String sFlagName, boolean bFlagValue) throws ExceptionZZZ {
+		boolean bFunction = false;
+		main:{
+			if(StringZZZ.isEmpty(sFlagName)) {
+				bFunction = true;
+				break main;
+			}
+						
+			bFunction = this.proofFlagCustomExists(sFlagName);															
+			if(bFunction == true){
 				
-			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-			//++++++++++++++++++++++++
+				//Setze das Flag nun in die HashMap
+				HashMap<String, Boolean> hmFlag = this.getHashMapFlagCustom();
+				hmFlag.put(sFlagName.toUpperCase(), bFlagValue);
+				bFunction = true;								
+			}										
+		}	// end main:
 		
-			
-			/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück, die auch als FLAGZ in dem anderen Objekt überhaupt vorhanden sind.
-			 *  Merke: Diese Methode ist dazu gedacht FlagZ-Werte von einem Objekt auf ein anderes zu übertragen.	
-			 *    
-			 * @return
-			 * @throws ExceptionZZZ 
-			 */
-			@Override
-			public String[] getFlagZ_passable(boolean bValueToSearchFor, IFlagZEnabledZZZ objUsingFlagZ) throws ExceptionZZZ{
-				return this.getFlagZ_passable_(bValueToSearchFor, false, objUsingFlagZ);
-			}
-			
-			/* (non-Javadoc)
-			 * @see basic.zKernel.flag.IFlagUserZZZ#getFlagZ_passable(boolean, boolean, basic.zKernel.flag.IFlagUserZZZ)
-			 */
-			@Override
-			public String[] getFlagZ_passable(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap, IFlagZEnabledZZZ objUsingFlagZ) throws ExceptionZZZ{
-				return this.getFlagZ_passable_(bValueToSearchFor, bLookupExplizitInHashMap, objUsingFlagZ);
-			}
-			
-			private String[] getFlagZ_passable_(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap, IFlagZEnabledZZZ objUsingFlagZ) throws ExceptionZZZ{
-				String[] saReturn = null;
-				main:{
-					
-					//1. Hole alle FlagZ, DIESER Klasse, mit dem gewünschten Wert.
-					String[] saFlag = this.getFlagZ(bValueToSearchFor,bLookupExplizitInHashMap);
-					
-					//2. Hole alle FlagZ der Zielklasse
-					String[] saFlagTarget = objUsingFlagZ.getFlagZ();
-					
-					//ArrayList<String>listasFlagPassable=new ArrayList<String>();
-					//Nun nur die Schnittmenge der beiden StringÄrrays hiolen.
-					
-					saReturn = StringArrayZZZ.intersect(saFlag, saFlagTarget);
-				}//end main:
-				return saReturn;
-			}
-			
-			/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück, die auch als FLAGZ in dem anderen Objekt überhaupt vorhanden sind.
-			 *  Merke: Diese Methode ist dazu gedacht FlagZ-Werte von einem Objekt auf ein anderes zu übertragen.	
-			 *    
-			 * @return
-			 * @throws ExceptionZZZ 
-			 */
-			public String[] getFlagZ_passable(IFlagZEnabledZZZ objUsingFlagZ) throws ExceptionZZZ{
-				return this.getFlagZ_passable_(objUsingFlagZ);
-			}
-			
-			private String[] getFlagZ_passable_(IFlagZEnabledZZZ objUsingFlagZ) throws ExceptionZZZ{
-				String[] saReturn = null;
-				main:{
-					
-					//1. Hole alle FlagZ, DIESER Klasse, mit dem gewünschten Wert.
-					String[] saFlag = this.getFlagZ();
-					
-					//2. Hole alle FlagZ der Zielklasse
-					String[] saFlagTarget = objUsingFlagZ.getFlagZ();
-					
-					ArrayList<String>listasFlagPassable=new ArrayList<String>();
-					//Nun nur die Schnittmenge der beiden StringÄrrays hiolen.
-					
-					saReturn = StringArrayZZZ.intersect(saFlag, saFlagTarget);
-				}//end main:
-				return saReturn;
-			}
-			
-			@Override
-			public boolean proofFlagExists(IFlagZEnabledZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
-				return this.proofFlagZExists(objEnumFlag.name());
-			}
+		return bFunction;	
+	}
 		
-			@Override
-			public boolean proofFlagSetBefore(IFlagZEnabledZZZ.FLAGZ objEnumFlag) throws ExceptionZZZ {
-				return this.proofFlagSetBefore(objEnumFlag.name());
-			}
+	@Override
+	public HashMap<String, Boolean>getHashMapFlagCustom(){
+		return this.hmFlagCustom;
+	}
+	
+	@Override
+	public void setHashMapFlagCustom(HashMap<String, Boolean> hmFlagLocal) {
+		this.hmFlagCustom = hmFlagLocal;
+	}
+	
+	/**Gibt alle möglichen FlagZ Werte als Array zurück. 
+	 * @return
+	 * @throws ExceptionZZZ 
+	 */
+	public String[] getFlagZCustom() throws ExceptionZZZ{
+//		String[] saReturn = null;
+//		main:{	
+//			saReturn = FlagZHelperZZZ.getFlagsZDirectAvailable(this.getClass());				
+//		}//end main:
+//		return saReturn;
+		
+		String[] saReturn = null;
+		main:{	
+			saReturn = FlagZHelperZZZ.getFlagsZCustom(this.getClass());				
+		}//end main:
+		return saReturn;
+	}
+
+	/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück. 
+	 * @return
+	 * @throws ExceptionZZZ 
+	 */
+	public String[] getFlagZCustom(boolean bValueToSearchFor) throws ExceptionZZZ{
+		return this.getFlagZCustom_(bValueToSearchFor, false);
+	}
+	
+	public String[] getFlagZCustom(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap) throws ExceptionZZZ{
+		return this.getFlagZCustom_(bValueToSearchFor, bLookupExplizitInHashMap);
+	}
+	
+	
+	
+	
+	private String[]getFlagZCustom_(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap) throws ExceptionZZZ{
+		String[] saReturn = null;
+		main:{
+			ArrayList<String>listasTemp=new ArrayList<String>();
 			
-		/** DIESE METHODE MUSS IN ALLEN KLASSEN VORHANDEN SEIN - über Vererbung ODER Interface Implementierung -, DIE IHRE FLAGS SETZEN WOLLEN
-		 *  SIE WIRD PER METHOD.INVOKE(....) AUFGERUFEN.
-		 * @param name 
-		 * @param sFlagName
-		 * @return
-		 * lindhaueradmin, 23.07.2013
-		 * @throws ExceptionZZZ 
-		 */
-		public boolean proofFlagZExists(String sFlagName) throws ExceptionZZZ{
-			boolean bReturn = false;
-			main:{
-				if(StringZZZ.isEmpty(sFlagName))break main;
-				bReturn = FlagZHelperZZZ.proofFlagZExists(this.getClass(), sFlagName);				
-			}//end main:
-			return bReturn;
+			//FALLUNTERSCHEIDUNG: Alle gesetzten FlagZ werden in der HashMap gespeichert. Aber die noch nicht gesetzten FlagZ stehen dort nicht drin.
+			//                                  Diese kann man nur durch Einzelprüfung ermitteln.
+			if(bLookupExplizitInHashMap) {
+				HashMap<String,Boolean>hmFlag=this.getHashMapFlagCustom();
+				if(hmFlag==null) break main;
+				
+				Set<String> setKey = hmFlag.keySet();
+				for(String sKey : setKey){
+					boolean btemp = hmFlag.get(sKey);
+					if(btemp==bValueToSearchFor){
+						listasTemp.add(sKey);
+					}
+				}
+			}else {
+				//So bekommt man alle Flags zurück, also auch die, die nicht explizit true oder false gesetzt wurden.						
+				String[]saFlagZ = this.getFlagZCustom();
+				
+				//20211201:
+				//Problem: Bei der Suche nach true ist das egal... aber bei der Suche nach false bekommt man jedes der Flags zurück,
+				//         auch wenn sie garnicht gesetzt wurden.
+				//Lösung:  Statt dessen explitzit über die HashMap der gesetzten Werte gehen....						
+				for(String sFlagZ : saFlagZ){
+					boolean btemp = this.getFlagCustom(sFlagZ);
+					if(btemp==bValueToSearchFor ){ //also 'true'
+						listasTemp.add(sFlagZ);
+					}
+				}
+			}
+			saReturn = listasTemp.toArray(new String[listasTemp.size()]);
+		}//end main:
+		return saReturn;
+	}
+	
+	/** DIESE METHODE MUSS IN ALLEN KLASSEN VORHANDEN SEIN - über Vererbung ODER Interface Implementierung -, DIE IHRE FLAGS SETZEN WOLLEN
+	 *  SIE WIRD PER METHOD.INVOKE(....) AUFGERUFEN.
+	 * @param name 
+	 * @param sFlagName
+	 * @return
+	 * lindhaueradmin, 23.07.2013
+	 * @throws ExceptionZZZ 
+	 */
+	public boolean proofFlagCustomExists(String sFlagName) throws ExceptionZZZ{
+		boolean bReturn = false;
+		main:{
+			if(StringZZZ.isEmpty(sFlagName))break main;
+			bReturn = FlagZHelperZZZ.proofFlagZDirectExists(this.getClass(), sFlagName);				
+		}//end main:
+		return bReturn;
+	}
+	
+	@Override
+	public boolean proofFlagCustomSetBefore(String sFlagName) throws ExceptionZZZ{
+		boolean bReturn = false;
+		main:{
+			if(StringZZZ.isEmpty(sFlagName))break main;
+			bReturn = FlagZHelperZZZ.proofFlagZLocalSetBefore(this, sFlagName);
 		}
-		
-		@Override
-		public boolean proofFlagSetBefore(String sFlagName) throws ExceptionZZZ{
-			boolean bReturn = false;
-			main:{
-				if(StringZZZ.isEmpty(sFlagName))break main;
-				bReturn = FlagZHelperZZZ.proofFlagZSetBefore(this, sFlagName);
-			}
-			return bReturn;
-		}
+		return bReturn;
+	}
+	
+	@Override
+	public boolean resetFlagsCustom() throws ExceptionZZZ{
+		boolean bReturn = false;
+		main:{
+			HashMap<String,Boolean> hm = this.getHashMapFlagCustom();
+			if(hm.isEmpty())break main;
+			
+			ReferenceHashMapZZZ<String,Boolean>objhmReturn=new ReferenceHashMapZZZ<String,Boolean>();
+			objhmReturn.set(hm);
+			
+			bReturn =FlagZHelperZZZ.resetFlags(objhmReturn); 			
+		}//end main:
+		return bReturn;
+	}
+				
+			
 
 		//### Functions #########################
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++

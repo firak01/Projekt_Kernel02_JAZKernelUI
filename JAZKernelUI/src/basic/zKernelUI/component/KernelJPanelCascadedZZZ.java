@@ -26,6 +26,7 @@ import basic.zBasic.ReflectClassZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasic.util.abstractArray.ArrayUtilZZZ;
 import basic.zBasic.util.abstractList.HashMapIndexedObjectZZZ;
+import basic.zBasic.util.datatype.calling.ReferenceHashMapZZZ;
 import basic.zBasic.util.datatype.string.StringArrayZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zBasicUI.listener.ListenerMouseMove4DragableWindowZZZ;
@@ -81,7 +82,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			
 	private HashMap<String, Boolean>hmFlag=new HashMap<String, Boolean>();
 	private HashMap<String, Boolean>hmFlagPassed = new HashMap<String, Boolean>();
-	private HashMap<String, Boolean>hmFlagLocal = new HashMap<String, Boolean>();
+	private HashMap<String, Boolean>hmFlagCustom = new HashMap<String, Boolean>();
 	
 	/**
 	 * DEFAULT Konstruktor, notwendig, damit man objClass.newInstance(); einfach machen kann.
@@ -1154,6 +1155,13 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			return this.hmFlag;
 		}
 		
+		@Override
+		public void setHashMapFlag(HashMap<String, Boolean> hmFlag) {
+			this.hmFlag = hmFlag;
+		}
+		
+		
+		
 		/**Gibt alle möglichen FlagZ Werte als Array zurück. 
 		 * @return
 		 * @throws ExceptionZZZ 
@@ -1265,7 +1273,80 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			return bReturn;
 		}
 		
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		//++++++++++++++++++++++++
+		@Override
+		public HashMap<String, Boolean> getHashMapFlagPassed() {
+			return this.hmFlagPassed;
+		}
 		
+		@Override
+		public void setHashMapFlagPassed(HashMap<String, Boolean> hmFlagPassed) {
+			this.hmFlagPassed = hmFlagPassed;
+		}
+		
+			
+			
+		/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück, die auch als FLAGZ in dem anderen Objekt überhaupt vorhanden sind.
+		 *  Merke: Diese Methode ist dazu gedacht FlagZ-Werte von einem Objekt auf ein anderes zu übertragen.	
+		 *    
+		 * @return
+		 * @throws ExceptionZZZ 
+		 */
+		public String[] getFlagZ_passable(boolean bValueToSearchFor, IFlagZEnabledZZZ objUsingFlagZ) throws ExceptionZZZ{
+			return this.getFlagZ_passable_(bValueToSearchFor, false, objUsingFlagZ);
+		}
+		
+		public String[] getFlagZ_passable(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap, IFlagZEnabledZZZ objUsingFlagZ) throws ExceptionZZZ{
+			return this.getFlagZ_passable_(bValueToSearchFor, bLookupExplizitInHashMap, objUsingFlagZ);
+		}
+		
+		private String[] getFlagZ_passable_(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap, IFlagZEnabledZZZ objUsingFlagZ) throws ExceptionZZZ{
+			String[] saReturn = null;
+			main:{
+				
+				//1. Hole alle FlagZ, DIESER Klasse, mit dem gewünschten Wert.
+				String[] saFlag = this.getFlagZ(bValueToSearchFor,bLookupExplizitInHashMap);
+				
+				//2. Hole alle FlagZ der Zielklasse
+				String[] saFlagTarget = objUsingFlagZ.getFlagZ();
+				
+				//ArrayList<String>listasFlagPassable=new ArrayList<String>();
+				//Nun nur die Schnittmenge der beiden StringÄrrays hiolen.
+				
+				saReturn = StringArrayZZZ.intersect(saFlag, saFlagTarget);
+			}//end main:
+			return saReturn;
+		}
+		
+		/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück, die auch als FLAGZ in dem anderen Objekt überhaupt vorhanden sind.
+		 *  Merke: Diese Methode ist dazu gedacht FlagZ-Werte von einem Objekt auf ein anderes zu übertragen.	
+		 *    
+		 * @return
+		 * @throws ExceptionZZZ 
+		 */
+		public String[] getFlagZ_passable(IFlagZEnabledZZZ objUsingFlagZ) throws ExceptionZZZ{
+			return this.getFlagZ_passable_(objUsingFlagZ);
+		}
+		
+		private String[] getFlagZ_passable_(IFlagZEnabledZZZ objUsingFlagZ) throws ExceptionZZZ{
+			String[] saReturn = null;
+			main:{
+				
+				//1. Hole alle FlagZ, DIESER Klasse, mit dem gewünschten Wert.
+				String[] saFlag = this.getFlagZ();
+				
+				//2. Hole alle FlagZ der Zielklasse
+				String[] saFlagTarget = objUsingFlagZ.getFlagZ();
+				
+				ArrayList<String>listasFlagPassable=new ArrayList<String>();
+				//Nun nur die Schnittmenge der beiden StringÄrrays hiolen.
+				
+				saReturn = StringArrayZZZ.intersect(saFlag, saFlagTarget);
+			}//end main:
+			return saReturn;
+		}
 					
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//++++++++++++++++++++++++
@@ -1344,12 +1425,12 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			
 		@Override
 		public HashMap<String, Boolean>getHashMapFlagCustom(){
-			return this.hmFlagLocal;
+			return this.hmFlagCustom;
 		}
 		
 		@Override
-		public void setHashMapFlagCustom(HashMap<String, Boolean> hmFlagLocal) {
-			this.hmFlagLocal = hmFlagLocal;
+		public void setHashMapFlagCustom(HashMap<String, Boolean> hmFlagCustom) {
+			this.hmFlagCustom = hmFlagCustom;
 		}
 		
 		/**Gibt alle möglichen FlagZ Werte als Array zurück. 
@@ -1357,26 +1438,36 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 		 * @throws ExceptionZZZ 
 		 */
 		public String[] getFlagZCustom() throws ExceptionZZZ{
+//			String[] saReturn = null;
+//			main:{	
+//				saReturn = FlagZHelperZZZ.getFlagsZDirectAvailable(this.getClass());				
+//			}//end main:
+//			return saReturn;
+//			
+			
 			String[] saReturn = null;
 			main:{	
-				saReturn = FlagZHelperZZZ.getFlagsZDirectAvailable(this.getClass());				
+				saReturn = FlagZHelperZZZ.getFlagsZCustom(this.getClass());				
 			}//end main:
 			return saReturn;
 		}
+		
+		
+		
 	
 		/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück. 
 		 * @return
 		 * @throws ExceptionZZZ 
 		 */
 		public String[] getFlagZCustom(boolean bValueToSearchFor) throws ExceptionZZZ{
-			return this.getFlagZLocal_(bValueToSearchFor, false);
+			return this.getFlagZCustom_(bValueToSearchFor, false);
 		}
 		
 		public String[] getFlagZCustom(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap) throws ExceptionZZZ{
-			return this.getFlagZLocal_(bValueToSearchFor, bLookupExplizitInHashMap);
+			return this.getFlagZCustom_(bValueToSearchFor, bLookupExplizitInHashMap);
 		}
 		
-		private String[]getFlagZLocal_(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap) throws ExceptionZZZ{
+		private String[]getFlagZCustom_(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap) throws ExceptionZZZ{
 			String[] saReturn = null;
 			main:{
 				ArrayList<String>listasTemp=new ArrayList<String>();
@@ -1444,81 +1535,23 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 			}
 			return bReturn;
 		}
-			
-		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		//++++++++++++++++++++++++
-		@Override
-		public HashMap<String, Boolean> getHashMapFlagPassed() {
-			return this.hmFlagPassed;
-		}
 		
 		@Override
-		public void setHashMapFlagPassed(HashMap<String, Boolean> hmFlagPassed) {
-			this.hmFlagPassed = hmFlagPassed;
+		public boolean resetFlagsCustom() throws ExceptionZZZ{
+			boolean bReturn = false;
+			main:{
+				HashMap<String,Boolean> hm = this.getHashMapFlagCustom();
+				if(hm.isEmpty())break main;
+				
+				ReferenceHashMapZZZ<String,Boolean>objhmReturn=new ReferenceHashMapZZZ<String,Boolean>();
+				objhmReturn.set(hm);
+				
+				bReturn =FlagZHelperZZZ.resetFlags(objhmReturn); 			
+			}//end main:
+			return bReturn;
 		}
+			
 		
-			
-			
-			/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück, die auch als FLAGZ in dem anderen Objekt überhaupt vorhanden sind.
-			 *  Merke: Diese Methode ist dazu gedacht FlagZ-Werte von einem Objekt auf ein anderes zu übertragen.	
-			 *    
-			 * @return
-			 * @throws ExceptionZZZ 
-			 */
-			public String[] getFlagZ_passable(boolean bValueToSearchFor, IFlagZEnabledZZZ objUsingFlagZ) throws ExceptionZZZ{
-				return this.getFlagZ_passable_(bValueToSearchFor, false, objUsingFlagZ);
-			}
-			
-			public String[] getFlagZ_passable(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap, IFlagZEnabledZZZ objUsingFlagZ) throws ExceptionZZZ{
-				return this.getFlagZ_passable_(bValueToSearchFor, bLookupExplizitInHashMap, objUsingFlagZ);
-			}
-			
-			private String[] getFlagZ_passable_(boolean bValueToSearchFor, boolean bLookupExplizitInHashMap, IFlagZEnabledZZZ objUsingFlagZ) throws ExceptionZZZ{
-				String[] saReturn = null;
-				main:{
-					
-					//1. Hole alle FlagZ, DIESER Klasse, mit dem gewünschten Wert.
-					String[] saFlag = this.getFlagZ(bValueToSearchFor,bLookupExplizitInHashMap);
-					
-					//2. Hole alle FlagZ der Zielklasse
-					String[] saFlagTarget = objUsingFlagZ.getFlagZ();
-					
-					//ArrayList<String>listasFlagPassable=new ArrayList<String>();
-					//Nun nur die Schnittmenge der beiden StringÄrrays hiolen.
-					
-					saReturn = StringArrayZZZ.intersect(saFlag, saFlagTarget);
-				}//end main:
-				return saReturn;
-			}
-			
-			/**Gibt alle "true" gesetzten FlagZ - Werte als Array zurück, die auch als FLAGZ in dem anderen Objekt überhaupt vorhanden sind.
-			 *  Merke: Diese Methode ist dazu gedacht FlagZ-Werte von einem Objekt auf ein anderes zu übertragen.	
-			 *    
-			 * @return
-			 * @throws ExceptionZZZ 
-			 */
-			public String[] getFlagZ_passable(IFlagZEnabledZZZ objUsingFlagZ) throws ExceptionZZZ{
-				return this.getFlagZ_passable_(objUsingFlagZ);
-			}
-			
-			private String[] getFlagZ_passable_(IFlagZEnabledZZZ objUsingFlagZ) throws ExceptionZZZ{
-				String[] saReturn = null;
-				main:{
-					
-					//1. Hole alle FlagZ, DIESER Klasse, mit dem gewünschten Wert.
-					String[] saFlag = this.getFlagZ();
-					
-					//2. Hole alle FlagZ der Zielklasse
-					String[] saFlagTarget = objUsingFlagZ.getFlagZ();
-					
-					ArrayList<String>listasFlagPassable=new ArrayList<String>();
-					//Nun nur die Schnittmenge der beiden StringÄrrays hiolen.
-					
-					saReturn = StringArrayZZZ.intersect(saFlag, saFlagTarget);
-				}//end main:
-				return saReturn;
-			}
 		//#######################################
 
 		//### Functions #########################
