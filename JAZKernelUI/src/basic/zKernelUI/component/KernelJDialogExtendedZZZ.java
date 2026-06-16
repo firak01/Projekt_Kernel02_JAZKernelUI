@@ -1178,6 +1178,21 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 				return bReturn;
 			}
 				
+			@Override
+			public boolean resetFlagsCustom() throws ExceptionZZZ{
+				boolean bReturn = false;
+				main:{
+					HashMap<String,Boolean> hm = this.getHashMapFlagCustom();
+					if(hm.isEmpty())break main;
+					
+					ReferenceHashMapZZZ<String,Boolean>objhmReturn=new ReferenceHashMapZZZ<String,Boolean>();
+					objhmReturn.set(hm);
+					
+					bReturn =FlagZHelperZZZ.resetFlags(objhmReturn); 			
+				}//end main:
+				return bReturn;
+			}
+			
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			//++++++++++++++++++++++++
@@ -1487,5 +1502,8 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 		return bReturn;
 	}
 	
-	
+	@Override
+	public void setHashMapFlag(HashMap<String, Boolean> hmFlag) {
+		this.hmFlag = hmFlag;
+	}
 }
