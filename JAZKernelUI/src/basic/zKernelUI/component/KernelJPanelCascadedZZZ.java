@@ -47,7 +47,7 @@ import basic.zKernelUI.component.componentGroup.JComponentGroupCollectionZZZ;
 import basic.zKernelUI.component.componentGroup.JComponentGroupHelperZZZ;
 import basic.zKernelUI.component.componentGroup.JComponentGroupZZZ;
 import basic.zKernelUI.component.componentGroup.ModelPanelDebugZZZ;
-import custom.zKernel.LogZZZ;
+import custom.zKernel.KernelLogZZZ;
 
 /** Klasse bietet als Erweiterung zu JPanel die Verschachtelung von Panels an.
  * Merke: Ohne ein JFrame als Parent funktioniert es nicht, das Panel per Drag mit der Maus zu bewegen.
@@ -58,7 +58,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	protected static final String sBUTTON_SWITCH = "buttonSwitch";
 		
 	protected IKernelZZZ objKernel;   //das "protected" erlaubt es hiervon erbende Klassen mit XYXErbendeKlasse.objKernel zu arbeiten.
-	protected LogZZZ objLog;
+	protected KernelLogZZZ objLog;
 	protected IKernelModuleZZZ objModule=null; //Das Modul, z.B. die Dialogbox, in der das Program gestartet wird.
 
 	//Zum Suchen das Panels einen Alias vergeben.
@@ -684,7 +684,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	 * @see basic.zKernel.IKernelLogUserZZZ#getLogObject()
 	 */
 	@Override
-	public LogZZZ getLogObject() {
+	public KernelLogZZZ getLogObject() {
 		return this.objLog;
 	}
 
@@ -692,7 +692,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 	 * @see basic.zKernel.IKernelLogUserZZZ#setLogObject(custom.zKernel.LogZZZ)
 	 */
 	@Override
-	public void setLogObject(LogZZZ objLog) {
+	public void setLogObject(KernelLogZZZ objLog) {
 		this.objLog = objLog;
 	}
 	

@@ -8,7 +8,7 @@ import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JToggleButton;
 
-import custom.zKernel.LogZZZ;
+import custom.zKernel.KernelLogZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IObjectZZZ;
 import basic.zBasic.util.abstractList.HashMapZZZ;

@@ -15,7 +15,7 @@ import basic.zBasic.IObjectZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
-import custom.zKernel.LogZZZ;
+import custom.zKernel.KernelLogZZZ;
 
 public class KernelJPanelDialogContentDefaultZZZ extends KernelJPanelCascadedZZZ{
 	private String sText4ContentDefault="";

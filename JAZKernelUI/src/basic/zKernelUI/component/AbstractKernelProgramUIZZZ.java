@@ -15,7 +15,7 @@ import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.component.IKernelProgramZZZ;
 import basic.zKernel.flag.IFlagZEnabledZZZ;
 import basic.zKernelUI.util.JTextFieldHelperZZZ;
-import custom.zKernel.LogZZZ;
+import custom.zKernel.KernelLogZZZ;
 
 public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZZ implements IProgramUIZZZ{
 	private KernelJPanelCascadedZZZ panel = null;
@@ -154,7 +154,7 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 				String sLog = "Component not found '" + sComponent4update + "'";
 				System.out.println(sLog);
 				
-				LogZZZ objLog = this.getLogObject();
+				KernelLogZZZ objLog = this.getLogObject();
 				objLog.writeLineDate(sLog);
 				break main;
 			}
@@ -166,7 +166,7 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 				String sLog = ReflectCodeZZZ.getPositionCurrent() + ": Component of type '" + component.getClass() + "' not handled in this update event."; 
 				System.out.println(sLog);
 				
-				LogZZZ objLog = this.getLogObject();
+				KernelLogZZZ objLog = this.getLogObject();
 				objLog.writeLineDate(sLog);
 			}
 		}//end main
@@ -179,7 +179,7 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 				String sLog = "Component not found '" + sComponent4update + "'";
 				System.out.println(sLog);
 				
-				LogZZZ objLog = this.getLogObject();
+				KernelLogZZZ objLog = this.getLogObject();
 				objLog.writeLineDate(sLog);
 				break main;
 			}
@@ -191,7 +191,7 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 				String sLog = ReflectCodeZZZ.getPositionCurrent() + ": Component of type '" + component.getClass() + "' not handled in this update event."; 
 				System.out.println(sLog);
 				
-				LogZZZ objLog = this.getLogObject();
+				KernelLogZZZ objLog = this.getLogObject();
 				objLog.writeLineDate(sLog);
 			}	
 		}//end main:
@@ -204,7 +204,7 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 				String sLog = "Component not found '" + sComponent4update + "'";
 				System.out.println(sLog);
 				
-				LogZZZ objLog = this.getLogObject();
+				KernelLogZZZ objLog = this.getLogObject();
 				objLog.writeLineDate(sLog);
 				break main;
 			}
@@ -216,7 +216,7 @@ public abstract class AbstractKernelProgramUIZZZ extends AbstractKernelProgramZZ
 				String sLog = ReflectCodeZZZ.getPositionCurrent() + ": Component of type '" + component.getClass() + "' not handled in this update event."; 
 				System.out.println(sLog);
 				
-				LogZZZ objLog = this.getLogObject();
+				KernelLogZZZ objLog = this.getLogObject();
 				objLog.writeLineDate(sLog);
 			}			
 		}//end main:

@@ -2,7 +2,7 @@ package debug.zKernelUI.component.buttonSwitchLabelGroup;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zKernel.KernelZZZ;
-import custom.zKernel.LogZZZ;
+import custom.zKernel.KernelLogZZZ;
 import custom.zKernelUI.module.config.FrameConfigZZZ;
 
 public class DebugButtonSwitchLabelGroupZZZ {
@@ -11,7 +11,7 @@ public class DebugButtonSwitchLabelGroupZZZ {
 		try {
 			//1. Kernel Objekt initialisieren. Dies ist fuer das Logging grundlegend.
 			KernelZZZ objKernel = new KernelZZZ("FGL", "01", "", "ZKernelConfigConfig_default.ini","useFormula");
-			LogZZZ objLog = objKernel.getLogObject();
+			KernelLogZZZ objLog = objKernel.getLogObject();
 			
 			
 			//2. Frame initialisieren und �ffnen. Die Applikation "DebugButtonGroup soll verarbeitet werden		

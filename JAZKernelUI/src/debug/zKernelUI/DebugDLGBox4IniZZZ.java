@@ -2,7 +2,7 @@ package debug.zKernelUI;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zKernel.KernelZZZ;
-import custom.zKernel.LogZZZ;
+import custom.zKernel.KernelLogZZZ;
 import custom.zKernelUI.module.config.DLG.DLGBOX4INIZZZ;
 
 public class DebugDLGBox4IniZZZ {
@@ -16,7 +16,7 @@ public class DebugDLGBox4IniZZZ {
 	KernelZZZ objKernel;
 	try {
 		objKernel = new KernelZZZ("FGL", "01", "", "ZKernelConfigConfig_default.ini",(String)null);
-		LogZZZ objLog = objKernel.getLogObject();
+		KernelLogZZZ objLog = objKernel.getLogObject();
 	
 		//Dieses bietet die Möglichkeit auf die Komponenten einer Applikation zuzugreifen (auch Module genannt)
 		//String sModule = "Kernel";

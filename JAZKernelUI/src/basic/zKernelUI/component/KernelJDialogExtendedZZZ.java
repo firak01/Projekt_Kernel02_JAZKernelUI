@@ -43,7 +43,7 @@ import basic.zKernel.flag.util.FlagZFassadeZZZ;
 import basic.zKernel.flag.IFlagZEnabledZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import basic.zKernelUI.util.JTextFieldHelperZZZ;
-import custom.zKernel.LogZZZ;
+import custom.zKernel.KernelLogZZZ;
 
 /**Diese Klasse soll sicherstellen, das ein Dialogfenster auch nur einmal geoeffnet wird.
  * @author 0823
@@ -51,7 +51,7 @@ import custom.zKernel.LogZZZ;
  */
 public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialogExtendedZZZ, IConstantZZZ, IObjectZZZ, IObjectLogZZZ, IKernelUserZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IScreenFeatureZZZ, IMouseFeatureZZZ, IFlagZEnabledZZZ, IFlagZCustomEnabledZZZ{
 	protected IKernelZZZ objKernel;
-	protected LogZZZ objLog;
+	protected KernelLogZZZ objLog;
 	protected IKernelModuleZZZ objModule=null; //Das Modul, z.B. für die Dialogbox
 	
 	protected IPanelCascadedZZZ panelContent = null;
@@ -667,7 +667,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 	 * @see basic.zKernel.IKernelLogUserZZZ#getLogObject()
 	 */
 	@Override
-	public LogZZZ getLogObject() {
+	public KernelLogZZZ getLogObject() {
 		return this.objLog;
 	}
 
@@ -675,7 +675,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 	 * @see basic.zKernel.IKernelLogUserZZZ#setLogObject(custom.zKernel.LogZZZ)
 	 */
 	@Override
-	public void setLogObject(LogZZZ objLog) {
+	public void setLogObject(KernelLogZZZ objLog) {
 		this.objLog = objLog;
 	}
 

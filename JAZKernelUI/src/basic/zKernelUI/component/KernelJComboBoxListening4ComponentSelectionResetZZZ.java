@@ -11,11 +11,11 @@ import basic.zKernel.AbstractKernelLogZZZ;
 import basic.zKernelUI.component.model.EventComponentSelectionResetZZZ;
 import basic.zKernelUI.component.model.IListenerSelectionResetZZZ;
 import basic.zKernel.IKernelZZZ;
-import custom.zKernel.LogZZZ;
+import custom.zKernel.KernelLogZZZ;
 
 public abstract class KernelJComboBoxListening4ComponentSelectionResetZZZ  extends JComboBox implements IConstantZZZ, IObjectZZZ, IObjectLogZZZ, IKernelUserZZZ, IListenerSelectionResetZZZ{
 	private IKernelZZZ objKernel;
-	private LogZZZ objLog;
+	private KernelLogZZZ objLog;
 	private Object objItemInitial;
 	boolean bObjectInitialSet=false;
 	
@@ -91,18 +91,19 @@ public abstract class KernelJComboBoxListening4ComponentSelectionResetZZZ  exten
 		// TODO Auto-generated method stub		
 	}
 	
-	//aus IObjectLogZZZIKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
+	//### aus IObjectLogZZZ, analog zu KernelKernelZZZ
 	@Override
 	public void logLineDate(String sLog) throws ExceptionZZZ {
-		LogZZZ objLog = this.getLogObject();
+		KernelLogZZZ objLog = this.getLogObject();
 		if(objLog==null) {
-			String sTemp = LogZZZ.computeLineDate(this, sLog);
+			String sTemp = KernelLogZZZ.computeLineDate(this, sLog);
 			System.out.println(sTemp);
 		}else {
 			objLog.writeLineDate(sLog);	
 		}		
 	}	
 
+	//### aus IKernelUserZZZ
 	public IKernelZZZ getKernelObject() {	
 		return this.objKernel;
 	}
@@ -111,13 +112,15 @@ public abstract class KernelJComboBoxListening4ComponentSelectionResetZZZ  exten
 		this.objKernel = objKernel;
 	}
 
-	public LogZZZ getLogObject() {	
+	//### aus KernelLogUserZZZ
+	public KernelLogZZZ getLogObject() {	
 		return this.objLog;
 	}
 
-	public void setLogObject(LogZZZ objLog) {
+	public void setLogObject(KernelLogZZZ objLog) {
 		this.objLog = objLog;
 	}
+	
 	public EventComponentSelectionResetZZZ getEventPrevious() {		
 		return this.eventPrevious;
 	}

@@ -16,7 +16,7 @@ import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
 import basic.zKernel.flag.IFlagZEnabledZZZ;
-import custom.zKernel.LogZZZ;
+import custom.zKernel.KernelLogZZZ;
 
 public class KernelJPanelDialogContentEmptyZZZ extends KernelJPanelContentEmptyZZZ{
 	

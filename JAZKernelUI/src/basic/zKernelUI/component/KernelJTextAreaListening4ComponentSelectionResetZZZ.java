@@ -25,11 +25,11 @@ import basic.zKernel.AbstractKernelLogZZZ;
 import basic.zKernel.flag.IFlagZEnabledZZZ;
 import basic.zKernelUI.component.model.EventComponentSelectionResetZZZ;
 import basic.zKernelUI.component.model.IListenerSelectionResetZZZ;
-import custom.zKernel.LogZZZ;
+import custom.zKernel.KernelLogZZZ;
 
 public abstract class KernelJTextAreaListening4ComponentSelectionResetZZZ extends JTextArea implements ITextAreaListening4ComponentSelectionResetZZZ, IObjectZZZ, IObjectLogZZZ, IFlagZEnabledZZZ, IKernelUserZZZ, IListenerSelectionResetZZZ{
 	private IKernelZZZ objKernel;
-	private LogZZZ objLog;
+	private KernelLogZZZ objLog;
 	
 	private EventComponentSelectionResetZZZ eventPrevious;
 	private boolean bFlagDebug;
@@ -72,11 +72,11 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 		this.objKernel = objKernel;
 	}
 
-	public LogZZZ getLogObject() {		
+	public KernelLogZZZ getLogObject() {		
 		return this.objLog;
 	}
 
-	public void setLogObject(LogZZZ objLog) {
+	public void setLogObject(KernelLogZZZ objLog) {
 		this.objLog = objLog;
 	}
 
@@ -274,9 +274,9 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
 	@Override
 	public void logLineDate(String sLog) throws ExceptionZZZ {
-		LogZZZ objLog = this.getLogObject();
+		KernelLogZZZ objLog = this.getLogObject();
 		if(objLog==null) {
-			String sTemp = LogZZZ.computeLineDate(this, sLog);
+			String sTemp = KernelLogZZZ.computeLineDate(this, sLog);
 			System.out.println(sTemp);
 		}else {
 			objLog.writeLineDate(sLog);

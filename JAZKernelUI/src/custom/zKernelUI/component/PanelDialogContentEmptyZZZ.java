@@ -18,7 +18,7 @@ import basic.zKernel.KernelZZZ;
 import basic.zKernel.flag.IFlagZEnabledZZZ;
 import basic.zKernelUI.component.KernelJDialogExtendedZZZ;
 import basic.zKernelUI.component.KernelJPanelDialogContentEmptyZZZ;
-import custom.zKernel.LogZZZ;
+import custom.zKernel.KernelLogZZZ;
 
 public class PanelDialogContentEmptyZZZ extends KernelJPanelDialogContentEmptyZZZ {
 	

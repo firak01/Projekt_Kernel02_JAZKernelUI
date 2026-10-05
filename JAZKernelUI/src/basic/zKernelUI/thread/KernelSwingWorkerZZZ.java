@@ -13,7 +13,7 @@ import basic.zBasicUI.thread.SwingWorker;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.AbstractKernelLogZZZ;
-import custom.zKernel.LogZZZ;
+import custom.zKernel.KernelLogZZZ;
 
 
 /** Abstrakte Klasse, die ZKernel-Funktionalität für Programme (Button-Clicks, etc.) zur Verfügung stellt.
@@ -42,7 +42,7 @@ import custom.zKernel.LogZZZ;
  */
 public abstract class KernelSwingWorkerZZZ extends SwingWorker  implements IObjectZZZ, IObjectLogZZZ, IKernelUserZZZ{
 	protected IKernelZZZ objKernel = null;
-	protected LogZZZ objLog = null;
+	protected KernelLogZZZ objLog = null;
 			
 	public KernelSwingWorkerZZZ() {
 		super();
@@ -65,12 +65,12 @@ public abstract class KernelSwingWorkerZZZ extends SwingWorker  implements IObje
 	}
 	
 	@Override
-	public LogZZZ getLogObject() {		
+	public KernelLogZZZ getLogObject() {		
 		return this.objLog;
 	}
 
 	@Override
-	public void setLogObject(LogZZZ objLog) {
+	public void setLogObject(KernelLogZZZ objLog) {
 		this.objLog = objLog;		
 	}
 

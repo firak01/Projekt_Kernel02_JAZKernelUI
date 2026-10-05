@@ -9,7 +9,7 @@ import basic.zKernel.file.ini.IKernelJsonIniSolverZZZ;
 import basic.zKernel.file.ini.IKernelJsonMapIniSolverZZZ;
 import basic.zKernel.file.ini.IKernelZFormulaIni_PathZZZ;
 import basic.zKernel.file.ini.IKernelZFormulaIni_VariableZZZ;
-import custom.zKernel.LogZZZ;
+import custom.zKernel.KernelLogZZZ;
 import custom.zKernelUI.module.config.FrameConfigZZZ;
 
 public class DebugNavigatorZZZ {
@@ -19,7 +19,7 @@ public class DebugNavigatorZZZ {
 			//1. Kernel Objekt initialisieren. Dies ist fuer das Logging grundlegend.
 			String[] saFlag= {"DEBUGUI_PANELLABEL_ON","useFormula", IKernelZFormulaIni_PathZZZ.FLAGZ.USEEXPRESSION_PATH.name(), IKernelZFormulaIni_VariableZZZ.FLAGZ.USEEXPRESSION_VARIABLE.name(), IObjectWithExpressionZZZ.FLAGZ.USEEXPRESSION.name(), IKernelExpressionIniSolverZZZ.FLAGZ.USEEXPRESSION_SOLVER.name(), IKernelJsonIniSolverZZZ.FLAGZ.USEJSON.name(), IKernelJsonArrayIniSolverZZZ.FLAGZ.USEJSON_ARRAY.name(), IKernelJsonMapIniSolverZZZ.FLAGZ.USEJSON_MAP.name()};
 			KernelZZZ objKernel = new KernelZZZ("FGL", "01", "", "ZKernelConfigConfig_default.ini", saFlag);
-			LogZZZ objLog = objKernel.getLogObject();
+			KernelLogZZZ objLog = objKernel.getLogObject();
 			
 			
 			//2. Frame initialisieren und oeffnen. Die Applikation "DebugButtonGroup soll verarbeitet werden		

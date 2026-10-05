@@ -11,7 +11,7 @@ import basic.zKernelUI.component.KernelJFrameCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.KernelZZZ;
-import custom.zKernel.LogZZZ;
+import custom.zKernel.KernelLogZZZ;
 import custom.zKernelUI.module.config.DLG.DLGBOX4INIZZZ;
 
 public class PanelConfig_SOUTHZZZ extends KernelJPanelCascadedZZZ {
@@ -153,11 +153,11 @@ public class PanelConfig_SOUTHZZZ extends KernelJPanelCascadedZZZ {
 			this.objKernel = objKernel;
 		}
 
-		public LogZZZ getLogObject() {
+		public KernelLogZZZ getLogObject() {
 			return this.objLog;		
 		}
 
-		public void setLogObject(LogZZZ objLog) {
+		public void setLogObject(KernelLogZZZ objLog) {
 			this.objLog = objLog;
 		}
 

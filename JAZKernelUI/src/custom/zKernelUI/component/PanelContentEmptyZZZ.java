@@ -21,7 +21,7 @@ import basic.zKernelUI.component.KernelJFrameCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelContentEmptyZZZ;
 import basic.zKernelUI.component.KernelJPanelDialogContentEmptyZZZ;
-import custom.zKernel.LogZZZ;
+import custom.zKernel.KernelLogZZZ;
 
 public class PanelContentEmptyZZZ extends KernelJPanelContentEmptyZZZ {
 	

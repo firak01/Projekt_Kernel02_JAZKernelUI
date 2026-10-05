@@ -8,7 +8,7 @@ import javax.swing.ListModel;
 
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.AbstractKernelLogZZZ;
-import custom.zKernel.LogZZZ;
+import custom.zKernel.KernelLogZZZ;
 
 
 import basic.zBasic.ExceptionZZZ;
@@ -21,7 +21,7 @@ import basic.zKernelUI.component.model.IListenerSelectionResetZZZ;
 
 public abstract class KernelJListListening4ComponentSelectionResetZZZ extends JList implements IConstantZZZ, IObjectZZZ, IObjectLogZZZ, IKernelUserZZZ, IListenerSelectionResetZZZ{
 	IKernelZZZ objKernel = null;
-	LogZZZ objLog = null;
+	KernelLogZZZ objLog = null;
 	
 	private EventComponentSelectionResetZZZ eventPrevious;
 	
@@ -60,9 +60,9 @@ public abstract class KernelJListListening4ComponentSelectionResetZZZ extends JL
 	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
 	@Override
 	public void logLineDate(String sLog) throws ExceptionZZZ {
-		LogZZZ objLog = this.getLogObject();
+		KernelLogZZZ objLog = this.getLogObject();
 		if(objLog==null) {
-			String sTemp = LogZZZ.computeLineDate(this, sLog);
+			String sTemp = KernelLogZZZ.computeLineDate(this, sLog);
 			System.out.println(sTemp);
 		}else {
 			objLog.writeLineDate(sLog);
@@ -75,10 +75,10 @@ public abstract class KernelJListListening4ComponentSelectionResetZZZ extends JL
 	public void setKernelObject(IKernelZZZ objKernel) {
 		this.objKernel = objKernel;
 	}
-	public LogZZZ getLogObject() {
+	public KernelLogZZZ getLogObject() {
 		return this.objLog;
 	}
-	public void setLogObject(LogZZZ objLog) {
+	public void setLogObject(KernelLogZZZ objLog) {
 		this.objLog = objLog;
 	}
 	public abstract void doResetCustom(EventComponentSelectionResetZZZ eventSelectionResetNew);

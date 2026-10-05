@@ -22,7 +22,7 @@ import javax.swing.border.Border;
 
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
-import custom.zKernel.LogZZZ;
+import custom.zKernel.KernelLogZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IObjectZZZ;
 import basic.zBasic.ReflectCodeZZZ;

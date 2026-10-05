@@ -18,7 +18,7 @@ import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.component.IKernelProgramZZZ;
 import basic.zKernel.flag.IFlagZCustomEnabledZZZ;
 import basic.zKernel.flag.IFlagZEnabledZZZ;
-import custom.zKernel.LogZZZ;
+import custom.zKernel.KernelLogZZZ;
 import custom.zKernelUI.component.PanelContentEmptyZZZ;
 import custom.zKernelUI.module.config.DLG.Panel_NORTHZZZ;
 

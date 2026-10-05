@@ -47,7 +47,7 @@ import basic.zKernel.KernelZZZ;
 import basic.zKernel.component.IKernelModuleUserZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernel.file.ini.KernelFileIniZZZ;
-import custom.zKernel.LogZZZ;
+import custom.zKernel.KernelLogZZZ;
 import custom.zKernel.file.ini.FileIniZZZ;
 
 public class Panel_CENTERZZZ extends KernelJPanelCascadedZZZ implements IKernelModuleZZZ, IComponentTableZZZ {

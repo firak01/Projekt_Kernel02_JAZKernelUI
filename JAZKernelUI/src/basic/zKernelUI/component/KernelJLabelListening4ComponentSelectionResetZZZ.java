@@ -4,7 +4,7 @@ import javax.swing.JLabel;
 
 import basic.zKernel.IKernelZZZ;
 import basic.zKernel.AbstractKernelLogZZZ;
-import custom.zKernel.LogZZZ;
+import custom.zKernel.KernelLogZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IConstantZZZ;
 import basic.zBasic.IObjectLogZZZ;
@@ -16,7 +16,7 @@ import basic.zKernelUI.component.model.EventComponentSelectionResetZZZ;
 
 public abstract class KernelJLabelListening4ComponentSelectionResetZZZ extends JLabel implements IConstantZZZ, IObjectZZZ, IObjectLogZZZ, IKernelUserZZZ, IListenerSelectionResetZZZ{
 	private IKernelZZZ objKernel;
-	private LogZZZ objLog;
+	private KernelLogZZZ objLog;
 	
 	private EventComponentSelectionResetZZZ eventPrevious;
 	private boolean bFlagUseEventResetDefault=false;
@@ -54,9 +54,9 @@ public abstract class KernelJLabelListening4ComponentSelectionResetZZZ extends J
 	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
 	@Override
 	public void logLineDate(String sLog) throws ExceptionZZZ {
-		LogZZZ objLog = this.getLogObject();
+		KernelLogZZZ objLog = this.getLogObject();
 		if(objLog==null) {
-			String sTemp = LogZZZ.computeLineDate(this, sLog);
+			String sTemp = KernelLogZZZ.computeLineDate(this, sLog);
 			System.out.println(sTemp);
 		}else {
 			objLog.writeLineDate(sLog);
@@ -71,11 +71,11 @@ public abstract class KernelJLabelListening4ComponentSelectionResetZZZ extends J
 		this.objKernel = objKernel;
 	}
 
-	public LogZZZ getLogObject() {	
+	public KernelLogZZZ getLogObject() {	
 		return this.objLog;
 	}
 
-	public void setLogObject(LogZZZ objLog) {
+	public void setLogObject(KernelLogZZZ objLog) {
 		this.objLog = objLog;
 	}
 

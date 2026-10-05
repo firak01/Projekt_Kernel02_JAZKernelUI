@@ -45,14 +45,14 @@ import basic.zKernel.flag.IFlagZEnabledZZZ;
 import basic.zKernel.flag.IFlagZEnabledZZZ.FLAGZ;
 import basic.zKernel.flag.util.FlagZFassadeZZZ;
 import basic.zKernelUI.KernelUIZZZ;
-import custom.zKernel.LogZZZ;
+import custom.zKernel.KernelLogZZZ;
 
 /** Class is base for all frames used by the configuration module
  * @author Lindhauer
  */
 public abstract class KernelJFrameCascadedZZZ extends JFrame  implements IObjectZZZ, IObjectLogZZZ, IFlagZEnabledZZZ, IFlagZCustomEnabledZZZ, IKernelUserZZZ, IKernelModuleZZZ, IComponentCascadedUserZZZ, IFrameCascadedZZZ, IFrameLaunchableZZZ, IScreenFeatureZZZ{
 	private IKernelZZZ objKernel;
-	private LogZZZ objLog; 
+	private KernelLogZZZ objLog; 
 	private KernelJFrameCascadedZZZ frameParent=null;
 	private JFrame frameBasic = null;  //Falls diese Klasse aus einem normalen JFrame erstellt werden soll.
 	protected Hashtable<String,IFrameCascadedZZZ> objHtFrameSub=new Hashtable<String,IFrameCascadedZZZ>();   //Damit kann man auf Frames zugreifen, die von diesem Frame aus gestartet wurden.
@@ -807,10 +807,10 @@ private HashMap<String, Boolean>hmFlagCustom = new HashMap<String, Boolean>();
 		this.objKernel = objKernel;
 	}
 		
-	public LogZZZ getLogObject() {
+	public KernelLogZZZ getLogObject() {
 		return this.objLog;
 	}
-	public void setLogObject(LogZZZ objLog) {
+	public void setLogObject(KernelLogZZZ objLog) {
 		this.objLog = objLog;
 	}
 
