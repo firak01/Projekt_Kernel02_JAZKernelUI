@@ -4,7 +4,7 @@ import javax.swing.JComboBox;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IConstantZZZ;
-import basic.zBasic.IObjectLogZZZ;
+import basic.zBasic.ILogPrintZZZ;
 import basic.zBasic.IObjectZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.AbstractKernelLogZZZ;
@@ -13,7 +13,7 @@ import basic.zKernelUI.component.model.IListenerSelectionResetZZZ;
 import basic.zKernel.IKernelZZZ;
 import custom.zKernel.KernelLogZZZ;
 
-public abstract class KernelJComboBoxListening4ComponentSelectionResetZZZ  extends JComboBox implements IConstantZZZ, IObjectZZZ, IObjectLogZZZ, IKernelUserZZZ, IListenerSelectionResetZZZ{
+public abstract class KernelJComboBoxListening4ComponentSelectionResetZZZ  extends JComboBox implements IConstantZZZ, IObjectZZZ, ILogPrintZZZ, IKernelUserZZZ, IListenerSelectionResetZZZ{
 	private IKernelZZZ objKernel;
 	private KernelLogZZZ objLog;
 	private Object objItemInitial;
@@ -93,7 +93,7 @@ public abstract class KernelJComboBoxListening4ComponentSelectionResetZZZ  exten
 	
 	//### aus IObjectLogZZZ, analog zu KernelKernelZZZ
 	@Override
-	public void logLineDate(String sLog) throws ExceptionZZZ {
+	public void printlnDate(String sLog) throws ExceptionZZZ {
 		KernelLogZZZ objLog = this.getLogObject();
 		if(objLog==null) {
 			String sTemp = KernelLogZZZ.computeLineDate(this, sLog);

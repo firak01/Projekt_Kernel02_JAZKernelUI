@@ -5,6 +5,7 @@ import javax.swing.SwingUtilities;
 import basic.zBasic.ExceptionZZZ;
 import basic.zKernel.IKernelZZZ;
 import basic.zKernelUI.component.IProgramUIZZZ;
+import custom.zKernel.Log;
 
 
 public abstract class KernelSwingWorker4UIZZZ extends KernelSwingWorkerZZZ implements IKernelSwingWorker4UIZZZ{
@@ -30,7 +31,7 @@ public abstract class KernelSwingWorker4UIZZZ extends KernelSwingWorkerZZZ imple
 
 			public void run(){											
 				try {
-					logLineDate("Program for label update started with '" + sValue + "'");
+					Log.printlnDate(this, "Program for label update started with '" + sValue + "'");
 					objProgram.updateLabel(sValue);
 				} catch (ExceptionZZZ e) {
 					e.printStackTrace();
@@ -48,7 +49,7 @@ public abstract class KernelSwingWorker4UIZZZ extends KernelSwingWorkerZZZ imple
 
 			public void run(){											
 				try {
-					logLineDate("Program for label update started with '" + sValue + "'");
+					Log.printlnDate(this, "Program for label update started with '" + sValue + "'");
 					objProgram.updateValue(sValue);
 				} catch (ExceptionZZZ e) {
 					e.printStackTrace();
@@ -66,7 +67,7 @@ public abstract class KernelSwingWorker4UIZZZ extends KernelSwingWorkerZZZ imple
 
 			public void run(){												
 				try {
-					logLineDate("Program for message update started with '" + sValue + "'");
+					Log.printlnDate(this, "Program for message update started with '" + sValue + "'");
 					objProgram.updateMessage(sValue);
 				} catch (ExceptionZZZ e) {
 					e.printStackTrace();

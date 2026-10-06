@@ -13,7 +13,7 @@ import javax.swing.JTextArea;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
 import basic.zBasic.ExceptionZZZ;
-import basic.zBasic.IObjectLogZZZ;
+import basic.zBasic.ILogPrintZZZ;
 import basic.zBasic.IObjectZZZ;
 import basic.zBasic.AbstractObjectWithFlagZZZ;
 import basic.zBasic.ReflectClassZZZ;
@@ -27,7 +27,7 @@ import basic.zKernelUI.component.model.EventComponentSelectionResetZZZ;
 import basic.zKernelUI.component.model.IListenerSelectionResetZZZ;
 import custom.zKernel.KernelLogZZZ;
 
-public abstract class KernelJTextAreaListening4ComponentSelectionResetZZZ extends JTextArea implements ITextAreaListening4ComponentSelectionResetZZZ, IObjectZZZ, IObjectLogZZZ, IFlagZEnabledZZZ, IKernelUserZZZ, IListenerSelectionResetZZZ{
+public abstract class KernelJTextAreaListening4ComponentSelectionResetZZZ extends JTextArea implements ITextAreaListening4ComponentSelectionResetZZZ, IObjectZZZ, ILogPrintZZZ, IFlagZEnabledZZZ, IKernelUserZZZ, IListenerSelectionResetZZZ{
 	private IKernelZZZ objKernel;
 	private KernelLogZZZ objLog;
 	
@@ -273,7 +273,7 @@ private HashMap<String, Boolean>hmFlag = new HashMap<String, Boolean>(); //Neu 2
 	
 	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
 	@Override
-	public void logLineDate(String sLog) throws ExceptionZZZ {
+	public void printlnDate(String sLog) throws ExceptionZZZ {
 		KernelLogZZZ objLog = this.getLogObject();
 		if(objLog==null) {
 			String sTemp = KernelLogZZZ.computeLineDate(this, sLog);

@@ -13,13 +13,13 @@ import custom.zKernel.KernelLogZZZ;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IConstantZZZ;
-import basic.zBasic.IObjectLogZZZ;
+import basic.zBasic.ILogPrintZZZ;
 import basic.zBasic.IObjectZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernelUI.component.model.EventComponentSelectionResetZZZ;
 import basic.zKernelUI.component.model.IListenerSelectionResetZZZ;
 
-public abstract class KernelJListListening4ComponentSelectionResetZZZ extends JList implements IConstantZZZ, IObjectZZZ, IObjectLogZZZ, IKernelUserZZZ, IListenerSelectionResetZZZ{
+public abstract class KernelJListListening4ComponentSelectionResetZZZ extends JList implements IConstantZZZ, IObjectZZZ, ILogPrintZZZ, IKernelUserZZZ, IListenerSelectionResetZZZ{
 	IKernelZZZ objKernel = null;
 	KernelLogZZZ objLog = null;
 	
@@ -59,7 +59,7 @@ public abstract class KernelJListListening4ComponentSelectionResetZZZ extends JL
 	
 	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
 	@Override
-	public void logLineDate(String sLog) throws ExceptionZZZ {
+	public void printlnDate(String sLog) throws ExceptionZZZ {
 		KernelLogZZZ objLog = this.getLogObject();
 		if(objLog==null) {
 			String sTemp = KernelLogZZZ.computeLineDate(this, sLog);

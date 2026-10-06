@@ -7,14 +7,14 @@ import basic.zKernel.AbstractKernelLogZZZ;
 import custom.zKernel.KernelLogZZZ;
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IConstantZZZ;
-import basic.zBasic.IObjectLogZZZ;
+import basic.zBasic.ILogPrintZZZ;
 import basic.zBasic.IObjectZZZ;
 import basic.zBasic.util.datatype.string.StringZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernelUI.component.model.EventComponentSelectionResetZZZ;
 import basic.zKernelUI.component.model.IListenerSelectionResetZZZ;
 
-public abstract class KernelJEditorPaneListening4ComponentSelectionResetZZZ extends JEditorPane implements IConstantZZZ, IObjectZZZ, IObjectLogZZZ, IKernelUserZZZ, IListenerSelectionResetZZZ{
+public abstract class KernelJEditorPaneListening4ComponentSelectionResetZZZ extends JEditorPane implements IConstantZZZ, IObjectZZZ, ILogPrintZZZ, IKernelUserZZZ, IListenerSelectionResetZZZ{
 	private IKernelZZZ objKernel;
 	private KernelLogZZZ objLog;
 	
@@ -41,7 +41,7 @@ public abstract class KernelJEditorPaneListening4ComponentSelectionResetZZZ exte
 	
 	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
 	@Override
-	public void logLineDate(String sLog) throws ExceptionZZZ {
+	public void printlnDate(String sLog) throws ExceptionZZZ {
 		KernelLogZZZ objLog = this.getLogObject();
 		if(objLog==null) {
 			String sTemp = KernelLogZZZ.computeLineDate(this, sLog);

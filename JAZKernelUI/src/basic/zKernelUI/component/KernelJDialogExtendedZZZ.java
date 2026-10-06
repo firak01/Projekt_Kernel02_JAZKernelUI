@@ -20,7 +20,7 @@ import javax.swing.SwingUtilities;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IConstantZZZ;
-import basic.zBasic.IObjectLogZZZ;
+import basic.zBasic.ILogPrintZZZ;
 import basic.zBasic.IObjectZZZ;
 import basic.zBasic.ObjectZZZ;
 import basic.zBasic.ReflectCodeZZZ;
@@ -49,7 +49,7 @@ import custom.zKernel.KernelLogZZZ;
  * @author 0823
  *
  */
-public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialogExtendedZZZ, IConstantZZZ, IObjectZZZ, IObjectLogZZZ, IKernelUserZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IScreenFeatureZZZ, IMouseFeatureZZZ, IFlagZEnabledZZZ, IFlagZCustomEnabledZZZ{
+public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialogExtendedZZZ, IConstantZZZ, IObjectZZZ, IKernelUserZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IScreenFeatureZZZ, IMouseFeatureZZZ, IFlagZEnabledZZZ, IFlagZCustomEnabledZZZ{
 	protected IKernelZZZ objKernel;
 	protected KernelLogZZZ objLog;
 	protected IKernelModuleZZZ objModule=null; //Das Modul, z.B. für die Dialogbox
@@ -179,7 +179,7 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 							 btemp = setFlag(sKey, booValue.booleanValue());//setzen der "auf Verdacht" indirekt übergebenen Flags
 							 if(btemp==false){						 
 								 sLog = "the passed flag '" + sKey + "' is not available for class '" + this.getClass() + "'.";
-								 this.logLineDate(ReflectCodeZZZ.getPositionCurrent() + ": " + sLog);
+								 Log.printlnDate(this, ReflectCodeZZZ.getPositionCurrent() + ": " + sLog);
 		//						  Bei der "Übergabe auf Verdacht" keinen Fehler werfen!!!
 		//						  ExceptionZZZ ez = new ExceptionZZZ(sLog, iERROR_PARAMETER_VALUE, this,  ReflectCodeZZZ.getMethodCurrentName()); 
 		//						  throw ez;		 
@@ -641,26 +641,26 @@ public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialo
 //		}
 //	}
 	
-	@Override
-	public synchronized void logLineDate(String sLog) throws ExceptionZZZ {
-		ObjectZZZ.logLineDate(this, sLog);
-	}
-	
-	@Override
-	public void logLineDate(String... sLogs) throws ExceptionZZZ {
-		ObjectZZZ.logLineDate(this, sLogs);
-	}
-	
-	@Override
-	public synchronized void logLineDateWithPosition(String sLog) throws ExceptionZZZ {
-		ObjectZZZ.logLineDateWithPosition(this, sLog);
-	}
-	
-	
-	@Override
-	public synchronized void logLineDateWithPosition(String... sLogs) throws ExceptionZZZ {
-		ObjectZZZ.logLineDateWithPosition(this, sLogs);
-	}
+//	@Override
+//	public synchronized void printlnDate(String sLog) throws ExceptionZZZ {
+//		ObjectZZZ.printlnDate(this, sLog);
+//	}
+//	
+//	@Override
+//	public void printlnDate(String... sLogs) throws ExceptionZZZ {
+//		ObjectZZZ.printlnDate(this, sLogs);
+//	}
+//	
+//	@Override
+//	public synchronized void printlnDateWithPosition(String sLog) throws ExceptionZZZ {
+//		ObjectZZZ.printlnDateWithPosition(this, sLog);
+//	}
+//	
+//	
+//	@Override
+//	public synchronized void printlnDateWithPosition(String... sLogs) throws ExceptionZZZ {
+//		ObjectZZZ.printlnDateWithPosition(this, sLogs);
+//	}
 		
 
 	/* (non-Javadoc)

@@ -22,7 +22,7 @@ import javax.swing.UIManager;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
 import basic.zBasic.ExceptionZZZ;
-import basic.zBasic.IObjectLogZZZ;
+import basic.zBasic.ILogPrintZZZ;
 import basic.zBasic.IObjectZZZ;
 import basic.zBasic.ObjectZZZ;
 import basic.zBasic.AbstractObjectWithFlagZZZ;
@@ -50,7 +50,7 @@ import custom.zKernel.KernelLogZZZ;
 /** Class is base for all frames used by the configuration module
  * @author Lindhauer
  */
-public abstract class KernelJFrameCascadedZZZ extends JFrame  implements IObjectZZZ, IObjectLogZZZ, IFlagZEnabledZZZ, IFlagZCustomEnabledZZZ, IKernelUserZZZ, IKernelModuleZZZ, IComponentCascadedUserZZZ, IFrameCascadedZZZ, IFrameLaunchableZZZ, IScreenFeatureZZZ{
+public abstract class KernelJFrameCascadedZZZ extends JFrame  implements IObjectZZZ, IFlagZEnabledZZZ, IFlagZCustomEnabledZZZ, IKernelUserZZZ, IKernelModuleZZZ, IComponentCascadedUserZZZ, IFrameCascadedZZZ, IFrameLaunchableZZZ, IScreenFeatureZZZ{
 	private IKernelZZZ objKernel;
 	private KernelLogZZZ objLog; 
 	private KernelJFrameCascadedZZZ frameParent=null;
@@ -710,26 +710,26 @@ private HashMap<String, Boolean>hmFlagCustom = new HashMap<String, Boolean>();
 //		}	
 //	}
 	
-	@Override
-	public synchronized void logLineDate(String sLog) throws ExceptionZZZ {
-		ObjectZZZ.logLineDate(this, sLog);
-	}
-	
-	@Override
-	public void logLineDate(String... sLogs) throws ExceptionZZZ {
-		ObjectZZZ.logLineDate(this, sLogs);
-	}
-	
-	@Override
-	public synchronized void logLineDateWithPosition(String sLog) throws ExceptionZZZ {
-		ObjectZZZ.logLineDateWithPosition(this, sLog);
-	}
-	
-	
-	@Override
-	public synchronized void logLineDateWithPosition(String... sLogs) throws ExceptionZZZ {
-		ObjectZZZ.logLineDateWithPosition(this, sLogs);
-	}
+//	@Override
+//	public synchronized void printlnDate(String sLog) throws ExceptionZZZ {
+//		ObjectZZZ.printlnDate(this, sLog);
+//	}
+//	
+//	@Override
+//	public void printlnDate(String... sLogs) throws ExceptionZZZ {
+//		ObjectZZZ.printlnDate(this, sLogs);
+//	}
+//	
+//	@Override
+//	public synchronized void printlnDateWithPosition(String sLog) throws ExceptionZZZ {
+//		ObjectZZZ.printlnDateWithPosition(this, sLog);
+//	}
+//	
+//	
+//	@Override
+//	public synchronized void printlnDateWithPosition(String... sLogs) throws ExceptionZZZ {
+//		ObjectZZZ.printlnDateWithPosition(this, sLogs);
+//	}
 	
 	public abstract boolean setSizeDefault() throws ExceptionZZZ;
 	

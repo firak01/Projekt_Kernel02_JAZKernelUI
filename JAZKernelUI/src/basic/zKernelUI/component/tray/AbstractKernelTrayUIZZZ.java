@@ -137,11 +137,11 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 			if(objEnumMenu!=null){
 				String sLog = ReflectCodeZZZ.getPositionCurrent() +": Menuepunkt=" + objEnumMenu.getMenu();
 				System.out.println(sLog);
-				this.logLineDate(sLog);
+				this.printlnDate(sLog);
 			}else {
 				String sLog = ReflectCodeZZZ.getPositionCurrent() +": Kein Menuepunkt vorhanden.";
 				System.out.println(sLog);
-				this.logLineDate(sLog);
+				this.printlnDate(sLog);
 			}
 			//++++++++++++++++++++++++++++++++
 				
@@ -282,7 +282,7 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 		if(enumStatus==null) {
 			sLog = ReflectCodeZZZ.getPositionCurrent()+": Keinen Status aus dem Event-Objekt erhalten. Breche ab";
 			System.out.println(sLog);
-			this.logLineDate(sLog);
+			this.printlnDate(sLog);
 			break main;
 		}
 		
@@ -292,7 +292,7 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 		if(hmEnum==null) {
 			sLog = ReflectCodeZZZ.getPositionCurrent()+": Keine Mapping Hashmap fuer das StatusMapping vorhanden. Breche ab";
 			System.out.println(sLog);
-			this.logLineDate(sLog);
+			this.printlnDate(sLog);
 			break main;
 		}
 		
@@ -301,7 +301,7 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 		IEnumSetMappedStatusLocalZZZ objEnum = hmEnum.get(enumStatus);							
 		if(objEnum==null) {
 			sLog = ReflectCodeZZZ.getPositionCurrent()+": Keinen gemappten Status für en Status aus dem Event-Objekt erhalten. Breche ab";					
-			this.logProtocol(sLog);
+			this.protocol(sLog);
 			break main;
 		}
 		
@@ -332,7 +332,7 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 			System.out.println(ReflectCodeZZZ.getPositionCurrent() + ": sStatus='"+sStatus+"'");
 		}else {
 			sLog = ReflectCodeZZZ.getPositionCurrent()+": Event ist kein instanceof IEventObjectStatusLocalZZZ. Breche ab.";					
-			this.logProtocol(sLog);
+			this.protocol(sLog);
 		}
 		
 	}//end main:
@@ -397,29 +397,29 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 			
 			String sLog = ReflectCodeZZZ.getPositionCurrent()+": Pruefe Relevanz des Events.";
 			System.out.println(sLog);
-			this.logLineDate(sLog);
+			this.printlnDate(sLog);
 			
 			if(eventStatusLocal instanceof IEventObjectStatusLocalZZZ) {				
 				IEnumSetMappedZZZ enumStatusFromEvent = ((IEventObjectStatusLocalZZZ) eventStatusLocal).getStatusLocal();				
 				if(enumStatusFromEvent==null) {
 					sLog = ReflectCodeZZZ.getPositionCurrent()+": KEINEN enumStatus empfangen. Beende.";
 					System.out.println(sLog);
-					this.logLineDate(sLog);							
+					this.printlnDate(sLog);							
 					break main;
 				}
 				
 				boolean bStatusValue = eventStatusLocal.getStatusValue();
 				sLog = ReflectCodeZZZ.getPositionCurrent()+": Einen enumStatus empfangen. Wert: " + bStatusValue;
 				System.out.println(sLog);
-				this.logLineDate(sLog);
+				this.printlnDate(sLog);
 					
 				sLog = ReflectCodeZZZ.getPositionCurrent()+": enumFromEventStatus hat class='"+enumStatusFromEvent.getClass()+"'";
 				System.out.println(sLog);
-				this.logLineDate(sLog);	
+				this.printlnDate(sLog);	
 					
 				sLog = ReflectCodeZZZ.getPositionCurrent()+": enumFromEventStatus='" + enumStatusFromEvent.getAbbreviation()+"'";
 				System.out.println(sLog);
-				this.logLineDate(sLog);
+				this.printlnDate(sLog);
 				
 				
 				//#### Problemansatz: Mappen des Lokalen Status auf einen Status aus dem Event, verschiedener Klassen.
@@ -433,13 +433,13 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 				if(objEnumStatusLocal==null) {
 					sLog = ReflectCodeZZZ.getPositionCurrent()+": Klasse '" + enumStatusFromEvent.getClass() + "' ist im Mapping nicht mit Wert vorhanden. Damit nicht relevant.";
 					System.out.println(sLog);
-					this.logLineDate(sLog);
+					this.printlnDate(sLog);
 					break main;
 					//sStatusAbbreviationLocal = enumStatusFromEvent.getAbbreviation();
 				}else {
 					sLog = ReflectCodeZZZ.getPositionCurrent()+": Klasse '" + enumStatusFromEvent.getClass() + "' ist im Mapping mit Wert vorhanden. Damit relevant.";
 					System.out.println(sLog);
-					this.logLineDate(sLog);
+					this.printlnDate(sLog);
 					
 					sStatusAbbreviationLocal = objEnumStatusLocal.getAbbreviation();
 				}
@@ -449,7 +449,7 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 				if(!bReturn) {
 					sLog = ReflectCodeZZZ.getPositionCurrent()+": Event werfenden Klasse ist fuer diese Klasse hinsichtlich eines Status nicht relevant. Breche ab.";
 					System.out.println(sLog);
-					this.logLineDate(sLog);				
+					this.printlnDate(sLog);				
 					break main;
 				}
 				
@@ -473,7 +473,7 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 				if(!bReturn) {
 					sLog = ReflectCodeZZZ.getPositionCurrent()+": Statuswert nicht relevant. Breche ab.";
 					System.out.println(sLog);
-					this.logLineDate(sLog);				
+					this.printlnDate(sLog);				
 					break main;
 				}
 				
@@ -499,7 +499,7 @@ public abstract class AbstractKernelTrayUIZZZ extends AbstractKernelUseObjectOnS
 			boolean bStatusValue = eventStatusLocal.getStatusValue();
 			String sLog = ReflectCodeZZZ.getPositionCurrent()+": Einen enumStatus empfangen. Wert: " + bStatusValue;
 			System.out.println(sLog);
-			this.logLineDate(sLog);	
+			this.printlnDate(sLog);	
 		
 			if(!bStatusValue)break main; //Hier interessieren nur "true" werte, die also etwas neues setzen.
 			

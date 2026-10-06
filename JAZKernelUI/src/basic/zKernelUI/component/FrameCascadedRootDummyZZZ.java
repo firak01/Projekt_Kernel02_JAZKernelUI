@@ -9,7 +9,7 @@ import basic.zKernelUI.KernelUIZZZ;
 import basic.zKernelUI.util.JFrameHelperZZZ;
 import basic.zBasic.ExceptionZZZ;
 
-/** Weil KernelJFrameCascaded eine abstracte Klasse ist, wird das ben�tigt, um z.B. einen CascasdedFrame aus einem Normalen JFrame zu erstellen,
+/** Weil KernelJFrameCascaded eine abstracte Klasse ist, wird das benoetigt, um z.B. einen CascasdedFrame aus einem Normalen JFrame zu erstellen,
  *   der dann im Konstruktor von KernelJPanelCascadedZZZ verwendet werden kann.
  *   
  * @author lindhaueradmin

@@ -280,7 +280,7 @@ class SwingWorker4ProgramPLUS extends KernelSwingWorkerZZZ{
 				try {							
 					
 					System.out.println("PLUS GECLICKT");
-					logLineDate("PLUS GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ					
+					printlnDate("PLUS GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ					
 					KernelButtonGroupZZZ<String, AbstractButton> groupButton = panel.getHashtableButtonGroup().get("EINS");
 					if(groupButton!=null){
 						groupButton.disableOther(PanelDebugButtonGroup_NORTHZZZ.sBUTTON_PLUS);
@@ -393,7 +393,7 @@ class SwingWorker4ProgramMINUS extends KernelSwingWorkerZZZ{
 				try {							
 					
 					System.out.println("MINUS GECLICKT");
-					logLineDate("MINUS GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ
+					printlnDate("MINUS GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ
 					
 					KernelButtonGroupZZZ<String, AbstractButton> groupButton = panel.getHashtableButtonGroup().get("EINS");
 					if(groupButton!=null){
@@ -508,7 +508,7 @@ class SwingWorker4ProgramENABLE extends KernelSwingWorkerZZZ{
 				try {							
 					
 					System.out.println("ENABLE ALL GECLICKT");
-					logLineDate("ENABLE ALL GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ
+					printlnDate("ENABLE ALL GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ
 					
 					KernelButtonGroupZZZ<String, AbstractButton> groupButton = panel.getHashtableButtonGroup().get("EINS");
 					if(groupButton!=null){
@@ -626,7 +626,7 @@ class SwingWorker4ProgramDISABLE extends KernelSwingWorkerZZZ {
 				try {							
 					
 					System.out.println("DISABLE GECLICKT");
-					logLineDate("DISABLE GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ
+					printlnDate("DISABLE GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ
 					
 					
 					KernelButtonGroupZZZ<String, AbstractButton> groupButton = panel.getHashtableButtonGroup().get("EINS");
@@ -738,7 +738,7 @@ class SwingWorker4ProgramTOGGLE_ALL extends KernelSwingWorkerZZZ implements IObj
 				try {							
 					
 					System.out.println("TOGGLE ALL GECLICKT");
-					logLineDate("TOGGLE ALL GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ
+					printlnDate("TOGGLE ALL GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ
 					
 					KernelButtonGroupZZZ<String, AbstractButton> groupButton = panel.getHashtableButtonGroup().get("EINS");
 					if(groupButton!=null){
@@ -849,7 +849,7 @@ class SwingWorker4ProgramDIFFER_ALL extends KernelSwingWorkerZZZ {
 				try {							
 					
 					System.out.println("DIFFER ALL GECLICKT");
-					logLineDate("DIFFER ALL GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ
+					printlnDate("DIFFER ALL GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ
 					
 					KernelButtonGroupZZZ<String, AbstractButton> groupButton = panel.getHashtableButtonGroup().get("ZWEI");
 					if(groupButton!=null){
@@ -960,7 +960,7 @@ class SwingWorker4ProgramSAME_ALL extends KernelSwingWorkerZZZ implements IObjec
 				try {							
 					
 					System.out.println("SAME ALL GECLICKT");
-					logLineDate("SAME ALL GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ
+					printlnDate("SAME ALL GECLICKT");//DAS IST EINE METHODE AUS KernelSwingWorkerZZZ
 					
 					KernelButtonGroupZZZ<String, AbstractButton> groupButton02 = panel.getHashtableButtonGroup().get("ZWEI");
 					if(groupButton02!=null){

@@ -19,8 +19,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import basic.zBasic.ExceptionZZZ;
-import basic.zBasic.IObjectLogZZZ;
+import basic.zBasic.ILogPrintZZZ;
 import basic.zBasic.IObjectZZZ;
+import basic.zBasic.LogZZZ;
 import basic.zBasic.ObjectZZZ;
 import basic.zBasic.ReflectClassZZZ;
 import basic.zBasic.ReflectCodeZZZ;
@@ -54,7 +55,7 @@ import custom.zKernel.KernelLogZZZ;
  * 
  *  Merke: Die Panels können sowohl nur modulnutzer als auch selber Modul sein. Darum werden beide Interfaces implementiert.
  */
-public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IKernelModuleUserZZZ, IKernelUserZZZ, IObjectZZZ, IObjectLogZZZ, IMouseFeatureZZZ, IDebugUiZZZ, IFlagZEnabledZZZ, IFlagZCustomEnabledZZZ{
+public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCascadedZZZ, IKernelModuleUserZZZ, IKernelUserZZZ, IObjectZZZ, IMouseFeatureZZZ, IDebugUiZZZ, IFlagZEnabledZZZ, IFlagZCustomEnabledZZZ{
 	protected static final String sBUTTON_SWITCH = "buttonSwitch";
 		
 	protected IKernelZZZ objKernel;   //das "protected" erlaubt es hiervon erbende Klassen mit XYXErbendeKlasse.objKernel zu arbeiten.
@@ -291,7 +292,7 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 							 btemp = setFlag(sKey, booValue.booleanValue());//setzen der "auf Verdacht" indirekt übergebenen Flags
 							 if(btemp==false){						 
 								 sLog = "the passed flag '" + sKey + "' is not available for class '" + this.getClass() + "'.";
-								 this.logLineDate(ReflectCodeZZZ.getPositionCurrent() + ": " + sLog);
+								 LogZZZ.printlnDate(this, ReflectCodeZZZ.getPositionCurrent() + ": " + sLog);
 		//						  Bei der "Übergabe auf Verdacht" keinen Fehler werfen!!!
 		//						  ExceptionZZZ ez = new ExceptionZZZ(sLog, iERROR_PARAMETER_VALUE, this,  ReflectCodeZZZ.getMethodCurrentName()); 
 		//						  throw ez;		 
@@ -767,26 +768,26 @@ public abstract class KernelJPanelCascadedZZZ extends JPanel implements IPanelCa
 //		}	
 //	}
 				
-	@Override
-	public synchronized void logLineDate(String sLog) throws ExceptionZZZ {
-		ObjectZZZ.logLineDate(this, sLog);
-	}
-	
-	@Override
-	public void logLineDate(String... sLogs) throws ExceptionZZZ {
-		ObjectZZZ.logLineDate(this, sLogs);
-	}
-	
-	@Override
-	public synchronized void logLineDateWithPosition(String sLog) throws ExceptionZZZ {
-		ObjectZZZ.logLineDateWithPosition(this, sLog);
-	}
-	
-	
-	@Override
-	public synchronized void logLineDateWithPosition(String... sLogs) throws ExceptionZZZ {
-		ObjectZZZ.logLineDateWithPosition(this, sLogs);
-	}
+//	@Override
+//	public synchronized void printlnDate(String sLog) throws ExceptionZZZ {
+//		ObjectZZZ.printlnDate(this, sLog);
+//	}
+//	
+//	@Override
+//	public void printlnDate(String... sLogs) throws ExceptionZZZ {
+//		ObjectZZZ.printlnDate(this, sLogs);
+//	}
+//	
+//	@Override
+//	public synchronized void printlnDateWithPosition(String sLog) throws ExceptionZZZ {
+//		ObjectZZZ.printlnDateWithPosition(this, sLog);
+//	}
+//	
+//	
+//	@Override
+//	public synchronized void printlnDateWithPosition(String... sLogs) throws ExceptionZZZ {
+//		ObjectZZZ.printlnDateWithPosition(this, sLogs);
+//	}
 
 	
 	

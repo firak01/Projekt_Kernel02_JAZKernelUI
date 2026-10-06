@@ -17,6 +17,7 @@ import basic.zKernel.component.IKernelModuleZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.thread.KernelSwingWorkerZZZ;
+import custom.zKernel.Log;
 import custom.zKernel.file.ini.FileIniZZZ;
 
 /**	Den SwingWorker als innere Klasse zu verwenden, scheitert daran, dass der Import nicht klappt fuer: SwingWorker4IniSAVE worker = objPanelSubEast.new SwingWorker4IniSAVE(objKernel, objKernelChoosen, objPanelSubEast, objPanelCenter, (String[])null);
@@ -155,7 +156,7 @@ final class SwingWorker4IniSAVE extends KernelSwingWorkerZZZ{
 				try {							
 					
 					System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#INI SAVE DURCHGEFUEHRT");
-					logLineDate("INI SAVE DURCHGEFUEHRT");					
+					Log.printlnDate(this, "INI SAVE DURCHGEFUEHRT");					
 											
 					((JComponent) panel).revalidate();
 					((Component) panel).repaint();

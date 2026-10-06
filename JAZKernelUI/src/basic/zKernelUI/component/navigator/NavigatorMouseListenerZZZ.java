@@ -205,7 +205,7 @@ public class NavigatorMouseListenerZZZ extends KernelMouseListenerCascadedZZZ im
 					try {							
 						
 						System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#NAVIGATOR ELEMENT GECLICKT");
-						logLineDate("NAVIGATOR ELEMENT GECLICKT");					
+						printlnDate("NAVIGATOR ELEMENT GECLICKT");					
 												
 						((JComponent) panel).revalidate();
 						((Component) panel).repaint();

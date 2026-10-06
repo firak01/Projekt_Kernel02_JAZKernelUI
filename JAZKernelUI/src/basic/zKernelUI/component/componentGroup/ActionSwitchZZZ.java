@@ -179,7 +179,7 @@ public class ActionSwitchZZZ extends  AbstractKernelActionListenerCascadedZZZ im
 					try {							
 						
 						System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#SWITCH GECLICKT");
-						logLineDate("SWITCH GECLICKT");					
+						printlnDate("SWITCH GECLICKT");					
 												
 						panel.revalidate();
 						panel.repaint();

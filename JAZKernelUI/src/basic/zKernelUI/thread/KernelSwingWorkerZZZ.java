@@ -2,7 +2,7 @@ package basic.zKernelUI.thread;
 
 
 import basic.zBasic.ExceptionZZZ;
-import basic.zBasic.IObjectLogZZZ;
+import basic.zBasic.ILogPrintZZZ;
 import basic.zBasic.IObjectZZZ;
 import basic.zBasic.ObjectZZZ;
 import basic.zBasicUI.thread.SwingWorker;
@@ -40,7 +40,7 @@ import custom.zKernel.KernelLogZZZ;
  * @author Fritz Lindhauer, 18.04.2021, 09:33:38
  * 
  */
-public abstract class KernelSwingWorkerZZZ extends SwingWorker  implements IObjectZZZ, IObjectLogZZZ, IKernelUserZZZ{
+public abstract class KernelSwingWorkerZZZ extends SwingWorker  implements IObjectZZZ, IKernelUserZZZ{
 	protected IKernelZZZ objKernel = null;
 	protected KernelLogZZZ objLog = null;
 			
@@ -121,26 +121,26 @@ public abstract class KernelSwingWorkerZZZ extends SwingWorker  implements IObje
 //		}		
 //	}
 	
-	@Override
-	public synchronized void logLineDate(String sLog) throws ExceptionZZZ {
-		ObjectZZZ.logLineDate(this, sLog);
-	}
-	
-	@Override
-	public void logLineDate(String... sLogs) throws ExceptionZZZ {
-		ObjectZZZ.logLineDate(this, sLogs);
-	}
-	
-	@Override
-	public synchronized void logLineDateWithPosition(String sLog) throws ExceptionZZZ {
-		ObjectZZZ.logLineDateWithPosition(this, sLog);
-	}
-	
-	
-	@Override
-	public synchronized void logLineDateWithPosition(String... sLogs) throws ExceptionZZZ {
-		ObjectZZZ.logLineDateWithPosition(this, sLogs);
-	}
+//	@Override
+//	public synchronized void printlnDate(String sLog) throws ExceptionZZZ {
+//		ObjectZZZ.printlnDate(this, sLog);
+//	}
+//	
+//	@Override
+//	public void printlnDate(String... sLogs) throws ExceptionZZZ {
+//		ObjectZZZ.printlnDate(this, sLogs);
+//	}
+//	
+//	@Override
+//	public synchronized void printlnDateWithPosition(String sLog) throws ExceptionZZZ {
+//		ObjectZZZ.printlnDateWithPosition(this, sLog);
+//	}
+//	
+//	
+//	@Override
+//	public synchronized void printlnDateWithPosition(String... sLogs) throws ExceptionZZZ {
+//		ObjectZZZ.printlnDateWithPosition(this, sLogs);
+//	}
 	
 	//Beim Konstruieren des SwingWorkers werden die notwendigen updateXYZ(...) Methoden aufgerufen.
 	@Override

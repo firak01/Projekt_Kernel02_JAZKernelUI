@@ -30,6 +30,7 @@ import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.thread.KernelSwingWorkerZZZ;
 import basic.zKernel.KernelZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
+import custom.zKernel.Log;
 import custom.zKernel.file.ini.FileIniZZZ;
 
 import custom.zKernelUI.module.config.DLG.Panel_EASTZZZ.SwingWorker4IniSAVEinner; 
@@ -305,7 +306,7 @@ public class Panel_EASTZZZ  extends KernelJPanelCascadedZZZ {
 					try {							
 						
 						System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#INI SAVE DURCHGEFUEHRT");
-						logLineDate("INI SAVE DURCHGEFUEHRT");					
+						Log.printlnDate(this, "INI SAVE DURCHGEFUEHRT");					
 												
 						((JComponent) panel).revalidate();
 						((Component) panel).repaint();
