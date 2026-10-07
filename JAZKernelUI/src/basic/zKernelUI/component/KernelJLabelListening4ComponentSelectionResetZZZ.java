@@ -52,16 +52,16 @@ public abstract class KernelJLabelListening4ComponentSelectionResetZZZ extends J
 	}
 	
 	//aus IKernelLogObjectUserZZZ, analog zu KernelKernelZZZ
-	@Override
-	public void printlnDate(String sLog) throws ExceptionZZZ {
-		KernelLogZZZ objLog = this.getLogObject();
-		if(objLog==null) {
-			String sTemp = KernelLogZZZ.computeLineDate(this, sLog);
-			System.out.println(sTemp);
-		}else {
-			objLog.writeLineDate(sLog);
-		}		
-	}	
+//	@Override
+//	public void printlnDate(String sLog) throws ExceptionZZZ {
+//		KernelLogZZZ objLog = this.getLogObject();
+//		if(objLog==null) {
+//			String sTemp = KernelLogZZZ.computelnDate(this, sLog);
+//			System.out.println(sTemp);
+//		}else {
+//			objLog.writeLineDate(sLog);
+//		}		
+//	}	
 
 	public IKernelZZZ getKernelObject() {	
 		return this.objKernel;

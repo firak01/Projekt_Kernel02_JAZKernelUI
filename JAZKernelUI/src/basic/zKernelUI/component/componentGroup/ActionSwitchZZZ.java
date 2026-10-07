@@ -15,6 +15,7 @@ import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.AbstractKernelActionListenerCascadedZZZ;
 import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.thread.KernelSwingWorkerZZZ;
+import custom.zKernel.Log;
 
 public class ActionSwitchZZZ extends  AbstractKernelActionListenerCascadedZZZ implements IEventBrokerComponentGroupSwitchUserZZZ, IComponentGroupCollectionUserZZZ { //KernelUseObjectZZZ implements ActionListener{
 	private int iIndexCurrent = 0;
@@ -179,7 +180,7 @@ public class ActionSwitchZZZ extends  AbstractKernelActionListenerCascadedZZZ im
 					try {							
 						
 						System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#SWITCH GECLICKT");
-						printlnDate("SWITCH GECLICKT");					
+						Log.printlnDate(ActionSwitchZZZ.class, "SWITCH GECLICKT");					
 												
 						panel.revalidate();
 						panel.repaint();

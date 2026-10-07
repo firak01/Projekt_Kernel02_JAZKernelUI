@@ -20,6 +20,7 @@ import basic.zKernelUI.component.KernelJPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelMouseListenerCascadedZZZ;
 import basic.zKernelUI.component.tray.ITrayZZZ;
 import basic.zKernelUI.thread.KernelSwingWorkerZZZ;
+import custom.zKernel.Log;
 
 
 //TODOGOON: SOLL GELOESCHT WERDEN. Das Starten des Swing Workers findet in NavigatorMouseListenerZZZ statt.
@@ -167,7 +168,7 @@ public class ActionSwitchZZZ<T> extends  KernelMouseListenerCascadedZZZ implemen
 					try {							
 						
 						System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#SWITCH GECLICKT");
-						printlnDate("SWITCH GECLICKT");					
+						Log.printlnDate(ActionSwitchZZZ.class, "SWITCH GECLICKT");					
 												
 						panel.revalidate();
 						panel.repaint();

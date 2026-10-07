@@ -17,6 +17,7 @@ import basic.zKernelUI.component.IPanelCascadedZZZ;
 import basic.zKernelUI.component.KernelMouseListenerCascadedZZZ;
 import basic.zKernelUI.component.tray.ITrayZZZ;
 import basic.zKernelUI.thread.KernelSwingWorkerZZZ;
+import custom.zKernel.Log;
 
 public class NavigatorMouseListenerZZZ extends KernelMouseListenerCascadedZZZ implements INavigatorElementMouseListenerZZZ{		
 	ISenderNavigatorElementSwitchZZZ objEventBroker=null; //Wird von der internen SwingWorker-Klasse verwendet.
@@ -205,7 +206,7 @@ public class NavigatorMouseListenerZZZ extends KernelMouseListenerCascadedZZZ im
 					try {							
 						
 						System.out.println(ReflectCodeZZZ.getMethodCurrentName() + "#NAVIGATOR ELEMENT GECLICKT");
-						printlnDate("NAVIGATOR ELEMENT GECLICKT");					
+						Log.printlnDate(NavigatorMouseListenerZZZ.class, "NAVIGATOR ELEMENT GECLICKT");					
 												
 						((JComponent) panel).revalidate();
 						((Component) panel).repaint();

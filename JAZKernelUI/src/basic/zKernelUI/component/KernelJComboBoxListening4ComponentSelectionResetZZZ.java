@@ -92,16 +92,16 @@ public abstract class KernelJComboBoxListening4ComponentSelectionResetZZZ  exten
 	}
 	
 	//### aus IObjectLogZZZ, analog zu KernelKernelZZZ
-	@Override
-	public void printlnDate(String sLog) throws ExceptionZZZ {
-		KernelLogZZZ objLog = this.getLogObject();
-		if(objLog==null) {
-			String sTemp = KernelLogZZZ.computeLineDate(this, sLog);
-			System.out.println(sTemp);
-		}else {
-			objLog.writeLineDate(sLog);	
-		}		
-	}	
+//	@Override
+//	public void printlnDate(String sLog) throws ExceptionZZZ {
+//		KernelLogZZZ objLog = this.getLogObject();
+//		if(objLog==null) {
+//			String sTemp = KernelLogZZZ.computelnDate(this, sLog);
+//			System.out.println(sTemp);
+//		}else {
+//			objLog.writeLineDate(sLog);	
+//		}		
+//	}	
 
 	//### aus IKernelUserZZZ
 	public IKernelZZZ getKernelObject() {	

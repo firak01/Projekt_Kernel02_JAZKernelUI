@@ -44,6 +44,7 @@ import basic.zKernel.flag.IFlagZEnabledZZZ;
 import basic.zKernelUI.KernelUIZZZ;
 import basic.zKernelUI.util.JTextFieldHelperZZZ;
 import custom.zKernel.KernelLogZZZ;
+import custom.zKernel.Log;
 
 /**Diese Klasse soll sicherstellen, das ein Dialogfenster auch nur einmal geoeffnet wird.
  * @author 0823
