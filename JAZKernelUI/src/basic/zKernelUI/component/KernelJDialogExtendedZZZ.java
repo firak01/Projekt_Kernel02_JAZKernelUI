@@ -15,14 +15,11 @@ import java.util.Set;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import basic.zBasic.ExceptionZZZ;
 import basic.zBasic.IConstantZZZ;
-import basic.zBasic.ILogPrintZZZ;
 import basic.zBasic.IObjectZZZ;
-import basic.zBasic.ObjectZZZ;
 import basic.zBasic.ReflectCodeZZZ;
 import basic.zBasic.util.abstractArray.ArrayUtilZZZ;
 import basic.zBasic.util.datatype.calling.ReferenceHashMapZZZ;
@@ -33,16 +30,13 @@ import basic.zBasicUI.listener.ListenerMouseMove4DragableWindowZZZ;
 import basic.zKernel.IKernelConfigZZZ;
 import basic.zKernel.IKernelUserZZZ;
 import basic.zKernel.IKernelZZZ;
-import basic.zKernel.AbstractKernelLogZZZ;
 import basic.zKernel.component.IKernelModuleUserZZZ;
 import basic.zKernel.component.IKernelModuleZZZ;
-import basic.zKernel.file.ini.IKernelEncryptionIniSolverZZZ;
 import basic.zKernel.flag.FlagZHelperZZZ;
 import basic.zKernel.flag.IFlagZCustomEnabledZZZ;
-import basic.zKernel.flag.util.FlagZFassadeZZZ;
 import basic.zKernel.flag.IFlagZEnabledZZZ;
+import basic.zKernel.flag.util.FlagZFassadeZZZ;
 import basic.zKernelUI.KernelUIZZZ;
-import basic.zKernelUI.util.JTextFieldHelperZZZ;
 import custom.zKernel.KernelLogZZZ;
 import custom.zKernel.Log;
 
@@ -51,6 +45,8 @@ import custom.zKernel.Log;
  *
  */
 public abstract class KernelJDialogExtendedZZZ extends JDialog implements IDialogExtendedZZZ, IConstantZZZ, IObjectZZZ, IKernelUserZZZ, IKernelModuleZZZ, IKernelModuleUserZZZ, IScreenFeatureZZZ, IMouseFeatureZZZ, IFlagZEnabledZZZ, IFlagZCustomEnabledZZZ{
+	private static final long serialVersionUID = 4168523541316033529L;
+	
 	protected IKernelZZZ objKernel;
 	protected KernelLogZZZ objLog;
 	protected IKernelModuleZZZ objModule=null; //Das Modul, z.B. für die Dialogbox
